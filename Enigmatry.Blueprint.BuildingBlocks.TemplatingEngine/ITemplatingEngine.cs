@@ -1,0 +1,9 @@
+﻿using System.Threading.Tasks;
+
+namespace Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine
+{
+    public interface ITemplatingEngine
+    {
+        Task<string> RenderFromFileAsync<T>(string path, T model);
+    }
+}
