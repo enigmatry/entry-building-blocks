@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Localization", "Enigmatry.Blueprint.BuildingBlocks.Localization\Enigmatry.Blueprint.BuildingBlocks.Localization.csproj", "{E1D5D37E-6354-4C44-B6DA-4C763C32FCD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Tests", "Enigmatry.Blueprint.BuildingBlocks.Tests\Enigmatry.Blueprint.BuildingBlocks.Tests.csproj", "{D781A467-0CB4-4789-B653-866C51E3B212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Tests", "Enigmatry.Blueprint.BuildingBlocks.Tests\Enigmatry.Blueprint.BuildingBlocks.Tests.csproj", "{D781A467-0CB4-4789-B653-866C51E3B212}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.EventBus", "Enigmatry.Blueprint.BuildingBlocks.EventBus\Enigmatry.Blueprint.BuildingBlocks.EventBus.csproj", "{463528A7-8C27-4897-89BD-6FD6E4059289}"
 EndProject
