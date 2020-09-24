@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using Enigmatry.Blueprint.Api.Localization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Blueprint.Api.Infrastructure.Init
