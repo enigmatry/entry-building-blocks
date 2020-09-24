@@ -20,18 +20,24 @@
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine\Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="EventBus\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Mail\" />
   </ItemGroup>
  
 </Project>
