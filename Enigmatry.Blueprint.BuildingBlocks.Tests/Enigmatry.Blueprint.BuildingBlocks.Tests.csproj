@@ -31,13 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.EmailClient\Enigmatry.Blueprint.BuildingBlocks.Email.csproj" />
     <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine\Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="EventBus\" />
     <Folder Include="Localization\" />
-    <Folder Include="Mail\" />
   </ItemGroup>
  
 </Project>
