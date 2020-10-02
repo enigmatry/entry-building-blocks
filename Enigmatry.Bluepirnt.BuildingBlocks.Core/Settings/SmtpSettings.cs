@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Email
+namespace Enigmatry.Blueprint.BuildingBlocks.Core.Settings
 {
     public class SmtpSettings
     {

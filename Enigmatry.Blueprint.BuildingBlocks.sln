@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.EventBus", "Enigmatry.Blueprint.BuildingBlocks.EventBus\Enigmatry.Blueprint.BuildingBlocks.EventBus.csproj", "{463528A7-8C27-4897-89BD-6FD6E4059289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Csv", "Enigmatry.Blueprint.BuildingBlocks.Csv\Enigmatry.Blueprint.BuildingBlocks.Csv.csproj", "{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Csv", "Enigmatry.Blueprint.BuildingBlocks.Csv\Enigmatry.Blueprint.BuildingBlocks.Csv.csproj", "{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Email", "Enigmatry.Blueprint.BuildingBlocks.EmailClient\Enigmatry.Blueprint.BuildingBlocks.Email.csproj", "{74BB7388-3776-40B1-B5A2-5A6C72E213FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Email", "Enigmatry.Blueprint.BuildingBlocks.EmailClient\Enigmatry.Blueprint.BuildingBlocks.Email.csproj", "{74BB7388-3776-40B1-B5A2-5A6C72E213FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Bluepirnt.BuildingBlocks.Core", "Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Bluepirnt.BuildingBlocks.Core.csproj", "{60B01B52-899C-4727-9074-28C8108CAB86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{74BB7388-3776-40B1-B5A2-5A6C72E213FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74BB7388-3776-40B1-B5A2-5A6C72E213FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74BB7388-3776-40B1-B5A2-5A6C72E213FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60B01B52-899C-4727-9074-28C8108CAB86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B01B52-899C-4727-9074-28C8108CAB86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60B01B52-899C-4727-9074-28C8108CAB86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60B01B52-899C-4727-9074-28C8108CAB86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

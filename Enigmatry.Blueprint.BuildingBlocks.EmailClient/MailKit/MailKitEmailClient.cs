@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
 using JetBrains.Annotations;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,7 @@ using MimeKit;
 namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
 {
     [UsedImplicitly]
-    public class MailKitEmailClient : IEmailClient
+    internal class MailKitEmailClient : IEmailClient
     {
         private readonly ILogger<MailKitEmailClient> _logger;
         private readonly SmtpSettings _settings;

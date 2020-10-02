@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
 using Enigmatry.Blueprint.BuildingBlocks.Email;
 using Enigmatry.Blueprint.BuildingBlocks.Email.MailKit;
-using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
+using Enigmatry.Blueprint.BuildingBlocks.Tests.Infrastructure;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
 {
@@ -14,19 +15,27 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
     public class MailKitPickupDirectoryEmailClientFixture
     {
 #pragma warning disable CS8618
-        private MailKitPickupDirectoryEmailClient _client;
+        private IEmailClient _client;
 #pragma warning restore CS8618
-        private string _pickupFolder = "tempPickup";
 
         [SetUp]
         public void Setup()
         {
-            SmtpSettings settings = new SmtpSettings()
-            {
-                UsePickupDirectory = true,
-                PickupDirectoryLocation = _pickupFolder
-            };
-            _client = new MailKitPickupDirectoryEmailClient(settings, new NullLogger<MailKitPickupDirectoryEmailClient>());
+            var configuration = new TestConfigurationBuilder()
+    .Build();
+
+            var _webHost = WebHost.CreateDefaultBuilder()
+                .UseConfiguration(configuration)
+                .UseStartup<TestStartup>()
+                .Build();
+
+            _client = (new DependencyResolverHelper(_webHost)).GetService<IEmailClient>();
+        }
+
+        [Test]
+        public void ClientShouldGetResolved()
+        {
+            _client.Should().BeOfType(typeof(MailKitPickupDirectoryEmailClient));
         }
 
         [Test]
@@ -42,20 +51,13 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
                 new List<string>() { receiver },
                 new List<string>() { sender });
             _client.Send(message);
-            string fullMessage = File.ReadAllText(Directory.GetFiles(_pickupFolder, "*.eml").First());
+            string fullMessage = File.ReadAllText(Directory.GetFiles(TestContext.CurrentContext.TestDirectory, "*.eml").First());
 
             fullMessage.Should().Contain($"From: {sender}");
             fullMessage.Should().Contain($"To: {receiver}");
             fullMessage.Should().Contain(messageBody);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-            if (Directory.Exists(_pickupFolder))
-            {
-                Directory.Delete(_pickupFolder, true);
-            }
-        }
+
     }
 }

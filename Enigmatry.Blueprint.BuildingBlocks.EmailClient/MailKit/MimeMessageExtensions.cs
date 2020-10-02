@@ -1,11 +1,12 @@
-﻿using MimeKit;
+﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
+using MimeKit;
 using MimeKit.Text;
 using System;
 using System.Linq;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
 {
-    public static class MimeMessageExtensions
+    internal static class MimeMessageExtensions
     {
         public static void SetEmailData(this MimeMessage message, EmailMessage email, SmtpSettings settings)
         {

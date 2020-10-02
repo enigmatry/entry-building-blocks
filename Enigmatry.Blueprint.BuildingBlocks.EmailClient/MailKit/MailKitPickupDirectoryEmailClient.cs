@@ -1,18 +1,20 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.IO;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
 {
-    public class MailKitPickupDirectoryEmailClient : IEmailClient
+    internal class MailKitPickupDirectoryEmailClient : IEmailClient
     {
         private readonly ILogger<MailKitPickupDirectoryEmailClient> _logger;
         private readonly SmtpSettings _settings;
 
-        public MailKitPickupDirectoryEmailClient(SmtpSettings settings, ILogger<MailKitPickupDirectoryEmailClient> logger)
+        public MailKitPickupDirectoryEmailClient(IOptionsMonitor<SmtpSettings> optionsMonitor, ILogger<MailKitPickupDirectoryEmailClient> logger)
         {
-            _settings = settings;
+            _settings = optionsMonitor.CurrentValue;
             _logger = logger;
         }
 
