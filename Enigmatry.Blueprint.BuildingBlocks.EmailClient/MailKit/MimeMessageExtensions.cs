@@ -1,4 +1,4 @@
-﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
+﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Options;
 using MimeKit;
 using MimeKit.Text;
 using System;
@@ -8,7 +8,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
 {
     internal static class MimeMessageExtensions
     {
-        public static void SetEmailData(this MimeMessage message, EmailMessage email, SmtpSettings settings)
+        public static void SetEmailData(this MimeMessage message, EmailMessage email, SmtpOptions settings)
         {
             message.To.AddRange(email.To.Select(MailboxAddress.Parse));
             message.From.AddRange(email.From.Select(MailboxAddress.Parse));

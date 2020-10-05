@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Core.Settings
+namespace Enigmatry.Blueprint.BuildingBlocks.Core.Options
 {
-    public class SmtpSettings
+    public class SmtpOptions
     {
         public string Server { get; set; } = String.Empty;
         public int Port { get; set; }

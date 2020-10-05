@@ -1,4 +1,4 @@
-﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
+﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Options;
 using Enigmatry.Blueprint.BuildingBlocks.Email;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
@@ -20,7 +20,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
         [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<SmtpSettings>(_configuration.GetSection("App:Smtp"));
+            services.Configure<SmtpOptions>(_configuration.GetSection("App:Smtp"));
             services.AppAddEmailClient(_configuration);
         }
 

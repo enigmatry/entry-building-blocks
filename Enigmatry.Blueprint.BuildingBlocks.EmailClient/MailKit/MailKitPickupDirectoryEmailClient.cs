@@ -1,4 +1,4 @@
-﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
+﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Options;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -10,24 +10,24 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
     internal class MailKitPickupDirectoryEmailClient : IEmailClient
     {
         private readonly ILogger<MailKitPickupDirectoryEmailClient> _logger;
-        private readonly SmtpSettings _settings;
+        private readonly SmtpOptions _options;
 
-        public MailKitPickupDirectoryEmailClient(IOptionsMonitor<SmtpSettings> optionsMonitor, ILogger<MailKitPickupDirectoryEmailClient> logger)
+        public MailKitPickupDirectoryEmailClient(IOptionsSnapshot<SmtpOptions> optionsSnapshot, ILogger<MailKitPickupDirectoryEmailClient> logger)
         {
-            _settings = optionsMonitor.CurrentValue;
+            _options = optionsSnapshot.Value;
             _logger = logger;
         }
 
         public void Send(EmailMessage email)
         {
             var message = new MimeMessage();
-            message.SetEmailData(email, _settings);
+            message.SetEmailData(email, _options);
 
-            if (!Directory.Exists(_settings.PickupDirectoryLocation))
+            if (!Directory.Exists(_options.PickupDirectoryLocation))
             {
-                Directory.CreateDirectory(_settings.PickupDirectoryLocation);
+                Directory.CreateDirectory(_options.PickupDirectoryLocation);
             }
-            var filePath = Path.Combine(_settings.PickupDirectoryLocation, $"{DateTime.Now.Ticks}.eml");
+            var filePath = Path.Combine(_options.PickupDirectoryLocation, $"{DateTime.Now.Ticks}.eml");
             message.WriteTo(filePath);
 
             _logger.LogDebug($"Email '{message.Subject}' is written to filesystem: {filePath}");
