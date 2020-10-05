@@ -4,6 +4,8 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Options
 {
     public class SmtpOptions
     {
+        public const string AppSmtp = "App:Smtp";
+
         public string Server { get; set; } = String.Empty;
         public int Port { get; set; }
         public string Username { get; set; } = String.Empty;

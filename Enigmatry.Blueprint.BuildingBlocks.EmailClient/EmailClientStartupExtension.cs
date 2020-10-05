@@ -9,7 +9,9 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email
     {
         public static void AppAddEmailClient(this IServiceCollection services, IConfiguration configuration)
         {
-            var smtpOptions = configuration.GetSection("App:Smtp").Get<SmtpOptions>();
+            services.Configure<SmtpOptions>(configuration.GetSection(SmtpOptions.AppSmtp));
+
+            var smtpOptions = configuration.GetSection(SmtpOptions.AppSmtp).Get<SmtpOptions>();
             
             if (smtpOptions.UsePickupDirectory)
             {

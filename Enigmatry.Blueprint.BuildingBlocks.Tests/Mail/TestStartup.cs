@@ -20,7 +20,6 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
         [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<SmtpOptions>(_configuration.GetSection("App:Smtp"));
             services.AppAddEmailClient(_configuration);
         }
 
