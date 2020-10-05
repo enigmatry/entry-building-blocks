@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.Csv\Enigmatry.Blueprint.BuildingBlocks.Csv.csproj" />
     <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.EmailClient\Enigmatry.Blueprint.BuildingBlocks.Email.csproj" />
     <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine\Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine.csproj" />
   </ItemGroup>
