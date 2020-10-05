@@ -10,8 +10,8 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
     {
         public static void SetEmailData(this MimeMessage message, EmailMessage email, SmtpSettings settings)
         {
-            message.To.AddRange(email.To.Select(address => MailboxAddress.Parse(address)));
-            message.From.AddRange(email.From.Select(address => MailboxAddress.Parse(address)));
+            message.To.AddRange(email.To.Select(MailboxAddress.Parse));
+            message.From.AddRange(email.From.Select(MailboxAddress.Parse));
 
             if (!String.IsNullOrEmpty(settings.From))
             {

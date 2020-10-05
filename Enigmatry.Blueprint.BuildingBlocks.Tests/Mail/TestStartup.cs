@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Infrastructure
+namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
 {
     public class TestStartup
     {

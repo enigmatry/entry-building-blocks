@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Email", "Enigmatry.Blueprint.BuildingBlocks.EmailClient\Enigmatry.Blueprint.BuildingBlocks.Email.csproj", "{74BB7388-3776-40B1-B5A2-5A6C72E213FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Bluepirnt.BuildingBlocks.Core", "Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Bluepirnt.BuildingBlocks.Core.csproj", "{60B01B52-899C-4727-9074-28C8108CAB86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Core", "Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj", "{60B01B52-899C-4727-9074-28C8108CAB86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

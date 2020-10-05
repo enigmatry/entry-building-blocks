@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Bluepirnt.BuildingBlocks.Core.csproj" />
+    <ProjectReference Include="..\Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj" />
   </ItemGroup>
 
 </Project>

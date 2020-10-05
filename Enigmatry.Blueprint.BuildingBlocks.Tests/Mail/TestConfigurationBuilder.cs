@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Infrastructure
+namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
 {
     public class TestConfigurationBuilder
     {

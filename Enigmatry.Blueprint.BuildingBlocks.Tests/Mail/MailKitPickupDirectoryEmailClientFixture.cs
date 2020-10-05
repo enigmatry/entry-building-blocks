@@ -24,12 +24,12 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
             var configuration = new TestConfigurationBuilder()
     .Build();
 
-            var _webHost = WebHost.CreateDefaultBuilder()
+            var webHost = WebHost.CreateDefaultBuilder()
                 .UseConfiguration(configuration)
                 .UseStartup<TestStartup>()
                 .Build();
 
-            _client = (new DependencyResolverHelper(_webHost)).GetService<IEmailClient>();
+            _client = new DependencyResolverHelper(webHost).GetService<IEmailClient>();
         }
 
         [Test]
