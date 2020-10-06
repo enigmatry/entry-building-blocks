@@ -1,5 +1,4 @@
-﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Options;
-using Enigmatry.Blueprint.BuildingBlocks.Email;
+﻿using Enigmatry.Blueprint.BuildingBlocks.Email;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

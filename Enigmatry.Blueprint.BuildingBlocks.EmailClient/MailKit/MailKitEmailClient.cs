@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using Enigmatry.Blueprint.BuildingBlocks.Core.Options;
+using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
 using JetBrains.Annotations;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
@@ -13,33 +13,33 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
     internal class MailKitEmailClient : IEmailClient
     {
         private readonly ILogger<MailKitEmailClient> _logger;
-        private readonly SmtpOptions _options;
+        private readonly SmtpSettings _settings;
 
-        public MailKitEmailClient(IOptionsSnapshot<SmtpOptions> optionsSnapshot, ILogger<MailKitEmailClient> logger)
+        public MailKitEmailClient(IOptionsSnapshot<SmtpSettings> optionsSnapshot, ILogger<MailKitEmailClient> logger)
         {
-            _options = optionsSnapshot.Value;
+            _settings = optionsSnapshot.Value;
             _logger = logger;
         }
 
         public void Send(EmailMessage email)
         {
             var message = new MimeMessage();
-            message.SetEmailData(email, _options);
+            message.SetEmailData(email, _settings);
 
             var stopWatch = new Stopwatch();
 
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.Connect(_options.Server, _options.Port);
-                if (!String.IsNullOrEmpty(_options.Username) && !String.IsNullOrEmpty(_options.Password))
+                smtpClient.Connect(_settings.Server, _settings.Port);
+                if (!String.IsNullOrEmpty(_settings.Username) && !String.IsNullOrEmpty(_settings.Password))
                 {
-                    smtpClient.Authenticate(_options.Username, _options.Password);
+                    smtpClient.Authenticate(_settings.Username, _settings.Password);
                 }
                 smtpClient.Send(message);
                 smtpClient.Disconnect(true);
             }
 
-            _logger.LogDebug($"Email {message.Subject}, using host: {_options.Server} and port: {_options.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
+            _logger.LogDebug($"Email {message.Subject}, using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
         }
     }
 }

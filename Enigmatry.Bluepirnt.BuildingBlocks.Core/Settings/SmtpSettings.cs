@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Core.Options
+namespace Enigmatry.Blueprint.BuildingBlocks.Core.Settings
 {
-    public class SmtpOptions
+    public class SmtpSettings
     {
         public const string AppSmtp = "App:Smtp";
 
