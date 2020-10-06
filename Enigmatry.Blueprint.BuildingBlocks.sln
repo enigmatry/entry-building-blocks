@@ -17,6 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Core", "Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj", "{60B01B52-899C-4727-9074-28C8108CAB86}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{0FB89D0E-7508-4B64-A1AB-7ECDC3C8C11A}"
+	ProjectSection(SolutionItems) = preProject
+		icon-192x192.png = icon-192x192.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

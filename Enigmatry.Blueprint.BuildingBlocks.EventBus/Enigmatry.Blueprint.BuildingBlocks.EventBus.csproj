@@ -5,6 +5,19 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <Authors>eko</Authors>
+    <Company>Enigmatry</Company>
+    <Product>Enigmatry.Blueprint.BuildingBlocks.EventBus</Product>
+    <Description>Building Block for adding an Event Bus to a Blueprint based project</Description>
+    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
+    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

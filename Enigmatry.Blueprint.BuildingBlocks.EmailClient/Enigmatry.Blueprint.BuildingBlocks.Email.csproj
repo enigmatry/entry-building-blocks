@@ -5,7 +5,20 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <Authors>eko</Authors>
+    <Company>Enigmatry</Company>
+    <Product>Enigmatry.Blueprint.BuildingBlocks.Email</Product>
+    <Description>Building Block for adding an Email client to a Blueprint based project</Description>
+    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
+    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
