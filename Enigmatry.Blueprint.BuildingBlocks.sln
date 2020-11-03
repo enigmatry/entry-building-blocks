@@ -22,19 +22,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{0FB89D0E
 		icon-192x192.png = icon-192x192.png
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Push", "Enigmatry.Blueprint.BuildingBlocks.Push\Enigmatry.Blueprint.BuildingBlocks.Push.csproj", "{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Push", "Enigmatry.Blueprint.BuildingBlocks.Push\Enigmatry.Blueprint.BuildingBlocks.Push.csproj", "{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.BlobStorage", "Enigmatry.Blueprint.BuildingBlocks.BlobStorage\Enigmatry.Blueprint.BuildingBlocks.BlobStorage.csproj", "{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.BlobStorage", "Enigmatry.Blueprint.BuildingBlocks.BlobStorage\Enigmatry.Blueprint.BuildingBlocks.BlobStorage.csproj", "{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.CacheManager", "Enigmatry.Blueprint.BuildingBlocks.CacheManager\Enigmatry.Blueprint.BuildingBlocks.CacheManager.csproj", "{77133C63-207B-4F3F-A9BC-D23D98B94A93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.CacheManager", "Enigmatry.Blueprint.BuildingBlocks.CacheManager\Enigmatry.Blueprint.BuildingBlocks.CacheManager.csproj", "{77133C63-207B-4F3F-A9BC-D23D98B94A93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.VirusScanner", "Enigmatry.Blueprint.BuildingBlocks.VirusScanner\Enigmatry.Blueprint.BuildingBlocks.VirusScanner.csproj", "{97762ACC-215F-4D66-BAA3-5919ED275FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.VirusScanner", "Enigmatry.Blueprint.BuildingBlocks.VirusScanner\Enigmatry.Blueprint.BuildingBlocks.VirusScanner.csproj", "{97762ACC-215F-4D66-BAA3-5919ED275FFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Paging", "Enigmatry.Blueprint.BuildingBlocks.Paging\Enigmatry.Blueprint.BuildingBlocks.Paging.csproj", "{DA05B613-4E7C-4061-8630-B294A2870DD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Paging", "Enigmatry.Blueprint.BuildingBlocks.Paging\Enigmatry.Blueprint.BuildingBlocks.Paging.csproj", "{DA05B613-4E7C-4061-8630-B294A2870DD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.BackgroundService", "Enigmatry.Blueprint.BuildingBlocks.BackgroundService\Enigmatry.Blueprint.BuildingBlocks.BackgroundService.csproj", "{30A7840E-E306-4B5F-B264-8E149FC5705C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.BackgroundService", "Enigmatry.Blueprint.BuildingBlocks.BackgroundService\Enigmatry.Blueprint.BuildingBlocks.BackgroundService.csproj", "{30A7840E-E306-4B5F-B264-8E149FC5705C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.AadB2c", "Enigmatry.Blueprint.BuildingBlocks.AadB2c\Enigmatry.Blueprint.BuildingBlocks.AadB2c.csproj", "{7A23AA75-D383-4121-959E-6B8BC5EB3BE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Swagger", "EnigmatryBuildingBlocks.SwaggerSecurity\Enigmatry.Blueprint.BuildingBlocks.Swagger.csproj", "{E19BAB9D-33E0-4BB5-87FA-9DA262A6D808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,10 +94,10 @@ Global
 		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A23AA75-D383-4121-959E-6B8BC5EB3BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A23AA75-D383-4121-959E-6B8BC5EB3BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A23AA75-D383-4121-959E-6B8BC5EB3BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A23AA75-D383-4121-959E-6B8BC5EB3BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E19BAB9D-33E0-4BB5-87FA-9DA262A6D808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E19BAB9D-33E0-4BB5-87FA-9DA262A6D808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E19BAB9D-33E0-4BB5-87FA-9DA262A6D808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E19BAB9D-33E0-4BB5-87FA-9DA262A6D808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
