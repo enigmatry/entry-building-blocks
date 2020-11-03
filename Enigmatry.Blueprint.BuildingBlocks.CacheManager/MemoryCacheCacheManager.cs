@@ -29,7 +29,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.CacheManager
                 return (T)value;
             }
 
-            return default(T);
+            return default(T)!;
         }
 
         public void Set<T>(string key, T value, TimeSpan timeout)
