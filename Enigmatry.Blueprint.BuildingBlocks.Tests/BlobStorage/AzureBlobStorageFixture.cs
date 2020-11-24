@@ -5,7 +5,6 @@ using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
-using System.Linq;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Tests.BlobStorage
 {
@@ -37,7 +36,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.BlobStorage
         [Test]
         public void TestResourcePath()
         {
-            string path = _blobStorage.BuildResourcePath(ResourceName);
+            var path = _blobStorage.BuildResourcePath(ResourceName);
             path.Should().Be($"https://{AccountName}.blob.core.windows.net/{ContainerName}/{ResourceName}");
         }
 

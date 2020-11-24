@@ -40,7 +40,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.BlobStorage
         [Test]
         public void TestSharedResourcePath()
         {
-            string path = _blobStorage.BuildSharedResourcePath(ResourceName);
+            var path = _blobStorage.BuildSharedResourcePath(ResourceName);
             path.Should().Contain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
             var parameters = HttpUtility.ParseQueryString(path);

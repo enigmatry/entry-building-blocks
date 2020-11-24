@@ -1,16 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.CacheManager
 {
     public static class RedisCacheStartupExtension
     {
-        public static void AppAddRedisCacheManager(this IServiceCollection services, IConfiguration configuration)
-        {
+        public static void AppAddRedisCacheManager(this IServiceCollection services) =>
             services.AddSingleton<ICacheManager, RedisCacheManager>();
-        }
     }
 }

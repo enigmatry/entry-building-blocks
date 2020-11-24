@@ -12,10 +12,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.CacheManager
             _cache = cache;
         }
 
-        public void Remove(string key)
-        {
-            _cache.Remove(key);
-        }
+        public void Remove(string key) => _cache.Remove(key);
 
         public void RemoveAllByPattern(string pattern)
         {
@@ -24,18 +21,15 @@ namespace Enigmatry.Blueprint.BuildingBlocks.CacheManager
 
         public T Get<T>(string key)
         {
-            if (_cache.TryGetValue(key, out object value))
+            if (_cache.TryGetValue(key, out var value))
             {
                 return (T)value;
             }
 
-            return default(T)!;
+            return default!;
         }
 
-        public void Set<T>(string key, T value, TimeSpan timeout)
-        {
-            _cache.Set(key, value, timeout);
-        }
+        public void Set<T>(string key, T value, TimeSpan timeout) => _cache.Set(key, value, timeout);
 
         public void AddItemToSortedSet(string setId, object value, double score)
         {

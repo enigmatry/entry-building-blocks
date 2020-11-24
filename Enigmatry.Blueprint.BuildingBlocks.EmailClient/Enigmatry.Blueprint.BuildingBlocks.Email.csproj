@@ -23,17 +23,16 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
     <PackageReference Include="MailKit" Version="2.9.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.9" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.8" />
     <PackageReference Include="MimeKit" Version="2.9.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Bluepirnt.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj" />
+    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.CacheManager\Enigmatry.Blueprint.BuildingBlocks.CacheManager.csproj" />
+    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj" />
   </ItemGroup>
 
 </Project>

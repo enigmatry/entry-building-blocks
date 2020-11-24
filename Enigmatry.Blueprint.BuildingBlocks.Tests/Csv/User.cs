@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Csv
+﻿namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Csv
 {
     public class User
     {

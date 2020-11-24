@@ -31,9 +31,8 @@ namespace Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine
 
         public async Task<string> RenderFromFileAsync<TModel>(string path, TModel model)
         {
-            ActionContext actionContext = GetActionContext();
-
-            ViewEngineResult viewEngineResult = _viewEngine.GetView(path, path, false);
+            var actionContext = GetActionContext();
+            var viewEngineResult = _viewEngine.GetView(path, path, false);
 
             if (!viewEngineResult.Success)
             {

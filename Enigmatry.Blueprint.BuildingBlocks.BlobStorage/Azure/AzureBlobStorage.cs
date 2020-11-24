@@ -34,7 +34,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Azure.BlobStorage
         {
             var blob = Container.GetBlobClient(path);
             await blob.UploadAsync(content, @override, cancellationToken);
-            
+
             var headers = ConfigureBlobHttpHeadersAsync(blob, cancellationToken);
             await blob.SetHttpHeadersAsync(headers, cancellationToken: cancellationToken);
         }
@@ -45,7 +45,9 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Azure.BlobStorage
                 return await Container.DeleteBlobIfExistsAsync(path, cancellationToken: cancellationToken);
 
             await foreach (var blob in Container.GetBlobsAsync(prefix: path.Replace('\\', '/').Remove(path.IndexOf('*'))))
+            {
                 await Container.GetBlobClient(blob.Name).DeleteAsync(cancellationToken: cancellationToken);
+            }
 
             return true;
         }
@@ -64,7 +66,8 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Azure.BlobStorage
                     _ => "application/octet-stream"
                 }
             };
-            if (Settings.CacheTimeout > 0) headers.CacheControl = $"public, max-age={Settings.CacheTimeout}";
+            if (Settings.CacheTimeout > 0)
+                headers.CacheControl = $"public, max-age={Settings.CacheTimeout}";
 
             return headers;
         }

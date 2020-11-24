@@ -12,7 +12,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email
             services.Configure<SmtpSettings>(configuration.GetSection(SmtpSettings.AppSmtp));
 
             var smtpSettings = configuration.GetSection(SmtpSettings.AppSmtp).Get<SmtpSettings>();
-            
+
             if (smtpSettings.UsePickupDirectory)
             {
                 services.AddScoped<IEmailClient, MailKitPickupDirectoryEmailClient>();

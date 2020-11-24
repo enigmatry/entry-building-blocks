@@ -20,4 +20,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.10" />
+  </ItemGroup>
+
 </Project>

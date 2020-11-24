@@ -24,7 +24,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Csv
             };
 
             var helper = new CsvHelper<User>();
-            byte[] bytes = helper.WriteRecords(users, CultureInfo.InvariantCulture);
+            var bytes = helper.WriteRecords(users, CultureInfo.InvariantCulture);
             var result = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
 
             result.Should().Contain("FirstName,LastName,Age");
@@ -34,14 +34,12 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Csv
         [Test]
         public void TestReadRecords()
         {
-            string csv = "FirstName,LastName,Age\nJohn,Doe,30";
+            var csv = "FirstName,LastName,Age\nJohn,Doe,30";
             var bytes = Encoding.ASCII.GetBytes(csv);
-            MemoryStream stream = new MemoryStream(bytes);
+            var stream = new MemoryStream(bytes);
 
             var helper = new CsvHelper<User>();
             var result = helper.GetRecords(stream, CultureInfo.InvariantCulture);
-
-            int i = result.Count();
 
             result.First().FirstName.Should().Be("John");
             result.First().LastName.Should().Be("Doe");

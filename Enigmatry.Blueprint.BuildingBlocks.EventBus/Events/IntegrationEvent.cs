@@ -10,7 +10,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.EventBus.Events
             CreationDate = DateTime.UtcNow;
         }
 
-        public Guid Id  { get; }
+        public Guid Id { get; }
         public DateTime CreationDate { get; }
     }
 }

@@ -15,7 +15,8 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Azure.BlobStorage
 
         public string BuildSharedResourcePath(string path)
         {
-            if (String.IsNullOrWhiteSpace(path)) return path;
+            if (String.IsNullOrWhiteSpace(path))
+                return path;
 
             var sasBuilder = new BlobSasBuilder
             {

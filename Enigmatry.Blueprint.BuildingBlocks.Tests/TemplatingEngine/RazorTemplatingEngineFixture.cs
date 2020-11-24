@@ -27,7 +27,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.TemplatingEngine
         [Test]
         public async Task TestRenderFromFile()
         {
-            string result = await _templatingEngine.RenderFromFileAsync("~/TemplatingEngine/Sample.cshtml",
+            var result = await _templatingEngine.RenderFromFileAsync("~/TemplatingEngine/Sample.cshtml",
                 new EmailModel { SampleText = "Hello world!" });
 
             result.Should().Contain("Hello world!");

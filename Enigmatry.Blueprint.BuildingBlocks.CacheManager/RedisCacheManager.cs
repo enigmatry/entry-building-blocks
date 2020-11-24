@@ -28,7 +28,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.CacheManager
         {
             _logger.LogDebug("Getting from cache, Type: {Type} by key: {Key}", typeof(T), key);
 
-            T result = _policy
+            var result = _policy
                 .Execute(() => Cache.GetObject<T>(key));
 
             _logger.LogDebug(result != null ? "Cache hit" : "Cache miss");
@@ -63,7 +63,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.CacheManager
             _policy.Execute(() =>
             {
                 _logger.LogInformation("Removing all: {KeyPattern}", pattern);
-                string[] keys = Cache.GetKeysByPattern(pattern).ToArray();
+                var keys = Cache.GetKeysByPattern(pattern).ToArray();
                 _logger.LogInformation("Number of keys to remove: {KeysCount}", keys.Length);
 
                 foreach (var key in keys)
