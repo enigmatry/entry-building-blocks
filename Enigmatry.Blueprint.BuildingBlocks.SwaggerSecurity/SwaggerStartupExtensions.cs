@@ -71,9 +71,12 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
             Dictionary<string, string> scopes,
             string appVersion = "v1")
         {
-            if (String.IsNullOrEmpty(authorizationUrl)) throw new ArgumentException("Authorization URL cannot be empty", "authorizationUrl");
-            if (String.IsNullOrEmpty(tokenUrl)) throw new ArgumentException("Token URL cannot be empty", "tokenUrl");
-            if (scopes == null) throw new ArgumentNullException("Scopes cannot be null", "scopes");
+            if (String.IsNullOrEmpty(authorizationUrl))
+                throw new ArgumentException("Authorization URL cannot be empty", nameof(authorizationUrl));
+            if (String.IsNullOrEmpty(tokenUrl))
+                throw new ArgumentException("Token URL cannot be empty", nameof(tokenUrl));
+            if (scopes == null)
+                throw new ArgumentNullException(nameof(scopes), "Scopes cannot be null");
 
             services.AddOpenApiDocument(settings =>
             {
@@ -112,9 +115,12 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
             Dictionary<string, string> scopes,
             string appVersion = "v1")
         {
-            if (String.IsNullOrEmpty(authorizationUrl)) throw new ArgumentException("Authorization URL cannot be empty", "authorizationUrl");
-            if (String.IsNullOrEmpty(tokenUrl)) throw new ArgumentException("Token URL cannot be empty", "tokenUrl");
-            if (scopes == null) throw new ArgumentNullException("Scopes cannot be null", "scopes");
+            if (String.IsNullOrEmpty(authorizationUrl))
+                throw new ArgumentException("Authorization URL cannot be empty", nameof(authorizationUrl));
+            if (String.IsNullOrEmpty(tokenUrl))
+                throw new ArgumentException("Token URL cannot be empty", nameof(tokenUrl));
+            if (scopes == null)
+                throw new ArgumentNullException(nameof(scopes), "Scopes cannot be null");
 
             services.AddOpenApiDocument(settings =>
             {
