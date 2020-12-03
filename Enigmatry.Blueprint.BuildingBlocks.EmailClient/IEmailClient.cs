@@ -1,7 +1,9 @@
-﻿namespace Enigmatry.Blueprint.BuildingBlocks.Email
+﻿using System.Threading.Tasks;
+
+namespace Enigmatry.Blueprint.BuildingBlocks.Email
 {
     public interface IEmailClient
     {
-        void Send(EmailMessage email);
+        Task SendAsync(EmailMessage email);
     }
 }

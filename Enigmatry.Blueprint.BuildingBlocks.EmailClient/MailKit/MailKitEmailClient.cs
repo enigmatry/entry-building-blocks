@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
 using JetBrains.Annotations;
 using MailKit.Net.Smtp;
@@ -21,25 +24,36 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
             _logger = logger;
         }
 
-        public void Send(EmailMessage email)
+        public async Task SendAsync(EmailMessage email)
         {
-            var message = new MimeMessage();
-            message.SetEmailData(email, _settings);
-
+            var numberOfSentEmails = 0;
             var stopWatch = new Stopwatch();
 
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.Connect(_settings.Server, _settings.Port);
+                await smtpClient.ConnectAsync(_settings.Server, _settings.Port);
                 if (!String.IsNullOrEmpty(_settings.Username) && !String.IsNullOrEmpty(_settings.Password))
                 {
-                    smtpClient.Authenticate(_settings.Username, _settings.Password);
+                    await smtpClient.AuthenticateAsync(_settings.Username, _settings.Password);
                 }
-                smtpClient.Send(message);
-                smtpClient.Disconnect(true);
+
+                foreach (var mail in email.GetBulk())
+                {
+                    var message = new MimeMessage();
+                    message.SetEmailData(mail, _settings);
+                    message.Cc.AddRange(mail.Cc.Select(x => new MailboxAddress(Encoding.UTF8, x.DisplayName, x.Address)));
+
+                    if (message.To.Count != 1)
+                        throw new InvalidOperationException($"'{nameof(message.To)}' is allowed to contain only one email address");
+
+                    await smtpClient.SendAsync(message);
+                    numberOfSentEmails++;
+                }
+
+                await smtpClient.DisconnectAsync(true);
             }
 
-            _logger.LogDebug($"Email {message.Subject}, using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
+            _logger.LogDebug($"{numberOfSentEmails} email(s) {email.Subject}, using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
         }
     }
 }

@@ -4,6 +4,9 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
 {
@@ -18,19 +21,30 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
             _logger = logger;
         }
 
-        public void Send(EmailMessage email)
+        public async Task SendAsync(EmailMessage email)
         {
-            var message = new MimeMessage();
-            message.SetEmailData(email, _settings);
-
             if (!Directory.Exists(_settings.PickupDirectoryLocation))
             {
                 Directory.CreateDirectory(_settings.PickupDirectoryLocation);
             }
-            var filePath = Path.Combine(_settings.PickupDirectoryLocation, $"{DateTime.Now.Ticks}.eml");
-            message.WriteTo(filePath);
 
-            _logger.LogDebug($"Email '{message.Subject}' is written to filesystem: {filePath}");
+            foreach (var mail in email.GetBulk())
+            {
+                var filePath = Path.Combine(_settings.PickupDirectoryLocation, $"{DateTime.Now.Ticks}.eml");
+
+                var message = new MimeMessage();
+                message.SetEmailData(mail, _settings);
+                message.Cc.AddRange(mail.Cc.Select(x => new MailboxAddress(Encoding.UTF8, x.DisplayName, x.Address)));
+
+                if (message.To.Count != 1)
+                    throw new InvalidOperationException($"'{nameof(message.To)}' is allowed to contain only one email address");
+
+                await message.WriteToAsync(filePath);
+
+                _logger.LogDebug($"Email '{message.Subject}' is written to filesystem: {filePath}");
+            }
+
+            await Task.CompletedTask;
         }
     }
 }

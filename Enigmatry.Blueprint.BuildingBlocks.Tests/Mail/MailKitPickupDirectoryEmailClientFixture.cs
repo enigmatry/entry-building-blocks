@@ -8,6 +8,8 @@ using NUnit.Framework;
 using Enigmatry.Blueprint.BuildingBlocks.Tests.Infrastructure;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
 {
@@ -39,19 +41,21 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
         }
 
         [Test]
-        public void TestSendMessage()
+        public async Task TestSendMessage()
         {
-            string messageBody = "This is a test message";
-            string sender = "sender@enigmatry.com";
-            string receiver = "receiver@enigmatry.com";
+            var messageBody = "This is a test message";
+            var sender = "sender@enigmatry.com";
+            var receiver = "receiver@enigmatry.com";
 
-            EmailMessage message = new EmailMessage(
+            var message = new EmailMessage(
                 "Test message",
                 messageBody,
-                new List<string>() { receiver },
-                new List<string>() { sender });
-            _client.Send(message);
-            string fullMessage = File.ReadAllText(Directory.GetFiles(TestContext.CurrentContext.TestDirectory, "*.eml").First());
+                new List<string>() { receiver })
+            {
+                From = new MailAddress(sender)
+            };
+            await _client.SendAsync(message);
+            var fullMessage = File.ReadAllText(Directory.GetFiles(TestContext.CurrentContext.TestDirectory, "*.eml").First());
 
             fullMessage.Should().Contain($"From: {sender}");
             fullMessage.Should().Contain($"To: {receiver}");
