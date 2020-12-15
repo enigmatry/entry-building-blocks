@@ -44,8 +44,8 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.BlobStorage
             path.Should().Contain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
             var parameters = HttpUtility.ParseQueryString(path);
-            var startDateTime = DateTime.Parse(parameters["st"]).ToUniversalTime();
-            var endDateTime = DateTime.Parse(parameters["se"]).ToUniversalTime();
+            var startDateTime = DateTime.Parse(parameters["st"]!).ToUniversalTime();
+            var endDateTime = DateTime.Parse(parameters["se"]!).ToUniversalTime();
 
             startDateTime.Should().BeBefore(DateTime.UtcNow);
             endDateTime.Should().BeAfter(DateTime.UtcNow);

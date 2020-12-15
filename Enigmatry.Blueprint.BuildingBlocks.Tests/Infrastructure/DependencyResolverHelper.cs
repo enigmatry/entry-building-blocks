@@ -10,7 +10,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Infrastructure
 
         public DependencyResolverHelper(IWebHost webHost) => _webHost = webHost;
 
-        public T GetService<T>()
+        public T GetService<T>() where T : notnull
         {
             using var serviceScope = _webHost.Services.CreateScope();
             var services = serviceScope.ServiceProvider;

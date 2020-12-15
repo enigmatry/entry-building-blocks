@@ -36,7 +36,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Csv
         {
             var csv = "FirstName,LastName,Age\nJohn,Doe,30";
             var bytes = Encoding.ASCII.GetBytes(csv);
-            var stream = new MemoryStream(bytes);
+            using var stream = new MemoryStream(bytes);
 
             var helper = new CsvHelper<User>();
             var result = helper.GetRecords(stream, CultureInfo.InvariantCulture);

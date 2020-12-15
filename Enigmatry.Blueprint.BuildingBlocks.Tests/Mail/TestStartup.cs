@@ -23,7 +23,9 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Mail
         }
 
         [UsedImplicitly]
+#pragma warning disable CA1801 // Review unused parameters
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+#pragma warning restore CA1801 // Review unused parameters
         {
             // Nothing to do here.
         }
