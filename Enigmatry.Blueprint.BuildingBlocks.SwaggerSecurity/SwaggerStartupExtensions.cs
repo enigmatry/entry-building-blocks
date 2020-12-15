@@ -13,6 +13,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
         /// <summary>
         /// Add the OpenAPI/Swagger middleware to the Asp.Net Core pipeline.
         /// </summary>
+        /// <param name="app">The application to configure</param>
         /// <param name="path">The internal swagger route (must start with '/')</param>
         public static void AppUseSwagger(this IApplicationBuilder app, string path = "")
         {
@@ -23,6 +24,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
         /// <summary>
         /// Add the OpenAPI/Swagger middleware to the Asp.Net Core pipeline, and configure the OAuth2 Client.
         /// </summary>
+        /// <param name="app">The application to configure</param>
         /// <param name="clientId">The Client Id used by the OAuth2 Client</param>
         /// <param name="clientSecret">The optional Client Secret used by the OAuth2 Client</param>
         /// <param name="path">The internal swagger route (must start with '/')</param>
@@ -47,6 +49,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
         /// <summary>
         /// Adds services required for OpenAPI 3.0 generation
         /// </summary>
+        /// <param name="services">The container to which to register Swagger services</param>
         /// <param name="appTitle">The title of th application</param>
         /// <param name="appVersion">The version of the application</param>
         public static void AppAddSwagger(this IServiceCollection services, string appTitle, string appVersion = "v1")
@@ -58,10 +61,11 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
         /// Adds services required for OpenAPI 3.0 generation, and appends the OAuth2 security scheme and requirement to the document's security
         /// definitions (specifically for the Authorization Code flow).
         /// </summary>
+        /// <param name="services">The container to which to register Swagger services</param>
         /// <param name="appTitle">The title of th application</param>
         /// <param name="authorizationUrl">The OAuth2 Authorization Url</param>
         /// <param name="tokenUrl">The OAuth2 Token Url</param>
-        /// <param name="scopes">The availbale OAuth2 Scopes</param>
+        /// <param name="scopes">The available OAuth2 Scopes</param>
         /// <param name="appVersion">The version of the application</param>
         public static void AppAddSwaggerWithAuthorizationCode(
             this IServiceCollection services,
@@ -102,10 +106,11 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Swagger
         /// Adds services required for OpenAPI 3.0 generation, and appends the OAuth2 security scheme and requirement to the document's security
         /// definitions (specifically for the Implicit Grant flow).
         /// </summary>
+        /// <param name="services">The container to which to register Swagger services</param>
         /// <param name="appTitle">The title of th application</param>
         /// <param name="authorizationUrl">The OAuth2 Authorization Url</param>
         /// <param name="tokenUrl">The OAuth2 Token Url</param>
-        /// <param name="scopes">The availbale OAuth2 Scopes</param>
+        /// <param name="scopes">The available OAuth2 Scopes</param>
         /// <param name="appVersion">The version of the application</param>
         public static void AppAddSwaggerWithImplicitGrant(
             this IServiceCollection services,
