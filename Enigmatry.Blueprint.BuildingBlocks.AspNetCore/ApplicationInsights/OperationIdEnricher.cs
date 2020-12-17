@@ -2,7 +2,7 @@
 using Serilog.Events;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.AspNetCore.ApplicationInsights
-{
+{ 
     // added because of AppInsights sampling of custom events -
     // ensures that a set of events is retained or discarded together
     // https://github.com/serilog/serilog-sinks-applicationinsights#including-operation-id
