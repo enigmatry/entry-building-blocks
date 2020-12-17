@@ -41,11 +41,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.csproj", "{66FDC9ED-ED2B-498C-A3BB-2DA8AE340666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.csproj", "{66FDC9ED-ED2B-498C-A3BB-2DA8AE340666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.csproj", "{55BC1926-9363-4B9F-B4C7-D0B2067FB1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.csproj", "{55BC1926-9363-4B9F-B4C7-D0B2067FB1E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.csproj", "{7B622B05-7637-4D43-A262-685A9B79D4C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.csproj", "{7B622B05-7637-4D43-A262-685A9B79D4C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework.csproj", "{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{7B622B05-7637-4D43-A262-685A9B79D4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B622B05-7637-4D43-A262-685A9B79D4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B622B05-7637-4D43-A262-685A9B79D4C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

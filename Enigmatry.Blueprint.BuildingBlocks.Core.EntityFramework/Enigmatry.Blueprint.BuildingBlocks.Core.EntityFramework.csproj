@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <Authors>szi</Authors>
+    <Company>Enigmatry</Company>
+    <Product>Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework</Product>
+    <Description>Core Building Block for EntityFramework dependent projects</Description>
+    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
+    <PackageIcon>icon-192x192.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+    <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj" />
+  </ItemGroup>
+
+</Project>

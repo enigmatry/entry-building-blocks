@@ -58,7 +58,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework
 
         public void Delete(TId id)
         {
-            T? item = FindById(id);
+            var item = FindById(id);
             if (item != null)
             {
                 Delete(item);

@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj" />
-  </ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework.csproj" /></ItemGroup>
 
 </Project>
