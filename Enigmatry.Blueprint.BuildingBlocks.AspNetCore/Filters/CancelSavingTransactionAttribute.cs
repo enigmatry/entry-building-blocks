@@ -1,4 +1,5 @@
 ﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Filters
@@ -9,7 +10,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Filters
 
         public override void OnActionExecuted(ActionExecutedContext context) => CancelSavingIfModelInvalid(context);
 
-        private static void CancelSavingIfModelInvalid(FilterContext context)
+        private static void CancelSavingIfModelInvalid(ActionContext context)
         {
             if (!context.ModelState.IsValid)
             {

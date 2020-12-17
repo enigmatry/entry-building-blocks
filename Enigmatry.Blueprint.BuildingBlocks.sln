@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests.csproj", "{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B1953E4-292C-492F-B7B5-6B18138B7A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1953E4-292C-492F-B7B5-6B18138B7A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1953E4-292C-492F-B7B5-6B18138B7A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1953E4-292C-492F-B7B5-6B18138B7A73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
