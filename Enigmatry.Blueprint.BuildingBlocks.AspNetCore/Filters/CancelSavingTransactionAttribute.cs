@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Filters
 {
-    internal sealed class CancelSavingTransactionAttribute : ActionFilterAttribute
+    public sealed class CancelSavingTransactionAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context) => CancelSavingIfModelInvalid(context);
 
