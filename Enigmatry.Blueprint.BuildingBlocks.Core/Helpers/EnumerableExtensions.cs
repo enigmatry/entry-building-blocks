@@ -9,16 +9,17 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Helpers
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             if (action == null)
+            {
                 throw new ArgumentNullException(nameof(action));
+            }
 
             foreach (T item in source)
+            {
                 action(item);
+            }
         }
 
-        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source)
-        {
-            return source ?? Enumerable.Empty<T>();
-        }
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T>? source) => source ?? Enumerable.Empty<T>();
     }
 }
 
