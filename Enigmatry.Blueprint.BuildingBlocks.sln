@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.csproj", "{66FDC9ED-ED2B-498C-A3BB-2DA8AE340666}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.csproj", "{55BC1926-9363-4B9F-B4C7-D0B2067FB1E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.EntityFramework.csproj", "{55BC1926-9363-4B9F-B4C7-D0B2067FB1E7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.csproj", "{7B622B05-7637-4D43-A262-685A9B79D4C2}"
 EndProject
@@ -51,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests.csproj", "{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.MediatR", "Enigmatry.Blueprint.BuildingBlocks.MediatR\Enigmatry.Blueprint.BuildingBlocks.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

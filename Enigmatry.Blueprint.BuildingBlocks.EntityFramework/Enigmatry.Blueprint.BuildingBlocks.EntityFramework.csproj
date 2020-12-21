@@ -7,7 +7,7 @@
     <IsPackable>true</IsPackable>
     <Authors>szi</Authors>
     <Company>Enigmatry</Company>
-    <Product>Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework</Product>
+    <Product>Enigmatry.Blueprint.BuildingBlocks.EntityFramework</Product>
     <Description>Building Block for adding EntityFramework related infrastructure to a Blueprint based project</Description>
     <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
