@@ -4,7 +4,7 @@ using Enigmatry.Blueprint.BuildingBlocks.Core.Helpers;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Logging;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.Security
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework.Security
 {
     public class DbContextAccessTokenProvider : IDbContextAccessTokenProvider
     {

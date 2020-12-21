@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.Security
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework.Security
 {
     public interface IDbContextAccessTokenProvider
     {

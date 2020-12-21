@@ -6,15 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Entities;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Helpers;
-using Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.MediatR;
-using Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.Security;
+using Enigmatry.Blueprint.BuildingBlocks.EntityFramework.MediatR;
+using Enigmatry.Blueprint.BuildingBlocks.EntityFramework.Security;
 using JetBrains.Annotations;
 using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
     public abstract class EntitiesDbContext : DbContext

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR
+namespace Enigmatry.Blueprint.BuildingBlocks.MediatR
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

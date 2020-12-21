@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
     public class DbContextUnitOfWork : IUnitOfWork

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using JetBrains.Annotations;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
 {
     [PublicAPI]
     public class EntitiesDbContextOptions

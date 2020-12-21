@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using MediatR;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR
+namespace Enigmatry.Blueprint.BuildingBlocks.MediatR
 {
     public class NullMediator : IMediator
     {
-        public Task Publish(object notification, CancellationToken cancellationToken = new ()) =>
+        public Task Publish(object notification, CancellationToken cancellationToken = default) => 
             Task.CompletedTask;
 
         public Task Publish<TNotification>(TNotification notification,
@@ -17,7 +17,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR
             CancellationToken cancellationToken = default) =>
             Task.FromResult(default(TResponse)!);
 
-        public Task<object?> Send(object request, CancellationToken cancellationToken = new ()) =>
+        public Task<object?> Send(object request, CancellationToken cancellationToken = default) =>
             Task.FromResult(default(object));
     }
 }

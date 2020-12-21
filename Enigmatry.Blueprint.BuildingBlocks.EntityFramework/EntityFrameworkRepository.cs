@@ -8,7 +8,7 @@ using Enigmatry.Blueprint.BuildingBlocks.Core.Entities;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
     public class EntityFrameworkRepository<T, TId> : IRepository<T, TId> where T : Entity<TId> where TId : struct

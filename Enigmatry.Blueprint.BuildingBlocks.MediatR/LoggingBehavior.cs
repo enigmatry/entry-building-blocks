@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Serilog.Context;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.MediatR
+namespace Enigmatry.Blueprint.BuildingBlocks.MediatR
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
     {

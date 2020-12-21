@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Enigmatry.Blueprint.BuildingBlocks.Infrastructure.EntityFramework.MediatR
+namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework.MediatR
 {
     internal static class MediatorExtension
     {
