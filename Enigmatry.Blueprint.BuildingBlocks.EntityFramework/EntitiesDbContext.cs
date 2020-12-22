@@ -68,7 +68,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
             var types = entitiesAssembly != null ? entitiesAssembly.GetTypes() : Enumerable.Empty<Type>();
 
             IEnumerable<Type> entityTypes = types
-                .Where(x => x.IsSubclassOf(typeof(Entity)) && !x.IsAbstract);
+                .Where(x => x.IsSubclassOf(typeof(EntityBase)) && !x.IsAbstract);
 
             foreach (Type type in entityTypes)
             {

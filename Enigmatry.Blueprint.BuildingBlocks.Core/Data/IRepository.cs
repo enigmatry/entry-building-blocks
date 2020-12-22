@@ -7,7 +7,7 @@ using Enigmatry.Blueprint.BuildingBlocks.Core.Entities;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Core.Data
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<T> where T : EntityBase
     {
         void Add(T item);
 
@@ -24,7 +24,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Data
         IQueryable<T> QueryAllSkipCacheIncluding(params Expression<Func<T, object>>[] paths);
     }
 
-    public interface IRepository<T, in TId> : IRepository<T> where T : Entity<TId>
+    public interface IRepository<T, in TId> where T : Entity<TId> where TId : struct
     {
         void Delete(TId id);
 

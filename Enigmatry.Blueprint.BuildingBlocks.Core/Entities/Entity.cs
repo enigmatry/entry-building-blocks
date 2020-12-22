@@ -1,40 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Core.Entities
 {
-    public abstract class Entity
+    public abstract class Entity<TId> : EntityBase where TId : struct
     {
-        // needs to be private so that EF does not map the field
-        private readonly List<DomainEvent> _domainEvents = new();
-
-        public IEnumerable<DomainEvent> GetDomainEvents() => _domainEvents;
-
-        protected void AddDomainEvent(DomainEvent? eventItem)
-        {
-            if (eventItem == null)
-            {
-                return;
-            }
-
-            _domainEvents.Add(eventItem);
-        }
-
-        public void ClearDomainEvents() => _domainEvents.Clear();
-
-        public void ClearDomainEvents<TEvent>() where TEvent : DomainEvent
-        {
-            var toRemove = _domainEvents.OfType<TEvent>().ToList();
-
-            foreach (var item in toRemove)
-            {
-                _domainEvents.Remove(item);
-            }
-        }
+        public TId Id { get; set; }
     }
 
-    public abstract class Entity<TId> : Entity
+    public abstract class Entity : Entity<Guid>
     {
-        public TId Id { get; set; } = default!;
+        protected Entity()
+        {
+            Id = SequentialGuidGenerator.Generate();
+        }
     }
 }

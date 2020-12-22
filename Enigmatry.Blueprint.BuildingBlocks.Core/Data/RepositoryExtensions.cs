@@ -6,7 +6,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Data
 {
     public static class RepositoryExtensions
     {
-        public static void AddRange<T>(this IRepository<T> repository, IEnumerable<T> entities) where T : Entity
+        public static void AddRange<T>(this IRepository<T> repository, IEnumerable<T> entities) where T : EntityBase
         {
             foreach (T entity in entities)
             {
