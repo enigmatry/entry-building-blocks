@@ -24,7 +24,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Data
         IQueryable<T> QueryAllSkipCacheIncluding(params Expression<Func<T, object>>[] paths);
     }
 
-    public interface IRepository<T, in TId> where T : Entity<TId> where TId : struct
+    public interface IRepository<T, in TId> : IRepository<T> where T : Entity<TId>
     {
         void Delete(TId id);
 

@@ -7,7 +7,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Entities
         public static T WithNextSequentialId<T>(this T entity) where T : Entity<Guid> =>
             entity.WithId(SequentialGuidGenerator.Generate());
 
-        public static T WithId<T, TId>(this T entity, TId id) where T : Entity<TId> where TId : struct
+        public static T WithId<T, TId>(this T entity, TId id) where T : Entity<TId>
         {
             entity.Id = id;
             return entity;
