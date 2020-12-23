@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Core.Entities
@@ -6,18 +7,20 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Entities
     public abstract class EntityBase
     {
         // needs to be private so that EF does not map the field
-        private readonly List<DomainEvent> _domainEvents = new();
+        private readonly Dictionary<DomainEvent, DomainEvent> _domainEvents = new();
 
-        public IEnumerable<DomainEvent> GetDomainEvents() => _domainEvents;
+        public IEnumerable<DomainEvent> GetDomainEvents() => _domainEvents.Values;
 
-        protected void AddDomainEvent(DomainEvent? eventItem)
+        protected void AddDomainEvent(DomainEvent eventItem)
         {
             if (eventItem == null)
             {
-                return;
+                throw new ArgumentNullException(nameof(eventItem));
             }
 
-            _domainEvents.Add(eventItem);
+            // prevents multiple events with the same data to be added
+            // last event wins
+            _domainEvents[eventItem] = eventItem;
         }
 
         public void ClearDomainEvents() => _domainEvents.Clear();
