@@ -11,6 +11,14 @@ using Microsoft.EntityFrameworkCore;
 namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
+    public class EntityFrameworkRepository<T> : EntityFrameworkRepository<T, Guid> where T : Entity<Guid>
+    {
+        public EntityFrameworkRepository(DbContext context) : base(context)
+        {
+        }
+    }
+
+    [UsedImplicitly]
     public class EntityFrameworkRepository<T, TId> : IRepository<T, TId> where T : Entity<TId>
     {
         public EntityFrameworkRepository(DbContext context)
