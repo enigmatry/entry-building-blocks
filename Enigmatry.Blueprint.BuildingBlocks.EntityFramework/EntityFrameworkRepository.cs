@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
-    public class EntityFrameworkRepository<T> : EntityFrameworkRepository<T, Guid> where T : Entity<Guid>
+    public class EntityFrameworkRepository<T> : EntityFrameworkRepository<T, Guid> where T : EntityWithTypedId<Guid>
     {
         public EntityFrameworkRepository(DbContext context) : base(context)
         {
@@ -19,7 +19,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
     }
 
     [UsedImplicitly]
-    public class EntityFrameworkRepository<T, TId> : IRepository<T, TId> where T : Entity<TId>
+    public class EntityFrameworkRepository<T, TId> : IRepository<T, TId> where T : EntityWithTypedId<TId>
     {
         public EntityFrameworkRepository(DbContext context)
         {
@@ -44,14 +44,14 @@ namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework
                 (current, includeProperty) => current.Include(includeProperty));
 
 
-        public virtual void Add(T item)
+        public virtual void Add(T entity)
         {
-            if (item == null)
+            if (entity == null)
             {
-                throw new ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(entity));
             }
 
-            DbSet.Add(item);
+            DbSet.Add(entity);
         }
 
         public virtual void Delete(T item)

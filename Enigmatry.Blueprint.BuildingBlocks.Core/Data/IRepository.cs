@@ -1,30 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Entities;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Core.Data
 {
-    public interface IRepository<T> where T : EntityBase
+    public interface IRepository<T> : IRepository<T, Guid> where T : EntityWithTypedId<Guid>
     {
-        void Add(T item);
-
-        void Delete(T item);
-
-        void DeleteRange(IEnumerable<T> entities);
-
-        IQueryable<T> QueryAll();
-
-        IQueryable<T> QueryAllSkipCache();
-
-        IQueryable<T> QueryAllIncluding(params Expression<Func<T, object>>[] paths);
-
-        IQueryable<T> QueryAllSkipCacheIncluding(params Expression<Func<T, object>>[] paths);
     }
 
-    public interface IRepository<T, in TId> : IRepository<T> where T : Entity<TId>
+    public interface IRepository<T, in TId> : IEntityRepository<T> where T : EntityWithTypedId<TId>
     {
         void Delete(TId id);
 

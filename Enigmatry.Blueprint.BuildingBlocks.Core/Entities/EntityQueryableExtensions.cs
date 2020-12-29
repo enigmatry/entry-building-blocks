@@ -5,22 +5,22 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.Entities
 {
     public static class EntityQueryableExtensions
     {
-        public static IQueryable<T> QueryById<T>(this IQueryable<T> query, Guid id) where T : Entity<Guid> =>
+        public static IQueryable<T> QueryById<T>(this IQueryable<T> query, Guid id) where T : EntityWithTypedId<Guid> =>
             query.Where(e => e.Id == id);
 
-        public static IQueryable<T> QueryById<T>(this IQueryable<T> query, int id) where T : Entity<int> =>
+        public static IQueryable<T> QueryById<T>(this IQueryable<T> query, int id) where T : EntityWithTypedId<int> =>
             query.Where(e => e.Id == id);
 
-        public static IQueryable<T> QueryExceptWithId<T>(this IQueryable<T> query, Guid? id) where T : Entity<Guid> =>
+        public static IQueryable<T> QueryExceptWithId<T>(this IQueryable<T> query, Guid? id) where T : EntityWithTypedId<Guid> =>
             query.Where(e => e.Id != id);
 
-        public static IQueryable<T> QueryExceptWithId<T>(this IQueryable<T> query, int? id) where T : Entity<int> =>
+        public static IQueryable<T> QueryExceptWithId<T>(this IQueryable<T> query, int? id) where T : EntityWithTypedId<int> =>
             query.Where(e => e.Id != id);
 
-        public static bool EntityExists<T>(this IQueryable<T> query, Guid id) where T : Entity<Guid> =>
+        public static bool EntityExists<T>(this IQueryable<T> query, Guid id) where T : EntityWithTypedId<Guid> =>
             query.Any(x => x.Id == id);
 
-        public static bool EntityExists<T>(this IQueryable<T> query, int id) where T : Entity<int> =>
+        public static bool EntityExists<T>(this IQueryable<T> query, int id) where T : EntityWithTypedId<int> =>
             query.Any(x => x.Id == id);
 
         public static T SingleOrNotFound<T>(this IQueryable<T> query)
