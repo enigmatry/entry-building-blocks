@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.CacheManager\Enigmatry.Blueprint.BuildingBlocks.CacheManager.csproj" />
     <ProjectReference Include="..\Enigmatry.Blueprint.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj" />
   </ItemGroup>
 
