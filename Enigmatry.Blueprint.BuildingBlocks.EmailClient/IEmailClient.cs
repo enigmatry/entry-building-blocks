@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Email
 {
     public interface IEmailClient
     {
-        Task SendAsync(EmailMessage email);
+        Task SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default);
+        Task SendBulkAsync(IEnumerable<EmailMessage> emailMessages, CancellationToken cancellationToken = default);
     }
 }
