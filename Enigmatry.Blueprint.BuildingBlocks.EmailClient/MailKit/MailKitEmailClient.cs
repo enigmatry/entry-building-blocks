@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
 using JetBrains.Annotations;
@@ -24,36 +23,31 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
             _logger = logger;
         }
 
-        public async Task SendAsync(EmailMessage email)
+        public async Task SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default) =>
+            await SendBulkAsync(emailMessage.GetBulk(), cancellationToken);
+
+        public async Task SendBulkAsync(IEnumerable<EmailMessage> emailMessages, CancellationToken cancellationToken = default)
         {
             var numberOfSentEmails = 0;
             var stopWatch = new Stopwatch();
 
             using (var smtpClient = new SmtpClient())
             {
-                await smtpClient.ConnectAsync(_settings.Server, _settings.Port);
-                if (!String.IsNullOrEmpty(_settings.Username) && !String.IsNullOrEmpty(_settings.Password))
-                {
-                    await smtpClient.AuthenticateAsync(_settings.Username, _settings.Password);
-                }
+                await smtpClient.ConnectAsync(_settings, cancellationToken);
 
-                foreach (var mail in email.GetBulk())
+                foreach (var emailMessage in emailMessages)
                 {
                     var message = new MimeMessage();
-                    message.SetEmailData(mail, _settings);
-                    message.Cc.AddRange(mail.Cc.Select(x => new MailboxAddress(Encoding.UTF8, x.DisplayName, x.Address)));
+                    message.SetEmailData(emailMessage, _settings);
 
-                    if (message.To.Count != 1)
-                        throw new InvalidOperationException($"'{nameof(message.To)}' is allowed to contain only one email address");
-
-                    await smtpClient.SendAsync(message);
+                    await smtpClient.SendAsync(message, cancellationToken);
                     numberOfSentEmails++;
                 }
 
-                await smtpClient.DisconnectAsync(true);
+                await smtpClient.DisconnectAsync(true, cancellationToken);
             }
 
-            _logger.LogDebug($"{numberOfSentEmails} email(s) {email.Subject}, using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
+            _logger.LogDebug($"{numberOfSentEmails} email(s) using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
         }
     }
 }

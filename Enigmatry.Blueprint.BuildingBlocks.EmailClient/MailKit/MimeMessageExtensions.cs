@@ -1,26 +1,32 @@
-﻿using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
-using MimeKit;
-using System;
+﻿using System;
 using System.Linq;
-using System.Net.Mail;
+using System.Text;
 using System.Text.RegularExpressions;
+using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
+using MimeKit;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
 {
     internal static class MimeMessageExtensions
     {
-        public static void SetEmailData(this MimeMessage message, EmailMessage email, SmtpSettings settings)
+        internal static void SetEmailData(this MimeMessage message, EmailMessage email, SmtpSettings settings)
         {
-            message.To.AddRange(email.To.Select(address => (MailboxAddress)address));
+            if (email.To.Count != 1)
+            {
+                throw new InvalidOperationException($"'{nameof(email.To)}' is allowed to contain only one email address");
+            }
 
             if (email.From != null)
             {
-                AddFromAddress(message, email.From);
+                message.From.Add((MailboxAddress)email.From);
             }
             else
             {
-                AddFromAddress(message, settings.From);
+                message.From.TryAdd(settings.From);
             }
+
+            message.To.AddRange(email.To.Select(address => (MailboxAddress)address));
+            message.Cc.AddRange(email.Cc.Select(x => new MailboxAddress(Encoding.UTF8, x.DisplayName, x.Address)));
 
             message.Subject = email.Subject;
 
@@ -30,22 +36,6 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
                 HtmlBody = email.Content
             };
             message.Body = builder.ToMessageBody();
-        }
-
-        private static void AddFromAddress(MimeMessage message, MailAddress fromAddress)
-        {
-            if (fromAddress != null)
-            {
-                message.From.Add((MailboxAddress)fromAddress);
-            }
-        }
-
-        private static void AddFromAddress(MimeMessage message, string fromAddress)
-        {
-            if (!String.IsNullOrEmpty(fromAddress) && MailboxAddress.TryParse(fromAddress, out var mailboxAddress))
-            {
-                message.From.Add(mailboxAddress);
-            }
         }
 
         private static string GetPlainText(string html)
