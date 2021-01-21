@@ -22,7 +22,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Email.MailKit
             }
             else
             {
-                message.From.TryToAdd(settings.From);
+                message.From.TryAdd(settings.From);
             }
 
             message.To.AddRange(email.To.Select(address => (MailboxAddress)address));
