@@ -9,6 +9,7 @@ using System.Text;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Tests.Csv
 {
+    [Category("unit")]
     public class CsvFixture
     {
         [Test]
