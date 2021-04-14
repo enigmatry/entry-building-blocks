@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Helpers;
+using Enigmatry.Blueprint.BuildingBlocks.Core.Settings;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Logging;
 
@@ -8,14 +9,21 @@ namespace Enigmatry.Blueprint.BuildingBlocks.EntityFramework.Security
 {
     public class DbContextAccessTokenProvider : IDbContextAccessTokenProvider
     {
+        private readonly DbContextSettings _settings;
         private readonly ILogger<DbContextAccessTokenProvider> _logger;
 
-        public DbContextAccessTokenProvider(ILogger<DbContextAccessTokenProvider> logger)
+        public DbContextAccessTokenProvider(DbContextSettings settings, ILogger<DbContextAccessTokenProvider> logger)
         {
+            _settings = settings;
             _logger = logger;
         }
 
-        public async Task<string> GetAccessTokenAsync() => await GetTokenFromAzureServiceTokenProvider();
+        public async Task<string> GetAccessTokenAsync()
+        {
+            return _settings.UseAccessToken ?
+                await GetTokenFromAzureServiceTokenProvider() :
+                await Task.FromResult(String.Empty);
+        }
 
         private async Task<string> GetTokenFromAzureServiceTokenProvider()
         {
