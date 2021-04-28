@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Enigmatry.Blueprint.BuildingBlocks.Core.Entities;
+using Enigmatry.Blueprint.BuildingBlocks.Core.Paging;
 using Microsoft.EntityFrameworkCore;
 
 namespace Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework
@@ -29,6 +32,60 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework
         {
             var items = await query.ToListAsync(cancellationToken);
             return mapper.Map<List<TDestination>>(items);
+        }
+
+        public static PagedResponse<T> ToPagedResponse<T>(this IQueryable<T> query, IPagedRequest request)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var items = query
+                .OrderByDynamic(request.SortBy, request.SortDirection)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToList();
+
+            var totalCount = query.Count();
+
+            return new PagedResponse<T>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageSize = request.PageSize,
+                PageNumber = request.PageNumber
+            };
+        }
+
+        public static async Task<PagedResponse<T>> ToPagedResponseAsync<T>(this IQueryable<T> query, IPagedRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            var items = await query
+                .OrderByDynamic(request.SortBy, request.SortDirection)
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync(cancellationToken);
+
+            var totalCount = await query.CountAsync(cancellationToken);
+
+            return new PagedResponse<T>
+            {
+                Items = items,
+                TotalCount = totalCount,
+                PageSize = request.PageSize,
+                PageNumber = request.PageNumber
+            };
+        }
+
+        private static IQueryable<T> OrderByDynamic<T>(this IQueryable<T> query, string? orderBy, string orderDirection = "asc")
+        {
+            return String.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
         }
     }
 }

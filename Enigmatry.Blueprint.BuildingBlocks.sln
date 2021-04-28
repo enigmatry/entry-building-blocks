@@ -28,8 +28,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.VirusScanner", "Enigmatry.Blueprint.BuildingBlocks.VirusScanner\Enigmatry.Blueprint.BuildingBlocks.VirusScanner.csproj", "{97762ACC-215F-4D66-BAA3-5919ED275FFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Paging", "Enigmatry.Blueprint.BuildingBlocks.Paging\Enigmatry.Blueprint.BuildingBlocks.Paging.csproj", "{DA05B613-4E7C-4061-8630-B294A2870DD5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.BackgroundService", "Enigmatry.Blueprint.BuildingBlocks.BackgroundService\Enigmatry.Blueprint.BuildingBlocks.BackgroundService.csproj", "{30A7840E-E306-4B5F-B264-8E149FC5705C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Core", "Enigmatry.Blueprint.BuildingBlocks.Core\Enigmatry.Blueprint.BuildingBlocks.Core.csproj", "{7735C55C-207E-411D-9831-9EC642E17EA7}"
@@ -47,11 +45,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.Buildin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Infrastructure", "Enigmatry.Blueprint.BuildingBlocks.Infrastructure\Enigmatry.Blueprint.BuildingBlocks.Infrastructure.csproj", "{7B622B05-7637-4D43-A262-685A9B79D4C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework.csproj", "{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework", "Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework\Enigmatry.Blueprint.BuildingBlocks.Core.EntityFramework.csproj", "{CD3DB0C6-EEB5-4F42-AC56-F1670509E98E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests.csproj", "{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests", "Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests\Enigmatry.Blueprint.BuildingBlocks.AspNetCore.Tests.csproj", "{0DEC2F87-76A4-42D6-AAEE-3CB1A74F5DF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Blueprint.BuildingBlocks.MediatR", "Enigmatry.Blueprint.BuildingBlocks.MediatR\Enigmatry.Blueprint.BuildingBlocks.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Blueprint.BuildingBlocks.MediatR", "Enigmatry.Blueprint.BuildingBlocks.MediatR\Enigmatry.Blueprint.BuildingBlocks.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,10 +97,6 @@ Global
 		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA05B613-4E7C-4061-8630-B294A2870DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA05B613-4E7C-4061-8630-B294A2870DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA05B613-4E7C-4061-8630-B294A2870DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA05B613-4E7C-4061-8630-B294A2870DD5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Release|Any CPU.ActiveCfg = Release|Any CPU
