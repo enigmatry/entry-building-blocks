@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,18 @@ namespace Enigmatry.Blueprint.BuildingBlocks.Tests.TemplatingEngine
         {
             var result = await _templatingEngine.RenderFromFileAsync("~/TemplatingEngine/Sample.cshtml",
                 new EmailModel { SampleText = "Hello world!" });
+
+            result.Should().Contain("Hello world!");
+            result.Should().Contain("Congratulations!");
+        }
+
+        [Test]
+        public async Task TestRenderFromFileUsingViewBag()
+        {
+            var viewBagDictionary = new Dictionary<string, object> { ["Title"] = "Hello world!" };
+
+            var result = await _templatingEngine.RenderFromFileAsync("~/TemplatingEngine/SampleWithViewBag.cshtml",
+                new EmailModel { SampleText = "Congratulations!" }, viewBagDictionary);
 
             result.Should().Contain("Hello world!");
             result.Should().Contain("Congratulations!");

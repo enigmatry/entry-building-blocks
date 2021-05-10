@@ -8,10 +8,14 @@
 
   <ItemGroup>
     <Content Remove="TemplatingEngine\Sample.cshtml" />
+    <Content Remove="TemplatingEngine\SampleWithViewBag.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="TemplatingEngine\Sample.cshtml">
+      <None Include="TemplatingEngine\Sample.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TemplatingEngine\SampleWithViewBag.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine
         private readonly IServiceProvider _serviceProvider;
         private readonly ITempDataProvider _tempDataProvider;
         private readonly IRazorViewEngine _viewEngine;
+        private static readonly Dictionary<string, object> EmptyViewBagDictionary = new();
 
         public RazorTemplatingEngine(
             IRazorViewEngine viewEngine,
@@ -29,7 +31,14 @@ namespace Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<string> RenderFromFileAsync<TModel>(string path, TModel model)
+        public Task<string> RenderFromFileAsync<TModel>(string path, TModel model)
+            => RenderFromFileInternalAsync(path, model, EmptyViewBagDictionary);
+
+        public Task<string> RenderFromFileAsync<TModel>(string path, TModel model, IDictionary<string, object> viewBagDictionary)
+            => RenderFromFileInternalAsync(path, model, viewBagDictionary);
+
+
+        private async Task<string> RenderFromFileInternalAsync<TModel>(string path, TModel model, IDictionary<string, object> viewBagDictionary)
         {
             var actionContext = GetActionContext();
             var viewEngineResult = _viewEngine.GetView(path, path, false);
@@ -56,6 +65,11 @@ namespace Enigmatry.Blueprint.BuildingBlocks.TemplatingEngine
                     _tempDataProvider),
                 output,
                 new HtmlHelperOptions());
+
+            foreach (var keyValuePair in viewBagDictionary)
+            {
+                viewContext.ViewData[keyValuePair.Key] = keyValuePair.Value;
+            }
 
             await view.RenderAsync(viewContext);
 
