@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <Authors>eko</Authors>
+    <Company>Enigmatry</Company>
+    <Product>Enigmatry.BuildingBlocks.CacheManager</Product>
+    <Description>Building Block for adding a Cache Manager to a Blueprint based project</Description>
+    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
+    <PackageIcon>icon-192x192.png</PackageIcon>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CachingFramework.Redis" Version="12.0.3" />
+    <PackageReference Include="CachingFramework.Redis.NewtonsoftJson" Version="12.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.10" />
+    <PackageReference Include="Polly" Version="7.2.1" />
+  </ItemGroup>
+
+</Project>
