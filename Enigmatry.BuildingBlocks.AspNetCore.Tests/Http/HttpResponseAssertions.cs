@@ -46,7 +46,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
             {
                 var json = JsonConvert.DeserializeObject<ValidationProblemDetails>(responseContent);
 
-                if (json.Errors.TryGetValue(fieldName, out var errorsField))
+                if (json != null && json.Errors.TryGetValue(fieldName, out var errorsField))
                 {
                     errorFound = String.IsNullOrEmpty(expectedValidationMessage)
                         ? errorsField.Any()

@@ -16,7 +16,7 @@ namespace Enigmatry.BuildingBlocks.BlobStorage
 
             services.AddScoped<IBlobStorage>((serviceProvider) =>
             {
-                var settings = serviceProvider.GetService<IOptionsSnapshot<AzureBlobStorageSettings>>();
+                var settings = serviceProvider.GetService<IOptionsSnapshot<AzureBlobStorageSettings>>()!;
                 var service = new BlobServiceClient(settings.Value.ConnectionString);
                 var container = service.GetBlobContainerClient(containerName);
                 return new AzureBlobStorage(
@@ -25,7 +25,7 @@ namespace Enigmatry.BuildingBlocks.BlobStorage
 
             services.AddScoped<IPrivateBlobStorage>((serviceProvider) =>
             {
-                var settings = serviceProvider.GetService<IOptionsSnapshot<AzureBlobStorageSettings>>();
+                var settings = serviceProvider.GetService<IOptionsSnapshot<AzureBlobStorageSettings>>()!;
                 var service = new BlobServiceClient(settings.Value.ConnectionString);
                 var container = service.GetBlobContainerClient(containerName);
                 return new AzurePrivateBlobStorage(

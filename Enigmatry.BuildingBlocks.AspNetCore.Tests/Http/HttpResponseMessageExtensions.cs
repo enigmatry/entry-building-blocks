@@ -7,13 +7,13 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
 {
     public static class HttpResponseMessageExtensions
     {
-        public static async Task<T> DeserializeAsync<T>(this HttpResponseMessage response)
+        public static async Task<T?> DeserializeAsync<T>(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(content);
         }
 
-        public static async Task<T> DeserializeWithStatusCodeCheckAsync<T>(this HttpResponseMessage response)
+        public static async Task<T?> DeserializeWithStatusCodeCheckAsync<T>(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
             return response.IsSuccessStatusCode
