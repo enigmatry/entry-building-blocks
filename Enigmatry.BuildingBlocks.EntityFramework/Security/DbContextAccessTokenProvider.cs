@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Identity;
 using Enigmatry.BuildingBlocks.Core.Helpers;
 using Enigmatry.BuildingBlocks.Core.Settings;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.BuildingBlocks.EntityFramework.Security
@@ -29,23 +30,23 @@ namespace Enigmatry.BuildingBlocks.EntityFramework.Security
         {
             try
             {
-                //No need to cache the token or check for expiration
-                // according to the docs this is all done automatically:
-                // https://docs.microsoft.com/en-us/azure/key-vault/service-to-service-authentication#using-the-library
-                var accessToken = await new AzureServiceTokenProvider()
-                    .GetAccessTokenAsync("https://database.windows.net/");
+                var tokenCredential = new DefaultAzureCredential();
+                var accessToken = await tokenCredential.GetTokenAsync(
+                    new TokenRequestContext(scopes: new string[] { "https://database.windows.net/.default" }) { }
+                );
 
-                if (!accessToken.HasContent())
+                if (!accessToken.Token.HasContent())
                 {
                     _logger.LogWarning("Getting access token for managed service identity: Token is empty.");
                 }
-                return accessToken;
+                return accessToken.Token;
             }
             catch (Exception e)
             {
                 _logger.LogError("Error when getting access token for managed service identity", e);
                 throw;
             }
+
         }
     }
 }
