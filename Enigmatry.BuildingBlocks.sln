@@ -51,6 +51,41 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.As
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.MediatR", "Enigmatry.BuildingBlocks.MediatR\Enigmatry.BuildingBlocks.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "@enigmatry", "@enigmatry", "{ADE5C83B-4098-4806-A4CC-8ECE8BF75A6E}"
+	ProjectSection(SolutionItems) = preProject
+		@enigmatry\package.json = @enigmatry\package.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "enigmatry-grid", "enigmatry-grid", "{9046BEF3-E011-4B8E-B9AE-A9C49FC80454}"
+	ProjectSection(SolutionItems) = preProject
+		@enigmatry\enigmatry-grid\_grid-theme.scss = @enigmatry\enigmatry-grid\_grid-theme.scss
+		@enigmatry\enigmatry-grid\cell.component.html = @enigmatry\enigmatry-grid\cell.component.html
+		@enigmatry\enigmatry-grid\cell.component.scss = @enigmatry\enigmatry-grid\cell.component.scss
+		@enigmatry\enigmatry-grid\cell.component.ts = @enigmatry\enigmatry-grid\cell.component.ts
+		@enigmatry\enigmatry-grid\context-menu.component.html = @enigmatry\enigmatry-grid\context-menu.component.html
+		@enigmatry\enigmatry-grid\context-menu.component.scss = @enigmatry\enigmatry-grid\context-menu.component.scss
+		@enigmatry\enigmatry-grid\context-menu.component.ts = @enigmatry\enigmatry-grid\context-menu.component.ts
+		@enigmatry\enigmatry-grid\grid.component.html = @enigmatry\enigmatry-grid\grid.component.html
+		@enigmatry\enigmatry-grid\grid.component.scss = @enigmatry\enigmatry-grid\grid.component.scss
+		@enigmatry\enigmatry-grid\grid.component.ts = @enigmatry\enigmatry-grid\grid.component.ts
+		@enigmatry\enigmatry-grid\grid.interface.ts = @enigmatry\enigmatry-grid\grid.interface.ts
+		@enigmatry\enigmatry-grid\grid.module.ts = @enigmatry\enigmatry-grid\grid.module.ts
+		@enigmatry\enigmatry-grid\index.ts = @enigmatry\enigmatry-grid\index.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pagination", "pagination", "{6A595FD6-A47C-412A-9CD6-0C02026934D0}"
+	ProjectSection(SolutionItems) = preProject
+		@enigmatry\pagination\index.ts = @enigmatry\pagination\index.ts
+		@enigmatry\pagination\pagination.interface.ts = @enigmatry\pagination\pagination.interface.ts
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipes", "pipes", "{91749375-BDA3-4F03-81FE-6584461A1991}"
+	ProjectSection(SolutionItems) = preProject
+		@enigmatry\pipes\check-mark.pipe.ts = @enigmatry\pipes\check-mark.pipe.ts
+		@enigmatry\pipes\index.ts = @enigmatry\pipes\index.ts
+		@enigmatry\pipes\pipes.module.ts = @enigmatry\pipes\pipes.module.ts
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +171,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9046BEF3-E011-4B8E-B9AE-A9C49FC80454} = {ADE5C83B-4098-4806-A4CC-8ECE8BF75A6E}
+		{6A595FD6-A47C-412A-9CD6-0C02026934D0} = {ADE5C83B-4098-4806-A4CC-8ECE8BF75A6E}
+		{91749375-BDA3-4F03-81FE-6584461A1991} = {ADE5C83B-4098-4806-A4CC-8ECE8BF75A6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E11BD612-C39E-44B6-9D00-28BEE560A5AA}
