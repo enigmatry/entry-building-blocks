@@ -4,7 +4,7 @@ namespace Enigmatry.BuildingBlocks.CacheManager
 {
     public interface ICacheManager
     {
-        T Get<T>(string key);
+        T? Get<T>(string key);
 
         void Set<T>(string key, T value, TimeSpan timeout);
 

@@ -8,7 +8,7 @@ using Polly;
 
 namespace Enigmatry.BuildingBlocks.CacheManager
 {
-    internal class RedisCacheManager : ICacheManager
+    public class RedisCacheManager : ICacheManager
     {
         private const string AllTag = "all";
         private readonly Lazy<RedisContext> _context;
@@ -24,7 +24,7 @@ namespace Enigmatry.BuildingBlocks.CacheManager
 
         private ICacheProvider Cache => _context.Value.Cache;
 
-        public T Get<T>(string key)
+        public T? Get<T>(string key)
         {
             _logger.LogDebug("Getting from cache, Type: {Type} by key: {Key}", typeof(T), key);
 
