@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EventBus\**" />
+    <Compile Remove="Localization\**" />
+    <Content Remove="EventBus\**" />
+    <Content Remove="Localization\**" />
+    <EmbeddedResource Remove="EventBus\**" />
+    <EmbeddedResource Remove="Localization\**" />
+    <None Remove="EventBus\**" />
+    <None Remove="Localization\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="TemplatingEngine\Sample.cshtml" />
     <Content Remove="TemplatingEngine\SampleWithViewBag.cshtml" />
   </ItemGroup>
@@ -47,11 +58,7 @@
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.Csv\Enigmatry.BuildingBlocks.Csv.csproj" />
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.EmailClient\Enigmatry.BuildingBlocks.Email.csproj" />
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.TemplatingEngine\Enigmatry.BuildingBlocks.TemplatingEngine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="EventBus\" />
-    <Folder Include="Localization\" />
+    <ProjectReference Include="..\Enigmatry.BuildingBlocks.Validation\Enigmatry.BuildingBlocks.Validation.csproj" />
   </ItemGroup>
  
 </Project>
