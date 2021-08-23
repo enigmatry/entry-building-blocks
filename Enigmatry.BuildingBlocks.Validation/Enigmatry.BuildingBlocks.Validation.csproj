@@ -8,7 +8,7 @@
     <Authors>mmr</Authors>
     <Company>Enigmatry</Company>
     <Product>Enigmatry.BuildingBlocks.Validation</Product>
-    <Description>Validation configurations to be used in form generator & fluent validations</Description>
+    <Description>Validation configurations to be used in form generator and fluent validations</Description>
     <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
