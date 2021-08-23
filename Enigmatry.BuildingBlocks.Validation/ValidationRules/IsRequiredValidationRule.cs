@@ -8,10 +8,12 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
         public IsRequiredValidationRule(PropertyInfo propertyInfo, string message, string messageTranslationId)
             : base(
                   "required",
+                  true,
                   propertyInfo,
                   String.IsNullOrWhiteSpace(message)
-                    ? $"'{propertyInfo.Name}' is required"
+                    ? $"{propertyInfo.Name} is required"
                     : message,
-                  messageTranslationId) { }
+                  messageTranslationId)
+        { }
     }
 }
