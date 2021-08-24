@@ -15,7 +15,7 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
         {
             Name = name;
             Value = value;
-            PropertyName = propertyInfo.Name.ToLowerInvariant();
+            PropertyName = propertyInfo.Name;
             Message = message;
             MessageTranslationId = messageTranslationId;
         }

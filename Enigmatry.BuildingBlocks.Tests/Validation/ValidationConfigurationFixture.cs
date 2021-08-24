@@ -17,18 +17,18 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             var validationRules = validationConfiguration.GetValidationRules();
 
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).ToLowerInvariant())
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue))
                 .Should().HaveCount(3);
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).ToLowerInvariant())
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue))
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo("required", "min", "max");
 
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).ToLowerInvariant())
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue))
                 .Should().HaveCount(3);
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).ToLowerInvariant())
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue))
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo("required", "minLength", "maxLength");
 
