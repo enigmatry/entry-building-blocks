@@ -1,5 +1,6 @@
 ﻿using Enigmatry.BuildingBlocks.Validation;
 using FluentAssertions;
+using Humanizer;
 using NUnit.Framework;
 using System;
 using System.Linq;
@@ -17,18 +18,18 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             var validationRules = validationConfiguration.GetValidationRules();
 
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue))
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
                 .Should().HaveCount(3);
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue))
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo("required", "min", "max");
 
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue))
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
                 .Should().HaveCount(3);
             validationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue))
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo("required", "minLength", "maxLength");
 
