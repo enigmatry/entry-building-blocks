@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Enigmatry.BuildingBlocks.Validation
 {
@@ -31,6 +32,18 @@ namespace Enigmatry.BuildingBlocks.Validation
         public PropertyValidationBuilder HasMaxLength(int value, string message = "", string messageTranslationId = "")
         {
             AddOrUpdateRule(new MaxLengthValidationRule(PropertyInfo, value, message, messageTranslationId));
+            return this;
+        }
+
+        public PropertyValidationBuilder HasPattern(Regex value, string message = "", string messageTranslationId = "")
+        {
+            AddOrUpdateRule(new PatternValidationRule(PropertyInfo, value, message, messageTranslationId));
+            return this;
+        }
+
+        public PropertyValidationBuilder IsEmail(string message = "", string messageTranslationId = "")
+        {
+            AddOrUpdateRule(new EmailValidationRule(PropertyInfo, message, messageTranslationId));
             return this;
         }
 

@@ -15,5 +15,11 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
                     : message,
                   messageTranslationId)
         { }
+
+        public override string AsNameValueString()
+        {
+            var value = (bool)Value;
+            return $"{Name}: {(value ? "true" : "false")}";
+        }
     }
 }

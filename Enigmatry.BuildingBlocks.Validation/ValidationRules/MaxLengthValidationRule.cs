@@ -13,10 +13,12 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
                   propertyInfo,
                   String.IsNullOrWhiteSpace(message)
                     ? Check.IsNumber(propertyInfo.PropertyType)
-                        ? $"{propertyInfo.Name} should be more than {value}"
-                        : $"{propertyInfo.Name} should have at least {value} characters"
+                        ? $"{propertyInfo.Name} should be less than {value}"
+                        : $"{propertyInfo.Name} should have less then {value} characters"
                     : message,
                   messageTranslationId)
         { }
+
+        public override string AsNameValueString() => $"{Name}: {Value}";
     }
 }
