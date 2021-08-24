@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Enigmatry.BuildingBlocks.Validation.Helpers
 {
-    public static class Check
+    internal static class Check
     {
         public static bool IsNumber(Type type) =>
             new List<Type>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Humanizer;
+using System;
 using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
@@ -15,7 +16,7 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
         {
             Name = name;
             Value = value;
-            PropertyName = propertyInfo.Name;
+            PropertyName = propertyInfo.Name.Camelize();
             Message = message;
             MessageTranslationId = messageTranslationId;
         }
