@@ -15,27 +15,49 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         {
             var validationConfiguration = new ValidationModelMockConfiguration();
 
-            var validationRules = validationConfiguration.GetValidationRules();
-
-            validationRules
+            validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
                 .Should().HaveCount(3);
-            validationRules
+            validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo("required", "min", "max");
 
-            validationRules
+            validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
                 .Should().HaveCount(3);
-            validationRules
+            validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
                 .Select(x => x.Name)
                 .Should().BeEquivalentTo("required", "minLength", "maxLength");
 
-            validationRules
+            validationConfiguration.ValidationRules
                 .All(x => !String.IsNullOrWhiteSpace(x.Message))
-                .Should().BeTrue();
+                .Should().BeTrue("Default messages must be set");
+        }
+
+        [TestCase(nameof(ValidationModelMock.NumberValue), "required", ValidationModelMockConfiguration.CustomValidationMessage, "")]
+        [TestCase(nameof(ValidationModelMock.NumberValue), "min", ValidationModelMockConfiguration.CustomValidationMessage, "")]
+        [TestCase(nameof(ValidationModelMock.NumberValue), "max", ValidationModelMockConfiguration.CustomValidationMessage, "")]
+        [TestCase(nameof(ValidationModelMock.TextValue), "required", ValidationModelMockConfiguration.CustomValidationMessage, ValidationModelMockConfiguration.CustomValidationMessageTranlsationId)]
+        [TestCase(nameof(ValidationModelMock.TextValue), "minLength", "TextValue should have at least 2 characters", "")]
+        [TestCase(nameof(ValidationModelMock.TextValue), "maxLength", "TextValue should have less then 10 characters", "")]
+        public void ValidationConfigurationPerValidator(string propertyName,
+                                                        string validationRuleName,
+                                                        string validationMessage,
+                                                        string validationMessageTranslationId)
+        {
+            var validationConfiguration = new ValidationModelMockConfiguration();
+
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == propertyName.Camelize())
+                .Should().NotBeNullOrEmpty();
+            var validationRule = validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == propertyName.Camelize())
+                .SingleOrDefault(rule => rule.Name == validationRuleName);
+            validationRule.Should().NotBeNull();
+            validationRule?.Message.Should().Be(validationMessage);
+            validationRule?.MessageTranslationId.Should().Be(validationMessageTranslationId);
         }
     }
 
@@ -45,16 +67,25 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         public string TextValue { get; set; } = String.Empty;
     }
 
-    public class ValidationModelMockConfiguration : ValidationConfiguration<ValidationModelMock>
+    public class ValidationModelMockConfiguration : AbstractValidationConfiguration<ValidationModelMock>
     {
+        public const string CustomValidationMessage = "CUSTOM_VALIDATION_MESSAGE";
+        public const string CustomValidationMessageTranlsationId = "CUSTOM_VALIDATION_MESSAGE_TRANSLATION_ID";
+
         public ValidationModelMockConfiguration()
         {
             RuleFor(x => x.NumberValue)
-                .IsRequired("Required field")
-                .HasMinLength(2, "Min length 1")
-                .HasMaxLength(10, "Min length 10");
+                .IsRequired()
+                    .WithMessage(CustomValidationMessage)
+                .HasMinLength(2)
+                    .WithMessage(CustomValidationMessage)
+                .HasMaxLength(10)
+                    .WithMessage(CustomValidationMessage);
+
             RuleFor(x => x.TextValue)
                 .IsRequired()
+                    .WithMessage(CustomValidationMessage)
+                    .WithMessageTranslationId(CustomValidationMessageTranlsationId)
                 .HasMinLength(2)
                 .HasMaxLength(10);
         }

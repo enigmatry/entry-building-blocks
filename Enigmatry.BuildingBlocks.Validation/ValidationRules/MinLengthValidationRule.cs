@@ -1,24 +1,19 @@
 ﻿using Enigmatry.BuildingBlocks.Validation.Helpers;
-using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class MinLengthValidationRule : ValidationRule
+    public class MinLengthValidationRule : AbstractValidationRule<int>
     {
-        public MinLengthValidationRule(PropertyInfo propertyInfo, int value, string message, string messageTranslationId)
-            : base(
-                  Check.IsNumber(propertyInfo.PropertyType) ? "min" : "minLength",
-                  value,
-                  propertyInfo,
-                  String.IsNullOrWhiteSpace(message)
-                    ? Check.IsNumber(propertyInfo.PropertyType)
-                        ? $"{propertyInfo.Name} should be more then {value}"
-                        : $"{propertyInfo.Name} should have at least {value} characters"
-                    : message,
-                  messageTranslationId)
-        { }
+        public MinLengthValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
+            : base(Extensions.IsNumber(propertyInfo.PropertyType) ? "min" : "minLength", value, propertyInfo, expression)
+        {
+            SetMessage(Extensions.IsNumber(propertyInfo.PropertyType)
+                ? $"{propertyInfo.Name} should be more then {value}"
+                : $"{propertyInfo.Name} should have at least {value} characters");
+        }
 
-        public override string AsNameValueString() => $"{Name}: {Value}";
+        public override string AsNameRulePair() => $"{Name}: {Rule}";
     }
 }

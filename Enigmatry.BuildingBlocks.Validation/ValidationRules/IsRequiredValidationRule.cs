@@ -1,25 +1,16 @@
-﻿using System;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class IsRequiredValidationRule : ValidationRule
+    public class IsRequiredValidationRule : AbstractValidationRule<bool>
     {
-        public IsRequiredValidationRule(PropertyInfo propertyInfo, string message, string messageTranslationId)
-            : base(
-                  "required",
-                  true,
-                  propertyInfo,
-                  String.IsNullOrWhiteSpace(message)
-                    ? $"{propertyInfo.Name} is required"
-                    : message,
-                  messageTranslationId)
-        { }
-
-        public override string AsNameValueString()
+        public IsRequiredValidationRule(PropertyInfo propertyInfo, LambdaExpression expression)
+            : base("required", true, propertyInfo, expression)
         {
-            var value = (bool)Value;
-            return $"{Name}: {(value ? "true" : "false")}";
+            SetMessage($"{propertyInfo.Name} is required");
         }
+
+        public override string AsNameRulePair() => $"{Name}: {(Rule ? "true" : "false")}";
     }
 }

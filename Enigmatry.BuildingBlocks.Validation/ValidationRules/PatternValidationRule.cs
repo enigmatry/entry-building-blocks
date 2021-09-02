@@ -1,22 +1,17 @@
-﻿using System;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class PatternValidationRule : ValidationRule
+    public class PatternValidationRule : AbstractValidationRule<Regex>
     {
-        public PatternValidationRule(PropertyInfo propertyInfo, Regex value, string message, string messageTranslationId)
-            : base(
-                  "pattern",
-                  value,
-                  propertyInfo,
-                  String.IsNullOrWhiteSpace(message)
-                    ? $"{propertyInfo.Name} is not in valid format"
-                    : message,
-                  messageTranslationId)
-        { }
+        public PatternValidationRule(Regex value, PropertyInfo propertyInfo, LambdaExpression expression)
+            : base("pattern", value, propertyInfo, expression)
+        {
+            SetMessage($"{propertyInfo.Name} is not in valid format");
+        }
 
-        public override string AsNameValueString() => $"{Name}: {(Regex)Value}";
+        public override string AsNameRulePair() => $"{Name}: {Rule}";
     }
 }

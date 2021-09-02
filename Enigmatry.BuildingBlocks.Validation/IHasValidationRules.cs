@@ -5,6 +5,6 @@ namespace Enigmatry.BuildingBlocks.Validation
 {
     public interface IHasValidationRules
     {
-        public IEnumerable<ValidationRule> GetValidationRules();
+        IEnumerable<IValidationRule> ValidationRules { get; }
     }
 }

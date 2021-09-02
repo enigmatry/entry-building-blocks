@@ -1,24 +1,19 @@
 ﻿using Enigmatry.BuildingBlocks.Validation.Helpers;
-using System;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class MaxLengthValidationRule : ValidationRule
+    public class MaxLengthValidationRule : AbstractValidationRule<int>
     {
-        public MaxLengthValidationRule(PropertyInfo propertyInfo, int value, string message, string messageTranslationId)
-            : base(
-                  Check.IsNumber(propertyInfo.PropertyType) ? "max" : "maxLength",
-                  value,
-                  propertyInfo,
-                  String.IsNullOrWhiteSpace(message)
-                    ? Check.IsNumber(propertyInfo.PropertyType)
-                        ? $"{propertyInfo.Name} should be less than {value}"
-                        : $"{propertyInfo.Name} should have less then {value} characters"
-                    : message,
-                  messageTranslationId)
-        { }
+        public MaxLengthValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
+            : base(Extensions.IsNumber(propertyInfo.PropertyType) ? "max" : "maxLength", value, propertyInfo, expression)
+        {
+            SetMessage(Extensions.IsNumber(propertyInfo.PropertyType)
+                ? $"{propertyInfo.Name} should be less than {value}"
+                : $"{propertyInfo.Name} should have less then {value} characters");
+        }
 
-        public override string AsNameValueString() => $"{Name}: {Value}";
+        public override string AsNameRulePair() => $"{Name}: {Rule}";
     }
 }
