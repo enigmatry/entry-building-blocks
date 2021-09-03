@@ -3,7 +3,7 @@ using System;
 
 namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
 {
-    public class PropertyValidationBuilder<T, TProperty> : InitPropertyValidationBuilder<T, TProperty>
+    public class PropertyValidationBuilder<T, TProperty> : InitialPropertyValidationBuilder<T, TProperty>
     {
         public PropertyValidationBuilder(IPropertyValidation<T, TProperty> propertyRule, IValidationRule? currentValidationRule)
             : base(propertyRule)

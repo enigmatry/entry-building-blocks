@@ -4,12 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
 {
-    public class InitPropertyValidationBuilder<T, TProperty>
+    public class InitialPropertyValidationBuilder<T, TProperty>
     {
         protected IPropertyValidation<T, TProperty> PropertyRule { get; set; }
         protected IValidationRule? CurrentValidationRule { get; set; } = null;
 
-        public InitPropertyValidationBuilder(IPropertyValidation<T, TProperty> propertyRule)
+        public InitialPropertyValidationBuilder(IPropertyValidation<T, TProperty> propertyRule)
         {
             PropertyRule = propertyRule;
         }
@@ -22,15 +22,15 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
-        public PropertyValidationBuilder<T, TProperty> HasMinLength(int value)
+        public PropertyValidationBuilder<T, TProperty> Min(int value)
         {
-            AddOrUpdateRule(new MinLengthValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            AddOrUpdateRule(new MinValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
-        public PropertyValidationBuilder<T, TProperty> HasMaxLength(int value)
+        public PropertyValidationBuilder<T, TProperty> Max(int value)
         {
-            AddOrUpdateRule(new MaxLengthValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            AddOrUpdateRule(new MaxValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 

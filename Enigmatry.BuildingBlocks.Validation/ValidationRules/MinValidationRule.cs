@@ -4,10 +4,13 @@ using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class MinLengthValidationRule : AbstractValidationRule<int>
+    public class MinValidationRule : AbstractValidationRule<int>
     {
-        public MinLengthValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
-            : base(Extensions.IsNumber(propertyInfo.PropertyType) ? "min" : "minLength", value, propertyInfo, expression)
+        public const string MinValueRuleName = "min";
+        public const string MinLengthRuleName = "minLength";
+
+        public MinValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
+            : base(Extensions.IsNumber(propertyInfo.PropertyType) ? MinValueRuleName : MinLengthRuleName, value, propertyInfo, expression)
         {
             SetMessage(Extensions.IsNumber(propertyInfo.PropertyType)
                 ? $"{propertyInfo.Name} should be more then {value}"

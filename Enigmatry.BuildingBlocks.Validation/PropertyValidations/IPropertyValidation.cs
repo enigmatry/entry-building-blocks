@@ -10,11 +10,11 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
     {
         PropertyInfo PropertyInfo { get; }
         IList<IValidationRule> Rules { get; }
+        void AddRule(IValidationRule rule);
     }
 
     public interface IPropertyValidation<T, TProperty> : IPropertyValidation<T>
     {
         Expression<Func<T, TProperty>> PropertyExpression { get; }
-        void AddRule(IValidationRule rule);
     }
 }

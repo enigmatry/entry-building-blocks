@@ -13,11 +13,11 @@ namespace Enigmatry.BuildingBlocks.Validation
 
         public IEnumerable<IValidationRule> ValidationRules => PropertyValidations.SelectMany(x => x.Rules);
 
-        public InitPropertyValidationBuilder<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
+        public InitialPropertyValidationBuilder<T, TProperty> RuleFor<TProperty>(Expression<Func<T, TProperty>> propertyExpression)
         {
             var propertyValidator = new PropertyValidation<T, TProperty>(propertyExpression);
             AddOrUpdate(propertyValidator);
-            return new InitPropertyValidationBuilder<T, TProperty>(propertyValidator);
+            return new InitialPropertyValidationBuilder<T, TProperty>(propertyValidator);
         }
 
         private void AddOrUpdate(IPropertyValidation<T> propertyValidator)

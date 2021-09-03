@@ -4,10 +4,13 @@ using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class MaxLengthValidationRule : AbstractValidationRule<int>
+    public class MaxValidationRule : AbstractValidationRule<int>
     {
-        public MaxLengthValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
-            : base(Extensions.IsNumber(propertyInfo.PropertyType) ? "max" : "maxLength", value, propertyInfo, expression)
+        public const string MaxValueRuleName = "max";
+        public const string MaxLengthRuleName = "maxLength";
+
+        public MaxValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
+            : base(Extensions.IsNumber(propertyInfo.PropertyType) ? MaxValueRuleName : MaxLengthRuleName, value, propertyInfo, expression)
         {
             SetMessage(Extensions.IsNumber(propertyInfo.PropertyType)
                 ? $"{propertyInfo.Name} should be less than {value}"

@@ -1,4 +1,5 @@
 ﻿using Enigmatry.BuildingBlocks.Validation;
+using Enigmatry.BuildingBlocks.Validation.ValidationRules;
 using FluentAssertions;
 using Humanizer;
 using NUnit.Framework;
@@ -21,7 +22,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
                 .Select(x => x.Name)
-                .Should().BeEquivalentTo("required", "min", "max");
+                .Should().BeEquivalentTo(IsRequiredValidationRule.RequiredRuleName, MinValidationRule.MinValueRuleName, MaxValidationRule.MaxValueRuleName);
 
             validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
@@ -29,19 +30,19 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
                 .Select(x => x.Name)
-                .Should().BeEquivalentTo("required", "minLength", "maxLength");
+                .Should().BeEquivalentTo(IsRequiredValidationRule.RequiredRuleName, MinValidationRule.MinLengthRuleName, MaxValidationRule.MaxLengthRuleName);
 
             validationConfiguration.ValidationRules
                 .All(x => !String.IsNullOrWhiteSpace(x.Message))
                 .Should().BeTrue("Default messages must be set");
         }
 
-        [TestCase(nameof(ValidationModelMock.NumberValue), "required", ValidationModelMockConfiguration.CustomValidationMessage, "")]
-        [TestCase(nameof(ValidationModelMock.NumberValue), "min", ValidationModelMockConfiguration.CustomValidationMessage, "")]
-        [TestCase(nameof(ValidationModelMock.NumberValue), "max", ValidationModelMockConfiguration.CustomValidationMessage, "")]
-        [TestCase(nameof(ValidationModelMock.TextValue), "required", ValidationModelMockConfiguration.CustomValidationMessage, ValidationModelMockConfiguration.CustomValidationMessageTranlsationId)]
-        [TestCase(nameof(ValidationModelMock.TextValue), "minLength", "TextValue should have at least 2 characters", "")]
-        [TestCase(nameof(ValidationModelMock.TextValue), "maxLength", "TextValue should have less then 10 characters", "")]
+        [TestCase(nameof(ValidationModelMock.NumberValue), IsRequiredValidationRule.RequiredRuleName, ValidationModelMockConfiguration.CustomValidationMessage, "")]
+        [TestCase(nameof(ValidationModelMock.NumberValue), MinValidationRule.MinValueRuleName, ValidationModelMockConfiguration.CustomValidationMessage, "")]
+        [TestCase(nameof(ValidationModelMock.NumberValue), MaxValidationRule.MaxValueRuleName, ValidationModelMockConfiguration.CustomValidationMessage, "")]
+        [TestCase(nameof(ValidationModelMock.TextValue), IsRequiredValidationRule.RequiredRuleName, ValidationModelMockConfiguration.CustomValidationMessage, ValidationModelMockConfiguration.CustomValidationMessageTranlsationId)]
+        [TestCase(nameof(ValidationModelMock.TextValue), MinValidationRule.MinLengthRuleName, "TextValue should have at least 2 characters", "")]
+        [TestCase(nameof(ValidationModelMock.TextValue), MaxValidationRule.MaxLengthRuleName, "TextValue should have less then 10 characters", "")]
         public void ValidationConfigurationPerValidator(string propertyName,
                                                         string validationRuleName,
                                                         string validationMessage,
@@ -77,17 +78,17 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             RuleFor(x => x.NumberValue)
                 .IsRequired()
                     .WithMessage(CustomValidationMessage)
-                .HasMinLength(2)
+                .Min(2)
                     .WithMessage(CustomValidationMessage)
-                .HasMaxLength(10)
+                .Max(10)
                     .WithMessage(CustomValidationMessage);
 
             RuleFor(x => x.TextValue)
                 .IsRequired()
                     .WithMessage(CustomValidationMessage)
                     .WithMessageTranslationId(CustomValidationMessageTranlsationId)
-                .HasMinLength(2)
-                .HasMaxLength(10);
+                .Min(2)
+                .Max(10);
         }
     }
 }
