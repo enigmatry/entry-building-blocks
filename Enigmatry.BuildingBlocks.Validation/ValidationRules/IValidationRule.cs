@@ -12,7 +12,6 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
         PropertyInfo PropertyInfo { get; }
         string PropertyName { get; }
 
-        string AsNameRulePair();
         void SetMessage(string message);
         void SetMessageTranslationId(string messageTranslationId);
         void TrySetDefaultMessageTranslationId(string messageTranslationId);

@@ -1,5 +1,7 @@
-﻿using Enigmatry.BuildingBlocks.Validation.ValidationRules;
-using System.Linq;
+﻿using Enigmatry.BuildingBlocks.Validation.Helpers;
+using Enigmatry.BuildingBlocks.Validation.ValidationRules;
+using Enigmatry.BuildingBlocks.Validation.ValidationRules.BuiltInRules;
+using Enigmatry.BuildingBlocks.Validation.ValidationRules.CustomValidationRules;
 using System.Text.RegularExpressions;
 
 namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
@@ -18,46 +20,68 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
 
         public PropertyValidationBuilder<T, TProperty> IsRequired()
         {
-            AddOrUpdateRule(new IsRequiredValidationRule(PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            AddOrReplace(new IsRequiredValidationRule(PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
         public PropertyValidationBuilder<T, TProperty> Min(int value)
         {
-            AddOrUpdateRule(new MinValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            var isNumber = Extensions.IsNumber(PropertyRule.PropertyInfo.PropertyType);
+            AddOrReplace(isNumber
+                ? new MinValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression)
+                : new MinLengthValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
         public PropertyValidationBuilder<T, TProperty> Max(int value)
         {
-            AddOrUpdateRule(new MaxValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            var isNumber = Extensions.IsNumber(PropertyRule.PropertyInfo.PropertyType);
+            AddOrReplace(isNumber
+                ? new MaxValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression)
+                : new MaxLengthValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
         public PropertyValidationBuilder<T, TProperty> HasPattern(Regex value)
         {
-            AddOrUpdateRule(new PatternValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            AddOrReplace(new PatternValidationRule(value, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
         public PropertyValidationBuilder<T, TProperty> IsEmailAddress()
         {
-            AddOrUpdateRule(new EmailValidationRule(PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            AddOrReplace(new EmailValidationRule(PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
             return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
         }
 
-        private void AddOrUpdateRule(IValidationRule rule)
+        /// <summary>
+        /// Validator name must match implementation with following signature:
+        ///     (control: FormControl): boolean
+        /// </summary>
+        /// <param name="validatorName"></param>
+        /// <returns></returns>
+        public PropertyValidationBuilder<T, TProperty> HasValidator(string validatorName)
         {
-            CurrentValidationRule = rule;
-            var existing = PropertyRule.Rules.SingleOrDefault(x => x.Name == rule.Name);
-            if (existing == null)
-            {
-                PropertyRule.AddRule(rule);
-            }
-            else
-            {
-                existing = rule;
-            }
+            AddOrReplace(new CustomValidatorValidationRule(validatorName, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
+        }
+
+        /// <summary>
+        /// Validator name must match implementation with following signature:
+        ///     (control: FormControl): Promise(boolean)
+        /// </summary>
+        /// <param name="validatorName"></param>
+        /// <returns></returns>
+        public PropertyValidationBuilder<T, TProperty> HasAsyncValidator(string validatorName)
+        {
+            AddOrReplace(new AsyncCustomValidatorValidationRule(validatorName, PropertyRule.PropertyInfo, PropertyRule.PropertyExpression));
+            return new PropertyValidationBuilder<T, TProperty>(PropertyRule, CurrentValidationRule);
+        }
+
+        private void AddOrReplace(IValidationRule validationRule)
+        {
+            CurrentValidationRule = validationRule;
+            PropertyRule.AddOrReplace(CurrentValidationRule);
         }
     }
 }

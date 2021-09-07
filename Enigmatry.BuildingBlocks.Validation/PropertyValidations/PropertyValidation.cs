@@ -22,17 +22,14 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
             Rules = new List<IValidationRule>();
         }
 
-        public void AddRule(IValidationRule rule)
+        public void AddOrReplace(IValidationRule rule)
         {
             var existing = Rules.SingleOrDefault(x => x.Name == rule.Name);
-            if (existing == null)
+            if (existing != null)
             {
-                Rules.Add(rule);
+                Rules.Remove(existing);
             }
-            else
-            {
-                existing = rule;
-            }
+            Rules.Add(rule);
         }
     }
 }

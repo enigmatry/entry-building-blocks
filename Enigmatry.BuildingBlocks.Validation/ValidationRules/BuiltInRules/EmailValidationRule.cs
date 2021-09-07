@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
+namespace Enigmatry.BuildingBlocks.Validation.ValidationRules.BuiltInRules
 {
     public class EmailValidationRule : PatternValidationRule
     {

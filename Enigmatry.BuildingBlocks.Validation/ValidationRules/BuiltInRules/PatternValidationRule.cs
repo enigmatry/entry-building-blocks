@@ -2,14 +2,14 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
+namespace Enigmatry.BuildingBlocks.Validation.ValidationRules.BuiltInRules
 {
-    public class PatternValidationRule : AbstractValidationRule<Regex>
+    public class PatternValidationRule : BuiltInValidationRule<Regex>
     {
-        public const string PatternRuleName = "pattern";
+        public const string RuleName = "pattern";
 
         public PatternValidationRule(Regex value, PropertyInfo propertyInfo, LambdaExpression expression)
-            : base(PatternRuleName, value, propertyInfo, expression)
+            : base(RuleName, value, propertyInfo, expression)
         {
             SetMessage($"{propertyInfo.Name} is not in valid format");
         }

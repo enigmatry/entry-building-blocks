@@ -5,25 +5,21 @@ using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public abstract class AbstractValidationRule<TRuleType> : IValidationRule
+    public abstract class ValidationRule : IValidationRule
     {
         public string Name { get; private set; } = String.Empty;
-        public TRuleType Rule { get; }
         public string Message { get; private set; } = String.Empty;
         public string MessageTranslationId { get; private set; } = String.Empty;
         public LambdaExpression Expression { get; }
         public PropertyInfo PropertyInfo { get; }
         public string PropertyName => PropertyInfo.Name.Camelize();
 
-        protected AbstractValidationRule(string name, TRuleType rule, PropertyInfo propertyInfo, LambdaExpression expression)
+        protected ValidationRule(string name, LambdaExpression expression, PropertyInfo propertyInfo)
         {
             Name = name;
-            Rule = rule;
-            PropertyInfo = propertyInfo;
             Expression = expression;
+            PropertyInfo = propertyInfo;
         }
-
-        public abstract string AsNameRulePair();
 
         public void SetMessage(string message) => Message = message;
 

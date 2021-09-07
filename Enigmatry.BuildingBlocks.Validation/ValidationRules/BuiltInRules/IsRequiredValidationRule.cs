@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
+namespace Enigmatry.BuildingBlocks.Validation.ValidationRules.BuiltInRules
 {
-    public class IsRequiredValidationRule : AbstractValidationRule<bool>
+    public class IsRequiredValidationRule : BuiltInValidationRule<bool>
     {
         public const string RequiredRuleName = "required";
 

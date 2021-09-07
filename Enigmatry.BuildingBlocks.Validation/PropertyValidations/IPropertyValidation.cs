@@ -10,7 +10,7 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
     {
         PropertyInfo PropertyInfo { get; }
         IList<IValidationRule> Rules { get; }
-        void AddRule(IValidationRule rule);
+        void AddOrReplace(IValidationRule rule);
     }
 
     public interface IPropertyValidation<T, TProperty> : IPropertyValidation<T>
