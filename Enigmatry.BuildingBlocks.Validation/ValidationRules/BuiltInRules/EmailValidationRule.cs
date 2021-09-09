@@ -9,7 +9,7 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules.BuiltInRules
         public EmailValidationRule(PropertyInfo propertyInfo, LambdaExpression expression)
             : base(new Regex(@"/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/"), propertyInfo, expression)
         {
-            SetMessage($"{nameof(propertyInfo.Name)} not in correct email address format");
+            SetMessage($"{propertyInfo.Name} is not in correct email address format");
         }
     }
 }
