@@ -1,11 +1,10 @@
 ﻿using Enigmatry.BuildingBlocks.Validation;
-using Enigmatry.BuildingBlocks.Validation.ValidationRules.BuiltInRules;
-using Enigmatry.BuildingBlocks.Validation.ValidationRules.CustomValidationRules;
 using FluentAssertions;
 using Humanizer;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Enigmatry.BuildingBlocks.Tests.Validation
 {
@@ -17,51 +16,69 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         {
             var validationConfiguration = new ValidationModelMockConfiguration();
 
-            validationConfiguration.BuiltInValidationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.IntValue).Camelize())
                 .Should().HaveCount(3);
-            validationConfiguration.BuiltInValidationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
-                .Select(x => x.Name)
-                .Should().BeEquivalentTo(IsRequiredValidationRule.RequiredRuleName, MinValidationRule.RuleName, MaxValidationRule.RuleName);
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.IntValue).Camelize())
+                .Select(x => x.FormlyRuleName)
+                .Should().BeEquivalentTo("required", "min", "max");
 
-            validationConfiguration.BuiltInValidationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.DoubleValue).Camelize())
                 .Should().HaveCount(3);
-            validationConfiguration.BuiltInValidationRules
-                .Where(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
-                .Select(x => x.Name)
-                .Should().BeEquivalentTo(IsRequiredValidationRule.RequiredRuleName, MinLengthValidationRule.RuleName, MaxLengthValidationRule.RuleName);
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.DoubleValue).Camelize())
+                .Select(x => x.FormlyRuleName)
+                .Should().BeEquivalentTo("required", "min", "max");
 
-            validationConfiguration.BuiltInValidationRules
-                .All(x => !String.IsNullOrWhiteSpace(x.Message))
-                .Should().BeTrue("Default messages must be set");
-
-            validationConfiguration.ValidatorValidationRules
-                .Should().HaveCount(1);
-            validationConfiguration.ValidatorValidationRules
-                .All(x => x.PropertyName == nameof(ValidationModelMock.NumberValue).Camelize())
-                .Should().BeTrue();
-            validationConfiguration.ValidatorValidationRules
-                .All(x => !String.IsNullOrWhiteSpace(x.Message))
-                .Should().BeTrue("Default messages must be set");
-
-            validationConfiguration.AsyncValidatorValidationRules
-                .Should().HaveCount(1);
-            validationConfiguration.AsyncValidatorValidationRules
-                .All(x => x.PropertyName == nameof(ValidationModelMock.TextValue).Camelize())
-                .Should().BeTrue();
-            validationConfiguration.AsyncValidatorValidationRules
-                .All(x => !String.IsNullOrWhiteSpace(x.Message))
-                .Should().BeTrue("Default messages must be set");
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.StringValue).Camelize())
+                .Should().HaveCount(3);
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == nameof(ValidationModelMock.StringValue).Camelize())
+                .Select(x => x.FormlyRuleName)
+                .Should().BeEquivalentTo("required", "minLength", "maxLength");
         }
 
-        [TestCase(nameof(ValidationModelMock.NumberValue), IsRequiredValidationRule.RequiredRuleName, ValidationModelMockConfiguration.CustomValidationMessage, "")]
-        [TestCase(nameof(ValidationModelMock.NumberValue), MinValidationRule.RuleName, ValidationModelMockConfiguration.CustomValidationMessage, "")]
-        [TestCase(nameof(ValidationModelMock.NumberValue), MaxValidationRule.RuleName, ValidationModelMockConfiguration.CustomValidationMessage, "")]
-        [TestCase(nameof(ValidationModelMock.TextValue), IsRequiredValidationRule.RequiredRuleName, ValidationModelMockConfiguration.CustomValidationMessage, ValidationModelMockConfiguration.CustomValidationMessageTranlsationId)]
-        [TestCase(nameof(ValidationModelMock.TextValue), MinLengthValidationRule.RuleName, "TextValue should have at least 2 characters", "")]
-        [TestCase(nameof(ValidationModelMock.TextValue), MaxLengthValidationRule.RuleName, "TextValue should have less then 10 characters", "")]
+
+        [Test]
+        public void ValidationConfigurationForPatterns()
+        {
+            var validationConfiguration = new PetternsValidationModelMockConfiguration();
+
+            validationConfiguration.ValidationRules
+                .Select(x => x.FormlyRuleName)
+                .Should().BeEquivalentTo("pattern", "pattern");
+            validationConfiguration.ValidationRules
+                .Select(x => x.PropertyName.Pascalize())
+                .Should().BeEquivalentTo("OtherStringValue", "StringValue");
+            validationConfiguration.ValidationRules
+                .Select(x => x.CustomMessage)
+                .Should().BeEquivalentTo("", "Invalid email address format");
+            validationConfiguration.ValidationRules
+                .Select(x => x.FormlyValidationMessage)
+                .Should().BeEquivalentTo(
+                    "${field?.templateOptions?.label}:property-name: is not in valid format",
+                    "Invalid email address format"
+                );
+            validationConfiguration.ValidationRules
+                .Select(x => x.FormlyValidationMessage)
+                .Should().BeEquivalentTo(
+                    "${field?.templateOptions?.label}:property-name: is not in valid format",
+                    "Invalid email address format"
+                );
+            validationConfiguration.ValidationRules
+                .Select(x => x.MessageTranslationId)
+                .Should().BeEquivalentTo("validators.pattern", "validators.pattern.emailAddress");
+        }
+
+        [TestCase(nameof(ValidationModelMock.IntValue), "required", "", "validators.required")]
+        [TestCase(nameof(ValidationModelMock.IntValue), "min", ValidationModelMockConfiguration.CustomMessage, "")]
+        [TestCase(nameof(ValidationModelMock.IntValue), "max", ValidationModelMockConfiguration.CustomMessage, ValidationModelMockConfiguration.CustomMessageTranlsationId)]
+        [TestCase(nameof(ValidationModelMock.StringValue), "required", ValidationModelMockConfiguration.CustomMessage, ValidationModelMockConfiguration.CustomMessageTranlsationId)]
+        [TestCase(nameof(ValidationModelMock.StringValue), "minLength", ValidationModelMockConfiguration.CustomMessage, "")]
+        [TestCase(nameof(ValidationModelMock.StringValue), "maxLength", "", "validators.maxLength")]
         public void ValidationConfigurationPerValidationRule(
             string propertyName,
             string validationRuleName,
@@ -70,97 +87,57 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         {
             var validationConfiguration = new ValidationModelMockConfiguration();
 
-            validationConfiguration.BuiltInValidationRules
+            validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == propertyName.Camelize())
                 .Should().NotBeNullOrEmpty();
-            var validationRule = validationConfiguration.BuiltInValidationRules
+            var validationRule = validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == propertyName.Camelize())
-                .SingleOrDefault(rule => rule.Name == validationRuleName);
+                .SingleOrDefault(rule => rule.FormlyRuleName == validationRuleName);
             validationRule.Should().NotBeNull();
-            validationRule?.Message.Should().Be(validationMessage);
+            validationRule?.CustomMessage.Should().Be(validationMessage);
             validationRule?.MessageTranslationId.Should().Be(validationMessageTranslationId);
         }
-
-        [TestCase(nameof(ValidationModelMock.NumberValue), ValidationModelMockConfiguration.ValidatorName, "VALIDATOR_NAME validator condition is not meet", "")]
-        public void ValidationConfigurationPerValidatior(
-            string propertyName,
-            string validatorName,
-            string validationMessage,
-            string validationMessageTranslationId)
-        {
-            var validationConfiguration = new ValidationModelMockConfiguration();
-
-            validationConfiguration.ValidatorValidationRules
-                .Where(x => x.PropertyName == propertyName.Camelize())
-                .Should().NotBeNullOrEmpty();
-            var validator = validationConfiguration.ValidatorValidationRules
-                .Where(x => x.PropertyName == propertyName.Camelize())
-                .SingleOrDefault(rule => rule.ValidatorName == validatorName);
-            validator.Should().NotBeNull();
-            validator?.Name.Should().Be(CustomValidatorValidationRule.RuleName);
-            validator?.Message.Should().Be(validationMessage);
-            validator?.MessageTranslationId.Should().Be(validationMessageTranslationId);
-        }
-
-        [TestCase(nameof(ValidationModelMock.TextValue),
-            ValidationModelMockConfiguration.AsyncValidatorName,
-            ValidationModelMockConfiguration.CustomValidationMessage,
-            ValidationModelMockConfiguration.CustomValidationMessageTranlsationId)]
-        public void ValidationConfigurationPerAsyncValidatior(
-            string propertyName,
-            string validatorName,
-            string validationMessage,
-            string validationMessageTranslationId)
-        {
-            var validationConfiguration = new ValidationModelMockConfiguration();
-
-            validationConfiguration.AsyncValidatorValidationRules
-                .Where(x => x.PropertyName == propertyName.Camelize())
-                .Should().NotBeNullOrEmpty();
-            var asyncValidator = validationConfiguration.AsyncValidatorValidationRules
-                .Where(x => x.PropertyName == propertyName.Camelize())
-                .SingleOrDefault(rule => rule.ValidatorName == validatorName);
-            asyncValidator.Should().NotBeNull();
-            asyncValidator?.Name.Should().Be(AsyncCustomValidatorValidationRule.RuleName);
-            asyncValidator?.Message.Should().Be(validationMessage);
-            asyncValidator?.MessageTranslationId.Should().Be(validationMessageTranslationId);
-        }
     }
 
-    public class ValidationModelMock
+    internal class ValidationModelMock
     {
-        public int NumberValue { get; set; }
-        public string TextValue { get; set; } = String.Empty;
+        public int IntValue { get; set; }
+        public double DoubleValue { get; set; }
+        public DateTimeOffset DateTimeOffsetValue { get; set; }
+        public string StringValue { get; set; } = String.Empty;
+        public string OtherStringValue { get; set; } = String.Empty;
     }
 
-    public class ValidationModelMockConfiguration : ValidationConfiguration<ValidationModelMock>
+    internal class ValidationModelMockConfiguration : ValidationConfiguration<ValidationModelMock>
     {
-        public const string CustomValidationMessage = "CUSTOM_VALIDATION_MESSAGE";
-        public const string CustomValidationMessageTranlsationId = "CUSTOM_VALIDATION_MESSAGE_TRANSLATION_ID";
-        public const string ValidatorName = "VALIDATOR_NAME";
-        public const string AsyncValidatorName = "ASYNC_VALIDATOR_NAME";
+        public const string CustomMessage = "CUSTOM_VALIDATION_MESSAGE";
+        public const string CustomMessageTranlsationId = "CUSTOM_VALIDATION_MESSAGE_TRANSLATION_ID";
 
         public ValidationModelMockConfiguration()
         {
-            RuleFor(x => x.NumberValue)
+            RuleFor(x => x.IntValue)
                 .IsRequired()
-                    .WithMessage(CustomValidationMessage)
-                .Min(2)
-                    .WithMessage(CustomValidationMessage)
-                .Max(10)
-                    .WithMessage(CustomValidationMessage)
-                .HasValidator("TO_BE_OVERRIDEN_VALIDATOR")
-                .HasValidator(ValidatorName);
+                .GreaterThen(0).WithMessage(CustomMessage)
+                .LessThen(10).WithMessage(CustomMessage, CustomMessageTranlsationId);
 
-            RuleFor(x => x.TextValue)
+            RuleFor(x => x.DoubleValue)
                 .IsRequired()
-                    .WithMessage(CustomValidationMessage)
-                    .WithMessageTranslationId(CustomValidationMessageTranlsationId)
-                .Min(2)
-                .Max(10)
-                .HasAsyncValidator(AsyncValidatorName)
-                    .WithMessage(CustomValidationMessage)
-                    .WithMessageTranslationId(CustomValidationMessageTranlsationId);
+                .GreaterThen(0).WithMessage(CustomMessage)
+                .LessThen(10).WithMessage(CustomMessage, CustomMessageTranlsationId);
+
+            RuleFor(x => x.StringValue)
+                .IsRequired().WithMessage(CustomMessage, CustomMessageTranlsationId)
+                .MinLength(0).WithMessage(CustomMessage)
+                .MaxLength(10);
+        }
+    }
+
+    internal class PetternsValidationModelMockConfiguration : ValidationConfiguration<ValidationModelMock>
+    {
+        public PetternsValidationModelMockConfiguration()
+        {
+            RuleFor(x => x.OtherStringValue).EmailAddress();
+            RuleFor(x => x.StringValue).Match(new Regex("/[A-Z]/"));
         }
     }
 }

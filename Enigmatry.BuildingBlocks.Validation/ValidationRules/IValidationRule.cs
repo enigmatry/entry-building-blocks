@@ -3,17 +3,32 @@ using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public interface IValidationRule
+    public interface IBaseValidationRule
     {
-        string Name { get; }
-        string Message { get; }
+        string CustomMessage { get; }
         string MessageTranslationId { get; }
-        LambdaExpression Expression { get; }
+        bool HasCustomMessage { get; }
+        bool HasMessageTranslationId { get; }
         PropertyInfo PropertyInfo { get; }
         string PropertyName { get; }
+    }
 
-        void SetMessage(string message);
+    public interface IFormlyValidationRule : IBaseValidationRule
+    {
+        string FormlyValidationMessage { get; }
+        string FormlyRuleName { get; }
+        string[] FormlyTemplateOptions { get; }
+
         void SetMessageTranslationId(string messageTranslationId);
-        void TrySetDefaultMessageTranslationId(string messageTranslationId);
+    }
+
+    public interface IFluentValidationValidationRule : IBaseValidationRule
+    {
+        LambdaExpression Expression { get; }
+    }
+
+    public interface IValidationRule : IFormlyValidationRule, IFluentValidationValidationRule
+    {
+        void SetCustomMessage(string message);
     }
 }

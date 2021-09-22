@@ -24,7 +24,8 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
 
         public void AddOrReplace(IValidationRule rule)
         {
-            var existing = Rules.SingleOrDefault(x => x.Name == rule.Name);
+            var existing = Rules.SingleOrDefault(x => x.FormlyRuleName == rule.FormlyRuleName);
+
             if (existing != null)
             {
                 Rules.Remove(existing);
