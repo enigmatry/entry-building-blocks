@@ -6,6 +6,7 @@ namespace Enigmatry.BuildingBlocks.BlobStorage
 {
     public interface IBlobStorage
     {
+        string Name { get; }
         string BuildResourcePath(string path);
         Task<bool> ExistsAsync(string path, CancellationToken cancellationToken = default);
         Task AddAsync(string path, Stream content, bool @override = false, CancellationToken cancellationToken = default);

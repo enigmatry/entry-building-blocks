@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace Enigmatry.BuildingBlocks.Core.Settings
+namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
 {
-    public class AzureBlobStorageSettings
+    internal class AzureBlobStorageSettings
     {
-        public const string AppAzureBlobStorage = "App:AzureBlobStorage";
-
         public string AccountKey { get; set; } = String.Empty;
         public string AccountName { get; set; } = String.Empty;
         public int SasDuration { get; set; }

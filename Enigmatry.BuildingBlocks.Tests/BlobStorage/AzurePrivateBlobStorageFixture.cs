@@ -1,5 +1,4 @@
 ﻿using Azure.Storage.Blobs;
-using Enigmatry.BuildingBlocks.Azure.BlobStorage;
 using Enigmatry.BuildingBlocks.Core.Settings;
 using FluentAssertions;
 using FluentAssertions.Extensions;
@@ -7,6 +6,9 @@ using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 using System.Web;
+using Azure.Storage.Sas;
+using Enigmatry.BuildingBlocks.BlobStorage;
+using Enigmatry.BuildingBlocks.BlobStorage.Azure;
 
 namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
 {
@@ -34,13 +36,16 @@ namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
             });
 
             var container = new BlobContainerClient(settings.Value.ConnectionString, ContainerName);
-            _blobStorage = new AzurePrivateBlobStorage(container, settings);
+            _blobStorage = new AzurePrivateBlobStorage(container, settings.Value);
         }
 
         [Test]
-        public void TestSharedResourcePath()
+        [TestCase(PrivateBlobPermission.Read)]
+        [TestCase(PrivateBlobPermission.Write)]
+        [TestCase(PrivateBlobPermission.Delete)]
+        public void TestSharedResourcePath(PrivateBlobPermission permission)
         {
-            var path = _blobStorage.BuildSharedResourcePath(ResourceName);
+            var path = _blobStorage.BuildSharedResourcePath(ResourceName, permission);
             path.Should().Contain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
             var parameters = HttpUtility.ParseQueryString(path);

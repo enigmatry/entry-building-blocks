@@ -1,10 +1,11 @@
 ﻿using Azure.Storage.Blobs;
-using Enigmatry.BuildingBlocks.Azure.BlobStorage;
 using Enigmatry.BuildingBlocks.Core.Settings;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
+using Enigmatry.BuildingBlocks.BlobStorage;
+using Enigmatry.BuildingBlocks.BlobStorage.Azure;
 
 namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
 {
@@ -30,7 +31,7 @@ namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
             });
 
             var container = new BlobContainerClient(settings.Value.ConnectionString, ContainerName);
-            _blobStorage = new AzureBlobStorage(container, settings);
+            _blobStorage = new AzureBlobStorage(container, settings.Value);
         }
 
         [Test]

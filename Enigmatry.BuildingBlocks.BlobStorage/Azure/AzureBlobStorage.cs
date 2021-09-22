@@ -1,26 +1,26 @@
-﻿using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Enigmatry.BuildingBlocks.BlobStorage;
-using Enigmatry.BuildingBlocks.Core.Settings;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 
-namespace Enigmatry.BuildingBlocks.Azure.BlobStorage
+namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
 {
     internal class AzureBlobStorage : IBlobStorage
     {
         protected AzureBlobStorageSettings Settings { get; }
         protected BlobContainerClient Container { get; }
 
-        public AzureBlobStorage(BlobContainerClient container, IOptions<AzureBlobStorageSettings> options)
+        public AzureBlobStorage(BlobContainerClient container, AzureBlobStorageSettings options)
         {
-            Settings = options.Value;
+            Settings = options;
             Container = container;
+            Name = container.Name;
         }
+
+        public string Name { get; }
 
         public string BuildResourcePath(string path) =>
             !String.IsNullOrWhiteSpace(path)

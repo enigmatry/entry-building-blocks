@@ -2,6 +2,6 @@
 {
     public interface IPrivateBlobStorage : IBlobStorage
     {
-        string BuildSharedResourcePath(string path);
+        string BuildSharedResourcePath(string path, PrivateBlobPermission permission = PrivateBlobPermission.Read);
     }
 }

@@ -1,24 +1,31 @@
-﻿using Azure.Storage;
+﻿using System;
+using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
-using Enigmatry.BuildingBlocks.BlobStorage;
-using Enigmatry.BuildingBlocks.Core.Settings;
-using Microsoft.Extensions.Options;
-using System;
 
-namespace Enigmatry.BuildingBlocks.Azure.BlobStorage
+namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
 {
     internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
     {
-        public AzurePrivateBlobStorage(BlobContainerClient container, IOptions<AzureBlobStorageSettings> settings)
+        public AzurePrivateBlobStorage(BlobContainerClient container, AzureBlobStorageSettings settings)
         : base(container, settings) { }
 
-        public string BuildSharedResourcePath(string path)
+        public string BuildSharedResourcePath(string path, PrivateBlobPermission permission = PrivateBlobPermission.Read)
         {
             if (String.IsNullOrWhiteSpace(path))
+            {
                 return path;
+            }
 
-            var sasBuilder = new BlobSasBuilder
+            var uri = new Uri(BuildResourcePath(path));
+            var query = BuildSasQueryParams(path, permission);
+            var builder = new UriBuilder(uri) { Query = query.ToString() };
+            return builder.ToString();
+        }
+
+        private BlobSasQueryParameters BuildSasQueryParams(string path, PrivateBlobPermission permission)
+        {
+            var builder = new BlobSasBuilder
             {
                 StartsOn = DateTime.UtcNow,
                 ExpiresOn = DateTime.UtcNow.AddSeconds(Settings.SasDuration),
@@ -27,15 +34,10 @@ namespace Enigmatry.BuildingBlocks.Azure.BlobStorage
                 Protocol = SasProtocol.Https
             };
 
-            sasBuilder.SetPermissions(BlobSasPermissions.Read);
+            builder.SetPermissions(permission.ToBlobSasPermissions());
 
-            return new UriBuilder(new Uri(BuildResourcePath(path)))
-            {
-                Query = sasBuilder
-                    .ToSasQueryParameters(new StorageSharedKeyCredential(Settings.AccountName, Settings.AccountKey))
-                    .ToString()
-            }
-            .ToString();
+            var credential = new StorageSharedKeyCredential(Settings.AccountName, Settings.AccountKey);
+            return builder.ToSasQueryParameters(credential);
         }
     }
 }
