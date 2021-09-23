@@ -51,7 +51,11 @@ namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
         private static AzureBlobStorageSettings ResolveSettings(IServiceProvider serviceProvider)
         {
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
-            return configuration.GetValue<AzureBlobStorageSettings>(ConfigurationKey);
+            var configurationSection = configuration.GetSection(ConfigurationKey)
+                .Get<AzureBlobStorageSettings>();
+
+            return configurationSection ?? throw new InvalidOperationException($"Configuration section \"{ConfigurationKey}\" does not exist," +
+                                                                               $" or could not be serialized as \"{typeof(AzureBlobStorageSettings).FullName}\" type.");
         }
     }
 }
