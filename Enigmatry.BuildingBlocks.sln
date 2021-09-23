@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.As
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.MediatR", "Enigmatry.BuildingBlocks.MediatR\Enigmatry.BuildingBlocks.MediatR.csproj", "{1B1953E4-292C-492F-B7B5-6B18138B7A73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.BuildingBlocks.Validation", "Enigmatry.BuildingBlocks.Validation\Enigmatry.BuildingBlocks.Validation.csproj", "{A879FBA8-D5EF-4B8B-886D-FB0DE18D521B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Validation", "Enigmatry.BuildingBlocks.Validation\Enigmatry.BuildingBlocks.Validation.csproj", "{A879FBA8-D5EF-4B8B-886D-FB0DE18D521B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.BuildingBlocks.HealthChecks", "Enigmatry.BuildingBlocks.HealthChecks\Enigmatry.BuildingBlocks.HealthChecks.csproj", "{D9AA5E6E-63C1-4F01-8A50-90E9275A7374}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,6 +141,10 @@ Global
 		{A879FBA8-D5EF-4B8B-886D-FB0DE18D521B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A879FBA8-D5EF-4B8B-886D-FB0DE18D521B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A879FBA8-D5EF-4B8B-886D-FB0DE18D521B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9AA5E6E-63C1-4F01-8A50-90E9275A7374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9AA5E6E-63C1-4F01-8A50-90E9275A7374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9AA5E6E-63C1-4F01-8A50-90E9275A7374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9AA5E6E-63C1-4F01-8A50-90E9275A7374}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
