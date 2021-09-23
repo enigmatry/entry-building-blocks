@@ -4,9 +4,9 @@ namespace Enigmatry.BuildingBlocks.Validation.Helpers
 {
     internal static class Check
     {
-        public static void IsNumber(Type type, string message = "", params string[] messageArgs)
+        public static void IfNotNumber(Type type, string message = "", params string[] messageArgs)
         {
-            if (!Extensions.IsNumber(type))
+            if (type.NotNumber())
             {
                 throw new InvalidOperationException(String.IsNullOrWhiteSpace(message)
                     ? $"{type.Name} is not of number format. Only number formats supported."
@@ -15,9 +15,9 @@ namespace Enigmatry.BuildingBlocks.Validation.Helpers
             }
         }
 
-        public static void IsEmpty(string value, string message = "", params string[] messageArgs)
+        public static void IfEmpty(string value, string message = "", params string[] messageArgs)
         {
-            if (String.IsNullOrWhiteSpace(value))
+            if (value.IsEmpty())
             {
                 throw new InvalidOperationException(String.IsNullOrWhiteSpace(message)
                     ? "Empty string value is not allowed."

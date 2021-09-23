@@ -272,9 +272,8 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         [Test]
         public void InvalidGreaterThen()
         {
-            Func<IPropertyMessageValidationBuilder<MockModel, DateTime>> lessThenFunc =
-                () => (IPropertyMessageValidationBuilder<MockModel, DateTime>)
-                    _validationConfiguration.RuleFor(x => x.DateTimeOffsetField).GreaterThen(0);
+            Func<IPropertyValidationBuilder<ValidationMockModel, DateTimeOffset>> lessThenFunc =
+                () => _validationConfiguration.RuleFor(x => x.DateTimeOffsetField).GreaterThen(0);
 
             lessThenFunc
                 .Should()
@@ -285,9 +284,8 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         [Test]
         public void InvalidLessThen()
         {
-            Func<IPropertyMessageValidationBuilder<MockModel, DateTime>> lessThenFunc =
-                () => (IPropertyMessageValidationBuilder<MockModel, DateTime>)
-                    _validationConfiguration.RuleFor(x => x.DateTimeOffsetField).LessThen(100);
+            Func<IPropertyValidationBuilder<ValidationMockModel, DateTimeOffset>> lessThenFunc =
+                () => _validationConfiguration.RuleFor(x => x.DateTimeOffsetField).LessThen(100);
 
             lessThenFunc
                 .Should()
@@ -298,25 +296,18 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         [Test]
         public void InvalidWithMessage()
         {
-            Func<IPropertyMessageValidationBuilder<MockModel, DateTime>> lessThenFunc =
-                () => (IPropertyMessageValidationBuilder<MockModel, DateTime>)
+            Func<IPropertyValidationBuilder<ValidationMockModel, DateTimeOffset>> lessThenFunc =
+                () => (IPropertyValidationBuilder<ValidationMockModel, DateTimeOffset>)
                     _validationConfiguration.RuleFor(x => x.IntField).LessThen(100).WithMessage("", "test");
 
             lessThenFunc
                 .Should()
                 .ThrowExactly<InvalidOperationException>()
-                .WithMessage($"{nameof(MockModel.IntField)} validation message cannot be empty.");
+                .WithMessage($"{nameof(ValidationMockModel.IntField)} validation message cannot be empty.");
         }
     }
 
-    internal class MockModel
-    {
-        public string StringField { get; set; } = String.Empty;
-        public int IntField { get; set; }
-        public DateTimeOffset DateTimeOffsetField { get; set; }
-    }
-
-    internal class MockModelValidationConfiguration : ValidationConfiguration<MockModel>
+    internal class MockModelValidationConfiguration : ValidationConfiguration<ValidationMockModel>
     {
         public const string Message = "MESSAGE";
         public const string TranslationId = "TRANSLATION_ID";

@@ -8,7 +8,7 @@ namespace Enigmatry.BuildingBlocks.Validation.Helpers
 {
     internal static class Extensions
     {
-        public static bool IsNumber(Type type) =>
+        public static bool IsNumber(this Type type) =>
             new List<Type>
             {
                 typeof(short),
@@ -20,6 +20,12 @@ namespace Enigmatry.BuildingBlocks.Validation.Helpers
                 typeof(byte)
             }
             .Any(x => x == type);
+
+        public static bool NotNumber(this Type type) => !type.IsNumber();
+
+        public static bool IsEmpty(this string value) => String.IsNullOrWhiteSpace(value);
+
+        public static bool NotEmpty(this string value) => !value.IsEmpty();
 
         // Stolen from FluentValidation ;)
         public static PropertyInfo? TryGetProperty<T, TProperty>(this Expression<Func<T, TProperty>> expression)
