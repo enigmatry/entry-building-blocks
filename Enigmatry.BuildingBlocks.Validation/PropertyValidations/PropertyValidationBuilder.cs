@@ -6,6 +6,12 @@ namespace Enigmatry.BuildingBlocks.Validation.PropertyValidations
 {
     public interface IPropertyValidationBuilder<T, TProperty> : IInitialPropertyValidationBuilder<T, TProperty>
     {
+        /// <summary>
+        /// Adds custom validation message with optional I18N Translation Id
+        /// </summary>
+        /// <param name="message">Custom validation message</param>
+        /// <param name="messageTranlsationId">Custom message I18N translation Id</param>
+        /// <returns></returns>
         public IPropertyValidationBuilder<T, TProperty> WithMessage(string message, string messageTranlsationId = "");
     }
 
