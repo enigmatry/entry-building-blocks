@@ -5,6 +5,7 @@ using FluentAssertions;
 using Humanizer;
 using NUnit.Framework;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -168,9 +169,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(3);
 
-            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MinIntField.ToString(), false);
-            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MinDoubleField.ToString(), false);
-            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MinByteField.ToString(), false);
+            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MinIntField, false);
+            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MinDoubleField, false);
+            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MinByteField, false);
         }
 
         [Test]
@@ -188,9 +189,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(3);
 
-            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MinIntField.ToString(), true);
-            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MinDoubleField.ToString(), true);
-            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MinByteField.ToString(), true);
+            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MinIntField, true);
+            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MinDoubleField, true);
+            AssertNumbercMinValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MinByteField, true);
         }
 
         [Test]
@@ -208,9 +209,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(3);
 
-            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MaxIntField.ToString(), false);
-            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MaxDoubleField.ToString(), false);
-            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MaxByteField.ToString(), false);
+            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MaxIntField, false);
+            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MaxDoubleField, false);
+            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MaxByteField, false);
         }
 
         [Test]
@@ -228,9 +229,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(3);
 
-            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MaxIntField.ToString(), true);
-            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MaxDoubleField.ToString(), true);
-            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MaxByteField.ToString(), true);
+            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.IntField)), MaxIntField, true);
+            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.DoubleField)), MaxDoubleField, true);
+            AssertNumbercMaxValidationRule(GetRuleByPropertyName(nameof(ValidationMockModel.ByteField)), MaxByteField, true);
         }
 
         [Test]
@@ -242,8 +243,8 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(2);
 
-            AssertNumbercMinValidationRule(GetRuleByFormlyRuleName("min"), MinIntField.ToString(), true);
-            AssertNumbercMaxValidationRule(GetRuleByFormlyRuleName("max"), MinIntField.ToString(), true);
+            AssertNumbercMinValidationRule(GetRuleByFormlyRuleName("min"), MinIntField, true);
+            AssertNumbercMaxValidationRule(GetRuleByFormlyRuleName("max"), MinIntField, true);
         }
 
         [Test]
@@ -255,8 +256,8 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(2);
 
-            AssertNumbercMinValidationRule(GetRuleByFormlyRuleName("min"), MinDoubleField.ToString(), true);
-            AssertNumbercMaxValidationRule(GetRuleByFormlyRuleName("max"), MinDoubleField.ToString(), true);
+            AssertNumbercMinValidationRule(GetRuleByFormlyRuleName("min"), MinDoubleField, true);
+            AssertNumbercMaxValidationRule(GetRuleByFormlyRuleName("max"), MinDoubleField, true);
         }
 
         [TestCase("MESSAGE", "")]
@@ -288,7 +289,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
                 .WithMessage($"{nameof(ValidationMockModel.IntField)} validation message cannot be empty.");
         }
 
-        private static void AssertNumbercMinValidationRule(IFormlyValidationRule rule, string value, bool isEqual)
+        private static void AssertNumbercMinValidationRule<T>(IFormlyValidationRule rule, T value, bool isEqual)
         {
             rule.FormlyRuleName
                 .Should().Be("min");
@@ -297,12 +298,12 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             rule.MessageTranslationId
                 .Should().Be("validators.min");
             rule.FormlyTemplateOptions
-                .Should().BeEquivalentTo("type: 'number'", $"min: {value}{(isEqual ? "" : " + 1")}");
+                .Should().BeEquivalentTo("type: 'number'", $"min: {String.Format(CultureInfo.InvariantCulture, "{0}", value)}{(isEqual ? "" : " + 1")}");
             rule.FormlyValidationMessage
                 .Should().Be("${field?.templateOptions?.label}:property-name: value should be more than ${field?.templateOptions?.min}:min-value:");
         }
 
-        private static void AssertNumbercMaxValidationRule(IFormlyValidationRule rule, string value, bool isEqual)
+        private static void AssertNumbercMaxValidationRule<T>(IFormlyValidationRule rule, T value, bool isEqual)
         {
             rule.FormlyRuleName
                 .Should().Be("max");
@@ -311,7 +312,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             rule.MessageTranslationId
                 .Should().Be("validators.max");
             rule.FormlyTemplateOptions
-                .Should().BeEquivalentTo("type: 'number'", $"max: {value}{(isEqual ? "" : " - 1")}");
+                .Should().BeEquivalentTo("type: 'number'", $"max: {String.Format(CultureInfo.InvariantCulture, "{0}", value)}{(isEqual ? "" : " - 1")}");
             rule.FormlyValidationMessage
                 .Should().Be("${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.max}:max-value:");
         }
