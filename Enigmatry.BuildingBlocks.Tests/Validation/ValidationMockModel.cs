@@ -6,6 +6,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
     {
         public int IntField { get; set; }
         public double DoubleField { get; set; }
+        public byte ByteField { get; set; }
         public DateTimeOffset DateTimeOffsetField { get; set; }
         public string StringField { get; set; } = String.Empty;
         public string OtherStringField { get; set; } = String.Empty;

@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class MinValueValidationRule : ValidationRule<int>
+    public class GreaterThenValidationRule<T> : ValidationRule<T>
     {
-        public MinValueValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
+        public GreaterThenValidationRule(T value, PropertyInfo propertyInfo, LambdaExpression expression)
             : base(value, propertyInfo, expression, String.Empty, "validators.min")
         { }
 
@@ -16,7 +16,7 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
             new[]
             {
                 "type: 'number'",
-                $"{FormlyRuleName}: {Rule}"
+                $"{FormlyRuleName}: {Rule} + 1"
             };
 
         public override string FormlyValidationMessage => HasCustomMessage

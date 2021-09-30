@@ -111,7 +111,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             RuleFor(x => x.DoubleField)
                 .IsRequired()
-                .GreaterThen(0).WithMessage(CustomMessage)
+                .GreaterThen(0.5).WithMessage(CustomMessage)
                 .LessThen(10).WithMessage(CustomMessage, CustomMessageTranlsationId);
 
             RuleFor(x => x.StringField)

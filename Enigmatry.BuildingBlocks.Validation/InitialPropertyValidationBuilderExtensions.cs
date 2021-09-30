@@ -50,34 +50,44 @@ namespace Enigmatry.BuildingBlocks.Validation
             return response;
         }
 
-        public static IPropertyValidationBuilder<T, TProperty> GreaterOrEqualTo<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, int rule)
-            where TProperty : struct, IComparable, IComparable<TProperty>
+        public static IPropertyValidationBuilder<T, TProperty> GreaterOrEqualTo<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, TProperty rule)
+            where TProperty : struct, IComparable, IComparable<TProperty>, IConvertible, IEquatable<TProperty>, IFormattable
         {
             Check.IfNotNumber(typeof(TProperty));
             var response = new PropertyValidationBuilder<T, TProperty>(builder.PropertyRule);
-            response.SetValidationRule(new MinValueValidationRule(rule, builder.PropertyRule.PropertyInfo, builder.PropertyRule.PropertyExpression));
+            response.SetValidationRule(new GreaterOrEqualToValidationRule<TProperty>(rule, builder.PropertyRule.PropertyInfo, builder.PropertyRule.PropertyExpression));
             return response;
         }
 
-        public static IPropertyValidationBuilder<T, TProperty> GreaterThen<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, int rule)
-            where TProperty : struct, IComparable, IComparable<TProperty> =>
-            GreaterOrEqualTo(builder, ++rule);
-
-        public static IPropertyValidationBuilder<T, TProperty> LessOrEqualTo<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, int rule)
-            where TProperty : struct, IComparable, IComparable<TProperty>
+        public static IPropertyValidationBuilder<T, TProperty> GreaterThen<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, TProperty rule)
+            where TProperty : struct, IComparable, IComparable<TProperty>, IConvertible, IEquatable<TProperty>, IFormattable
         {
             Check.IfNotNumber(typeof(TProperty));
             var response = new PropertyValidationBuilder<T, TProperty>(builder.PropertyRule);
-            response.SetValidationRule(new MaxValueValidationRule(rule, builder.PropertyRule.PropertyInfo, builder.PropertyRule.PropertyExpression));
+            response.SetValidationRule(new GreaterThenValidationRule<TProperty>(rule, builder.PropertyRule.PropertyInfo, builder.PropertyRule.PropertyExpression));
             return response;
         }
 
-        public static IPropertyValidationBuilder<T, TProperty> LessThen<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, int rule)
-            where TProperty : struct, IComparable, IComparable<TProperty> =>
-            LessOrEqualTo(builder, --rule);
+        public static IPropertyValidationBuilder<T, TProperty> LessOrEqualTo<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, TProperty rule)
+            where TProperty : struct, IComparable, IComparable<TProperty>, IConvertible, IEquatable<TProperty>, IFormattable
+        {
+            Check.IfNotNumber(typeof(TProperty));
+            var response = new PropertyValidationBuilder<T, TProperty>(builder.PropertyRule);
+            response.SetValidationRule(new LessOrEqualToValidationRule<TProperty>(rule, builder.PropertyRule.PropertyInfo, builder.PropertyRule.PropertyExpression));
+            return response;
+        }
 
-        public static IPropertyValidationBuilder<T, TProperty> EqualTo<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, int rule)
-            where TProperty : struct, IComparable, IComparable<TProperty>
+        public static IPropertyValidationBuilder<T, TProperty> LessThen<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, TProperty rule)
+            where TProperty : struct, IComparable, IComparable<TProperty>, IConvertible, IEquatable<TProperty>, IFormattable
+        {
+            Check.IfNotNumber(typeof(TProperty));
+            var response = new PropertyValidationBuilder<T, TProperty>(builder.PropertyRule);
+            response.SetValidationRule(new LessThenValidationRule<TProperty>(rule, builder.PropertyRule.PropertyInfo, builder.PropertyRule.PropertyExpression));
+            return response;
+        }
+
+        public static IPropertyValidationBuilder<T, TProperty> EqualTo<T, TProperty>(this IInitialPropertyValidationBuilder<T, TProperty> builder, TProperty rule)
+            where TProperty : struct, IComparable, IComparable<TProperty>, IConvertible, IEquatable<TProperty>, IFormattable
         {
             Check.IfNotNumber(typeof(TProperty));
             var response = GreaterOrEqualTo(builder, rule);
