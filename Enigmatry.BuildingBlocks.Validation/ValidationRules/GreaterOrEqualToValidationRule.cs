@@ -18,7 +18,7 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
             new[]
             {
                 "type: 'number'",
-                $"{FormlyRuleName}: {String.Format(CultureInfo.InvariantCulture, "{0}", Rule)}"
+                $"{FormlyRuleName}: {String.Format(new CultureInfo("en-US", false), "{0}", Rule)}"
             };
 
         public override string FormlyValidationMessage => HasCustomMessage
