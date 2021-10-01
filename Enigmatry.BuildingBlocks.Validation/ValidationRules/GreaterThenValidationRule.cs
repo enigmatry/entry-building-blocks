@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
 {
-    public class GreaterThenValidationRule<T> : ValidationRule<T>
+    public class GreaterThenValidationRule<T> : NumbericValidationRule<T>
         where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
     {
         public GreaterThenValidationRule(T value, PropertyInfo propertyInfo, LambdaExpression expression)
@@ -18,7 +17,7 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
             new[]
             {
                 "type: 'number'",
-                $"{FormlyRuleName}: {String.Format(CultureInfo.InvariantCulture, "{0}", Rule)} + 1"
+                $"{FormlyRuleName}: {RuleAsString} + {Increment}"
             };
 
         public override string FormlyValidationMessage => HasCustomMessage

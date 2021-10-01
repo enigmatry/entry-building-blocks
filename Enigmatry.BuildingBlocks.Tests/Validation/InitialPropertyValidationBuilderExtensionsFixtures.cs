@@ -298,7 +298,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             rule.MessageTranslationId
                 .Should().Be("validators.min");
             rule.FormlyTemplateOptions
-                .Should().BeEquivalentTo("type: 'number'", $"min: {String.Format(CultureInfo.InvariantCulture, "{0}", value)}{(isEqual ? "" : " + 1")}");
+                .Should().BeEquivalentTo("type: 'number'", $"min: {String.Format(CultureInfo.InvariantCulture, "{0}", value)}{(isEqual ? "" : $" + {GetIncrement<T>()}")}");
             rule.FormlyValidationMessage
                 .Should().Be("${field?.templateOptions?.label}:property-name: value should be more than ${field?.templateOptions?.min}:min-value:");
         }
@@ -312,7 +312,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             rule.MessageTranslationId
                 .Should().Be("validators.max");
             rule.FormlyTemplateOptions
-                .Should().BeEquivalentTo("type: 'number'", $"max: {String.Format(CultureInfo.InvariantCulture, "{0}", value)}{(isEqual ? "" : " - 1")}");
+                .Should().BeEquivalentTo("type: 'number'", $"max: {String.Format(CultureInfo.InvariantCulture, "{0}", value)}{(isEqual ? "" : $" - {GetIncrement<T>()}")}");
             rule.FormlyValidationMessage
                 .Should().Be("${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.max}:max-value:");
         }
@@ -322,6 +322,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
         private IFormlyValidationRule GetRuleByFormlyRuleName(string formlyRuleName) =>
             _validationConfiguration.ValidationRules.Single(x => x.FormlyRuleName == formlyRuleName);
+
+        private static string GetIncrement<T>() =>
+            new[] { typeof(float), typeof(decimal), typeof(double) }.Contains(typeof(T)) ? "0.1" : "1";
     }
 
     internal class MockModelValidationConfiguration : ValidationConfiguration<ValidationMockModel> { }

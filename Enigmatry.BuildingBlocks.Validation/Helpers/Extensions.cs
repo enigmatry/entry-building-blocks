@@ -9,15 +9,23 @@ namespace Enigmatry.BuildingBlocks.Validation.Helpers
     internal static class Extensions
     {
         public static bool IsNumber(this Type type) =>
+            IsFloatingPointNumber(type) ||
             new List<Type>
             {
                 typeof(short),
                 typeof(int),
                 typeof(long),
+                typeof(byte)
+            }
+            .Any(x => x == type);
+
+
+        public static bool IsFloatingPointNumber(this Type type) =>
+            new List<Type>
+            {
                 typeof(decimal),
                 typeof(double),
-                typeof(float),
-                typeof(byte)
+                typeof(float)
             }
             .Any(x => x == type);
 
