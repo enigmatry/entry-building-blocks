@@ -23,7 +23,7 @@ namespace Enigmatry.BuildingBlocks.Core.Collections
             Action<T, TCollection> updater) =>
             new CollectionUpdater<T, TCollection>(collection, false).Apply(values, matcher, creator, updater, NullDeleter<TCollection>());
 
-        private static Action<TCollection> NullDeleter<TCollection>() => item => {};
+        private static Action<TCollection> NullDeleter<TCollection>() => item => { };
 
         public static CollectionUpdater<T, TCollection> UpdateWith<T, TCollection>(
             this ICollection<TCollection> collection,

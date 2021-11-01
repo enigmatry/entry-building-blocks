@@ -6,7 +6,9 @@ namespace Enigmatry.BuildingBlocks.Localization
 {
     public static class LocalizationStartupExtensions
     {
+#pragma warning disable IDE0060 // Remove unused parameter
         public static void AppUseCultures(this IApplicationBuilder app)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             //IList<CultureInfo> supportedCultures = new List<CultureInfo>
             //{
@@ -22,7 +24,9 @@ namespace Enigmatry.BuildingBlocks.Localization
             //});
         }
 
+#pragma warning disable IDE0060 // Remove unused parameter
         public static void AppAddLocalization(this IServiceCollection services)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             // https://joonasw.net/view/aspnet-core-localization-deep-dive
             //services.AddLocalization(options => { options.ResourcesPath = "Resources"; });

@@ -127,9 +127,6 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         {
             RuleFor(x => x.OtherStringField).EmailAddress();
             RuleFor(x => x.StringField).Match(new Regex("/[A-Z]/"));
-
-            RuleFor(x => x.StringField).MaxLength(10);
-            RuleFor(x => x.OtherStringField).MaxLength(10);
         }
     }
 }
