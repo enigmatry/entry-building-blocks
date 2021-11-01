@@ -7,13 +7,13 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
     public class MaxLengthValidationRule : ValidationRule<int>
     {
         public MaxLengthValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
-            : base(value, propertyInfo, expression, String.Empty, "validators.maxLength")
+            : base(value, propertyInfo, expression, String.Empty, "validators.maxlength")
         { }
 
-        public override string FormlyRuleName => "maxLength";
+        public override string FormlyRuleName => "maxlength";
 
         public override string FormlyValidationMessage => HasCustomMessage
             ? CustomMessage
-            : "${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.maxLength}:max-value: characters";
+            : "${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.maxlength}:max-value: characters";
     }
 }

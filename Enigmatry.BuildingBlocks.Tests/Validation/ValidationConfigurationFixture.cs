@@ -37,7 +37,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             validationConfiguration.ValidationRules
                 .Where(x => x.PropertyName == nameof(ValidationMockModel.StringField).Camelize())
                 .Select(x => x.FormlyRuleName)
-                .Should().BeEquivalentTo("required", "minLength", "maxLength");
+                .Should().BeEquivalentTo("required", "minlength", "maxlength");
         }
 
 
@@ -75,8 +75,8 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         [TestCase(nameof(ValidationMockModel.IntField), "min", MockValidationModelConfiguration.CustomMessage, "")]
         [TestCase(nameof(ValidationMockModel.IntField), "max", MockValidationModelConfiguration.CustomMessage, MockValidationModelConfiguration.CustomMessageTranlsationId)]
         [TestCase(nameof(ValidationMockModel.StringField), "required", MockValidationModelConfiguration.CustomMessage, MockValidationModelConfiguration.CustomMessageTranlsationId)]
-        [TestCase(nameof(ValidationMockModel.StringField), "minLength", MockValidationModelConfiguration.CustomMessage, "")]
-        [TestCase(nameof(ValidationMockModel.StringField), "maxLength", "", "validators.maxLength")]
+        [TestCase(nameof(ValidationMockModel.StringField), "minlength", MockValidationModelConfiguration.CustomMessage, "")]
+        [TestCase(nameof(ValidationMockModel.StringField), "maxlength", "", "validators.maxlength")]
         public void ValidationConfigurationPerValidationRule(
             string propertyName,
             string validationRuleName,
@@ -127,6 +127,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         {
             RuleFor(x => x.OtherStringField).EmailAddress();
             RuleFor(x => x.StringField).Match(new Regex("/[A-Z]/"));
+
+            RuleFor(x => x.StringField).MaxLength(10);
+            RuleFor(x => x.OtherStringField).MaxLength(10);
         }
     }
 }
