@@ -1,11 +1,9 @@
 ﻿using Azure.Storage.Blobs;
-using Enigmatry.BuildingBlocks.Core.Settings;
+using Enigmatry.BuildingBlocks.BlobStorage.Azure;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
-using Enigmatry.BuildingBlocks.BlobStorage;
-using Enigmatry.BuildingBlocks.BlobStorage.Azure;
 
 namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
 {

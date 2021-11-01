@@ -50,7 +50,8 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Filters
 
             var jsonResult = new JsonResult(GetProblemDetails(context))
             {
-                StatusCode = (int)HttpStatusCode.InternalServerError, ContentType = "application/problem+json"
+                StatusCode = (int)HttpStatusCode.InternalServerError,
+                ContentType = "application/problem+json"
             };
             context.Result = jsonResult;
         }

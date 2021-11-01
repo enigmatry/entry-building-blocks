@@ -32,7 +32,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
             AssertionScope assertionScope =
                 assertion.ForCondition(Subject.StatusCode == expected).BecauseOf(because, becauseArgs);
             const string message = "Expected response to have HttpStatusCode {0}{reason}, but found {1}. Response: {2}";
-            object[] failArgs = {expected, Subject.StatusCode, Subject.Content.ReadAsStringAsync().Result};
+            object[] failArgs = { expected, Subject.StatusCode, Subject.Content.ReadAsStringAsync().Result };
             _ = assertionScope.FailWith(message, failArgs);
             return new AndConstraint<HttpResponseAssertions>(this);
         }
@@ -66,13 +66,13 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
             if (String.IsNullOrEmpty(expectedValidationMessage))
             {
                 message = "Expected response to have validation message with key: {0}{reason}, but found {1}.";
-                failArgs = new object[] {fieldName, responseContent};
+                failArgs = new object[] { fieldName, responseContent };
             }
             else
             {
                 message =
                     "Expected response to have validation message with key: {0} and message: {1} {reason}, but found {2}.";
-                failArgs = new object[] {fieldName, expectedValidationMessage, responseContent};
+                failArgs = new object[] { fieldName, expectedValidationMessage, responseContent };
             }
 
             _ = assertionScope.FailWith(message, failArgs);

@@ -33,7 +33,9 @@ namespace Enigmatry.BuildingBlocks.Tests.TemplatingEngine
 
         [UsedImplicitly]
 #pragma warning disable CA1801 // Review unused parameters
+#pragma warning disable IDE0060 // Remove unused parameter
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+#pragma warning restore IDE0060 // Remove unused parameter
 #pragma warning restore CA1801 // Review unused parameters
         {
         }

@@ -11,7 +11,9 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Validation
     public static class CamelCasePropertyNameResolver
     {
 #pragma warning disable CA1801 // Review unused parameters
+#pragma warning disable IDE0060 // Remove unused parameter
         public static string ResolvePropertyName(Type type, MemberInfo memberInfo, LambdaExpression? expression)
+#pragma warning restore IDE0060 // Remove unused parameter
 #pragma warning restore CA1801 // Review unused parameters
         {
             var propertyName = DefaultPropertyNameResolver(memberInfo, expression);
