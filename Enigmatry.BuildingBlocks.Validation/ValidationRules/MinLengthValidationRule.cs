@@ -7,13 +7,13 @@ namespace Enigmatry.BuildingBlocks.Validation.ValidationRules
     public class MinLengthValidationRule : ValidationRule<int>
     {
         public MinLengthValidationRule(int value, PropertyInfo propertyInfo, LambdaExpression expression)
-            : base(value, propertyInfo, expression, String.Empty, "validators.minlength")
+            : base(value, propertyInfo, expression, String.Empty, "validators.minLength")
         { }
 
-        public override string FormlyRuleName => "minlength";
+        public override string FormlyRuleName => "minLength";
 
         public override string FormlyValidationMessage => HasCustomMessage
             ? CustomMessage
-            : "${field?.templateOptions?.label}:property-name: should have at least ${field?.templateOptions?.minlength}:min-value: characters";
+            : "${field?.templateOptions?.label}:property-name: should have at least ${field?.templateOptions?.minLength}:min-value: characters";
     }
 }

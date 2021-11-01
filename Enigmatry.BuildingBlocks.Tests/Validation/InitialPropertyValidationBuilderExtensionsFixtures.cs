@@ -98,15 +98,15 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             _validationConfiguration.ValidationRules
                 .Should().HaveCount(1);
             _validationConfiguration.ValidationRules.Single().FormlyRuleName
-                .Should().Be("minlength");
+                .Should().Be("minLength");
             _validationConfiguration.ValidationRules.Single().CustomMessage
                 .Should().BeEmpty();
             _validationConfiguration.ValidationRules.Single().MessageTranslationId
-                .Should().Be("validators.minlength");
+                .Should().Be("validators.minLength");
             _validationConfiguration.ValidationRules.Single().FormlyTemplateOptions
-                .Should().BeEquivalentTo("minlength: 0");
+                .Should().BeEquivalentTo("minLength: 0");
             _validationConfiguration.ValidationRules.Single().FormlyValidationMessage
-                .Should().Be("${field?.templateOptions?.label}:property-name: should have at least ${field?.templateOptions?.minlength}:min-value: characters");
+                .Should().Be("${field?.templateOptions?.label}:property-name: should have at least ${field?.templateOptions?.minLength}:min-value: characters");
         }
 
         [Test]
@@ -119,15 +119,15 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
             _validationConfiguration.ValidationRules
                 .Should().HaveCount(1);
             _validationConfiguration.ValidationRules.Single().FormlyRuleName
-                .Should().Be("maxlength");
+                .Should().Be("maxLength");
             _validationConfiguration.ValidationRules.Single().CustomMessage
                 .Should().BeEmpty();
             _validationConfiguration.ValidationRules.Single().MessageTranslationId
-                .Should().Be("validators.maxlength");
+                .Should().Be("validators.maxLength");
             _validationConfiguration.ValidationRules.Single().FormlyTemplateOptions
-                .Should().BeEquivalentTo("maxlength: 100");
+                .Should().BeEquivalentTo("maxLength: 100");
             _validationConfiguration.ValidationRules.Single().FormlyValidationMessage
-                .Should().Be("${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.maxlength}:max-value: characters");
+                .Should().Be("${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.maxLength}:max-value: characters");
         }
 
         [Test]
@@ -139,19 +139,19 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
 
             _validationConfiguration.ValidationRules.Should().HaveCount(2);
 
-            var minRule = _validationConfiguration.ValidationRules.Single(x => x.FormlyRuleName == "minlength");
+            var minRule = _validationConfiguration.ValidationRules.Single(x => x.FormlyRuleName == "minLength");
             minRule.CustomMessage.Should().BeEmpty();
-            minRule.MessageTranslationId.Should().Be("validators.minlength");
-            minRule.FormlyTemplateOptions.Should().BeEquivalentTo("minlength: 10");
+            minRule.MessageTranslationId.Should().Be("validators.minLength");
+            minRule.FormlyTemplateOptions.Should().BeEquivalentTo("minLength: 10");
             minRule.FormlyValidationMessage
-                .Should().Be("${field?.templateOptions?.label}:property-name: should have at least ${field?.templateOptions?.minlength}:min-value: characters");
+                .Should().Be("${field?.templateOptions?.label}:property-name: should have at least ${field?.templateOptions?.minLength}:min-value: characters");
 
-            var maxRule = _validationConfiguration.ValidationRules.Single(x => x.FormlyRuleName == "maxlength");
+            var maxRule = _validationConfiguration.ValidationRules.Single(x => x.FormlyRuleName == "maxLength");
             maxRule.CustomMessage.Should().BeEmpty();
-            maxRule.MessageTranslationId.Should().Be("validators.maxlength");
-            maxRule.FormlyTemplateOptions.Should().BeEquivalentTo("maxlength: 10");
+            maxRule.MessageTranslationId.Should().Be("validators.maxLength");
+            maxRule.FormlyTemplateOptions.Should().BeEquivalentTo("maxLength: 10");
             maxRule.FormlyValidationMessage
-                .Should().Be("${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.maxlength}:max-value: characters");
+                .Should().Be("${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.maxLength}:max-value: characters");
         }
 
         [Test]
