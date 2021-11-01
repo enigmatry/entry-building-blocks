@@ -40,6 +40,30 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
                 .Should().BeEquivalentTo("required", "minLength", "maxLength");
         }
 
+        [TestCase(nameof(ValidationMockModel.IntField), "required", "", "validators.required")]
+        [TestCase(nameof(ValidationMockModel.IntField), "min", MockValidationModelConfiguration.CustomMessage, "")]
+        [TestCase(nameof(ValidationMockModel.IntField), "max", MockValidationModelConfiguration.CustomMessage, MockValidationModelConfiguration.CustomMessageTranlsationId)]
+        [TestCase(nameof(ValidationMockModel.StringField), "required", MockValidationModelConfiguration.CustomMessage, MockValidationModelConfiguration.CustomMessageTranlsationId)]
+        [TestCase(nameof(ValidationMockModel.StringField), "minLength", MockValidationModelConfiguration.CustomMessage, "")]
+        [TestCase(nameof(ValidationMockModel.StringField), "maxLength", "", "validators.maxLength")]
+        public void ValidationConfigurationPerValidationRule(
+            string propertyName,
+            string validationRuleName,
+            string validationMessage,
+            string validationMessageTranslationId)
+        {
+            var validationConfiguration = new MockValidationModelConfiguration();
+
+            validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == propertyName.Camelize())
+                .Should().NotBeNullOrEmpty();
+            var validationRule = validationConfiguration.ValidationRules
+                .Where(x => x.PropertyName == propertyName.Camelize())
+                .SingleOrDefault(rule => rule.FormlyRuleName == validationRuleName);
+            validationRule.Should().NotBeNull();
+            validationRule?.CustomMessage.Should().Be(validationMessage);
+            validationRule?.MessageTranslationId.Should().Be(validationMessageTranslationId);
+        }
 
         [Test]
         public void ValidationConfigurationForPatterns()
@@ -71,31 +95,36 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
                 );
         }
 
-        [TestCase(nameof(ValidationMockModel.IntField), "required", "", "validators.required")]
-        [TestCase(nameof(ValidationMockModel.IntField), "min", MockValidationModelConfiguration.CustomMessage, "")]
-        [TestCase(nameof(ValidationMockModel.IntField), "max", MockValidationModelConfiguration.CustomMessage, MockValidationModelConfiguration.CustomMessageTranlsationId)]
-        [TestCase(nameof(ValidationMockModel.StringField), "required", MockValidationModelConfiguration.CustomMessage, MockValidationModelConfiguration.CustomMessageTranlsationId)]
-        [TestCase(nameof(ValidationMockModel.StringField), "minLength", MockValidationModelConfiguration.CustomMessage, "")]
-        [TestCase(nameof(ValidationMockModel.StringField), "maxLength", "", "validators.maxLength")]
-        public void ValidationConfigurationPerValidationRule(
-            string propertyName,
-            string validationRuleName,
-            string validationMessage,
-            string validationMessageTranslationId)
+        [Test]
+        public void ValidationConfigurationForNullables()
         {
-            var validationConfiguration = new MockValidationModelConfiguration();
+            var validationConfiguration = new MockValidationModelWithNullablesConfiguration();
 
             validationConfiguration.ValidationRules
-                .Where(x => x.PropertyName == propertyName.Camelize())
-                .Should().NotBeNullOrEmpty();
-            var validationRule = validationConfiguration.ValidationRules
-                .Where(x => x.PropertyName == propertyName.Camelize())
-                .SingleOrDefault(rule => rule.FormlyRuleName == validationRuleName);
-            validationRule.Should().NotBeNull();
-            validationRule?.CustomMessage.Should().Be(validationMessage);
-            validationRule?.MessageTranslationId.Should().Be(validationMessageTranslationId);
+                .Select(x => x.PropertyName.Pascalize()).Distinct()
+                .Should().BeEquivalentTo(
+                    nameof(ValidationMockModel.NullableIntField),
+                    nameof(ValidationMockModel.NullableDoubleField),
+                    nameof(ValidationMockModel.NullableByteField)
+                );
+            validationConfiguration.ValidationRules
+                .Select(x => x.FormlyRuleName).Distinct()
+                .Should().BeEquivalentTo("required", "min", "max");
+            validationConfiguration.ValidationRules
+                .All(x => x.HasMessageTranslationId).Should().BeTrue();
+            validationConfiguration.ValidationRules
+                .All(x => x.HasCustomMessage).Should().BeFalse();
+            validationConfiguration.ValidationRules
+                .Select(x => x.FormlyValidationMessage).Distinct()
+                .Should().BeEquivalentTo(
+                    "${field?.templateOptions?.label}:property-name: is required",
+                    "${field?.templateOptions?.label}:property-name: value should be more than ${field?.templateOptions?.min}:min-value:",
+                    "${field?.templateOptions?.label}:property-name: value should be less than ${field?.templateOptions?.max}:max-value:"
+                );
         }
     }
+
+    #region Mocks
 
     internal class MockValidationModelConfiguration : ValidationConfiguration<ValidationMockModel>
     {
@@ -127,6 +156,20 @@ namespace Enigmatry.BuildingBlocks.Tests.Validation
         {
             RuleFor(x => x.OtherStringField).EmailAddress();
             RuleFor(x => x.StringField).Match(new Regex("/[A-Z]/"));
+
         }
     }
+
+    internal class MockValidationModelWithNullablesConfiguration : ValidationConfiguration<ValidationMockModel>
+    {
+        public MockValidationModelWithNullablesConfiguration()
+        {
+            RuleFor(x => x.NullableIntField).IsRequired().GreaterThen(1).LessThen(10);
+            RuleFor(x => x.NullableDoubleField).IsRequired().GreaterThen(1.1).LessThen(10.1);
+            RuleFor(x => x.NullableByteField).IsRequired().GreaterThen((byte)1).LessThen((byte)10);
+
+        }
+    }
+
+    #endregion Mocks
 }
