@@ -14,9 +14,8 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
     {
         protected override string Identifier => "HttpResponse";
 
-        public HttpResponseAssertions(HttpResponseMessage value)
+        public HttpResponseAssertions(HttpResponseMessage subject) : base(subject)
         {
-            Subject = value;
         }
 
         public AndConstraint<HttpResponseAssertions> BeBadRequest(string because = "", params object[] becauseArgs) =>

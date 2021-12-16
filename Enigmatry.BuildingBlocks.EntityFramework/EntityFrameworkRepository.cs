@@ -54,16 +54,6 @@ namespace Enigmatry.BuildingBlocks.EntityFramework
             DbSet.Add(entity);
         }
 
-        public virtual void Delete(T item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-
-            DbSet.Remove(item);
-        }
-
         public virtual void Delete(TId id)
         {
             var item = FindById(id);
@@ -71,6 +61,19 @@ namespace Enigmatry.BuildingBlocks.EntityFramework
             {
                 Delete(item);
             }
+        }
+
+
+#pragma warning disable CA1725 // Parameter names should match base declaration
+        public virtual void Delete(T item)
+#pragma warning restore CA1725 // Parameter names should match base declaration
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            DbSet.Remove(item);
         }
 
         public virtual void DeleteRange(IEnumerable<T> entities) => DbSet.RemoveRange(entities);
