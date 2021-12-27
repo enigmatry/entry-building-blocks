@@ -30,6 +30,10 @@ namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
         public async Task<bool> ExistsAsync(string path, CancellationToken cancellationToken = default) =>
             await Container.GetBlobClient(path).ExistsAsync(cancellationToken);
 
+        public async Task CopyAsync(string path, Uri from, CancellationToken cancellationToken) =>
+            await Container.GetBlobClient(path)
+                .StartCopyFromUriAsync(from, cancellationToken: cancellationToken);
+
         public async Task AddAsync(string path, Stream content, bool @override = false, CancellationToken cancellationToken = default)
         {
             var blob = Container.GetBlobClient(path);
