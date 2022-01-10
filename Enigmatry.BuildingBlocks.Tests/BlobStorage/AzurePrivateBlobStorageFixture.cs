@@ -1,12 +1,9 @@
 ﻿using Azure.Storage.Blobs;
-using Enigmatry.BuildingBlocks.Core.Settings;
 using FluentAssertions;
-using FluentAssertions.Extensions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using System;
 using System.Web;
-using Azure.Storage.Sas;
 using Enigmatry.BuildingBlocks.BlobStorage;
 using Enigmatry.BuildingBlocks.BlobStorage.Azure;
 
@@ -21,7 +18,7 @@ namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
         private const string AccountName = "testaccount";
         private const string ContainerName = "testContainer";
         private const string ResourceName = "testResource.pdf";
-        private const int SasDuration = 120;
+        private readonly TimeSpan _sasDuration = TimeSpan.FromSeconds(120);
 
         [SetUp]
         public void Setup()
@@ -32,7 +29,7 @@ namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
                 // Dummy Account key
                 AccountKey = "8ab4k8YGxQMhcAhN8S3M9R2COIVbSD3yC7HIuh5GKw1+CPamPjPQskRU97uZfKvK7C/XrZyCeDP2XUIedwRYYw==",
                 CacheTimeout = 600,
-                SasDuration = SasDuration
+                SasDuration = _sasDuration
             });
 
             var container = new BlobContainerClient(settings.Value.ConnectionString, ContainerName);
@@ -48,13 +45,11 @@ namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
             var path = _blobStorage.BuildSharedResourcePath(ResourceName, permission);
             path.Should().Contain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
-            var parameters = HttpUtility.ParseQueryString(path);
-            var startDateTime = DateTime.Parse(parameters["st"]!).ToUniversalTime();
-            var endDateTime = DateTime.Parse(parameters["se"]!).ToUniversalTime();
+            var queryParams = HttpUtility.ParseQueryString(path);
+            var expiresOn = DateTime.Parse(queryParams["se"]!).ToUniversalTime();
 
-            startDateTime.Should().BeBefore(DateTime.UtcNow);
-            endDateTime.Should().BeAfter(DateTime.UtcNow);
-            endDateTime.Should().BeLessThan(SasDuration.Seconds()).After(DateTime.UtcNow);
+            expiresOn.Should().BeAfter(DateTime.UtcNow);
+            expiresOn.Should().BeLessThan(_sasDuration).After(DateTime.UtcNow);
         }
     }
 }

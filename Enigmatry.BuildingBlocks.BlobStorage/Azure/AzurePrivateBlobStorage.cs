@@ -25,10 +25,14 @@ namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
 
         private BlobSasQueryParameters BuildSasQueryParams(string path, PrivateBlobPermission permission)
         {
+            // If you set the start time for a SAS to the current time, failures might occur intermittently for the first few minutes.
+            // This is due to different machines having slightly different current times (known as clock skew).
+            // In general, set the start time to be at least 15 minutes in the past.  Or, don't set it at all,
+            // which will make it valid immediately in all cases. The same generally applies to expiry time as well - remember that
+            // you may observe up to 15 minutes of clock skew in either direction on any request.
             var builder = new BlobSasBuilder
             {
-                StartsOn = DateTime.UtcNow,
-                ExpiresOn = DateTime.UtcNow.AddSeconds(Settings.SasDuration),
+                ExpiresOn = DateTime.UtcNow.Add(Settings.SasDuration),
                 BlobContainerName = Container.Name,
                 BlobName = path,
                 Protocol = SasProtocol.Https
