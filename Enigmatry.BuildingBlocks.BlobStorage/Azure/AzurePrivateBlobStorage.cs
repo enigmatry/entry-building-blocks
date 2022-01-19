@@ -8,38 +8,47 @@ namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
     internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
     {
         public AzurePrivateBlobStorage(BlobContainerClient container, AzureBlobStorageSettings settings)
-        : base(container, settings) { }
-
-        public string BuildSharedResourcePath(string path, PrivateBlobPermission permission = PrivateBlobPermission.Read)
+            : base(container, settings)
         {
-            if (String.IsNullOrWhiteSpace(path))
+        }
+
+        public bool VerifySharedResourcePath(Uri uri)
+        {
+            if (!AzureBlobSharedUri.TryParse(uri, out var sasUri))
             {
-                return path;
+                return false;
             }
 
-            var uri = new Uri(BuildResourcePath(path));
-            var query = BuildSasQueryParams(path, permission);
+            var validSignature = BuildSasQueryParams(sasUri.BlobName, sasUri.Permission, sasUri.ExpiresOn).Signature;
+            return sasUri.Signature == validSignature;
+        }
+
+
+        public string BuildSharedResourcePath(string relativePath,
+            PrivateBlobPermission permission = PrivateBlobPermission.Read)
+        {
+            DateTimeOffset expiresOn = DateTime.UtcNow.Add(Settings.SasDuration);
+            if (String.IsNullOrWhiteSpace(relativePath))
+            {
+                return String.Empty;
+            }
+
+            var uri = new Uri(BuildResourcePath(relativePath));
+            var query = BuildSasQueryParams(relativePath, permission, expiresOn);
             var builder = new UriBuilder(uri) { Query = query.ToString() };
             return builder.ToString();
         }
 
-        private BlobSasQueryParameters BuildSasQueryParams(string path, PrivateBlobPermission permission)
+        private BlobSasQueryParameters BuildSasQueryParams(string blob, PrivateBlobPermission permission, DateTimeOffset expiresOn)
         {
-            // If you set the start time for a SAS to the current time, failures might occur intermittently for the first few minutes.
-            // This is due to different machines having slightly different current times (known as clock skew).
-            // In general, set the start time to be at least 15 minutes in the past.  Or, don't set it at all,
-            // which will make it valid immediately in all cases. The same generally applies to expiry time as well - remember that
-            // you may observe up to 15 minutes of clock skew in either direction on any request.
             var builder = new BlobSasBuilder
             {
-                ExpiresOn = DateTime.UtcNow.Add(Settings.SasDuration),
+                ExpiresOn = expiresOn,
                 BlobContainerName = Container.Name,
-                BlobName = path,
+                BlobName = blob,
                 Protocol = SasProtocol.Https
             };
-
             builder.SetPermissions(permission.ToBlobSasPermissions());
-
             var credential = new StorageSharedKeyCredential(Settings.AccountName, Settings.AccountKey);
             return builder.ToSasQueryParameters(credential);
         }

@@ -51,6 +51,46 @@ namespace Enigmatry.BuildingBlocks.Tests.BlobStorage
             expiresOn.Should().BeAfter(DateTime.UtcNow);
             expiresOn.Should().BeLessThan(_sasDuration).After(DateTime.UtcNow);
         }
+
+        [Test]
+        public void VerifySharedResourcePathReturnsTrueWhenPathSignatureIsValid()
+        {
+            var path = "https://testaccount.blob.core.windows.net:443" +
+                       "/testContainer/testResource.pdf" +
+                       "?sv=2020-08-04&spr=https&se=2022-01-11T16%3A00%3A39Z&sr=b&sp=r" +
+                       "&sig=6vhsxACAj6lDMcBAspgKhb9uMDGsb6Rrh3Oj0V%2FLOn0%3D";
+            _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeTrue();
+        }
+
+        [Test]
+        public void VerifySharedResourcePathReturnsFalseWhenPathContainsWrongPermission()
+        {
+            var path = "https://testaccount.blob.core.windows.net:443" +
+                       "/testContainer/testResource.pdf" +
+                       "?sv=2020-08-04&spr=https&se=2022-01-11T16%3A00%3A39Z&sr=b&sp=w" +
+                       "&sig=6vhsxACAj6lDMcBAspgKhb9uMDGsb6Rrh3Oj0V%2FLOn0%3D";
+            _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
+        }
+
+        [Test]
+        public void VerifySharedResourcePathReturnsFalseWhenSignatureIsCorrupted()
+        {
+            var path = "https://testaccount.blob.core.windows.net:443" +
+                       "/testContainer/testResource.pdf" +
+                       "?sv=2020-08-04&spr=https&se=2022-01-11T16%3A00%3A39Z&sr=b&sp=r" +
+                       "&sig=6vhsxACAj6ldMCBAsPgKhb9uMDGsb6Rrh3Oj0V%2FLOn0%3D";
+            _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
+        }
+
+        [Test]
+        public void VerifySharedResourcePathReturnsFalseWhenBlobNameIsDifferent()
+        {
+            var path = "https://testaccount.blob.core.windows.net:443" +
+                       "/testContainer/testResourcee.pdf" +
+                       "?sv=2020-08-04&spr=https&se=2022-01-11T16%3A00%3A39Z&sr=b&sp=r" +
+                       "&sig=6vhsxACAj6lDMcBAspgKhb9uMDGsb6Rrh3Oj0V%2FLOn0%3D";
+            _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
+        }
     }
 }
 

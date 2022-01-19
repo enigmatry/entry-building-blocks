@@ -1,7 +1,10 @@
-﻿namespace Enigmatry.BuildingBlocks.BlobStorage
+﻿using System;
+
+namespace Enigmatry.BuildingBlocks.BlobStorage
 {
     public interface IPrivateBlobStorage : IBlobStorage
     {
-        string BuildSharedResourcePath(string path, PrivateBlobPermission permission = PrivateBlobPermission.Read);
+        string BuildSharedResourcePath(string relativePath, PrivateBlobPermission permission = PrivateBlobPermission.Read);
+        bool VerifySharedResourcePath(Uri uri);
     }
 }

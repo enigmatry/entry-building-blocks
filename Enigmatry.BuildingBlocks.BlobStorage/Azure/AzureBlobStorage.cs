@@ -22,33 +22,33 @@ namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
 
         public string Name { get; }
 
-        public string BuildResourcePath(string path) =>
-            !String.IsNullOrWhiteSpace(path)
-                ? new UriBuilder { Scheme = Container.Uri.Scheme, Host = Container.Uri.Host, Path = Path.Combine(Container.Name, path) }.ToString()
-                : path;
+        public string BuildResourcePath(string relativePath) =>
+            !String.IsNullOrWhiteSpace(relativePath)
+                ? new UriBuilder { Scheme = Container.Uri.Scheme, Host = Container.Uri.Host, Path = Path.Combine(Container.Name, relativePath) }.ToString()
+                : relativePath;
 
-        public async Task<bool> ExistsAsync(string path, CancellationToken cancellationToken = default) =>
-            await Container.GetBlobClient(path).ExistsAsync(cancellationToken);
+        public async Task<bool> ExistsAsync(string relativePath, CancellationToken cancellationToken = default) =>
+            await Container.GetBlobClient(relativePath).ExistsAsync(cancellationToken);
 
-        public async Task CopyAsync(string path, Uri from, CancellationToken cancellationToken) =>
-            await Container.GetBlobClient(path)
-                .StartCopyFromUriAsync(from, cancellationToken: cancellationToken);
+        public async Task CopyAsync(string relativePath, Uri absoluteUri, CancellationToken cancellationToken) =>
+            await Container.GetBlobClient(relativePath)
+                .StartCopyFromUriAsync(absoluteUri, cancellationToken: cancellationToken);
 
-        public async Task AddAsync(string path, Stream content, bool @override = false, CancellationToken cancellationToken = default)
+        public async Task AddAsync(string relativePath, Stream content, bool @override = false, CancellationToken cancellationToken = default)
         {
-            var blob = Container.GetBlobClient(path);
+            var blob = Container.GetBlobClient(relativePath);
             await blob.UploadAsync(content, @override, cancellationToken);
 
             var headers = ConfigureBlobHttpHeadersAsync(blob, cancellationToken);
             await blob.SetHttpHeadersAsync(headers, cancellationToken: cancellationToken);
         }
 
-        public async Task<bool> RemoveAsync(string path, CancellationToken cancellationToken = default)
+        public async Task<bool> RemoveAsync(string relativePath, CancellationToken cancellationToken = default)
         {
-            if (!path.Contains('*'))
-                return await Container.DeleteBlobIfExistsAsync(path, cancellationToken: cancellationToken);
+            if (!relativePath.Contains('*'))
+                return await Container.DeleteBlobIfExistsAsync(relativePath, cancellationToken: cancellationToken);
 
-            await foreach (var blob in Container.GetBlobsAsync(prefix: path.Replace('\\', '/').Remove(path.IndexOf('*'))))
+            await foreach (var blob in Container.GetBlobsAsync(prefix: relativePath.Replace('\\', '/').Remove(relativePath.IndexOf('*'))))
             {
                 await Container.GetBlobClient(blob.Name).DeleteAsync(cancellationToken: cancellationToken);
             }
@@ -56,8 +56,8 @@ namespace Enigmatry.BuildingBlocks.BlobStorage.Azure
             return true;
         }
 
-        public async Task<Stream> GetAsync(string path, CancellationToken cancellationToken = default) =>
-            (await Container.GetBlobClient(path).DownloadAsync(cancellationToken)).Value.Content;
+        public async Task<Stream> GetAsync(string relativePath, CancellationToken cancellationToken = default) =>
+            (await Container.GetBlobClient(relativePath).DownloadAsync(cancellationToken)).Value.Content;
 
         internal virtual BlobHttpHeaders ConfigureBlobHttpHeadersAsync(BlobClient blob, CancellationToken cancellationToken = default)
         {

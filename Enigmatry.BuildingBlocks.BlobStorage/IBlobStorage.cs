@@ -8,11 +8,11 @@ namespace Enigmatry.BuildingBlocks.BlobStorage
     public interface IBlobStorage
     {
         string Name { get; }
-        string BuildResourcePath(string path);
-        Task<bool> ExistsAsync(string path, CancellationToken cancellationToken = default);
-        Task AddAsync(string path, Stream content, bool @override = false, CancellationToken cancellationToken = default);
-        Task<bool> RemoveAsync(string path, CancellationToken cancellationToken = default);
-        Task<Stream> GetAsync(string path, CancellationToken cancellationToken = default);
-        Task CopyAsync(string path, Uri from, CancellationToken cancellationToken);
+        string BuildResourcePath(string relativeUri);
+        Task<bool> ExistsAsync(string relativeUri, CancellationToken cancellationToken = default);
+        Task AddAsync(string relativeUri, Stream content, bool @override = false, CancellationToken cancellationToken = default);
+        Task<bool> RemoveAsync(string relativeUri, CancellationToken cancellationToken = default);
+        Task<Stream> GetAsync(string relativeUri, CancellationToken cancellationToken = default);
+        Task CopyAsync(string relativeUri, Uri absoluteUri, CancellationToken cancellationToken);
     }
 }
