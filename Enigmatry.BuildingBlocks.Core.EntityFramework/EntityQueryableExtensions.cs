@@ -41,18 +41,18 @@ namespace Enigmatry.BuildingBlocks.Core.EntityFramework
                 throw new ArgumentNullException(nameof(request));
             }
 
-            query = query
+            var pagedQuery = query
                 .OrderByDynamic(request.SortBy, request.SortDirection);
 
             var skipPaging = request.PageSize == Int32.MaxValue;
 
             if (!skipPaging)
             {
-                query = query.Skip((request.PageNumber - 1) * request.PageSize)
+                pagedQuery = pagedQuery.Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize);
             }
 
-            var items = query.ToList();
+            var items = pagedQuery.ToList();
 
             var totalCount = skipPaging ? items.Count : query.Count();
 
@@ -73,18 +73,18 @@ namespace Enigmatry.BuildingBlocks.Core.EntityFramework
                 throw new ArgumentNullException(nameof(request));
             }
 
-            query = query
+            var pagedQuery = query
                 .OrderByDynamic(request.SortBy, request.SortDirection);
 
             var skipPaging = request.PageSize == Int32.MaxValue;
 
             if (!skipPaging)
             {
-                query = query.Skip((request.PageNumber - 1) * request.PageSize)
+                pagedQuery = pagedQuery.Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize);
             }
 
-            var items = await query.ToListAsync(cancellationToken);
+            var items = await pagedQuery.ToListAsync(cancellationToken);
 
             var totalCount = skipPaging ? items.Count : await query.CountAsync(cancellationToken);
 
