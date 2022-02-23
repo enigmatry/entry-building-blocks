@@ -3,15 +3,15 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Enigmatry.BuildingBlocks.AspNetCore.Tests
+namespace Enigmatry.BuildingBlocks.Core.Helpers
 {
     public static class EmbeddedResource
     {
-        public static string ReadResourceContent(string namespaceAndFileName)
+        public static string ReadResourceContent(string namespaceAndFileName, Assembly assembly)
         {
             try
             {
-                using Stream? stream = typeof(EmbeddedResource).GetTypeInfo().Assembly.GetManifestResourceStream(namespaceAndFileName);
+                using Stream? stream = assembly.GetManifestResourceStream(namespaceAndFileName);
                 if (stream == null)
                 {
                     return String.Empty;
