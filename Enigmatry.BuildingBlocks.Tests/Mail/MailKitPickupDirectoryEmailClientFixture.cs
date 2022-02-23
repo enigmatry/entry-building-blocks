@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FluentAssertions;
+using System.Text;
+using System.Threading.Tasks;
 using Enigmatry.BuildingBlocks.Email;
 using Enigmatry.BuildingBlocks.Email.MailKit;
-using NUnit.Framework;
 using Enigmatry.BuildingBlocks.Tests.Infrastructure;
+using FluentAssertions;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using System.Net.Mail;
-using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Enigmatry.BuildingBlocks.Tests.Mail
 {
@@ -24,7 +24,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Mail
         public void Setup()
         {
             var configuration = new TestConfigurationBuilder()
-    .Build();
+                .Build();
 
             var webHost = WebHost.CreateDefaultBuilder()
                 .UseConfiguration(configuration)
@@ -35,10 +35,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Mail
         }
 
         [Test]
-        public void ClientShouldGetResolved()
-        {
-            _client.Should().BeOfType(typeof(MailKitPickupDirectoryEmailClient));
-        }
+        public void ClientShouldGetResolved() => _client.Should().BeOfType(typeof(MailKitPickupDirectoryEmailClient));
 
         [Test]
         public async Task TestSendMessage()
@@ -46,22 +43,33 @@ namespace Enigmatry.BuildingBlocks.Tests.Mail
             var messageBody = "This is a test message";
             var sender = "sender@enigmatry.com";
             var receiver = "receiver@enigmatry.com";
+            var attachment1FileName = "test1.txt";
+            var attachment1Contents = "This is a test";
+            var attachment2FileName = "test2.txt";
+            var attachment2Contents = "This is another test";
 
             var message = new EmailMessage(
+                new List<string> { receiver },
                 "Test message",
-                messageBody,
-                new List<string>() { receiver })
-            {
-                From = new MailAddress(sender)
-            };
+                messageBody)
+            { From = new EmailMessageAddress(sender) };
+            message.Attachments.Add(attachment1FileName, Encoding.ASCII.GetBytes(attachment1Contents));
+            message.Attachments.Add(attachment2FileName, Encoding.ASCII.GetBytes(attachment2Contents));
             await _client.SendAsync(message);
-            var fullMessage = File.ReadAllText(Directory.GetFiles(TestContext.CurrentContext.TestDirectory, "*.eml").First());
+
+            var pathToFile = new DirectoryInfo(TestContext.CurrentContext.TestDirectory).EnumerateFiles("*.eml")
+                .OrderByDescending(f => f.LastWriteTime).First().FullName;
+
+            var fullMessage =
+                await File.ReadAllTextAsync(pathToFile);
 
             fullMessage.Should().Contain($"From: {sender}");
             fullMessage.Should().Contain($"To: {receiver}");
             fullMessage.Should().Contain(messageBody);
+            fullMessage.Should().Contain(attachment1Contents);
+            fullMessage.Should().Contain($"Content-Type: text/plain; name={attachment1FileName}");
+            fullMessage.Should().Contain(attachment2Contents);
+            fullMessage.Should().Contain($"Content-Disposition: attachment; filename={attachment2FileName}");
         }
-
-
     }
 }

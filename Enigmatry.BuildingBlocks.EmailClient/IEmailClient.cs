@@ -6,7 +6,7 @@ namespace Enigmatry.BuildingBlocks.Email
 {
     public interface IEmailClient
     {
-        Task SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default);
-        Task SendBulkAsync(IEnumerable<EmailMessage> emailMessages, CancellationToken cancellationToken = default);
+        Task<EmailMessageSendResult> SendAsync(EmailMessage emailMessage, CancellationToken cancellationToken = default);
+        Task<IEnumerable<EmailMessageSendResult>> SendBulkAsync(IEnumerable<EmailMessage> emailMessages, CancellationToken cancellationToken = default);
     }
 }
