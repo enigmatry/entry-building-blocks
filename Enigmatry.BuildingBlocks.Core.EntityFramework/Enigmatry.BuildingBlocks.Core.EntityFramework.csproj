@@ -22,8 +22,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="10.1.1" />
-        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.14" />
+        <PackageReference Include="AutoMapper" Version="11.0.1" />
+        <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.18" />
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
     </ItemGroup>
 
     <ItemGroup>

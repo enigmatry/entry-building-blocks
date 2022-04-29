@@ -14,9 +14,9 @@ namespace Enigmatry.BuildingBlocks.Core.Collections
         {
             _target = target ?? throw new ArgumentNullException(nameof(target));
             _applyRemove = applyRemove;
-            Added = new ReadOnlyCollection<(T, TCollection)>(new (T, TCollection)[0]);
-            Removed = new ReadOnlyCollection<(T, TCollection)>(new (T, TCollection)[0]);
-            Updated = new ReadOnlyCollection<(T, TCollection)>(new (T, TCollection)[0]);
+            Added = new ReadOnlyCollection<(T, TCollection)>(Array.Empty<(T, TCollection)>());
+            Removed = new ReadOnlyCollection<(T, TCollection)>(Array.Empty<(T, TCollection)>());
+            Updated = new ReadOnlyCollection<(T, TCollection)>(Array.Empty<(T, TCollection)>());
         }
 
         public IReadOnlyCollection<(T source, TCollection destination)> Added { get; private set; }

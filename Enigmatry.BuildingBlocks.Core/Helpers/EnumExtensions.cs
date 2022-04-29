@@ -38,7 +38,7 @@ namespace Enigmatry.BuildingBlocks.Core.Helpers
             Type enumType = o!.GetType();
             FieldInfo? field = enumType.GetField(o.ToString() ?? String.Empty);
             Type attributeType = typeof(TDescriptionAttribute);
-            var attributes = field != null ? field.GetCustomAttributes(attributeType, false) : new object[0];
+            var attributes = field != null ? field.GetCustomAttributes(attributeType, false) : Array.Empty<object>();
             return attributes.Length == 0 ? null : (TDescriptionAttribute)attributes[0];
         }
     }
