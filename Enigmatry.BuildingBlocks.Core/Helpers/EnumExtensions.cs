@@ -22,7 +22,8 @@ namespace Enigmatry.BuildingBlocks.Core.Helpers
             return attribute is DisplayAttribute attr ? attr.Name : String.Empty;
         }
 
-        public static string GetDescription<TEnum>(this TEnum o) => o.GetAttribute<TEnum, DescriptionAttribute>().Description;
+        public static string GetDescription<TEnum>(this TEnum o) =>
+            o.GetAttribute<TEnum, DescriptionAttribute>().Description;
 
         public static TDescriptionAttribute GetAttribute<TEnum, TDescriptionAttribute>(this TEnum o)
             where TDescriptionAttribute : DescriptionAttribute
