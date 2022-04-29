@@ -28,7 +28,8 @@ namespace Enigmatry.BuildingBlocks.Swagger
         /// <param name="clientId">The Client Id used by the OAuth2 Client</param>
         /// <param name="clientSecret">The optional Client Secret used by the OAuth2 Client</param>
         /// <param name="path">The internal swagger route (must start with '/')</param>
-        public static void AppUseSwaggerWithOAuth2Client(this IApplicationBuilder app, string clientId, string clientSecret = "", string path = "")
+        public static void AppUseSwaggerWithOAuth2Client(this IApplicationBuilder app, string clientId,
+            string clientSecret = "", string path = "")
         {
             app.UseOpenApi();
             app.UseSwaggerUi3(options =>
@@ -85,19 +86,20 @@ namespace Enigmatry.BuildingBlocks.Swagger
             services.AddOpenApiDocument(settings =>
             {
                 settings.SetBasicSwaggerSettings(appTitle, appVersion);
-                settings.AddSecurity("oauth2", new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                settings.AddSecurity("oauth2",
+                    new OpenApiSecurityScheme
                     {
-                        AuthorizationCode = new OpenApiOAuthFlow
+                        Type = OpenApiSecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows
                         {
-                            AuthorizationUrl = authorizationUrl,
-                            TokenUrl = tokenUrl,
-                            Scopes = scopes
+                            AuthorizationCode = new OpenApiOAuthFlow
+                            {
+                                AuthorizationUrl = authorizationUrl,
+                                TokenUrl = tokenUrl,
+                                Scopes = scopes
+                            }
                         }
-                    }
-                });
+                    });
                 settings.OperationProcessors.Add(new OperationSecurityScopeProcessor("oauth2"));
             });
         }
@@ -130,24 +132,26 @@ namespace Enigmatry.BuildingBlocks.Swagger
             services.AddOpenApiDocument(settings =>
             {
                 settings.SetBasicSwaggerSettings(appTitle, appVersion);
-                settings.AddSecurity("oauth2", new OpenApiSecurityScheme
-                {
-                    Type = OpenApiSecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                settings.AddSecurity("oauth2",
+                    new OpenApiSecurityScheme
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        Type = OpenApiSecuritySchemeType.OAuth2,
+                        Flows = new OpenApiOAuthFlows
                         {
-                            AuthorizationUrl = authorizationUrl,
-                            TokenUrl = tokenUrl,
-                            Scopes = scopes
+                            Implicit = new OpenApiOAuthFlow
+                            {
+                                AuthorizationUrl = authorizationUrl,
+                                TokenUrl = tokenUrl,
+                                Scopes = scopes
+                            }
                         }
-                    }
-                });
+                    });
                 settings.OperationProcessors.Add(new OperationSecurityScopeProcessor("oauth2"));
             });
         }
 
-        private static void SetBasicSwaggerSettings(this AspNetCoreOpenApiDocumentGeneratorSettings settings, string appTitle, string appVersion)
+        private static void SetBasicSwaggerSettings(this AspNetCoreOpenApiDocumentGeneratorSettings settings,
+            string appTitle, string appVersion)
         {
             settings.DocumentName = appVersion;
             settings.Title = appTitle;
