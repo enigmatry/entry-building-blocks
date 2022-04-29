@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Rest;
-using Newtonsoft.Json;
 
 namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
 {
@@ -10,14 +10,14 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
         public static async Task<T?> DeserializeAsync<T>(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(content);
+            return JsonSerializer.Deserialize<T>(content);
         }
 
         public static async Task<T?> DeserializeWithStatusCodeCheckAsync<T>(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
             return response.IsSuccessStatusCode
-                ? JsonConvert.DeserializeObject<T>(content)
+                ? JsonSerializer.Deserialize<T>(content)
                 : throw DisposeResponseContentAndThrowException(response, content);
         }
 

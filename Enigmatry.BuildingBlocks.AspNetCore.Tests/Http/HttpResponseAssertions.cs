@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
 {
@@ -43,7 +43,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
             var errorFound = false;
             try
             {
-                var json = JsonConvert.DeserializeObject<ValidationProblemDetails>(responseContent);
+                var json = JsonSerializer.Deserialize<ValidationProblemDetails>(responseContent);
 
                 if (json != null && json.Errors.TryGetValue(fieldName, out var errorsField))
                 {
