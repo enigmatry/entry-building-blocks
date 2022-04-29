@@ -19,7 +19,7 @@ namespace Enigmatry.BuildingBlocks.Core.Helpers
                 .First()
                 .GetCustomAttribute(typeof(DisplayAttribute));
 
-            return attribute is DisplayAttribute attr ? attr.Name : String.Empty;
+            return (attribute is DisplayAttribute attr ? attr.Name : String.Empty) ?? String.Empty;
         }
 
         public static string GetDescription<TEnum>(this TEnum o) =>
