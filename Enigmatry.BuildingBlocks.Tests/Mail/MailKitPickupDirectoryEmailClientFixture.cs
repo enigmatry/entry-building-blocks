@@ -49,10 +49,9 @@ namespace Enigmatry.BuildingBlocks.Tests.Mail
             var attachment2Contents = "This is another test";
 
             var message = new EmailMessage(
-                new List<string> { receiver },
+                new List<string> {receiver},
                 "Test message",
-                messageBody)
-            { From = new EmailMessageAddress(sender) };
+                messageBody) {From = new EmailMessageAddress(sender)};
             message.Attachments.Add(attachment1FileName, Encoding.ASCII.GetBytes(attachment1Contents));
             message.Attachments.Add(attachment2FileName, Encoding.ASCII.GetBytes(attachment2Contents));
             await _client.SendAsync(message);
