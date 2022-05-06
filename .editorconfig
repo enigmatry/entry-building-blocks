@@ -103,10 +103,12 @@ csharp_style_prefer_index_operator = true:warning
 csharp_style_prefer_range_operator = true:suggestion
 csharp_style_throw_expression = true:warning
 csharp_style_unused_value_assignment_preference = discard_variable:error
-csharp_style_unused_value_expression_statement_preference = discard_variable:error
+csharp_style_unused_value_expression_statement_preference = discard_variable:silent
 
 # 'using' directive preferences
 csharp_using_directive_placement = outside_namespace:error
+# Namespace preferences
+csharp_style_namespace_declarations = file_scoped:suggestion
 ############################### 
 # C# Formatting Rules         # 
 ############################### 
@@ -162,46 +164,46 @@ dotnet_naming_style.underscore_prefix_style.required_prefix     = _
 dotnet_naming_style.interface_prefix_style.capitalization       = pascal_case
 dotnet_naming_style.interface_prefix_style.required_prefix      = I
 # Use PascalCase for types
-dotnet_naming_rule.types_should_be_pascal_case.severity         = suggestion 
+dotnet_naming_rule.types_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.types_should_be_pascal_case.symbols          = types 
-dotnet_naming_rule.types_should_be_pascal_case.style            = pascal_case_style 
+dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_symbols.types.applicable_kinds                    = class,struct,enum
 dotnet_naming_symbols.types.applicable_accessibilities          = * 
 # Use camelCase for parameters and local variables
-dotnet_naming_rule.locals_should_be_camel_case.severity         = suggestion 
+dotnet_naming_rule.locals_should_be_camel_case.severity = suggestion
 dotnet_naming_rule.locals_should_be_camel_case.symbols          = locals 
-dotnet_naming_rule.locals_should_be_camel_case.style            = camel_case_style 
+dotnet_naming_rule.locals_should_be_camel_case.style = camel_case_style
 dotnet_naming_symbols.locals.applicable_kinds                   = parameter
 # Use PascalCase for constant fields   
-dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion 
+dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
-dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_style 
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_symbols.constant_fields.applicable_kinds            = field 
 dotnet_naming_symbols.constant_fields.applicable_accessibilities  = * 
 dotnet_naming_symbols.constant_fields.required_modifiers          = const
 # Use PascalCase for readonly static fields   
-dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.severity = suggestion 
+dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.symbols  = static_readonly_fields
-dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.style    = pascal_case_style 
+dotnet_naming_rule.static_readonly_fields_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_symbols.static_readonly_fields.applicable_kinds            = field 
 dotnet_naming_symbols.static_readonly_fields.applicable_accessibilities  = * 
 dotnet_naming_symbols.static_readonly_fields.required_modifiers          = static,readonly
 # Use underscore prefix and camel case for (non-constant) fields
-dotnet_naming_rule.fields_should_be_prefixed_underscore.severity = suggestion 
+dotnet_naming_rule.fields_should_be_prefixed_underscore.severity = suggestion
 dotnet_naming_rule.fields_should_be_prefixed_underscore.symbols  = fields 
-dotnet_naming_rule.fields_should_be_prefixed_underscore.style    = underscore_prefix_style 
+dotnet_naming_rule.fields_should_be_prefixed_underscore.style = underscore_prefix_style
 dotnet_naming_symbols.fields.applicable_kinds                    = field 
 dotnet_naming_symbols.fields.applicable_accessibilities          = *
 # Use PascalCase for all members except fields
-dotnet_naming_rule.members_should_be_pascal_case.severity       = suggestion 
+dotnet_naming_rule.members_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.members_should_be_pascal_case.symbols        = members 
-dotnet_naming_rule.members_should_be_pascal_case.style          = pascal_case_style 
+dotnet_naming_rule.members_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_symbols.members.applicable_kinds                  = property,method,event,delegate
 dotnet_naming_symbols.members.applicable_accessibilities        = *
 # Use PascalCase and I prefix for interfaces
-dotnet_naming_rule.interfaces_should_be_prefixed_with_I.severity   = suggestion 
+dotnet_naming_rule.interfaces_should_be_prefixed_with_i.severity = suggestion
 dotnet_naming_rule.interfaces_should_be_prefixed_with_I.symbols    = interfaces 
-dotnet_naming_rule.interfaces_should_be_prefixed_with_I.style      = interface_prefix_style 
+dotnet_naming_rule.interfaces_should_be_prefixed_with_i.style = interface_prefix_style
 dotnet_naming_symbols.interfaces.applicable_kinds                  = interface
 dotnet_naming_symbols.interfaces.applicable_accessibilities        = *
 ##################################
@@ -228,7 +230,7 @@ dotnet_diagnostic.CA1030.severity = suggestion # CA1030: Use events where approp
 dotnet_diagnostic.CA1031.severity = silent # CA1031: Do not catch general exception types
 dotnet_diagnostic.CA1032.severity = silent # CA1032: Implement standard exception constructors
 dotnet_diagnostic.CA1033.severity = error # CA1033: Interface methods should be callable by child types
-dotnet_diagnostic.CA1034.severity = error # CA1034: Nested types should not be visible
+dotnet_diagnostic.CA1034.severity = none # CA1034: Nested types should not be visible
 dotnet_diagnostic.CA1036.severity = silent # CA1036: Override methods on comparable types
 dotnet_diagnostic.CA1040.severity = error # CA1040: Avoid empty interfaces
 dotnet_diagnostic.CA1041.severity = error # CA1041: Provide ObsoleteAttribute message
@@ -287,8 +289,8 @@ dotnet_diagnostic.CA1715.severity = warning # CA1715: Identifiers should have co
 dotnet_diagnostic.CA1716.severity = suggestion # CA1716: Identifiers should not match keywords
 dotnet_diagnostic.CA1717.severity = suggestion # CA1717: Only FlagsAttribute enums should have plural names
 dotnet_diagnostic.CA1720.severity = warning # CA1720: Identifiers should not contain type names
-dotnet_diagnostic.CA1721.severity = warning # CA1721: Property names should not match get methods
-dotnet_diagnostic.CA1724.severity = warning # CA1724: Type names should not match namespaces
+dotnet_diagnostic.CA1721.severity = none # CA1721: Property names should not match get methods
+dotnet_diagnostic.CA1724.severity = none # CA1724: Type names should not match namespaces
 dotnet_diagnostic.CA1725.severity = error # CA1725: Parameter names should match base declaration
 dotnet_diagnostic.CA1801.severity = error # CA1801: Review unused parameters
 dotnet_diagnostic.CA1802.severity = error # CA1802: Use Literals Where Appropriate
@@ -524,8 +526,8 @@ dotnet_diagnostic.IDE0044.severity = warning # IDE0044: Add readonly modifier
 dotnet_diagnostic.IDE0044WithoutSuggestion.severity = warning # IDE0044: Add readonly modifier
 dotnet_diagnostic.IDE0045.severity = warning # IDE0045: Convert to conditional expression
 dotnet_diagnostic.IDE0045WithoutSuggestion.severity = warning # IDE0045: Convert to conditional expression
-dotnet_diagnostic.IDE0046.severity = warning # IDE0046: Convert to conditional expression
-dotnet_diagnostic.IDE0046WithoutSuggestion.severity = warning # IDE0046: Convert to conditional expression
+dotnet_diagnostic.IDE0046.severity = none # IDE0046: Convert to conditional expression
+dotnet_diagnostic.IDE0046WithoutSuggestion.severity = none # IDE0046: Convert to conditional expression
 dotnet_diagnostic.IDE0047.severity = warning # IDE0047: Remove unnecessary parentheses
 dotnet_diagnostic.IDE0048.severity = suggestion # IDE0048: Add parentheses for clarity
 dotnet_diagnostic.IDE0048WithoutSuggestion.severity = suggestion # IDE0048: Add parentheses for clarity
@@ -574,3 +576,13 @@ dotnet_diagnostic.IDE1005.severity = error # IDE1005: Delegate invocation can be
 dotnet_diagnostic.IDE1005WithoutSuggestion.severity = error # IDE1005: Delegate invocation can be simplified
 dotnet_diagnostic.IDE1006.severity = error # IDE1006: Naming styles
 dotnet_diagnostic.IDE1006WithoutSuggestion.severity = error # IDE1006: Naming styles
+
+[*Fixture.cs]
+dotnet_diagnostic.CA1707.severity = none # CA1707: Identifiers should not contain underscores
+
+[*Test.cs]
+dotnet_diagnostic.CA1707.severity = none # CA1707: Identifiers should not contain underscores
+
+[*QueryableExtensions.cs]
+dotnet_diagnostic.CA1307.severity = none # CA1307: Specify StringComparison for clarity - suppress for EF Core queries
+
