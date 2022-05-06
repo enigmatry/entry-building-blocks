@@ -10,16 +10,23 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
         public static async Task<T?> DeserializeAsync<T>(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(content);
+            return Deserialize<T>(content);
         }
 
         public static async Task<T?> DeserializeWithStatusCodeCheckAsync<T>(this HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
             return response.IsSuccessStatusCode
-                ? JsonSerializer.Deserialize<T>(content)
+                ? Deserialize<T>(content)
                 : throw DisposeResponseContentAndThrowException(response, content);
         }
+
+        private static T? Deserialize<T>(string content) =>
+            JsonSerializer.Deserialize<T>(content,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
 
         public static async Task EnsureSuccessStatusCodeAsync(this HttpResponseMessage response)
         {
@@ -30,14 +37,16 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
             }
         }
 
-        private static HttpOperationException DisposeResponseContentAndThrowException(HttpResponseMessage response, string content)
+        private static HttpOperationException DisposeResponseContentAndThrowException(HttpResponseMessage response,
+            string content)
         {
             // Disposing the content should help users: If users call EnsureSuccessStatusCode(), an exception is
             // thrown if the statusCode status code is != 2xx. I.e. the behavior is similar to a failed request (e.g.
             // connection failure). Users are not expected to dispose the content in this case: If an exception is 
             // thrown, the object is responsible fore cleaning up its state.
             response.Content?.Dispose();
-            throw new HttpOperationException($"StatusCode: {response.StatusCode}, ReasonPhrase: {response.ReasonPhrase}, RequestUri: {response.RequestMessage.RequestUri}, Content: {content}.");
+            throw new HttpOperationException(
+                $"StatusCode: {response.StatusCode}, ReasonPhrase: {response.ReasonPhrase}, RequestUri: {response.RequestMessage.RequestUri}, Content: {content}.");
         }
     }
 }

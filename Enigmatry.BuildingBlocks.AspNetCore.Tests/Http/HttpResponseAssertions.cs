@@ -43,7 +43,8 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
             var errorFound = false;
             try
             {
-                var json = JsonSerializer.Deserialize<ValidationProblemDetails>(responseContent);
+                var json = JsonSerializer.Deserialize<ValidationProblemDetails>(responseContent,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 if (json != null && json.Errors.TryGetValue(fieldName, out var errorsField))
                 {
