@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-    <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="6.0.1" />
-    <PackageReference Include="AspNetCore.HealthChecks.System" Version="6.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.System" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>

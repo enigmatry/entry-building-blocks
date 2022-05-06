@@ -65,8 +65,7 @@
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.BlobStorage\Enigmatry.BuildingBlocks.BlobStorage.csproj" />
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.Csv\Enigmatry.BuildingBlocks.Csv.csproj" />
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.EmailClient\Enigmatry.BuildingBlocks.Email.csproj" />
-    <ProjectReference
-      Include="..\Enigmatry.BuildingBlocks.TemplatingEngine\Enigmatry.BuildingBlocks.TemplatingEngine.csproj" />
+    <ProjectReference Include="..\Enigmatry.BuildingBlocks.TemplatingEngine\Enigmatry.BuildingBlocks.TemplatingEngine.csproj" />
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.Validation\Enigmatry.BuildingBlocks.Validation.csproj" />
   </ItemGroup>
 
