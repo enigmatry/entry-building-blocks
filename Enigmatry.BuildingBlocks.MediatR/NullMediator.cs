@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
@@ -19,5 +20,15 @@ namespace Enigmatry.BuildingBlocks.MediatR
 
         public Task<object?> Send(object request, CancellationToken cancellationToken = default) =>
             Task.FromResult(default(object));
+
+#if NETSTANDARD2_1_OR_GREATER
+        public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamRequest<TResponse> request,
+            CancellationToken cancellationToken = new()) =>
+            throw new System.NotImplementedException();
+
+        public IAsyncEnumerable<object?> CreateStream(object request,
+            CancellationToken cancellationToken = new()) =>
+            throw new System.NotImplementedException();
+#endif
     }
 }
