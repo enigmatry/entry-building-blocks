@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
 {
+    [Obsolete("Use HttpResponseMessageAssertionsExtensions")]
     public class HttpResponseAssertions : ReferenceTypeAssertions<HttpResponseMessage, HttpResponseAssertions>
     {
         protected override string Identifier => "HttpResponse";
@@ -18,9 +19,11 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
         {
         }
 
+        [Obsolete("Use HttpResponseMessageAssertionsExtensions")]
         public AndConstraint<HttpResponseAssertions> BeBadRequest(string because = "", params object[] becauseArgs) =>
             HaveStatusCode(HttpStatusCode.BadRequest, because, becauseArgs);
 
+        [Obsolete("Use HttpResponseMessageAssertionsExtensions")]
         public AndConstraint<HttpResponseAssertions> BeNotFound(string because = "", params object[] becauseArgs) =>
             HaveStatusCode(HttpStatusCode.NotFound, because, becauseArgs);
 
