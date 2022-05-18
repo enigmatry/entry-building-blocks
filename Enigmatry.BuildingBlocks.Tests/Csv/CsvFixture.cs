@@ -1,4 +1,5 @@
-﻿using Enigmatry.BuildingBlocks.Csv;
+﻿using System;
+using Enigmatry.BuildingBlocks.Csv;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -15,21 +16,24 @@ namespace Enigmatry.BuildingBlocks.Tests.Csv
         [Test]
         public void TestWriteRecords()
         {
-            var users = new List<User>()
+            Console.WriteLine(DateTimeOffset.Now);
+            var users = new List<User>
             {
-                new User() {
+                new User {
                     FirstName = "John",
                     LastName = "Doe",
-                    Age = 30
+                    Age = 30,
+                    LastLogon = new DateTimeOffset(2022, 4, 30, 9, 30, 0, TimeSpan.FromHours(2)),
+                    SomeDateTime = new DateTime(2022, 4, 27, 9, 30, 0)
                 }
             };
 
             var helper = new CsvHelper<User>();
-            var bytes = helper.WriteRecords(users, CultureInfo.InvariantCulture);
+            var bytes = helper.WriteRecords(users, CultureInfo.GetCultureInfo("nl-NL"));
             var result = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
 
-            result.Should().Contain("FirstName,LastName,Age");
-            result.Should().Contain("John,Doe,30");
+            result.Should().Contain("FirstName;LastName;Age;Ingelogd op;SomeDateTime");
+            result.Should().Contain("John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00");
         }
 
         [Test]
