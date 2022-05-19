@@ -15,8 +15,10 @@ namespace Enigmatry.BuildingBlocks.Csv
     {
         public IEnumerable<T> GetRecords(Stream stream, CultureInfo culture)
         {
+            var classMap = CreateClassMap(culture);
             using var textReader = new StreamReader(stream);
             using var reader = new CsvReader(textReader, culture);
+            reader.Context.RegisterClassMap(classMap);
             return reader.GetRecords<T>().ToList();
         }
 

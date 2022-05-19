@@ -39,12 +39,13 @@ namespace Enigmatry.BuildingBlocks.Tests.Csv
         [Test]
         public void TestReadRecords()
         {
-            var csv = "FirstName,LastName,Age\nJohn,Doe,30";
+            var csv = "FirstName;LastName;Age;Ingelogd op;SomeDateTime\n" +
+                      "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00";
             var bytes = Encoding.ASCII.GetBytes(csv);
             using var stream = new MemoryStream(bytes);
 
             var helper = new CsvHelper<User>();
-            var result = helper.GetRecords(stream, CultureInfo.InvariantCulture);
+            var result = helper.GetRecords(stream, CultureInfo.GetCultureInfo("nl-NL"));
 
             result.First().FirstName.Should().Be("John");
             result.First().LastName.Should().Be("Doe");
