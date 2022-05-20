@@ -13,5 +13,6 @@ namespace Enigmatry.BuildingBlocks.Core.Settings
         public bool UsePickupDirectory { get; set; }
         public string PickupDirectoryLocation { get; set; } = String.Empty;
         public string From { get; set; } = String.Empty;
+        public string CatchAllAddress { get; set; } = String.Empty;
     }
 }

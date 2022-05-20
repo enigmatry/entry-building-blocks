@@ -29,9 +29,16 @@ namespace Enigmatry.BuildingBlocks.Email.MailKit
                 message.From.Add(email.From.ToMailboxAddress());
             }
 
-            message.To.AddRange(email.To.Select(address => address.ToMailboxAddress()));
-            message.Cc.AddRange(email.Cc.Select(address => address.ToMailboxAddress()));
-            message.Bcc.AddRange(email.Bcc.Select(address => address.ToMailboxAddress()));
+            if (settings.CatchAllAddress.HasContent())
+            {
+                message.To.TryAdd(settings.CatchAllAddress);
+            }
+            else
+            {
+                message.To.AddRange(email.To.Select(address => address.ToMailboxAddress()));
+                message.Cc.AddRange(email.Cc.Select(address => address.ToMailboxAddress()));
+                message.Bcc.AddRange(email.Bcc.Select(address => address.ToMailboxAddress()));
+            }
 
             message.Subject = email.Subject;
 
