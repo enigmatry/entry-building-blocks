@@ -8,7 +8,7 @@ using FluentAssertions.Primitives;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
+namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson.Http
 {
     [PublicAPI]
     public static class HttpResponseMessageAssertionsExtensions

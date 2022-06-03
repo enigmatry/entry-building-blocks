@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Rest;
 
-namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
+namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson.Http
 {
     public static class HttpResponseMessageExtensions
     {
