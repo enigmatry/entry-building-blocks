@@ -22,11 +22,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
         }
 
         private static T? Deserialize<T>(string content) =>
-            JsonSerializer.Deserialize<T>(content,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+            JsonSerializer.Deserialize<T>(content, HttpSerializationOptions.Options);
 
         public static async Task EnsureSuccessStatusCodeAsync(this HttpResponseMessage response)
         {

@@ -25,25 +25,25 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
 
         public static async Task PutAsync<T>(this HttpClient client, string uri, T content)
         {
-            HttpResponseMessage response = await client.PutAsJsonAsync(uri, content);
+            HttpResponseMessage response = await client.PutAsJsonAsync(uri, content, HttpSerializationOptions.Options);
             await response.EnsureSuccessStatusCodeAsync();
         }
 
         public static async Task<TResponse?> PutAsync<T, TResponse>(this HttpClient client, string uri, T content)
         {
-            HttpResponseMessage response = await client.PutAsJsonAsync(uri, content);
+            HttpResponseMessage response = await client.PutAsJsonAsync(uri, content, HttpSerializationOptions.Options);
             return await response.DeserializeWithStatusCodeCheckAsync<TResponse>();
         }
 
         public static async Task PostAsync<T>(this HttpClient client, string uri, T content)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync(uri, content);
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, content, HttpSerializationOptions.Options);
             await response.EnsureSuccessStatusCodeAsync();
         }
 
         public static async Task<TResponse?> PostAsync<T, TResponse>(this HttpClient client, string uri, T content)
         {
-            HttpResponseMessage response = await client.PostAsJsonAsync(uri, content);
+            HttpResponseMessage response = await client.PostAsJsonAsync(uri, content, HttpSerializationOptions.Options);
             return await response.DeserializeWithStatusCodeCheckAsync<TResponse>();
         }
     }
