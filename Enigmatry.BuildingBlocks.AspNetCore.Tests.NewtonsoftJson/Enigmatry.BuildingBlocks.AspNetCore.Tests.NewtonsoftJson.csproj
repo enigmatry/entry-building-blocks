@@ -5,7 +5,7 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <Authors>awa</Authors>
     <Company>Enigmatry</Company>
     <Product>Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson</Product>
     <Description>Building Block for writing tests in a Blueprint AspNetCore based project with Newtonsoft Json</Description>
@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.8" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
   </ItemGroup>
 
   <ItemGroup>
