@@ -13,6 +13,7 @@ namespace Enigmatry.BuildingBlocks.Core.Helpers
                 throw new ArgumentNullException(nameof(desiredObject));
             }
 
+            // Once we move to .net core, we'd like to replace BinaryFormatter with Json one.
             using var stream = new MemoryStream();
             var formatter = new BinaryFormatter();
             formatter.Serialize(stream, desiredObject);

@@ -4,6 +4,7 @@
     <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <ItemGroup>

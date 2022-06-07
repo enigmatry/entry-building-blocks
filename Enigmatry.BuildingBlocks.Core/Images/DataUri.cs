@@ -11,6 +11,11 @@ namespace Enigmatry.BuildingBlocks.Core.Images
 
         public static DataUri CreateFrom(byte[] array, string mimeType)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+
             if (array.Length == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(array), @"Cannot create data uri without a source for image!");
