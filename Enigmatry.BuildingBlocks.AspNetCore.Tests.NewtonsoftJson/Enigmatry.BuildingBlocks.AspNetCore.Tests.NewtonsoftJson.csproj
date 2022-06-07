@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <Authors>awa</Authors>
+    <Company>Enigmatry</Company>
+    <Product>Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson</Product>
+    <Description>Building Block for writing tests in a Blueprint AspNetCore based project with Newtonsoft Json</Description>
+    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
+    <PackageIcon>icon-192x192.png</PackageIcon>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.BuildingBlocks.AspNetCore.Tests\Enigmatry.BuildingBlocks.AspNetCore.Tests.csproj" />
+  </ItemGroup>
+
+</Project>

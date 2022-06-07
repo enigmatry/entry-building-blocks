@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Rest;
 
-namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
+namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson.Http
 {
     public static class HttpResponseMessageExtensions
     {
@@ -22,11 +22,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Tests.Http
         }
 
         private static T? Deserialize<T>(string content) =>
-            JsonSerializer.Deserialize<T>(content,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+            JsonSerializer.Deserialize<T>(content, HttpSerializationOptions.Options);
 
         public static async Task EnsureSuccessStatusCodeAsync(this HttpResponseMessage response)
         {
