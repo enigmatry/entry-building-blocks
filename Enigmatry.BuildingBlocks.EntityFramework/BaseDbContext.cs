@@ -1,38 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using Enigmatry.BuildingBlocks.Core.Entities;
+﻿using Enigmatry.BuildingBlocks.Core.Entities;
 using Enigmatry.BuildingBlocks.Core.Helpers;
 using Enigmatry.BuildingBlocks.EntityFramework.MediatR;
 using Enigmatry.BuildingBlocks.EntityFramework.Security;
 using JetBrains.Annotations;
-using MediatR;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Enigmatry.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
-    public abstract class EntitiesDbContext : DbContext
+    public abstract class BaseDbContext : DbContext
     {
         private readonly EntitiesDbContextOptions _entitiesDbContextOptions;
-        private readonly IMediator _mediator;
-        private readonly ILogger<EntitiesDbContext> _logger;
         private readonly IDbContextAccessTokenProvider _dbContextAccessTokenProvider;
 
         public Action<ModelBuilder>? ModelBuilderConfigurator { get; set; }
 
-        protected EntitiesDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options, IMediator mediator,
-            ILogger<EntitiesDbContext> logger, IDbContextAccessTokenProvider dbContextAccessTokenProvider) : base(
-            options)
+        protected BaseDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options,
+            IDbContextAccessTokenProvider dbContextAccessTokenProvider) : base(options)
         {
             _entitiesDbContextOptions = entitiesDbContextOptions;
-            _mediator = mediator;
-            _logger = logger;
             _dbContextAccessTokenProvider = dbContextAccessTokenProvider;
 
             SetupManagedServiceIdentityAccessToken();
@@ -59,18 +52,19 @@ namespace Enigmatry.BuildingBlocks.EntityFramework
             base.OnModelCreating(modelBuilder);
         }
 
+        [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
         private void RegisterEntities(ModelBuilder modelBuilder)
         {
-            MethodInfo entityMethod =
+            var entityMethod =
                 typeof(ModelBuilder).GetMethods().First(m => m.Name == "Entity" && m.IsGenericMethod);
 
-            Assembly? entitiesAssembly = _entitiesDbContextOptions.EntitiesAssembly;
-            var types = entitiesAssembly != null ? entitiesAssembly.GetTypes() : Enumerable.Empty<Type>();
+            var entitiesAssembly = _entitiesDbContextOptions.EntitiesAssembly;
+            var types = entitiesAssembly?.GetTypes() ?? Enumerable.Empty<Type>();
 
-            IEnumerable<Type> entityTypes = types
+            var entityTypes = types
                 .Where(x => x.IsSubclassOf(typeof(Entity)) && !x.IsAbstract);
 
-            foreach (Type type in entityTypes)
+            foreach (var type in entityTypes)
             {
                 entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, Array.Empty<object>());
             }
@@ -86,7 +80,7 @@ namespace Enigmatry.BuildingBlocks.EntityFramework
         {
             // we need to gather domain events before saving, so that we include events
             // for deleted entities (otherwise they are lost due to deletion of the object from context)
-            IEnumerable<DomainEvent> domainEvents = this.GatherDomainEventsFromContext();
+            var domainEvents = this.GatherDomainEventsFromContext();
 
             // Dispatch Domain Events collection. 
             // Choices:
@@ -99,9 +93,10 @@ namespace Enigmatry.BuildingBlocks.EntityFramework
             // performed through the DbContext will be committed
             var saved = await base.SaveChangesAsync(cancellationToken);
 
-            await _mediator.DispatchDomainEventsAsync(domainEvents, _logger);
-
+            await Dispatch(domainEvents);
             return saved;
         }
+
+        protected abstract Task Dispatch(IEnumerable<DomainEvent> domainEvents);
     }
 }

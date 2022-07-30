@@ -1,29 +1,23 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Enigmatry.BuildingBlocks.Core.Data;
+﻿using Enigmatry.BuildingBlocks.Core.Data;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Enigmatry.BuildingBlocks.EntityFramework
 {
     [UsedImplicitly]
-    public class DbContextUnitOfWork : IUnitOfWork
+    public class EntityFrameworkUnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
-        private readonly ILogger<DbContextUnitOfWork> _logger;
+        private readonly ILogger<EntityFrameworkUnitOfWork> _logger;
         private bool _cancelSaving;
 
-        public DbContextUnitOfWork(DbContext context, ILogger<DbContextUnitOfWork> logger)
+        public EntityFrameworkUnitOfWork(DbContext context, ILogger<EntityFrameworkUnitOfWork> logger)
         {
             _context = context;
             _logger = logger;
-        }
-
-        public int SaveChanges()
-        {
-            var task = Task.Run(async () => await SaveChangesAsync());
-            return task.Result;
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
