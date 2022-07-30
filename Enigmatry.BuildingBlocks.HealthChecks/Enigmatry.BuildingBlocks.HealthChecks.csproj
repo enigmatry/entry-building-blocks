@@ -5,7 +5,11 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Authors>eko, nda</Authors>
     <Company>Enigmatry</Company>
     <Product>Enigmatry.BuildingBlocks.HealthChecks</Product>
     <Description>Building Block for adding health checks</Description>
@@ -26,17 +30,26 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="5.0.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.AzureServiceBus" Version="5.1.2" />
     <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.System" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.17" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.AzureServiceBus" Version="6.0.4" />
     <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="6.0.2" />
-    <PackageReference Include="AspNetCore.HealthChecks.System" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.System" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.BuildingBlocks.Core\Enigmatry.BuildingBlocks.Core.csproj" />
   </ItemGroup>
-
 </Project>
