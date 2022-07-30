@@ -1,30 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using Enigmatry.BuildingBlocks.AspNetCore.Validation;
+﻿using Enigmatry.BuildingBlocks.AspNetCore.Validation;
 using Enigmatry.BuildingBlocks.Core.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
 
 namespace Enigmatry.BuildingBlocks.AspNetCore.Filters
 {
     public sealed class HandleExceptionsFilter : ExceptionFilterAttribute
     {
-        private readonly bool _useDeveloperExceptionPage;
+        private readonly IHostEnvironment _hostEnvironment;
 
-        public HandleExceptionsFilter(bool useDeveloperExceptionPage)
+        public HandleExceptionsFilter(IHostEnvironment hostEnvironment)
         {
-            _useDeveloperExceptionPage = useDeveloperExceptionPage;
+            _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
         }
 
         public override void OnException(ExceptionContext context)
         {
-            ILogger<HandleExceptionsFilter> logger = context.HttpContext.Resolve<ILogger<HandleExceptionsFilter>>();
+            var logger = context.HttpContext.Resolve<ILogger<HandleExceptionsFilter>>();
             if (context.Exception is ValidationException validationException)
             {
                 logger.LogDebug(context.Exception, "Validation exception");
@@ -41,7 +41,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Filters
 
             logger.LogError(context.Exception, "Unexpected error");
 
-            IList<MediaTypeHeaderValue> accept = context.HttpContext.Request.GetTypedHeaders().Accept;
+            var accept = context.HttpContext.Request.GetTypedHeaders().Accept;
             if (accept != null && accept.All(header => header.MediaType != "application/json"))
             {
                 // server does not accept Json, leaving to default MVC error page handler.
@@ -58,7 +58,7 @@ namespace Enigmatry.BuildingBlocks.AspNetCore.Filters
 
         private ProblemDetails GetProblemDetails(ExceptionContext context)
         {
-            var errorDetail = _useDeveloperExceptionPage
+            var errorDetail = _hostEnvironment.IsDevelopment()
                 ? context.Exception.Demystify().ToString()
                 : "The instance value should be used to identify the problem when calling customer support";
 
