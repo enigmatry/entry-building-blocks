@@ -1,9 +1,10 @@
 ﻿using System;
+using JetBrains.Annotations;
 using NSwag.Generation.AspNetCore;
 
 namespace Enigmatry.BuildingBlocks.Swagger
 {
-    internal static class AspNetCoreOpenApiDocumentGeneratorSettingsExtensions
+    public static class AspNetCoreOpenApiDocumentGeneratorSettingsExtensions
     {
         internal static void ConfigureSwaggerSettings(this AspNetCoreOpenApiDocumentGeneratorSettings settings,
             string appTitle, string appVersion, Action<AspNetCoreOpenApiDocumentGeneratorSettings>? configureSettings)
@@ -16,15 +17,9 @@ namespace Enigmatry.BuildingBlocks.Swagger
             configureSettings?.Invoke(settings);
         }
 
-        public static AspNetCoreOpenApiDocumentGeneratorSettings MarkNonNullablePropertiesAsRequired(
-            this AspNetCoreOpenApiDocumentGeneratorSettings settings, bool enable)
-        {
-            if (enable)
-            {
-                settings.SchemaProcessors.Add(new MarkAsRequiredIfNonNullableSchemaProcessor());
-            }
-
-            return settings;
-        }
+        [PublicAPI]
+        public static void
+            MarkNonNullablePropertiesAsRequired(this AspNetCoreOpenApiDocumentGeneratorSettings settings) =>
+            settings.SchemaProcessors.Add(new MarkAsRequiredIfNonNullableSchemaProcessor());
     }
 }
