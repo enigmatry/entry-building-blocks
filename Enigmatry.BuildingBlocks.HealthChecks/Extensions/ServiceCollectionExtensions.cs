@@ -8,7 +8,7 @@ using System;
 
 namespace Enigmatry.BuildingBlocks.HealthChecks.Extensions
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         [PublicAPI]
         public static IHealthChecksBuilder AppAddHealthChecks(this IServiceCollection services, IConfiguration configuration)
