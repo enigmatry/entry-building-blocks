@@ -42,18 +42,27 @@ public static class GraphServiceClientExtensions
     }
 
     /// <summary>
-    /// Retrieve paged (100) AD users.
+    /// Retrieve paged (100) AD users with a default set of properties.
     /// </summary>
     /// <param name="graphClient">Instance of the <see cref="GraphServiceClient"/>.</param>
     /// <param name="pageSize">Number of users per page.</param>
     /// <returns><see cref="IGraphServiceUsersCollectionPage"/> collection of <see cref="GraphUser"/>.</returns>
-    public static async Task<IGraphServiceUsersCollectionPage> GetUsers(this GraphServiceClient graphClient,
-        int pageSize = 100) =>
+    public static async Task<IGraphServiceUsersCollectionPage> GetUsers(this GraphServiceClient graphClient, int pageSize = 100) =>
+        await graphClient.GetUsers(SelectExpression(), pageSize);
+
+    /// <summary>
+    /// Retrieve paged (100) AD users.
+    /// </summary>
+    /// <param name="graphClient">Instance of the <see cref="GraphServiceClient"/>.</param>
+    /// <param name="pageSize">Number of users per page.</param>
+    /// <param name="selectExpression">Lambda expression tree that selects the properties of the returned <see cref="GraphUser"/></param>
+    /// <returns><see cref="IGraphServiceUsersCollectionPage"/> collection of <see cref="GraphUser"/>.</returns>
+    public static async Task<IGraphServiceUsersCollectionPage> GetUsers(this GraphServiceClient graphClient, Expression<Func<GraphUser, object>> selectExpression, int pageSize = 100) =>
         await graphClient
             .Users
             .Request()
             .Top(pageSize)
-            .Select(SelectExpression())
+            .Select(selectExpression)
             .GetAsync();
 
     /// <summary>
