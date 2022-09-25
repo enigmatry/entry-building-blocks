@@ -1,20 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System;
+using System.Threading.Tasks;
 
-namespace Enigmatry.BuildingBlocks.HealthChecks
+namespace Enigmatry.BuildingBlocks.HealthChecks.Authorization
 {
-    internal class HealthChecksTokenHandler : AuthorizationHandler<HealthChecksTokenRequirement>
+    internal class TokenHandler : AuthorizationHandler<TokenRequirement>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public HealthChecksTokenHandler(IHttpContextAccessor httpContextAccessor)
+        public TokenHandler(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
         }
 
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HealthChecksTokenRequirement requirement)
+        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, TokenRequirement requirement)
         {
             if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Query["token"].ToString() == requirement.Token)
             {

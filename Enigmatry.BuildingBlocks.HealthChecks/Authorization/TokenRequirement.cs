@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Enigmatry.BuildingBlocks.HealthChecks
+namespace Enigmatry.BuildingBlocks.HealthChecks.Authorization
 {
-    internal class HealthChecksTokenRequirement : IAuthorizationRequirement
+    internal class TokenRequirement : IAuthorizationRequirement
     {
         public const string Name = "HealthCheckToken";
 
-        public HealthChecksTokenRequirement(string token)
+        public TokenRequirement(string token)
         {
             Token = token;
         }

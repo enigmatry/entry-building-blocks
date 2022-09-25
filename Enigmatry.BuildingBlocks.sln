@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Tests", "Enigmatry.BuildingBlocks.Tests\Enigmatry.BuildingBlocks.Tests.csproj", "{D781A467-0CB4-4789-B653-866C51E3B212}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.EventBus", "Enigmatry.BuildingBlocks.EventBus\Enigmatry.BuildingBlocks.EventBus.csproj", "{463528A7-8C27-4897-89BD-6FD6E4059289}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Csv", "Enigmatry.BuildingBlocks.Csv\Enigmatry.BuildingBlocks.Csv.csproj", "{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Email", "Enigmatry.BuildingBlocks.EmailClient\Enigmatry.BuildingBlocks.Email.csproj", "{74BB7388-3776-40B1-B5A2-5A6C72E213FC}"
@@ -20,15 +18,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{0FB89D0E
 		icon-192x192.png = icon-192x192.png
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Push", "Enigmatry.BuildingBlocks.Push\Enigmatry.BuildingBlocks.Push.csproj", "{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.BlobStorage", "Enigmatry.BuildingBlocks.BlobStorage\Enigmatry.BuildingBlocks.BlobStorage.csproj", "{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.CacheManager", "Enigmatry.BuildingBlocks.CacheManager\Enigmatry.BuildingBlocks.CacheManager.csproj", "{77133C63-207B-4F3F-A9BC-D23D98B94A93}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.VirusScanner", "Enigmatry.BuildingBlocks.VirusScanner\Enigmatry.BuildingBlocks.VirusScanner.csproj", "{97762ACC-215F-4D66-BAA3-5919ED275FFE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.BackgroundService", "Enigmatry.BuildingBlocks.BackgroundService\Enigmatry.BuildingBlocks.BackgroundService.csproj", "{30A7840E-E306-4B5F-B264-8E149FC5705C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Core", "Enigmatry.BuildingBlocks.Core\Enigmatry.BuildingBlocks.Core.csproj", "{7735C55C-207E-411D-9831-9EC642E17EA7}"
 EndProject
@@ -56,10 +48,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Va
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.HealthChecks", "Enigmatry.BuildingBlocks.HealthChecks\Enigmatry.BuildingBlocks.HealthChecks.csproj", "{D9AA5E6E-63C1-4F01-8A50-90E9275A7374}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson", "Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson\Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson.csproj", "{0BC6099B-A52E-4E07-B5D9-9411C5079E96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson", "Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson\Enigmatry.BuildingBlocks.AspNetCore.Tests.NewtonsoftJson.csproj", "{0BC6099B-A52E-4E07-B5D9-9411C5079E96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson", "Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson\Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson.csproj", "{1BAD222C-FA97-4623-9A6B-BA18FAD1D9FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson", "Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson\Enigmatry.BuildingBlocks.AspNetCore.Tests.SystemTextJson.csproj", "{1BAD222C-FA97-4623-9A6B-BA18FAD1D9FC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.HealthChecks.Tests", "Enigmatry.BuildingBlocks.HealthChecks.Tests\Enigmatry.BuildingBlocks.HealthChecks.Tests.csproj", "{41B26B6E-E36A-4F40-8EBE-77DF6F069B70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.GraphApi", "Enigmatry.BuildingBlocks.GraphApi\Enigmatry.BuildingBlocks.GraphApi.csproj", "{55415C07-9A32-4DFB-AF41-8BD00EFC0826}"
+EndProject
+Global
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.BuildingBlocks.Randomness", "Enigmatry.BuildingBlocks.Randomness\Enigmatry.BuildingBlocks.Randomness.csproj", "{3DE3C8BF-CC8E-4818-A325-10D79E913653}"
 EndProjectGlobal
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +76,6 @@ EndProjectGlobal
 		{D781A467-0CB4-4789-B653-866C51E3B212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D781A467-0CB4-4789-B653-866C51E3B212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D781A467-0CB4-4789-B653-866C51E3B212}.Release|Any CPU.Build.0 = Release|Any CPU
-		{463528A7-8C27-4897-89BD-6FD6E4059289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{463528A7-8C27-4897-89BD-6FD6E4059289}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{463528A7-8C27-4897-89BD-6FD6E4059289}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{463528A7-8C27-4897-89BD-6FD6E4059289}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,10 +84,6 @@ EndProjectGlobal
 		{74BB7388-3776-40B1-B5A2-5A6C72E213FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74BB7388-3776-40B1-B5A2-5A6C72E213FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74BB7388-3776-40B1-B5A2-5A6C72E213FC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AD72C7F-4B63-439B-B3D9-4A108C5B12AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -103,14 +92,6 @@ EndProjectGlobal
 		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97762ACC-215F-4D66-BAA3-5919ED275FFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30A7840E-E306-4B5F-B264-8E149FC5705C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7735C55C-207E-411D-9831-9EC642E17EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7735C55C-207E-411D-9831-9EC642E17EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7735C55C-207E-411D-9831-9EC642E17EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,6 +140,15 @@ EndProjectGlobal
 		{1BAD222C-FA97-4623-9A6B-BA18FAD1D9FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BAD222C-FA97-4623-9A6B-BA18FAD1D9FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BAD222C-FA97-4623-9A6B-BA18FAD1D9FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41B26B6E-E36A-4F40-8EBE-77DF6F069B70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B26B6E-E36A-4F40-8EBE-77DF6F069B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B26B6E-E36A-4F40-8EBE-77DF6F069B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B26B6E-E36A-4F40-8EBE-77DF6F069B70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Release|Any CPU.ActiveCfg = Release|Any CPU

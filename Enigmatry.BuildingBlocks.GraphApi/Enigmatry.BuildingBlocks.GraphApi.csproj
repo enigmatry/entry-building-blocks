@@ -1,14 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>9.0</LangVersion>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <Authors>eko</Authors>
     <Company>Enigmatry</Company>
-    <Product>Enigmatry.BuildingBlocks.BlobStorage</Product>
-    <Description>Building Block for adding Azure Blob Storage to a Blueprint based project</Description>
+    <Product>Enigmatry.BuildingBlocks.GraphApi</Product>
+    <Description>Building Block for adding MS Graph Api</Description>
     <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -16,18 +20,16 @@
 
   <ItemGroup>
     <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
       <PackagePath></PackagePath>
+      <Pack>True</Pack>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.6.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Graph" Version="4.36.0" />
   </ItemGroup>
 
   <ItemGroup>
