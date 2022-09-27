@@ -1,10 +1,12 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Enigmatry.BuildingBlocks.Core.Images
 {
-    public class DataUri
+    [PublicAPI]
+    public record DataUri
     {
         private const string Pattern = @"data:image/(?<type>.+?),(?<data>.+)";
         private readonly string _content;
