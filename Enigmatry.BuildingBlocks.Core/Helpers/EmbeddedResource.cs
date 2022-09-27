@@ -11,7 +11,7 @@ namespace Enigmatry.BuildingBlocks.Core.Helpers
         {
             try
             {
-                using Stream? stream = assembly.GetManifestResourceStream(namespaceAndFileName);
+                using var stream = assembly.GetManifestResourceStream(namespaceAndFileName);
                 if (stream == null)
                 {
                     return String.Empty;

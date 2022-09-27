@@ -56,9 +56,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.He
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.GraphApi", "Enigmatry.BuildingBlocks.GraphApi\Enigmatry.BuildingBlocks.GraphApi.csproj", "{55415C07-9A32-4DFB-AF41-8BD00EFC0826}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.BuildingBlocks.Randomness", "Enigmatry.BuildingBlocks.Randomness\Enigmatry.BuildingBlocks.Randomness.csproj", "{3DE3C8BF-CC8E-4818-A325-10D79E913653}"
+EndProject
 Global
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.BuildingBlocks.Randomness", "Enigmatry.BuildingBlocks.Randomness\Enigmatry.BuildingBlocks.Randomness.csproj", "{3DE3C8BF-CC8E-4818-A325-10D79E913653}"
-EndProjectGlobal
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -148,11 +148,11 @@ EndProjectGlobal
 		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55415C07-9A32-4DFB-AF41-8BD00EFC0826}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Release|Any CPU.Build.0 = Release|Any CPU	EndGlobalSection
+		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

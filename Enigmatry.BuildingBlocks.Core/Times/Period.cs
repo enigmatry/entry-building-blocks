@@ -35,12 +35,11 @@ namespace Enigmatry.BuildingBlocks.Core.Times
             EndDate = period.EndDate;
         }
 
-        public override bool Equals(object obj) => Equals(obj as Period);
+        public override bool Equals(object? obj) => Equals(obj as Period);
 
-        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
         public Period? CalculateOverlap(Period period)
         {
-            if (period == null)
+            if (period == null!)
 #pragma warning restore CS8625, CS8604 // Cannot convert null literal to non-nullable reference type.
             {
                 return null;
@@ -90,9 +89,15 @@ namespace Enigmatry.BuildingBlocks.Core.Times
 
         [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
         [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
-        public static bool operator ==(Period p1, Period p2) => p1?.Equals(p2) ?? p2 is null;
+        public static bool operator ==(Period p1, Period p2)
+        {
+            return p1?.Equals(p2) ?? p2 is null;
+        }
 
-        public static bool operator !=(Period p1, Period p2) => !(p1 == p2);
+        public static bool operator !=(Period p1, Period p2)
+        {
+            return !(p1 == p2);
+        }
 
         public bool Contains(DateTime date) => date >= StartDate && date <= EndDate;
 

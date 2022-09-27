@@ -1,34 +1,34 @@
 ﻿using Enigmatry.BuildingBlocks.Core.Images;
+using FluentAssertions;
 using NUnit.Framework;
 using System;
 
 namespace Enigmatry.BuildingBlocks.Tests.Core.Images
 {
-    [TestFixture]
-    public class DataUriTests
+    public class DataUriFixture
     {
         [Test]
         public void DataUriArrayCreationNullGuard() =>
-            Assert.Throws<ArgumentNullException>(() => DataUri.CreateFrom(null!, "some type"));
+            ShouldThrow<ArgumentNullException>(() => DataUri.CreateFrom(null!, "some type"));
 
         [Test]
         public void DataUriArrayCreationEmptyGuard() =>
-            Assert.Throws<ArgumentOutOfRangeException>(() => DataUri.CreateFrom(Array.Empty<byte>(), "some type"));
+            ShouldThrow<ArgumentOutOfRangeException>(() => DataUri.CreateFrom(Array.Empty<byte>(), "some type"));
 
         [Test]
         public void DataUriArrayCreationTypeGuard() =>
-            Assert.Throws<ArgumentException>(() => DataUri.CreateFrom(new byte[] { 234, 123 }, string.Empty));
+            ShouldThrow<ArgumentException>(() => DataUri.CreateFrom(new byte[] { 234, 123 }, string.Empty));
 
         [Test]
         public void DataUriStringCreationNullGuard() =>
-            Assert.Throws<ArgumentNullException>(() => DataUri.CreateFrom(null!));
+            ShouldThrow<ArgumentNullException>(() => DataUri.CreateFrom(null!));
 
         [Test]
         public void DataUriArrayCreationSuccess()
         {
             var uri = DataUri.CreateFrom(Source.Valid.Bytes, "image/png");
 
-            Assert.That(Source.Valid.PngUri, Is.EqualTo(uri.ToString()));
+            Source.Valid.PngUri.Should().BeEquivalentTo(uri.ToString());
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Enigmatry.BuildingBlocks.Tests.Core.Images
         [TestCase("data:application/json,Wa9pDZ9A4U2tZbUG")]
         [TestCase("data:image/png,")]
         [TestCase("data:image/png-Wa9pDZ9A4U2tZbUG")]
-        public void DataUriGuard(string input) => Assert.Throws<ArgumentException>(() => DataUri.CreateFrom(input));
+        public void DataUriGuard(string input) => ShouldThrow<ArgumentException>(() => DataUri.CreateFrom(input));
 
         [Test]
         public void ToByteArrayConversion()
@@ -46,7 +46,10 @@ namespace Enigmatry.BuildingBlocks.Tests.Core.Images
 
             var bytes = dataUri.ToByteArray();
 
-            Assert.That(Source.Valid.Bytes, Is.EqualTo(bytes));
+            Source.Valid.Bytes.Should().BeEquivalentTo(bytes);
         }
+
+        private static void ShouldThrow<TException>(Action act) where TException : Exception =>
+            act.Should().Throw<TException>();
     }
 }
