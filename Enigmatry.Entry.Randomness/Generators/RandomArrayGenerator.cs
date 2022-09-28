@@ -1,10 +1,12 @@
 ﻿using Enigmatry.Entry.Randomness.Contracts;
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
+    [PublicAPI]
     public class RandomArrayGenerator
     {
         private readonly Lazy<IEnumerable<IGenerateRandomness>> _availableGenerators;

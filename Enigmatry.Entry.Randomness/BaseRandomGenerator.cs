@@ -1,10 +1,12 @@
 ﻿using Enigmatry.Entry.Randomness.Contracts;
+using JetBrains.Annotations;
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
 namespace Enigmatry.Entry.Randomness
 {
+    [PublicAPI]
     public abstract class BaseRandomGenerator : IGenerateRandomness, IDisposable
     {
         public Type GeneratorType { get; }

@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using JetBrains.Annotations;
+using System.Linq;
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
+    [PublicAPI]
     public class RandomBoolGenerator : BaseRandomGenerator
     {
         public RandomBoolGenerator() : base(typeof(bool)) { }

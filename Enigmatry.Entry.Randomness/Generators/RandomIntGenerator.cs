@@ -1,7 +1,9 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
+    [PublicAPI]
     public class RandomIntGenerator : BaseRandomGenerator
     {
         public RandomIntGenerator() : base(typeof(int)) { }
