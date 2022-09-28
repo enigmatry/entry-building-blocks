@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Enigmatry.BuildingBlocks.Randomness.Generators
+namespace Enigmatry.Entry.Randomness.Generators
 {
     public class RandomCharGenerator : BaseRandomGenerator
     {

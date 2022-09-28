@@ -1,9 +1,9 @@
-﻿using Enigmatry.BuildingBlocks.Randomness.Contracts;
+﻿using Enigmatry.Entry.Randomness.Contracts;
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace Enigmatry.BuildingBlocks.Randomness
+namespace Enigmatry.Entry.Randomness
 {
     public abstract class BaseRandomGenerator : IGenerateRandomness, IDisposable
     {

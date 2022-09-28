@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 
-namespace Enigmatry.BuildingBlocks.Core.Times
+namespace Enigmatry.Entry.AspNetCore.Times
 {
     [PublicAPI]
     public sealed record Period

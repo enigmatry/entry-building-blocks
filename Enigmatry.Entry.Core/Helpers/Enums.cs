@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Enigmatry.BuildingBlocks.Core.Helpers
+namespace Enigmatry.Entry.Core.Helpers
 {
     public static class Enums
     {

@@ -1,9 +1,9 @@
-﻿using Enigmatry.BuildingBlocks.Core.Images;
+﻿using Enigmatry.Entry.AspNetCore.Images;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
 
-namespace Enigmatry.BuildingBlocks.Tests.Core.Images
+namespace Enigmatry.Entry.Tests.Core.Images
 {
     public class DataUriFixture
     {

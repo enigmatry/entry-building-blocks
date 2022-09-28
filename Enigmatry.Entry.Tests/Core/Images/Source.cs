@@ -1,4 +1,4 @@
-﻿namespace Enigmatry.BuildingBlocks.Tests.Core.Images
+﻿namespace Enigmatry.Entry.Tests.Core.Images
 {
     internal class Source
     {

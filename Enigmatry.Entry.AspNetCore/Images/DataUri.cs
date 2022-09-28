@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Enigmatry.BuildingBlocks.Core.Images
+namespace Enigmatry.Entry.AspNetCore.Images
 {
     [PublicAPI]
     public record DataUri
@@ -42,7 +42,7 @@ namespace Enigmatry.BuildingBlocks.Core.Images
             var invalidDataUri = !Regex.Match(content, Pattern).Success;
             if (invalidDataUri)
             {
-                throw new ArgumentException(nameof(content));
+                throw new ArgumentException("Data uri is invalid!", nameof(content));
             }
 
             return new DataUri(content);

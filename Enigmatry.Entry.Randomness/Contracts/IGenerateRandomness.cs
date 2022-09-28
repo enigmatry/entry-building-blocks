@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Enigmatry.BuildingBlocks.Randomness.Contracts
+namespace Enigmatry.Entry.Randomness.Contracts
 {
     public interface IGenerateRandomness
     {

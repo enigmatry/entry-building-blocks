@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Enigmatry.BuildingBlocks.Randomness.Generators
+namespace Enigmatry.Entry.Randomness.Generators
 {
     public class RandomLongGenerator : BaseRandomGenerator
     {
