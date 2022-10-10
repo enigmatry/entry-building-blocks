@@ -36,7 +36,7 @@ namespace Enigmatry.Entry.EntityFramework
 
             var numberOfChanges = await _context.SaveChangesAsync(cancellationToken);
             _logger.LogDebug(
-                $"{numberOfChanges} of changed were saved to database {_context.Database.GetDbConnection().Database}");
+                $"{numberOfChanges} changes were saved to database {_context.Database.GetDbConnection().Database}");
             return numberOfChanges;
         }
 
