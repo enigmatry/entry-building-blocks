@@ -9,8 +9,8 @@ namespace Enigmatry.Entry.HealthChecks
     {
         internal const string SectionName = "HealthChecks";
 
-        internal int MaximumAllowedMemoryInMegaBytes { get; set; }
-        internal string RequiredToken { get; set; } = String.Empty;
+        public int MaximumAllowedMemoryInMegaBytes { get; set; }
+        public string RequiredToken { get; set; } = String.Empty;
 
         internal bool TokenAuthorizationEnabled => RequiredToken.HasContent();
     }
