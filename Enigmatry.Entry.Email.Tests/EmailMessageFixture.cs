@@ -1,7 +1,6 @@
 ﻿using Enigmatry.Entry.Email;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Linq;
 
 namespace Enigmatry.Entry.Tests.Mail
 {
