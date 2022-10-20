@@ -34,11 +34,13 @@ namespace Enigmatry.Entry.EntityFramework
         private void SetupManagedServiceIdentityAccessToken()
         {
             var accessToken = _dbContextAccessTokenProvider.GetAccessTokenAsync().GetAwaiter().GetResult();
-            if (accessToken.HasContent())
+            if (!accessToken.HasContent())
             {
-                var connection = (SqlConnection)Database.GetDbConnection();
-                connection.AccessToken = accessToken;
+                return;
             }
+
+            var connection = (SqlConnection)Database.GetDbConnection();
+            connection.AccessToken = accessToken;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

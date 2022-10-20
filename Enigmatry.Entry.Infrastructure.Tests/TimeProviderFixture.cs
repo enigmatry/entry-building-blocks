@@ -4,8 +4,19 @@ using NUnit.Framework;
 namespace Enigmatry.Entry.Infrastructure.Tests;
 
 [Category("unit")]
-public class CurrentTimeProviderFixture
+public class TimeProviderFixture
 {
+    [Test]
+    public void SameTime()
+    {
+        var provider = new TimeProvider();
+
+        var firstDate = provider.FixedUtcNow;
+        var secondDate = provider.FixedUtcNow;
+
+        firstDate.Should().BeExactly(secondDate);
+    }
+
     [Test]
     public void UniqueTime()
     {
