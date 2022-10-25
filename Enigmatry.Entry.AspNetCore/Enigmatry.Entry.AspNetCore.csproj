@@ -5,7 +5,11 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Authors>szi, nda</Authors>
     <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.AspNetCore</Product>
     <Description>Building Block for AspNet Core applications based on Blueprint project</Description>

@@ -62,9 +62,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Csv.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Email.Tests", "Enigmatry.Entry.Email.Tests\Enigmatry.Entry.Email.Tests.csproj", "{0EB33A95-49F4-46BA-9840-A5D6A5273DE5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.TemplatingEngine.Tests", "Enigmatry.Entry.TemplatingEngine.Tests\Enigmatry.Entry.TemplatingEngine.Tests.csproj", "{1E122C99-D6B6-48D1-981A-8A5F2231220B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine.Tests", "Enigmatry.Entry.TemplatingEngine.Tests\Enigmatry.Entry.TemplatingEngine.Tests.csproj", "{1E122C99-D6B6-48D1-981A-8A5F2231220B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.Validation.Tests", "Enigmatry.Entry.Validation.Tests\Enigmatry.Entry.Validation.Tests.csproj", "{12E88B74-17F3-461B-881B-D30D23B1388C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Validation.Tests", "Enigmatry.Entry.Validation.Tests\Enigmatry.Entry.Validation.Tests.csproj", "{12E88B74-17F3-461B-881B-D30D23B1388C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
