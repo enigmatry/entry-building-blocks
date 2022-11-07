@@ -22,11 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="NJsonSchema" Version="10.7.2" />
-    <PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="NJsonSchema" />
+    <PackageReference Include="NSwag.AspNetCore" />
+    <PackageReference Include="JetBrains.Annotations" />
   </ItemGroup>
 
 </Project>

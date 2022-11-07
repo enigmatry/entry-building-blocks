@@ -5,7 +5,11 @@
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Authors>szi, nda</Authors>
     <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.AspNetCore</Product>
     <Description>Building Block for AspNet Core applications based on Blueprint project</Description>
@@ -26,10 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.0.3" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="Ben.Demystifier" />
+    <PackageReference Include="FluentValidation.AspNetCore" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
