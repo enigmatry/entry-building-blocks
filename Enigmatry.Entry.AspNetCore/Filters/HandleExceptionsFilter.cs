@@ -8,39 +8,60 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace Enigmatry.Entry.AspNetCore.Filters
 {
-    public sealed class HandleExceptionsFilter : ExceptionFilterAttribute
+    [Obsolete("ExceptionsFilter is deprecated due to limited context, please use extensions method instead since more exceptions can be caught from it.")]
+    public class HandleExceptionsFilter : IAsyncExceptionFilter, IExceptionFilter
     {
         private readonly IHostEnvironment _hostEnvironment;
+        private readonly ILogger<HandleExceptionsFilter> _logger;
 
-        public HandleExceptionsFilter(IHostEnvironment hostEnvironment)
+        public HandleExceptionsFilter(IHostEnvironment hostEnvironment, ILogger<HandleExceptionsFilter> logger)
         {
             _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public override void OnException(ExceptionContext context)
+        public void OnException(ExceptionContext context)
         {
-            var logger = context.HttpContext.Resolve<ILogger<HandleExceptionsFilter>>();
-            if (context.Exception is ValidationException validationException)
+            if (context == null)
             {
-                logger.LogDebug(context.Exception, "Validation exception");
-                context.Result = context.HttpContext.CreateValidationProblemDetailsResponse(validationException);
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            var handledElsewhere = OnBeforeException(context);
+            if (handledElsewhere)
+            {
                 return;
             }
 
-            if (context.Exception is EntityNotFoundException exception)
+            switch (context.Exception)
             {
-                logger.LogError(context.Exception, $"Entity: {exception.EntityName} not found");
-                context.Result = new NotFoundResult();
-                return;
+                case ValidationException validationException:
+                    _logger.LogDebug(context.Exception, "Validation exception");
+                    context.Result = context.HttpContext.CreateValidationProblemDetailsResponse(validationException);
+                    return;
+                case EntityNotFoundException exception:
+                    _logger.LogError(context.Exception, $"Entity: {exception.EntityName} not found");
+                    context.Result = new NotFoundResult();
+                    return;
+                default:
+                    _logger.LogError(context.Exception, "Unexpected error");
+                    HandleUnexpectedErrorFrom(context);
+                    break;
             }
+        }
 
-            logger.LogError(context.Exception, "Unexpected error");
+        protected virtual bool OnBeforeException(ExceptionContext context) => false;
 
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
+        private void HandleUnexpectedErrorFrom(ExceptionContext context)
+        {
             var accept = context.HttpContext.Request.GetTypedHeaders().Accept;
             if (accept != null && accept.All(header => header.MediaType != "application/json"))
             {
@@ -71,6 +92,12 @@ namespace Enigmatry.Entry.AspNetCore.Filters
             };
 
             return problemDetails;
+        }
+
+        public Task OnExceptionAsync(ExceptionContext context)
+        {
+            OnException(context);
+            return Task.CompletedTask;
         }
     }
 }
