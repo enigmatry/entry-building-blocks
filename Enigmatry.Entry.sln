@@ -64,7 +64,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Email.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine.Tests", "Enigmatry.Entry.TemplatingEngine.Tests\Enigmatry.Entry.TemplatingEngine.Tests.csproj", "{1E122C99-D6B6-48D1-981A-8A5F2231220B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.Scheduler", "Enigmatry.Entry.Scheduler\Enigmatry.Entry.Scheduler.csproj", "{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Scheduler", "Enigmatry.Entry.Scheduler\Enigmatry.Entry.Scheduler.csproj", "{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

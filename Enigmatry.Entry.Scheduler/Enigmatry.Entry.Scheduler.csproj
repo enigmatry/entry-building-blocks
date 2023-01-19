@@ -9,7 +9,7 @@
     <Authors>eko</Authors>
     <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.Scheduler</Product>
-    <Description>Building Block with startup extensions for a scheduler webjob using Quartz features.</Description>
+    <Description>Building Block with startup extensions for a scheduler webjob using Quartz jobs.</Description>
     <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

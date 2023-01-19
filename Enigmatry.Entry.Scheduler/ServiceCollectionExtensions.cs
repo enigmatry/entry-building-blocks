@@ -1,5 +1,4 @@
 ﻿using Enigmatry.Entry.Core.Helpers;
-using MediatR;
 using Quartz;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
@@ -18,29 +17,29 @@ public static class ServiceCollectionExtensions
         services.AddQuartz(quartz =>
         {
             quartz.UseMicrosoftDependencyInjectionJobFactory();
-            quartz.AddFeatures(configuration, assembly);
+            quartz.AddJobs(configuration, assembly);
         });
 
         services.AddQuartzHostedService(quartz => quartz.WaitForJobsToComplete = true);
     }
 
-    private static void AddFeatures(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration, Assembly assembly) =>
+    private static void AddJobs(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration, Assembly assembly) =>
         assembly.GetTypes()
             .Where(type => !type.IsAbstract)
-            .Where(type => type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IRequest<>)))
-            .Where(type => configuration.GetSchedulingFeatureSection(type).Exists())
-            .Where(configuration.GetSchedulingFeatureRunValue)
-            .ForEach(type => quartz.AddFeature(configuration, type));
+            .Where(type => type.GetInterface(nameof(IJob)) != null)
+            .Where(type => configuration.GetSchedulingJobSection(type).Exists())
+            .Where(configuration.GetSchedulingJobEnabledValue)
+            .ForEach(type => quartz.AddJob(configuration, type));
 
-    private static void AddFeature(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration, Type type)
+    private static void AddJob(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration, Type type)
     {
-        var key = configuration.GetSchedulingFeatureSection(type).Key;
+        var key = configuration.GetSchedulingJobSection(type).Key;
 
-        quartz.AddJob(typeof(FeatureRunner<>).MakeGenericType(type), new JobKey(key));
+        quartz.AddJob(type, new JobKey(key));
 
         quartz.AddTrigger(trigger =>
         {
-            var cronExpression = configuration.GetSchedulingFeatureCronExpressionValue(type)
+            var cronExpression = configuration.GetSchedulingJobCronExpressionValue(type)
                 ?? throw new InvalidOperationException($"Cannot determine CRON expression for job: {key}");
 
             trigger.ForJob(key)
@@ -48,7 +47,7 @@ public static class ServiceCollectionExtensions
                 .WithCronSchedule(cronExpression);
         });
 
-        if (configuration.GetSchedulingFeatureRunOnStartupValue(type))
+        if (configuration.GetSchedulingJobRunOnStartupValue(type))
         {
             quartz.AddTrigger(trigger =>
                 trigger.ForJob(key)
