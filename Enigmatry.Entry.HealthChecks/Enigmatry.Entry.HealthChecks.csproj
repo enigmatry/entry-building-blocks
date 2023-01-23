@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -32,15 +32,8 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-    <PackageReference Include="AspNetCore.HealthChecks.System" VersionOverride="5.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-    <PackageReference Include="AspNetCore.HealthChecks.System" />
-  </ItemGroup>
-
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.System" />
     <PackageReference Include="JetBrains.Annotations" />
   </ItemGroup>
 

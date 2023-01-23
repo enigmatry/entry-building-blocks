@@ -42,7 +42,7 @@ namespace Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http
             // thrown, the object is responsible fore cleaning up its state.
             response.Content?.Dispose();
             throw new HttpOperationException(
-                $"StatusCode: {response.StatusCode}, ReasonPhrase: {response.ReasonPhrase}, RequestUri: {response.RequestMessage.RequestUri}, Content: {content}.");
+                $"StatusCode: {response.StatusCode}, ReasonPhrase: {response.ReasonPhrase}, RequestUri: {response.RequestMessage?.RequestUri}, Content: {content}.");
         }
     }
 }
