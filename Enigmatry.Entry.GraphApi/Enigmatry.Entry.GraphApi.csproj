@@ -7,15 +7,7 @@
     <Authors>eko</Authors>
     <Product>Enigmatry.Entry.GraphApi</Product>
     <Description>Building Block for adding MS Graph Api</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <PackagePath></PackagePath>
-      <Pack>True</Pack>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

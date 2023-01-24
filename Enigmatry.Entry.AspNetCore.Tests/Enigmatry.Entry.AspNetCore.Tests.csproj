@@ -7,7 +7,6 @@
     <Authors>szi</Authors>
     <Product>Enigmatry.Entry.AspNetCore.Tests</Product>
     <Description>Building Block for writing tests in a Blueprint AspNetCore based project</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,13 +15,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Database\DropAllSql.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

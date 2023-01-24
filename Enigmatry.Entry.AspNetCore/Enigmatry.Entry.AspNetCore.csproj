@@ -7,19 +7,12 @@
     <Authors>szi, nda</Authors>
     <Product>Enigmatry.Entry.AspNetCore</Product>
     <Description>Building Block for AspNet Core applications based on Blueprint project</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" />

@@ -7,15 +7,7 @@
     <Authors>eko</Authors>
     <Product>Enigmatry.Entry.Core</Product>
     <Description>Core Building Block</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" />

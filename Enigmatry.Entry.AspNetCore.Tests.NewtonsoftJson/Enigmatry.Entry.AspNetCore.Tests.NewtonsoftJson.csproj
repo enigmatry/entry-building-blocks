@@ -7,15 +7,7 @@
     <Authors>awa</Authors>
     <Product>Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson</Product>
     <Description>Building Block for writing tests in a Blueprint AspNetCore based project with Newtonsoft Json</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" />

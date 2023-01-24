@@ -7,15 +7,7 @@
     <Authors>eko</Authors>
     <Product>Enigmatry.Entry.Email</Product>
     <Description>Building Block for adding an Email client to a Blueprint based project</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MailKit" />

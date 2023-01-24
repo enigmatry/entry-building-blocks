@@ -7,7 +7,6 @@
     <Authors>eko, nda</Authors>
     <Product>Enigmatry.Entry.HealthChecks</Product>
     <Description>Building Block for adding health checks</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>Enigmatry.Entry.HealthChecks.Tests</_Parameter1>
     </AssemblyAttribute>

@@ -7,15 +7,7 @@
     <Authors>szi</Authors>
     <Product>Enigmatry.Entry.Infrastructure</Product>
     <Description>Building Block for adding Infrastructure to a Blueprint based project</Description>
-    <PackageIcon>icon-192x192.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Entry.Core\Enigmatry.Entry.Core.csproj" />
