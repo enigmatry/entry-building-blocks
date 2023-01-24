@@ -2,16 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Authors>eko</Authors>
-    <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.Csv</Product>
     <Description>Building Block for adding a Csv Helper to a Blueprint based project</Description>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

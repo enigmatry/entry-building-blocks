@@ -2,16 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Authors>szi</Authors>
-    <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.MediatR</Product>
     <Description>Building Block for adding MediatR related infrastructure to a Blueprint based project</Description>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

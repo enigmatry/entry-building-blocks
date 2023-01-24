@@ -2,16 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Authors>szi</Authors>
-    <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.AspNetCore.Tests.SystemTextJson</Product>
     <Description>Building Block for writing tests in a Blueprint AspNetCore based project with SystemText Json</Description>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
     <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
