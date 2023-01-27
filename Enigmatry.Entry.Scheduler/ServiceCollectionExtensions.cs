@@ -38,7 +38,8 @@ public static class ServiceCollectionExtensions
     private static void AddJob(this IServiceCollectionQuartzConfigurator quartz, JobConfiguration config,
         ILogger logger)
     {
-        if (config.JobEnabled)
+        var settings = config.Settings;
+        if (!settings.Enabled)
         {
             logger.LogWarning("Job: {job} is disabled. Skipping registration",
                 config.JobName);
@@ -52,10 +53,10 @@ public static class ServiceCollectionExtensions
         {
             trigger.ForJob(key)
                 .WithIdentity(key + "_Trigger")
-                .WithCronSchedule(config.Cronex);
+                .WithCronSchedule(settings.Cronex);
         });
 
-        if (config.RunOnStartup)
+        if (settings.RunOnStartup)
         {
             quartz.AddTrigger(trigger =>
                 trigger.ForJob(key)

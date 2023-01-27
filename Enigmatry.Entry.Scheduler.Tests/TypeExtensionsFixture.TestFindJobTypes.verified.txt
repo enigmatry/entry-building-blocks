@@ -1,9 +1,8 @@
 ﻿[
-  SampleJobs.Job1,
-  SampleJobs.Job2,
-  SampleJobs.Job3,
-  SampleJobs.Job4,
   SampleJobs.AJob,
-  SampleJobs.AnEntryJob,
+  SampleJobs.AnEntryJobWithArguments,
+  SampleJobs.AJobWithoutCronExpression,
+  SampleJobs.AJobWithoutConfiguration,
+  SampleJobs.AnEntryJobWithoutArguments,
   SampleJobs.AnEntryJobDerivingSomeBaseJob
 ]

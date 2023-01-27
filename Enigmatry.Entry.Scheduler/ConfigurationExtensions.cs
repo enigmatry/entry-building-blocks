@@ -12,8 +12,10 @@ internal static class ConfigurationExtensions
     public static JobConfiguration GetJobConfiguration(this IConfiguration configuration, Type jobType)
     {
         var jobName = JobConfiguration.GetJobName(jobType);
-        var jobSection = configuration.GetSchedulingSection().GetSection($"Jobs:{jobName}");
-        return new JobConfiguration(jobName, jobType, jobSection);
+        var schedulingSection = configuration.GetSchedulingSection();
+        var jobSection = schedulingSection.GetSection($"Jobs:{jobName}");
+        var settings = jobSection.Get<JobSettings>();
+        return new JobConfiguration(jobName, jobType, settings, jobSection);
     }
 
     private static IConfigurationSection GetSchedulingSection(this IConfiguration configuration)

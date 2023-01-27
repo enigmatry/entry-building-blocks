@@ -70,8 +70,8 @@ public class ConfigurationExtensionsFixture
         jobs.Count.Should().Be(2);
         await Verify(jobs);
 
-        var job2 = jobs.First(j => j.JobType == typeof(SampleJobs.Job2));
-        var args = job2.GetSchedulingJobArgumentsValue<SampleJobs.Job2.Request>();
+        var job2 = jobs.First(j => j.JobType == typeof(SampleJobs.AnEntryJobWithArguments));
+        var args = job2.GetSchedulingJobArgumentsValue<SampleJobs.AnEntryJobWithArguments.Request>();
         args.Arg1.Should().Be("argument1");
         args.Arg2.Should().Be("argument2");
     }
@@ -82,14 +82,14 @@ public class ConfigurationExtensionsFixture
     private static IConfiguration AConfiguration() => SchedulingConfigurationBuilder.BuildValidTestConfiguration();
 
     private static IEnumerable<Type> JobTypesWithConfiguration() =>
-        new List<Type> { typeof(SampleJobs.Job1), typeof(SampleJobs.Job2) };
+        new List<Type> { typeof(SampleJobs.AJob), typeof(SampleJobs.AnEntryJobWithArguments) };
 
     private static IEnumerable<Type> WrongJobTypes() =>
         new List<Type> { typeof(ConfigurationExtensionsFixture), typeof(int) };
 
     private static IEnumerable<Type> JobTypesWithoutValidConfiguration() =>
-        new List<Type> { typeof(SampleJobs.Job3) };
+        new List<Type> { typeof(SampleJobs.AJobWithoutCronExpression) };
 
     private static IEnumerable<Type> JobTypesWithoutConfiguration() =>
-        new List<Type> { typeof(SampleJobs.Job4) };
+        new List<Type> { typeof(SampleJobs.AJobWithoutConfiguration) };
 }

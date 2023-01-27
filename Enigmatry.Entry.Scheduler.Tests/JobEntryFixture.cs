@@ -11,7 +11,7 @@ public class JobEntryFixture
     public async Task TestExecute()
     {
         var configuration = SchedulingConfigurationBuilder.BuildValidTestConfiguration();
-        var job = new SampleJobs.Job2(new NullLogger<EntryJob<SampleJobs.Job2.Request>>(), configuration);
+        var job = new SampleJobs.AnEntryJobWithArguments(new NullLogger<EntryJob<SampleJobs.AnEntryJobWithArguments.Request>>(), configuration);
 
         await job.Execute(A.Fake<IJobExecutionContext>());
 

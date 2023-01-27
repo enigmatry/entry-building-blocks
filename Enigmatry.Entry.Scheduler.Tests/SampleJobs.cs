@@ -8,13 +8,13 @@ namespace Enigmatry.Entry.Scheduler.Tests;
 public static class SampleJobs
 {
     [UsedImplicitly]
-    internal class Job1 : IJob
+    internal class AJob : IJob
     {
         public Task Execute(IJobExecutionContext context) => Task.CompletedTask;
     }
 
     [UsedImplicitly]
-    internal class Job2 : EntryJob<Job2.Request>
+    internal class AnEntryJobWithArguments : EntryJob<AnEntryJobWithArguments.Request>
     {
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         internal class Request
@@ -23,7 +23,7 @@ public static class SampleJobs
             public string Arg2 { get; set; } = String.Empty;
         }
 
-        public Job2(ILogger<EntryJob<Request>> logger, IConfiguration configuration) : base(logger, configuration)
+        public AnEntryJobWithArguments(ILogger<EntryJob<Request>> logger, IConfiguration configuration) : base(logger, configuration)
         {
         }
 
@@ -37,27 +37,21 @@ public static class SampleJobs
     }
 
     [UsedImplicitly]
-    internal class Job3 : IJob
+    internal class AJobWithoutCronExpression : IJob
     {
         public Task Execute(IJobExecutionContext context) => Task.CompletedTask;
     }
 
     [UsedImplicitly]
-    internal class Job4 : IJob
+    internal class AJobWithoutConfiguration : IJob
     {
         public Task Execute(IJobExecutionContext context) => Task.CompletedTask;
     }
 
     [UsedImplicitly]
-    public class AJob : IJob
+    public class AnEntryJobWithoutArguments : EntryJob<AnEntryJobWithoutArguments.Request>
     {
-        public Task Execute(IJobExecutionContext context) => Task.CompletedTask;
-    }
-
-    [UsedImplicitly]
-    public class AnEntryJob : EntryJob<AnEntryJob.Request>
-    {
-        public AnEntryJob(ILogger<EntryJob<Request>> logger, IConfiguration configuration) : base(logger,
+        public AnEntryJobWithoutArguments(ILogger<EntryJob<Request>> logger, IConfiguration configuration) : base(logger,
             configuration)
         {
         }
@@ -66,6 +60,7 @@ public static class SampleJobs
 
         public class Request
         {
+            public string AnArgument { get; set; } = "initialValue";
         }
     }
 

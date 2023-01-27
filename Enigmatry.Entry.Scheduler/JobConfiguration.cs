@@ -6,42 +6,41 @@ namespace Enigmatry.Entry.Scheduler;
 
 internal class JobConfiguration
 {
-    private readonly IConfigurationSection _jobConfiguration;
+    private readonly IConfigurationSection _section;
 
-    public JobConfiguration(string jobName, Type jobType, IConfigurationSection jobConfiguration)
+    public JobConfiguration(string jobName, Type jobType, JobSettings settings, IConfigurationSection section)
     {
-        _jobConfiguration = jobConfiguration;
         JobName = jobName;
         JobType = jobType;
+        Settings = settings;
+        _section = section;
 
         EnsureConfigurationIsValid();
     }
 
     private void EnsureConfigurationIsValid()
     {
-        if (!_jobConfiguration.Exists())
+        if (!_section.Exists())
         {
-            throw new ConfigurationErrorsException($"Configuration Section '{SectionName}' is not found");
+            throw new ConfigurationErrorsException($"Configuration Section '{JobName}' is not found");
         }
 
-        if (!Cronex.HasContent())
+        if (!Settings.Cronex.HasContent())
         {
-            throw new ConfigurationErrorsException($"Missing 'Cronex' value in configuration for configuration section: '{SectionName}'");
+            throw new ConfigurationErrorsException(
+                $"Missing 'Cronex' value in configuration for configuration section: '{JobName}'");
         }
     }
 
     public string JobName { get; }
-    private string SectionName => JobName;
     public Type JobType { get; }
-
-    public bool RunOnStartup => _jobConfiguration.GetValue<bool?>("RunOnStartup") ?? false;
-    public bool JobEnabled => _jobConfiguration.GetValue<bool?>("Enabled") ?? true;
-    public string Cronex => _jobConfiguration["Cronex"];
+    public JobSettings Settings { get; }
 
     internal T GetSchedulingJobArgumentsValue<T>() where T : new()
     {
-        var section = _jobConfiguration.GetSection("Args");
-        return section == null ? new T() : section.Get<T>();
+        var section = _section.GetSection("Args");
+        var value = section.Get<T>();
+        return value == null ? new T() : value;
     }
 
     internal static string GetJobName(Type jobType) => jobType.Name;
