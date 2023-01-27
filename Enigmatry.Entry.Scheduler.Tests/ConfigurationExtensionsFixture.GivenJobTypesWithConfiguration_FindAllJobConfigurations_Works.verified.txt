@@ -1,0 +1,16 @@
+﻿[
+  {
+    JobName: Job1,
+    JobType: SampleJobs.Job1,
+    RunOnStartup: true,
+    JobEnabled: true,
+    Cronex: 12:00:00
+  },
+  {
+    JobName: Job2,
+    JobType: SampleJobs.Job2,
+    RunOnStartup: false,
+    JobEnabled: false,
+    Cronex: 12:00:00
+  }
+]

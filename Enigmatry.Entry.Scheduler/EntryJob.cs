@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
 namespace Enigmatry.Entry.Scheduler;
 
+[PublicAPI]
 public abstract class EntryJob<T> : IJob where T : class, new()
 {
     private readonly ILogger<EntryJob<T>> _logger;
@@ -22,7 +24,8 @@ public abstract class EntryJob<T> : IJob where T : class, new()
 
         try
         {
-            await Execute(_configuration.GetSchedulingJobArgumentsValue<T>());
+            var jobType = GetType();
+            await Execute(_configuration.GetJobConfiguration(jobType).GetSchedulingJobArgumentsValue<T>());
             _logger.LogInformation($"{jobName} job completed.");
         }
         catch (Exception ex)

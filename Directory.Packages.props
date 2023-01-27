@@ -63,5 +63,6 @@
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.2.19" />
     <PackageVersion Include="System.Net.Http.Json" Version="6.0.0" />
+    <PackageVersion Include="Verify.NUnit" Version="19.7.1" />
   </ItemGroup>
 </Project>

@@ -1,14 +1,18 @@
 ﻿using Enigmatry.Entry.Core.Helpers;
 using Quartz;
 using System.Reflection;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.Scheduler;
 
+[PublicAPI]
 public static class ServiceCollectionExtensions
 {
-    public static void AppAddQuartz(this IServiceCollection services, IConfiguration configuration, Assembly assembly)
+    public static void AppAddQuartz(this IServiceCollection services, IConfiguration configuration, Assembly assembly,
+        ILogger logger)
     {
         // Quartz configuration reference:
         // https://www.quartz-scheduler.net/documentation/quartz-3.x/configuration/reference.html#quartz-net-configuration-reference
@@ -17,37 +21,41 @@ public static class ServiceCollectionExtensions
         services.AddQuartz(quartz =>
         {
             quartz.UseMicrosoftDependencyInjectionJobFactory();
-            quartz.AddJobs(configuration, assembly);
+            quartz.AddJobs(configuration, assembly, logger);
         });
 
         services.AddQuartzHostedService(quartz => quartz.WaitForJobsToComplete = true);
     }
 
-    private static void AddJobs(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration, Assembly assembly) =>
-        assembly.GetTypes()
-            .Where(type => !type.IsAbstract)
-            .Where(type => type.GetInterface(nameof(IJob)) != null)
-            .Where(type => configuration.GetSchedulingJobSection(type).Exists())
-            .Where(configuration.GetSchedulingJobEnabledValue)
-            .ForEach(type => quartz.AddJob(configuration, type));
-
-    private static void AddJob(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration, Type type)
+    private static void AddJobs(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration,
+        Assembly assembly, ILogger logger)
     {
-        var key = configuration.GetSchedulingJobSection(type).Key;
+        var jobTypes = assembly.FinAllJobTypes();
+        var configurations = configuration.FindAllJobConfigurations(jobTypes);
+        configurations.ForEach(section => quartz.AddJob(section, logger));
+    }
 
-        quartz.AddJob(type, new JobKey(key));
+    private static void AddJob(this IServiceCollectionQuartzConfigurator quartz, JobConfiguration config,
+        ILogger logger)
+    {
+        if (config.JobEnabled)
+        {
+            logger.LogWarning("Job: {job} is disabled. Skipping registration",
+                config.JobName);
+            return;
+        }
+
+        var key = config.JobName;
+        quartz.AddJob(config.JobType, new JobKey(key));
 
         quartz.AddTrigger(trigger =>
         {
-            var cronExpression = configuration.GetSchedulingJobCronExpressionValue(type)
-                ?? throw new InvalidOperationException($"Cannot determine CRON expression for job: {key}");
-
             trigger.ForJob(key)
                 .WithIdentity(key + "_Trigger")
-                .WithCronSchedule(cronExpression);
+                .WithCronSchedule(config.Cronex);
         });
 
-        if (configuration.GetSchedulingJobRunOnStartupValue(type))
+        if (config.RunOnStartup)
         {
             quartz.AddTrigger(trigger =>
                 trigger.ForJob(key)
