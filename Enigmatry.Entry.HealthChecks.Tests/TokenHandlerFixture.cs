@@ -9,70 +9,69 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.HealthChecks.Tests
+namespace Enigmatry.Entry.HealthChecks.Tests;
+
+[Category("unit")]
+public class HealthChecksTokenHandlerFixture
 {
-    [Category("unit")]
-    public class HealthChecksTokenHandlerFixture
+    private const string ValidToken = "123456";
+    private const string InvalidToken = "abcdef";
+    private AuthorizationHandlerContext _handlerContext = null!;
+
+    [SetUp]
+    public void Setup() =>
+        _handlerContext = new(new[] { new TokenRequirement(ValidToken) },
+            ClaimsPrincipal.Current!, null);
+
+    [Test]
+    public void ConstructorGuards()
     {
-        private const string ValidToken = "123456";
-        private const string InvalidToken = "abcdef";
-        private AuthorizationHandlerContext _handlerContext = null!;
+        Action act = () => _ = new TokenHandler(null!);
 
-        [SetUp]
-        public void Setup() =>
-            _handlerContext = new(new[] { new TokenRequirement(ValidToken) },
-                ClaimsPrincipal.Current!, null);
+        act.Should().Throw<ArgumentNullException>();
+    }
 
-        [Test]
-        public void ConstructorGuards()
-        {
-            Action act = () => _ = new TokenHandler(null!);
+    [Test]
+    public async Task NullContextAuthorizationFailure()
+    {
+        var contextAccessor = A.Fake<IHttpContextAccessor>();
+        contextAccessor.HttpContext = null;
+        var handler = new TokenHandler(contextAccessor);
 
-            act.Should().Throw<ArgumentNullException>();
-        }
+        await handler.HandleAsync(_handlerContext);
 
-        [Test]
-        public async Task NullContextAuthorizationFailure()
-        {
-            var contextAccessor = A.Fake<IHttpContextAccessor>();
-            contextAccessor.HttpContext = null;
-            var handler = new TokenHandler(contextAccessor);
+        _handlerContext.HasSucceeded.Should().BeFalse();
+    }
 
-            await handler.HandleAsync(_handlerContext);
+    [Test]
+    public async Task InvalidTokenAuthorizationFailure()
+    {
+        var handler = ArrangeHandlerWith(InvalidToken);
 
-            _handlerContext.HasSucceeded.Should().BeFalse();
-        }
+        await handler.HandleAsync(_handlerContext);
 
-        [Test]
-        public async Task InvalidTokenAuthorizationFailure()
-        {
-            var handler = ArrangeHandlerWith(InvalidToken);
+        _handlerContext.HasSucceeded.Should().BeFalse();
+    }
 
-            await handler.HandleAsync(_handlerContext);
+    [Test]
+    public async Task ValidTokenAuthorizationSuccess()
+    {
+        var handler = ArrangeHandlerWith(ValidToken);
 
-            _handlerContext.HasSucceeded.Should().BeFalse();
-        }
+        await handler.HandleAsync(_handlerContext);
 
-        [Test]
-        public async Task ValidTokenAuthorizationSuccess()
-        {
-            var handler = ArrangeHandlerWith(ValidToken);
+        _handlerContext.HasSucceeded.Should().BeTrue();
+    }
 
-            await handler.HandleAsync(_handlerContext);
+    private static TokenHandler ArrangeHandlerWith(string token)
+    {
+        var contextAccessor = A.Fake<IHttpContextAccessor>();
 
-            _handlerContext.HasSucceeded.Should().BeTrue();
-        }
+        var request = new HttpRequestFeature { QueryString = $"token={token}" };
+        var features = new FeatureCollection();
+        features.Set<IHttpRequestFeature>(request);
 
-        private static TokenHandler ArrangeHandlerWith(string token)
-        {
-            var contextAccessor = A.Fake<IHttpContextAccessor>();
-
-            var request = new HttpRequestFeature { QueryString = $"token={token}" };
-            var features = new FeatureCollection();
-            features.Set<IHttpRequestFeature>(request);
-
-            contextAccessor.HttpContext = new DefaultHttpContext(features);
-            return new TokenHandler(contextAccessor);
-        }
+        contextAccessor.HttpContext = new DefaultHttpContext(features);
+        return new TokenHandler(contextAccessor);
     }
 }

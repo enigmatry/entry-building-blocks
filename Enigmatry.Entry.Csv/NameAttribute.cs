@@ -3,7 +3,7 @@
 namespace Enigmatry.Entry.Csv
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class NameAttribute : Attribute
+    public sealed class NameAttribute : Attribute
     {
         public string Name { get; } = String.Empty;
 

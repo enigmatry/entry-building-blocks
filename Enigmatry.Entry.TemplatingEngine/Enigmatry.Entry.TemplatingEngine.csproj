@@ -2,24 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <Authors>eko</Authors>
-    <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.TemplatingEngine</Product>
     <Description>Building Block for adding Email Templating to a Blueprint based project</Description>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
-    <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
