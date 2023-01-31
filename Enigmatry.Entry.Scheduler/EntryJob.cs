@@ -20,17 +20,17 @@ public abstract class EntryJob<T> : IJob where T : class, new()
     public virtual async Task Execute(IJobExecutionContext context)
     {
         var jobName = context.JobDetail.Key.Name;
-        _logger.LogInformation($"Processing {jobName} job...");
+        _logger.LogInformation("Processing {JobName} job...", jobName);
 
         try
         {
             var jobType = GetType();
             await Execute(_configuration.GetJobConfiguration(jobType).GetSchedulingJobArgumentsValue<T>());
-            _logger.LogInformation($"{jobName} job completed.");
+            _logger.LogInformation("{JobName} job completed.", jobName);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error occurred during {jobName} job execution.");
+            _logger.LogError(ex, "Error occurred during {JobName} job execution.", jobName);
         }
     }
 

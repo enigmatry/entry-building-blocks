@@ -41,7 +41,7 @@ public static class ServiceCollectionExtensions
         var settings = config.Settings;
         if (!settings.Enabled)
         {
-            logger.LogWarning("Job: {job} is disabled. Skipping registration",
+            logger.LogWarning("Job: {JobName} is disabled. Skipping registration",
                 config.JobName);
             return;
         }

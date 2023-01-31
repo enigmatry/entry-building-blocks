@@ -17,7 +17,8 @@ public class TypeExtensionsFixture
         jobs.Should().Contain(typeof(SampleJobs.AJobWithoutCronExpression), "this type is deriving from EntryJob");
         jobs.Should().Contain(typeof(SampleJobs.AJobWithoutConfiguration), "this type is deriving from EntryJob");
         jobs.Should().Contain(typeof(SampleJobs.AnEntryJobDerivingSomeBaseJob), "this type is deriving from a job that derives from EntryJob");
-        jobs.Should().NotContain(typeof(SampleJobs.ABaseJob<>), "this is an abstract class");
+        jobs.Should().NotContain(typeof(SampleJobs.ABaseNonAbstractJob<>), "this job is a base class");
+        jobs.Should().NotContain(typeof(SampleJobs.ABaseAbstractJob<>), "this job is a base class");
 
         await Verify(jobs);
     }

@@ -65,7 +65,7 @@ public static class SampleJobs
     }
 
     [UsedImplicitly]
-    public class AnEntryJobDerivingSomeBaseJob : ABaseJob<AnEntryJobDerivingSomeBaseJob.Request>
+    public class AnEntryJobDerivingSomeBaseJob : ABaseNonAbstractJob<AnEntryJobDerivingSomeBaseJob.Request>
     {
         public class Request
         {
@@ -77,12 +77,21 @@ public static class SampleJobs
         {
         }
 
-        public override Task Execute(Request request) => throw new NotImplementedException();
+        public override async Task Execute(Request request) => await base.Execute(request);
     }
 
-    public abstract class ABaseJob<T> : EntryJob<T> where T : class, new()
+    public class ABaseNonAbstractJob<T> : ABaseAbstractJob<T> where T : class, new()
     {
-        protected ABaseJob(ILogger<EntryJob<T>> logger, IConfiguration configuration) : base(logger, configuration)
+        protected ABaseNonAbstractJob(ILogger<EntryJob<T>> logger, IConfiguration configuration) : base(logger, configuration)
+        {
+        }
+
+        public override Task Execute(T request) => Task.CompletedTask;
+    }
+
+    public abstract class ABaseAbstractJob<T> : EntryJob<T> where T : class, new()
+    {
+        protected ABaseAbstractJob(ILogger<EntryJob<T>> logger, IConfiguration configuration) : base(logger, configuration)
         {
         }
     }

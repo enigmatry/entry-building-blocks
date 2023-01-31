@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using System.Configuration;
 using Enigmatry.Entry.Core.Helpers;
 
