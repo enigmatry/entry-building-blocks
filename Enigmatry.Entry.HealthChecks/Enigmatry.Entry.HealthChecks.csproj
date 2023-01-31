@@ -1,21 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <Authors>eko, nda</Authors>
-    <Company>Enigmatry</Company>
     <Product>Enigmatry.Entry.HealthChecks</Product>
     <Description>Building Block for adding health checks</Description>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
-    <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,24 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\icon-192x192.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>Enigmatry.Entry.HealthChecks.Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
-    <PackageReference Include="AspNetCore.HealthChecks.System" VersionOverride="5.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-    <PackageReference Include="AspNetCore.HealthChecks.System" />
-  </ItemGroup>
-
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.System" />
     <PackageReference Include="JetBrains.Annotations" />
   </ItemGroup>
 

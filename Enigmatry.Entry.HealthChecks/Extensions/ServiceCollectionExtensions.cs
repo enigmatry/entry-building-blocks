@@ -6,47 +6,46 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System;
 
-namespace Enigmatry.Entry.HealthChecks.Extensions
+namespace Enigmatry.Entry.HealthChecks.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    [PublicAPI]
+    public static IHealthChecksBuilder AppAddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
-        [PublicAPI]
-        public static IHealthChecksBuilder AppAddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        if (services == null)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-
-            var settings = configuration.ResolveHealthCheckSettings();
-            var healthChecksBuilder = services.AddHealthChecks();
-
-            if (settings.TokenAuthorizationEnabled)
-            {
-                InitializeTokenAuthorization(services, settings);
-            }
-
-            Initialize(healthChecksBuilder, settings);
-            return healthChecksBuilder;
+            throw new ArgumentNullException(nameof(services));
         }
 
-        private static void Initialize(IHealthChecksBuilder healthChecksBuilder, Settings settings)
+        if (configuration == null)
         {
-            const int megabyte = 1024 * 1024;
-            healthChecksBuilder.AddPrivateMemoryHealthCheck(megabyte * settings.MaximumAllowedMemoryInMegaBytes,
-                "Available memory test", HealthStatus.Degraded);
+            throw new ArgumentNullException(nameof(configuration));
         }
 
-        private static void InitializeTokenAuthorization(IServiceCollection services, Settings settings)
+        var settings = configuration.ResolveHealthCheckSettings();
+        var healthChecksBuilder = services.AddHealthChecks();
+
+        if (settings.TokenAuthorizationEnabled)
         {
-            services.AddAuthorization(options => options.AddPolicy(TokenRequirement.Name,
-                policy => policy.Requirements.Add(new TokenRequirement(settings.RequiredToken))));
-            services.AddSingleton<IAuthorizationHandler, TokenHandler>();
+            InitializeTokenAuthorization(services, settings);
         }
+
+        Initialize(healthChecksBuilder, settings);
+        return healthChecksBuilder;
+    }
+
+    private static void Initialize(IHealthChecksBuilder healthChecksBuilder, Settings settings)
+    {
+        const int megabyte = 1024 * 1024;
+        healthChecksBuilder.AddPrivateMemoryHealthCheck(megabyte * settings.MaximumAllowedMemoryInMegaBytes,
+            "Available memory test", HealthStatus.Degraded);
+    }
+
+    private static void InitializeTokenAuthorization(IServiceCollection services, Settings settings)
+    {
+        services.AddAuthorization(options => options.AddPolicy(TokenRequirement.Name,
+            policy => policy.Requirements.Add(new TokenRequirement(settings.RequiredToken))));
+        services.AddSingleton<IAuthorizationHandler, TokenHandler>();
     }
 }

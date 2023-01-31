@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -46,9 +47,11 @@ namespace Enigmatry.Entry.BlobStorage.Azure
         public async Task<bool> RemoveAsync(string relativePath, CancellationToken cancellationToken = default)
         {
             if (!relativePath.Contains('*'))
+            {
                 return await Container.DeleteBlobIfExistsAsync(relativePath, cancellationToken: cancellationToken);
+            }
 
-            await foreach (var blob in Container.GetBlobsAsync(prefix: relativePath.Replace('\\', '/').Remove(relativePath.IndexOf('*'))))
+            await foreach (var blob in Container.GetBlobsAsync(prefix: relativePath.Replace('\\', '/').Remove(relativePath.IndexOf('*')), cancellationToken: cancellationToken))
             {
                 await Container.GetBlobClient(blob.Name).DeleteAsync(cancellationToken: cancellationToken);
             }
@@ -63,7 +66,7 @@ namespace Enigmatry.Entry.BlobStorage.Azure
         {
             var headers = new BlobHttpHeaders
             {
-                ContentType = Path.GetExtension(blob.Name).ToLower() switch
+                ContentType = Path.GetExtension(blob.Name).ToLower(CultureInfo.InvariantCulture) switch
                 {
                     ".pdf" => "application/pdf",
                     ".svg" => "image/svg+xml",
@@ -71,7 +74,9 @@ namespace Enigmatry.Entry.BlobStorage.Azure
                 }
             };
             if (Settings.CacheTimeout > 0)
+            {
                 headers.CacheControl = $"public, max-age={Settings.CacheTimeout}";
+            }
 
             return headers;
         }

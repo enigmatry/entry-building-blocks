@@ -10,40 +10,39 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.HealthChecks.Extensions
+namespace Enigmatry.Entry.HealthChecks.Extensions;
+
+[PublicAPI]
+public static class StartupExtensions
 {
-    [PublicAPI]
-    public static class StartupExtensions
+    public static void AppMapHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
     {
-        public static void AppMapHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
+        var settings = configuration.ResolveHealthCheckSettings();
+        var healthCheckEndpoint = endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions
         {
-            var settings = configuration.ResolveHealthCheckSettings();
-            var healthCheckEndpoint = endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions
+            // Specify a custom ResponseWriter, so we can return json with additional information,
+            // Otherwise it will just return plain text with the status.
+            ResponseWriter = WriteResponse,
+            ResultStatusCodes =
             {
-                // Specify a custom ResponseWriter, so we can return json with additional information,
-                // Otherwise it will just return plain text with the status.
-                ResponseWriter = WriteResponse,
-                ResultStatusCodes =
-                {
-                    [HealthStatus.Healthy] = StatusCodes.Status200OK,
-                    [HealthStatus.Degraded] = StatusCodes.Status200OK,
-                    [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
-                }
-            });
-
-            if (settings.TokenAuthorizationEnabled)
-            {
-                healthCheckEndpoint.RequireAuthorization(TokenRequirement.Name);
+                [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
             }
-        }
+        });
 
-        private static async Task WriteResponse(HttpContext context, HealthReport report) =>
-            await context.Response.WriteAsJsonAsync(
-                new
-                {
-                    status = report.Status.ToString(),
-                    entries = report.Entries.Select(keyValuePair =>
-                        new { key = keyValuePair.Key, value = keyValuePair.Value.Status.ToString() })
-                }, new JsonSerializerOptions { WriteIndented = true });
+        if (settings.TokenAuthorizationEnabled)
+        {
+            healthCheckEndpoint.RequireAuthorization(TokenRequirement.Name);
+        }
     }
+
+    private static async Task WriteResponse(HttpContext context, HealthReport report) =>
+        await context.Response.WriteAsJsonAsync(
+            new
+            {
+                status = report.Status.ToString(),
+                entries = report.Entries.Select(keyValuePair =>
+                    new { key = keyValuePair.Key, value = keyValuePair.Value.Status.ToString() })
+            }, new JsonSerializerOptions { WriteIndented = true });
 }
