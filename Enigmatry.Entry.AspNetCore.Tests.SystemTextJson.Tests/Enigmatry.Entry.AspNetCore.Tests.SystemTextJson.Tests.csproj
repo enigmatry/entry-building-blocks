@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.SampleApp\Enigmatry.Entry.AspNetCore.SampleApp.csproj" />
-    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.SystemTextJson\Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests\Enigmatry.Entry.AspNetCore.Tests.csproj" />
   </ItemGroup>
 
 </Project>

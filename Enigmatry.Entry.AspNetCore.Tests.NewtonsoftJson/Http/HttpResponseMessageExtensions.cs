@@ -21,7 +21,7 @@ public static class HttpResponseMessageExtensions
             : throw DisposeResponseContentAndThrowException(response, content);
     }
 
-    private static T? Deserialize<T>(string content) =>
+    internal static T? Deserialize<T>(string content) =>
         JsonConvert.DeserializeObject<T>(content, HttpSerializationSettings.Settings);
 
     public static async Task EnsureSuccessStatusCodeAsync(this HttpResponseMessage response)

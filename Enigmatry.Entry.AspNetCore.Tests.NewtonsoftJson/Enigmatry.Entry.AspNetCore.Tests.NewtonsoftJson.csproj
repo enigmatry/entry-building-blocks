@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.TestUtils\Enigmatry.Entry.AspNetCore.TestUtils.csproj" />
   </ItemGroup>
 

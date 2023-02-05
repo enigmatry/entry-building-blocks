@@ -6,7 +6,6 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NUnit.Framework;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 
@@ -87,6 +86,6 @@ public class ExceptionHandlerFixture
     private static async Task<T> GetErrorsFrom<T>(HttpContext context)
     {
         var value = await GetResponseStringFrom(context);
-        return JsonSerializer.Deserialize<T>(value);
+        return JsonSerializer.Deserialize<T>(value)!;
     }
 }
