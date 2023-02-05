@@ -5,13 +5,14 @@ using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Enigmatry.Entry.AspNetCore.Exceptions
@@ -41,14 +42,16 @@ namespace Enigmatry.Entry.AspNetCore.Exceptions
             }
         }
 
-        private static async Task HandleValidationExceptionFrom(HttpContext context, ValidationException validationException)
+        private static async Task HandleValidationExceptionFrom(HttpContext context,
+            ValidationException validationException)
         {
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Response.ContentType = "application/problem+json";
-
-            var validationResult = context.CreateValidationProblemDetailsResponse(validationException);
-            var jsonString = JsonSerializer.Serialize(validationResult.Value);
-            await context.Response.WriteAsync(jsonString);
+            var validationResult = context.CreateValidationProblemDetails(validationException);
+            var jsonResult = new JsonResult(validationResult)
+            {
+                ContentType = "application/problem+json",
+                StatusCode = StatusCodes.Status400BadRequest
+            };
+            await ExecuteResult(context, jsonResult);
         }
 
         [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
@@ -61,10 +64,21 @@ namespace Enigmatry.Entry.AspNetCore.Exceptions
                 return;
             }
 
-            context.Response.StatusCode = 500;
-            context.Response.ContentType = "application/problem+json";
-            var jsonString = JsonSerializer.Serialize(GetProblemDetails(context, exception));
-            await context.Response.WriteAsync(jsonString);
+            var problemDetails = GetProblemDetails(context, exception);
+            var jsonResult = new JsonResult(problemDetails)
+            {
+                ContentType = "application/problem+json",
+                StatusCode = 500
+            };
+            await ExecuteResult(context, jsonResult);
+        }
+
+        private static async Task ExecuteResult(HttpContext context, IActionResult actionResult)
+        {
+            RouteData routeData = context.GetRouteData();
+            var actionDescriptor = new ActionDescriptor();
+            var actionContext = new ActionContext(context, routeData, actionDescriptor);
+            await actionResult.ExecuteResultAsync(actionContext);
         }
 
         private static ProblemDetails GetProblemDetails(HttpContext context, Exception exception)

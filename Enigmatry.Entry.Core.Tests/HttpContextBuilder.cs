@@ -3,9 +3,12 @@ using FakeItEasy;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Enigmatry.Entry.Core.Tests;
 internal class HttpContextBuilder
@@ -60,11 +63,28 @@ internal class HttpContextBuilder
         var provider = new ServiceCollection()
             .AddTransient(_ => A.Fake<IHostEnvironment>())
             .AddTransient(_ => A.Fake<ILogger<ExceptionHandler>>())
+            .AddTransient<IActionResultExecutor<JsonResult>, SystemTextJsonResultActionExecutor>()
             .BuildServiceProvider();
 
         return new DefaultHttpContext(features)
         {
             RequestServices = provider
         };
+    }
+
+    internal class SystemTextJsonResultActionExecutor : IActionResultExecutor<JsonResult>
+    {
+        // Taken from Microsoft.AspNetCore.Mvc.Infrastructure.SystemTextJsonResultExecutor, trying to resemble Execute method
+        public async Task ExecuteAsync(ActionContext context, JsonResult result)
+        {
+            var response = context.HttpContext.Response;
+            response.ContentType = result.ContentType!;
+            response.StatusCode = result.StatusCode.GetValueOrDefault();
+            var value = result.Value;
+            var objectType = value?.GetType() ?? typeof(object);
+            var responseStream = response.Body;
+            await JsonSerializer.SerializeAsync(responseStream, value, objectType);
+            await responseStream.FlushAsync(context.HttpContext.RequestAborted);
+        }
     }
 }
