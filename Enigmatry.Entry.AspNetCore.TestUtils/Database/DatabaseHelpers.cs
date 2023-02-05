@@ -1,6 +1,6 @@
 ﻿using Enigmatry.Entry.Core.Helpers;
 
-namespace Enigmatry.Entry.AspNetCore.Tests.Database;
+namespace Enigmatry.Entry.AspNetCore.TestUtils.Database;
 
 public static class DatabaseHelpers
 {

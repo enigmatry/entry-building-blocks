@@ -7,9 +7,8 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
-namespace Enigmatry.Entry.Core.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests;
 
 public class ExceptionHandlerFixture
 {

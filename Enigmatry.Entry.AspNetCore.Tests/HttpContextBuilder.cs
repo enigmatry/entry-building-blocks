@@ -1,16 +1,17 @@
-﻿using Enigmatry.Entry.AspNetCore.Exceptions;
+﻿using System.Text.Json;
+using Enigmatry.Entry.AspNetCore.Exceptions;
 using FakeItEasy;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
+using Microsoft.Extensions.Logging.Abstractions;
 
-namespace Enigmatry.Entry.Core.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests;
 internal class HttpContextBuilder
 {
     private Exception _exception;
@@ -62,7 +63,7 @@ internal class HttpContextBuilder
 
         var provider = new ServiceCollection()
             .AddTransient(_ => A.Fake<IHostEnvironment>())
-            .AddTransient(_ => A.Fake<ILogger<ExceptionHandler>>())
+            .AddTransient<ILogger<ExceptionHandler>>(_ => new NullLogger<ExceptionHandler>())
             .AddTransient<IActionResultExecutor<JsonResult>, SystemTextJsonResultActionExecutor>()
             .BuildServiceProvider();
 

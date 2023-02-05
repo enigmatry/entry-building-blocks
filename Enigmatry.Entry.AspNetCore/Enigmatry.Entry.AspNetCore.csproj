@@ -14,8 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Enigmatry.Entry.Core.Tests" />
-    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    <InternalsVisibleTo Include="Enigmatry.Entry.AspNetCore.Tests" />
   </ItemGroup>
 
   <ItemGroup>

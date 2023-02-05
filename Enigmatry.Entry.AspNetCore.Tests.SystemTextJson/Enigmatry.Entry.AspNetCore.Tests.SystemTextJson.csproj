@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests\Enigmatry.Entry.AspNetCore.Tests.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.TestUtils\Enigmatry.Entry.AspNetCore.TestUtils.csproj" />
   </ItemGroup>
 
 </Project>

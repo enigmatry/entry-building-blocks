@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Enigmatry.Entry.AspNetCore.Tests.Http;
+namespace Enigmatry.Entry.AspNetCore.TestUtils.Http;
 
 public static class UriExtensions
 {

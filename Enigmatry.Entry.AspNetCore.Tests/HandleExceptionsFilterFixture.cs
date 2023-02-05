@@ -1,4 +1,5 @@
 ﻿using Enigmatry.Entry.AspNetCore.Filters;
+using Enigmatry.Entry.AspNetCore.Tests;
 using Enigmatry.Entry.Core.Entities;
 using FakeItEasy;
 using FluentAssertions;

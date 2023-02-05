@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Enigmatry.Entry.AspNetCore.Tests;
+namespace Enigmatry.Entry.AspNetCore.TestUtils;
 
 public static class ServiceScopeExtensions
 {

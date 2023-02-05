@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Enigmatry.Entry.Core.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests;
 internal static class ActionResultExtensions
 {
     internal static IEnumerable<string> GetErrorMessages(this IActionResult actionResult)
