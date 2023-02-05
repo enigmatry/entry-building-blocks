@@ -9,46 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FakeItEasy" />
-    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Verify.NUnit" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests\Enigmatry.Entry.AspNetCore.Tests.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="WeatherForecastControllerFixture.TestGetValidationError.verified.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGetValidationError.received.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGetNotFound.verified.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGetNotFound.received.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGetError.verified.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGetError.received.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGet.verified.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
-    <None Update="WeatherForecastControllerFixture.TestGet.received.txt">
-      <DependentUpon>WeatherForecastControllerFixture.cs</DependentUpon>
-    </None>
   </ItemGroup>
 
 </Project>
