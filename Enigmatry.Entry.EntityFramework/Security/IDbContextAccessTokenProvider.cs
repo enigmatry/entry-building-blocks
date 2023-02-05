@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.EntityFramework.Security
+namespace Enigmatry.Entry.EntityFramework.Security;
+
+public interface IDbContextAccessTokenProvider
 {
-    public interface IDbContextAccessTokenProvider
-    {
-        Task<string> GetAccessTokenAsync();
-    }
+    Task<string> GetAccessTokenAsync();
 }
