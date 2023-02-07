@@ -64,6 +64,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Email.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine.Tests", "Enigmatry.Entry.TemplatingEngine.Tests\Enigmatry.Entry.TemplatingEngine.Tests.csproj", "{1E122C99-D6B6-48D1-981A-8A5F2231220B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Scheduler", "Enigmatry.Entry.Scheduler\Enigmatry.Entry.Scheduler.csproj", "{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.Scheduler.Tests", "Enigmatry.Entry.Scheduler.Tests\Enigmatry.Entry.Scheduler.Tests.csproj", "{2C1FEAC4-5CED-4A19-A777-B64E0C934DA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,6 +170,14 @@ Global
 		{1E122C99-D6B6-48D1-981A-8A5F2231220B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E122C99-D6B6-48D1-981A-8A5F2231220B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E122C99-D6B6-48D1-981A-8A5F2231220B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C1FEAC4-5CED-4A19-A777-B64E0C934DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C1FEAC4-5CED-4A19-A777-B64E0C934DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C1FEAC4-5CED-4A19-A777-B64E0C934DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C1FEAC4-5CED-4A19-A777-B64E0C934DA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

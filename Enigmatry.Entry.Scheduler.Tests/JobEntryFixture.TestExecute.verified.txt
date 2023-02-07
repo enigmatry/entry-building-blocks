@@ -1,0 +1,4 @@
+﻿{
+  Arg1: argument1,
+  Arg2: argument2
+}
