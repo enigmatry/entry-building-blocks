@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Enigmatry.Entry.AspNetCore.SampleApp;
+namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 
 public class WeatherForecast
 {

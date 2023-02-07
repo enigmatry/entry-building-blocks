@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Enigmatry.Entry.AspNetCore.SampleApp;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 

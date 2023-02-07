@@ -1,5 +1,5 @@
-﻿using Enigmatry.Entry.AspNetCore.SampleApp;
-using Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http;
+﻿using Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 using Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests;

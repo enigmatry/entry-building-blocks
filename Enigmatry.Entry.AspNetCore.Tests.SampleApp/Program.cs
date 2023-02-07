@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Enigmatry.Entry.AspNetCore.SampleApp;
+namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 
 #pragma warning disable CA1052
 

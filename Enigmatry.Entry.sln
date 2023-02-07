@@ -68,11 +68,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.TestUtils", "Enigmatry.Entry.AspNetCore.TestUtils\Enigmatry.Entry.AspNetCore.TestUtils.csproj", "{C05BB437-49C7-43EE-AC50-649DC15DCBCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.SampleApp", "Enigmatry.Entry.AspNetCore.SampleApp\Enigmatry.Entry.AspNetCore.SampleApp.csproj", "{7778BE91-D8D9-488F-9747-102F36A91177}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Tests.SampleApp", "Enigmatry.Entry.AspNetCore.Tests.SampleApp\Enigmatry.Entry.AspNetCore.Tests.SampleApp.csproj", "{7778BE91-D8D9-488F-9747-102F36A91177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests", "Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests.csproj", "{62748057-A574-4EA8-B589-1B15E1104E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests", "Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests.csproj", "{62748057-A574-4EA8-B589-1B15E1104E91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests", "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests\Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests.csproj", "{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests", "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests\Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests.csproj", "{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

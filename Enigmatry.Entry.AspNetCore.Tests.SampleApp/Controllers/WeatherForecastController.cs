@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 #pragma warning disable CA5394
 #pragma warning disable IDE0052
 
-namespace Enigmatry.Entry.AspNetCore.SampleApp.Controllers;
+namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
 
 [ApiController]
 [Route("[controller]")]

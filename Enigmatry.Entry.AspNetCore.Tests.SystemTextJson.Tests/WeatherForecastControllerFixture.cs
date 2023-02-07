@@ -1,4 +1,4 @@
-﻿using Enigmatry.Entry.AspNetCore.SampleApp;
+﻿using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 using Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 using Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Http;
 

@@ -1,4 +1,4 @@
-﻿using Enigmatry.Entry.AspNetCore.SampleApp;
+﻿using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
