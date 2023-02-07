@@ -38,6 +38,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
@@ -59,6 +60,9 @@
     <PackageVersion Include="NUnit.Analyzers" Version="3.3.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageVersion Include="Polly" Version="7.2.3" />
+    <PackageVersion Include="Quartz" Version="3.5.0" />
+    <PackageVersion Include="Quartz.Extensions.DependencyInjection" Version="3.5.0" />
+    <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.5.0" />
     <PackageVersion Include="Serilog" Version="2.11.0" />
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.2.19" />
