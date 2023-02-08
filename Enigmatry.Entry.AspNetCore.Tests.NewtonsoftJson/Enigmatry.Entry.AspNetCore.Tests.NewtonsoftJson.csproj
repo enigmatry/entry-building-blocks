@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>awa</Authors>
+    <PackageId>Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson</PackageId>
     <Product>Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson</Product>
     <Description>Building Block for writing tests in a Blueprint AspNetCore based project with Newtonsoft Json</Description>
   </PropertyGroup>

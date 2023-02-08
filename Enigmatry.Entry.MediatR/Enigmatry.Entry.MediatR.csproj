@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <PackageId>Enigmatry.Entry.MediatR</PackageId>
     <Product>Enigmatry.Entry.MediatR</Product>
     <Description>Building Block for adding MediatR related infrastructure to a Blueprint based project</Description>
   </PropertyGroup>

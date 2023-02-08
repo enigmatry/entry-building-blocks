@@ -1,13 +1,15 @@
 <Project>
 
 	<PropertyGroup>
-
+    
+    <Authors>Enigmatry</Authors>
     <Copyright>Copyright © 2023 Enigmatry. All rights reserved.</Copyright>
     <Company>Enigmatry</Company>
-    <Product>Enigmatry Entry</Product>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>icon-192x192.png</PackageIcon>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageTags>Enigmatry;Entry</PackageTags>
+    <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

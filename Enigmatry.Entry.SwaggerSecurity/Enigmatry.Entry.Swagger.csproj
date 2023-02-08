@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
+    <PackageId>Enigmatry.Entry.Swagger</PackageId>
     <Product>Enigmatry.Entry.Swagger</Product>
     <Description>Building Block for adding Swagger documentation to a Blueprint based project</Description>
   </PropertyGroup>

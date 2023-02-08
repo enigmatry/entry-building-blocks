@@ -4,7 +4,7 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi, nda</Authors>
+    <PackageId>Enigmatry.Entry.AspNetCore</PackageId>
     <Product>Enigmatry.Entry.AspNetCore</Product>
     <Description>Building Block for AspNet Core applications based on Blueprint project</Description>
   </PropertyGroup>

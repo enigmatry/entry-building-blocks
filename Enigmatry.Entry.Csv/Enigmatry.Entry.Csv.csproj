@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
+    <PackageId>Enigmatry.Entry.Csv</PackageId>
     <Product>Enigmatry.Entry.Csv</Product>
     <Description>Building Block for adding a Csv Helper to a Blueprint based project</Description>
   </PropertyGroup>
