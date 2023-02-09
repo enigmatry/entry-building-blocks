@@ -7,7 +7,7 @@
     <Company>Enigmatry</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/enigmatry/entry-building-blocks</PackageProjectUrl>
     <PackageTags>Enigmatry;Entry</PackageTags>
     <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

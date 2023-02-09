@@ -6,7 +6,7 @@
     <IsPackable>true</IsPackable>
     <PackageId>Enigmatry.Entry.CacheManager</PackageId>
     <Product>Enigmatry.Entry.CacheManager</Product>
-    <Description>Building Block for adding a Cache Manager to a Blueprint based project</Description>
+    <Description>Building Block for adding a Cache Manager to an Entry based project</Description>
   </PropertyGroup>
 
   <ItemGroup>
