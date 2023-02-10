@@ -4,9 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <PackageId>Enigmatry.Entry.AspNetCore.Tests</PackageId>
     <Product>Enigmatry.Entry.AspNetCore.Tests</Product>
-    <Description>Building Block for writing tests in a Blueprint AspNetCore based project</Description>
+    <Description>Building Block for writing tests in an Entry AspNetCore based project</Description>
   </PropertyGroup>
 
   <ItemGroup>

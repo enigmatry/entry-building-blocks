@@ -4,9 +4,9 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <PackageId>Enigmatry.Entry.Infrastructure</PackageId>
     <Product>Enigmatry.Entry.Infrastructure</Product>
-    <Description>Building Block for adding Infrastructure to a Blueprint based project</Description>
+    <Description>Building Block for adding Infrastructure to an Entry based project</Description>
   </PropertyGroup>
 
   <ItemGroup>

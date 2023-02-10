@@ -4,7 +4,7 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
+    <PackageId>Enigmatry.Entry.Core.EntityFramework</PackageId>
     <Product>Enigmatry.Entry.Core.EntityFramework</Product>
     <Description>Core Building Block for EntityFramework dependent projects</Description>
   </PropertyGroup>

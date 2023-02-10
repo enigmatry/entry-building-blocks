@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
+    <PackageId>Enigmatry.Entry.TemplatingEngine</PackageId>
     <Product>Enigmatry.Entry.TemplatingEngine</Product>
-    <Description>Building Block for adding Email Templating to a Blueprint based project</Description>
+    <Description>Building Block for adding Email Templating to an Entry based project</Description>
   </PropertyGroup>
 
   <ItemGroup>
