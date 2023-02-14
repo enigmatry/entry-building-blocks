@@ -4,7 +4,6 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
     <Product>Enigmatry.Entry.GraphApi</Product>
     <Description>Building Block for adding MS Graph Api</Description>
   </PropertyGroup>

@@ -4,7 +4,6 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
     <Product>Enigmatry.Entry.Core</Product>
     <Description>Core Building Block</Description>
   </PropertyGroup>

@@ -4,7 +4,6 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
     <Product>Enigmatry.Entry.EntityFramework</Product>
     <Description>Building Block for adding EntityFramework related infrastructure to a Blueprint based project</Description>
   </PropertyGroup>

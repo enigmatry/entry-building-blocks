@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Enigmatry.Entry.Core.Helpers;
+﻿using Enigmatry.Entry.Core.Helpers;
 
-namespace Enigmatry.Entry.AspNetCore.TestUtils.Database;
+namespace Enigmatry.Entry.AspNetCore.Tests.Utilities.Database;
 
 public static class StringExtensionsForSql
 {

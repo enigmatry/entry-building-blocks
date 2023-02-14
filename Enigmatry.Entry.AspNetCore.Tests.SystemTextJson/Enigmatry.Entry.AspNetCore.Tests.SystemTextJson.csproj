@@ -4,7 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
     <Product>Enigmatry.Entry.AspNetCore.Tests.SystemTextJson</Product>
     <Description>Building Block for writing tests in a Blueprint AspNetCore based project with SystemText Json</Description>
   </PropertyGroup>
@@ -18,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.TestUtils\Enigmatry.Entry.AspNetCore.TestUtils.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.Utilities\Enigmatry.Entry.AspNetCore.Tests.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

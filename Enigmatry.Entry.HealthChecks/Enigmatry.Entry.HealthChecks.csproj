@@ -4,7 +4,6 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko, nda</Authors>
     <Product>Enigmatry.Entry.HealthChecks</Product>
     <Description>Building Block for adding health checks</Description>
   </PropertyGroup>

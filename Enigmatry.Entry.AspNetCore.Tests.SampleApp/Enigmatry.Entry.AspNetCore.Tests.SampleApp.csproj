@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <Authors>szi</Authors>
     <Product>Enigmatry.Entry.AspNetCore.SampleApp</Product>
     <Description>Sample AspNetCore application</Description>
   </PropertyGroup>

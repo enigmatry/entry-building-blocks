@@ -4,7 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>eko</Authors>
     <Product>Enigmatry.Entry.Email</Product>
     <Description>Building Block for adding an Email client to a Blueprint based project</Description>
   </PropertyGroup>

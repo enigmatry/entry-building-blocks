@@ -1,11 +1,12 @@
 ﻿using Enigmatry.Entry.AspNetCore.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 
-#pragma warning disable CA1052
-
+[SuppressMessage("Design", "CA1052:Static holder types should be Static or NotInheritable",
+    Justification = "This rule doesn't apply for Program.cs")]
 public class Program
 {
     public static void Main(string[] args)

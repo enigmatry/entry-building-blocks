@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>true</IsPackable>
-    <Authors>eko,szi</Authors>
     <Product>Enigmatry.Entry.Scheduler</Product>
     <Description>Building Block with startup extensions for a scheduler webjob using Quartz jobs.</Description>
   </PropertyGroup>

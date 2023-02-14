@@ -14,6 +14,5 @@ public class WeatherForecastControllerFixture : WeatherForecastControllerFixture
     protected override async Task<T?> GetAsync<T>(HttpClient client, string uri) where T : default =>
         await client.GetAsync<T>(uri);
 
-    protected override T? DeserializeJson<T>(string content) where T : default =>
-        HttpResponseMessageExtensions.Deserialize<T>(content);
+    protected override T? DeserializeJson<T>(string content) where T : default => content.Deserialize<T>();
 }

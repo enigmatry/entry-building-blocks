@@ -5,14 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>szi</Authors>
-    <Product>Enigmatry.Entry.AspNetCore.TestUtils</Product>
+    <Product>Enigmatry.Entry.AspNetCore.Tests.Utilities</Product>
     <Description>Test utilities for AspNetCore projects</Description>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Database\DropAllSql.sql" />
-  </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Database\DropAllSql.sql" />

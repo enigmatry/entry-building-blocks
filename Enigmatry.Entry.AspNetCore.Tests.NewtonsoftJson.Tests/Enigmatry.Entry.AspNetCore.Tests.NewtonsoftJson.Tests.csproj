@@ -4,7 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
-    <Authors>szi</Authors>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -14,7 +13,6 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="NUnit.Analyzers" />
-    <PackageReference Include="coverlet.collector" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.csproj" />
