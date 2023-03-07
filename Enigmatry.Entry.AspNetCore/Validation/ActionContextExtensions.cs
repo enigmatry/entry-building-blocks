@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Enigmatry.Entry.AspNetCore.Validation
-{
+namespace Enigmatry.Entry.AspNetCore.Validation;
+
     public static class ActionContextExtensions
     {
         public static BadRequestObjectResult CreateValidationProblemDetailsResponse(this HttpContext context, ModelStateDictionary modelState)
@@ -67,4 +67,3 @@ namespace Enigmatry.Entry.AspNetCore.Validation
             }
         }
     }
-}

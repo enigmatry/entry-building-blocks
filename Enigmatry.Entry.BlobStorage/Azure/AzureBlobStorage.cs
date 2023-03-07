@@ -47,9 +47,9 @@ internal class AzureBlobStorage : IBlobStorage
     public async Task<bool> RemoveAsync(string relativePath, CancellationToken cancellationToken = default)
     {
         if (!relativePath.Contains('*'))
-        {
+            {
             return await Container.DeleteBlobIfExistsAsync(relativePath, cancellationToken: cancellationToken);
-        }
+            }
 
         await foreach (var blob in Container.GetBlobsAsync(prefix: relativePath.Replace('\\', '/').Remove(relativePath.IndexOf('*')), cancellationToken: cancellationToken))
         {

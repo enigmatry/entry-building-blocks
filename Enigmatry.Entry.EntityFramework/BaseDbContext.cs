@@ -12,8 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.EntityFramework
-{
+namespace Enigmatry.Entry.EntityFramework;
+
     [UsedImplicitly]
     public abstract class BaseDbContext : DbContext
     {
@@ -101,4 +101,3 @@ namespace Enigmatry.Entry.EntityFramework
 
         protected abstract Task Dispatch(IEnumerable<DomainEvent> domainEvents);
     }
-}

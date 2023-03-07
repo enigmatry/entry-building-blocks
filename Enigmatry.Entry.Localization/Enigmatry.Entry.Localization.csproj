@@ -4,8 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.Localization</PackageId>
     <Product>Enigmatry.Entry.Localization</Product>
-    <Description>Building Block for adding server-side Localization to a Blueprint based project</Description>
+    <Description>Building Block for adding server-side Localization to an Entry based project</Description>
   </PropertyGroup>
 
   <ItemGroup>

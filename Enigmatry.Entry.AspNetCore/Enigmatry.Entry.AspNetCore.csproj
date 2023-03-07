@@ -4,6 +4,7 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.AspNetCore</PackageId>
     <Product>Enigmatry.Entry.AspNetCore</Product>
     <Description>Building Block for AspNet Core applications based on Blueprint project</Description>
   </PropertyGroup>
@@ -12,9 +13,6 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <InternalsVisibleTo Include="Enigmatry.Entry.AspNetCore.Tests" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" />

@@ -2,10 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.AspNetCore.Tests</PackageId>
+    <Product>Enigmatry.Entry.AspNetCore.Tests</Product>
+    <Description>Building Block for writing tests in an Entry AspNetCore based project</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Database\DropAllSql.sql" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" />

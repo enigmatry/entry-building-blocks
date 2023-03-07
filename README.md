@@ -1,4 +1,4 @@
-# enigmatry-blueprint-building-blocks
+# entry-building-blocks
 
 ## Index
 
@@ -43,9 +43,9 @@ _List here the required tooling to start developing locally, including version (
 
 ### Source Code
 
-Clone the repository from: `https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git`
+Clone the repository from: `https://github.com/enigmatry/entry-building-blocks`
 
-* Console command: `git clone https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git`
+* Console command: `git clone https://github.com/enigmatry/entry-building-blocks`
 * Visual Studio: Go to menu Team -> Manage Connections, and then in section Local Git Repositories select action 'Clone' and specify the remote git url and checkout directory.
 
 ### Databases and Storage

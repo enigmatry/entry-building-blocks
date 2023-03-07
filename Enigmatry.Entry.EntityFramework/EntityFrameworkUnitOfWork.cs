@@ -5,8 +5,8 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.EntityFramework
-{
+namespace Enigmatry.Entry.EntityFramework;
+
     [UsedImplicitly]
     public class EntityFrameworkUnitOfWork : IUnitOfWork
     {
@@ -36,4 +36,3 @@ namespace Enigmatry.Entry.EntityFramework
 
         public void CancelSaving() => _cancelSaving = true;
     }
-}

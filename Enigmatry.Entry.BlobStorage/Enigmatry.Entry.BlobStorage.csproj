@@ -4,8 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.BlobStorage</PackageId>
     <Product>Enigmatry.Entry.BlobStorage</Product>
-    <Description>Building Block for adding Azure Blob Storage to a Blueprint based project</Description>
+    <Description>Building Block for adding Azure Blob Storage to an Entry based project</Description>
   </PropertyGroup>
 
   <ItemGroup>
