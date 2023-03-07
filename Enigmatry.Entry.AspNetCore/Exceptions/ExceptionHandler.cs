@@ -5,84 +5,97 @@ using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.AspNetCore.Exceptions
+namespace Enigmatry.Entry.AspNetCore.Exceptions;
+
+internal class ExceptionHandler
 {
-    internal class ExceptionHandler
+    [SuppressMessage("ReSharper", "RedundantSuppressNullableWarningExpression",
+        Justification = "If handler path feature could not be found it means error handling doesn't work!")]
+    internal static async Task HandleExceptionFrom(HttpContext context)
     {
-        [SuppressMessage("ReSharper", "RedundantSuppressNullableWarningExpression",
-            Justification = "If handler path feature could not be found it means error handling doesn't work!")]
-        internal static async Task HandleExceptionFrom(HttpContext context)
+        var logger = context.Resolve<ILogger<ExceptionHandler>>();
+        var exception = context.Features.Get<IExceptionHandlerPathFeature>()!.Error;
+        switch (exception)
         {
-            var logger = context.Resolve<ILogger<ExceptionHandler>>();
-            var exception = context.Features.Get<IExceptionHandlerPathFeature>()!.Error;
-            switch (exception)
-            {
-                case ValidationException validationException:
-                    logger.LogDebug(exception, "Validation exception");
-                    await HandleValidationExceptionFrom(context, validationException);
-                    return;
-                case EntityNotFoundException notFoundException:
-                    logger.LogError(exception, $"Entity: {notFoundException.EntityName} not found");
-                    context.Response.StatusCode = StatusCodes.Status404NotFound;
-                    return;
-                default:
-                    logger.LogError(exception, "Unexpected error");
-                    await HandleUnexpectedErrorFrom(context, exception);
-                    break;
-            }
-        }
-
-        private static async Task HandleValidationExceptionFrom(HttpContext context, ValidationException validationException)
-        {
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            context.Response.ContentType = "application/problem+json";
-
-            var validationResult = context.CreateValidationProblemDetailsResponse(validationException);
-            var jsonString = JsonSerializer.Serialize(validationResult.Value);
-            await context.Response.WriteAsync(jsonString);
-        }
-
-        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
-        private static async Task HandleUnexpectedErrorFrom(HttpContext context, Exception exception)
-        {
-            var accept = context.Request.GetTypedHeaders().Accept;
-            if (accept != null && accept.All(header => header.MediaType != "application/json"))
-            {
-                // server does not accept Json, leaving to default MVC error page handler.
+            case ValidationException validationException:
+                logger.LogDebug(exception, "Validation exception");
+                await HandleValidationExceptionFrom(context, validationException);
                 return;
-            }
-
-            context.Response.StatusCode = 500;
-            context.Response.ContentType = "application/problem+json";
-            var jsonString = JsonSerializer.Serialize(GetProblemDetails(context, exception));
-            await context.Response.WriteAsync(jsonString);
+            case EntityNotFoundException notFoundException:
+                logger.LogError(exception, $"Entity: {notFoundException.EntityName} not found");
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                return;
+            default:
+                logger.LogError(exception, "Unexpected error");
+                await HandleUnexpectedErrorFrom(context, exception);
+                break;
         }
+    }
 
-        private static ProblemDetails GetProblemDetails(HttpContext context, Exception exception)
+    private static async Task HandleValidationExceptionFrom(HttpContext context,
+        ValidationException validationException)
+    {
+        var validationResult = context.CreateValidationProblemDetails(validationException);
+        var jsonResult = new JsonResult(validationResult)
         {
-            var environment = context.Resolve<IHostEnvironment>();
-            var errorDetail = environment.IsDevelopment()
-                ? exception.Demystify().ToString()
-                : "The instance value should be used to identify the problem when calling customer support";
+            ContentType = "application/problem+json",
+            StatusCode = StatusCodes.Status400BadRequest
+        };
+        await ExecuteResult(context, jsonResult);
+    }
 
-            var problemDetails = new ProblemDetails
-            {
-                Title = "An unexpected error occurred!",
-                Instance = context.Request.Path,
-                Status = StatusCodes.Status500InternalServerError,
-                Detail = errorDetail
-            };
-
-            return problemDetails;
+    [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
+    private static async Task HandleUnexpectedErrorFrom(HttpContext context, Exception exception)
+    {
+        var accept = context.Request.GetTypedHeaders().Accept;
+        if (accept != null && accept.All(header => header.MediaType != "application/json"))
+        {
+            // server does not accept Json, leaving to default MVC error page handler.
+            return;
         }
+
+        var problemDetails = GetProblemDetails(context, exception);
+        var jsonResult = new JsonResult(problemDetails)
+        {
+            ContentType = "application/problem+json",
+            StatusCode = 500
+        };
+        await ExecuteResult(context, jsonResult);
+    }
+
+    private static async Task ExecuteResult(HttpContext context, IActionResult actionResult)
+    {
+        RouteData routeData = context.GetRouteData();
+        var actionDescriptor = new ActionDescriptor();
+        var actionContext = new ActionContext(context, routeData, actionDescriptor);
+        await actionResult.ExecuteResultAsync(actionContext);
+    }
+
+    private static ProblemDetails GetProblemDetails(HttpContext context, Exception exception)
+    {
+        var environment = context.Resolve<IHostEnvironment>();
+        var errorDetail = environment.IsDevelopment()
+            ? exception.Demystify().ToString()
+            : "The instance value should be used to identify the problem when calling customer support";
+
+        var problemDetails = new ProblemDetails
+        {
+            Title = "An unexpected error occurred!",
+            Instance = context.Request.Path,
+            Status = StatusCodes.Status500InternalServerError,
+            Detail = errorDetail
+        };
+
+        return problemDetails;
     }
 }

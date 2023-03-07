@@ -6,7 +6,9 @@ namespace Enigmatry.Entry.Email
     public class EmailMessageAttachment : IEquatable<EmailMessageAttachment>
     {
         public string FileName { get; set; }
+#pragma warning disable CA1819
         public byte[] Data { get; }
+#pragma warning restore CA1819
         public string ContentType { get; }
 
         public EmailMessageAttachment(string fileName, byte[] data) : this(fileName, data,

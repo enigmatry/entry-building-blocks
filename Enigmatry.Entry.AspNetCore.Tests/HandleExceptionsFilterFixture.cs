@@ -8,13 +8,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace Enigmatry.Entry.Core.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests;
 
 [Obsolete("ExceptionsFilter is deprecated due to limited context, please use extensions method instead since more exceptions can be caught from it.")]
 public class HandleExceptionsFilterFixture
 {
     private const string GeneralException = "General exception";
-    private HandleExceptionsFilter _filter;
+    private HandleExceptionsFilter _filter = null!;
 
     [SetUp]
     public void Setup() => _filter = InitializeFilter();
@@ -28,7 +28,7 @@ public class HandleExceptionsFilterFixture
 
         _filter.OnException(context);
 
-        var errors = context.Result.GetErrorMessages().ToList();
+        var errors = context.Result!.GetErrorMessages().ToList();
 
         errors.Count.Should().Be(1);
         errors.First().Should().Be("Name is required.");

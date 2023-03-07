@@ -3,25 +3,24 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.HealthChecks.Authorization
+namespace Enigmatry.Entry.HealthChecks.Authorization;
+
+internal class TokenHandler : AuthorizationHandler<TokenRequirement>
 {
-    internal class TokenHandler : AuthorizationHandler<TokenRequirement>
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public TokenHandler(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+    }
 
-        public TokenHandler(IHttpContextAccessor httpContextAccessor)
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, TokenRequirement requirement)
+    {
+        if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Query["token"].ToString() == requirement.Token)
         {
-            _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+            context.Succeed(requirement);
         }
 
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, TokenRequirement requirement)
-        {
-            if (_httpContextAccessor.HttpContext != null && _httpContextAccessor.HttpContext.Request.Query["token"].ToString() == requirement.Token)
-            {
-                context.Succeed(requirement);
-            }
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }

@@ -19,9 +19,16 @@ namespace Enigmatry.Entry.AspNetCore.Validation
 
         public static BadRequestObjectResult CreateValidationProblemDetailsResponse(this HttpContext context, ValidationException validationException)
         {
+            var problemDetails = CreateValidationProblemDetails(context, validationException);
+            return ToBadRequestObjectResult(problemDetails);
+        }
+
+        public static ValidationProblemDetails CreateValidationProblemDetails(this HttpContext context,
+            ValidationException validationException)
+        {
             ValidationProblemDetails problemDetails = CreateValidationProblemDetails(context);
             CopyErrorsFromValidationException(problemDetails, validationException.Errors);
-            return ToBadRequestObjectResult(problemDetails);
+            return problemDetails;
         }
 
         private static ValidationProblemDetails CreateValidationProblemDetails(HttpContext context,

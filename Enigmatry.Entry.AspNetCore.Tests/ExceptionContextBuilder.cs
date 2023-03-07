@@ -8,15 +8,16 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
-namespace Enigmatry.Entry.Core.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests;
 
 internal class ExceptionContextBuilder
 {
     private const string PropertyName = "name";
     private const string ErrorMessage = "Name is required.";
     [Obsolete]
-    private readonly ILogger _logger = A.Fake<ILogger<HandleExceptionsFilter>>();
+    private readonly ILogger _logger = new NullLogger<HandleExceptionsFilter>();
     private Exception _exception = default!;
     private bool _jsonRequest;
     private bool _xmlRequest;

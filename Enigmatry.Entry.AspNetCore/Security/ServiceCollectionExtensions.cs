@@ -5,34 +5,33 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Net;
 
-namespace Enigmatry.Entry.AspNetCore.Security
+namespace Enigmatry.Entry.AspNetCore.Security;
+
+[PublicAPI]
+public static class ServiceCollectionExtensions
 {
-    [PublicAPI]
-    public static class ServiceCollectionExtensions
+    public static void AppAddHttps(this IServiceCollection services, IHostEnvironment environment)
     {
-        public static void AppAddHttps(this IServiceCollection services, IHostEnvironment environment)
+        var isDevelopmentEnvironment = environment.IsDevelopment();
+
+        if (!isDevelopmentEnvironment)
         {
-            var isDevelopmentEnvironment = environment.IsDevelopment();
-
-            if (!isDevelopmentEnvironment)
+            const int oneYear = 365;
+            services.AddHsts(options =>
             {
-                const int oneYear = 365;
-                services.AddHsts(options =>
-                {
-                    options.Preload = true;
-                    options.IncludeSubDomains = true;
-                    options.MaxAge = TimeSpan.FromDays(oneYear);
-                });
-            }
-
-            var redirection = isDevelopmentEnvironment
-                ? HttpStatusCode.TemporaryRedirect
-                : HttpStatusCode.PermanentRedirect;
-
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = (int)redirection;
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(oneYear);
             });
         }
+
+        var redirection = isDevelopmentEnvironment
+            ? HttpStatusCode.TemporaryRedirect
+            : HttpStatusCode.PermanentRedirect;
+
+        services.AddHttpsRedirection(options =>
+        {
+            options.RedirectStatusCode = (int)redirection;
+        });
     }
 }

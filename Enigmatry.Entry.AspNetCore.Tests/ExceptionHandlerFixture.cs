@@ -1,15 +1,13 @@
-﻿using Enigmatry.Entry.AspNetCore.Exceptions;
+﻿using System.Text.Json;
+using Enigmatry.Entry.AspNetCore.Exceptions;
 using Enigmatry.Entry.Core.Entities;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
-using System.Text.Json;
 
-namespace Enigmatry.Entry.Core.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests;
 
 public class ExceptionHandlerFixture
 {
@@ -39,7 +37,8 @@ public class ExceptionHandlerFixture
 
         await HandleExceptionFrom(context);
 
-        var errors = (await GetErrorsFrom<ValidationProblemDetails>(context))!.Errors;
+        var result = await GetErrorsFrom<ValidationProblemDetails>(context)!;
+        var errors = result!.Errors;
         errors.Count.Should().Be(1);
         errors.First().Key.Should().Be(propertyName);
         errors.First().Value.First().Should().Be(propertyError);
@@ -54,7 +53,7 @@ public class ExceptionHandlerFixture
 
         await HandleExceptionFrom(context);
 
-        (await GetResponseStringFrom(context)).Should().Be(string.Empty);
+        (await GetResponseStringFrom(context)).Should().Be(String.Empty);
     }
 
     [Test]
@@ -87,6 +86,6 @@ public class ExceptionHandlerFixture
     private static async Task<T> GetErrorsFrom<T>(HttpContext context)
     {
         var value = await GetResponseStringFrom(context);
-        return JsonSerializer.Deserialize<T>(value);
+        return JsonSerializer.Deserialize<T>(value)!;
     }
 }
