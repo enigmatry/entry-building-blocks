@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 
 namespace Enigmatry.Entry.BlobStorage.Azure;
 
@@ -47,9 +47,9 @@ internal class AzureBlobStorage : IBlobStorage
     public async Task<bool> RemoveAsync(string relativePath, CancellationToken cancellationToken = default)
     {
         if (!relativePath.Contains('*'))
-            {
+        {
             return await Container.DeleteBlobIfExistsAsync(relativePath, cancellationToken: cancellationToken);
-            }
+        }
 
         await foreach (var blob in Container.GetBlobsAsync(prefix: relativePath.Replace('\\', '/').Remove(relativePath.IndexOf('*')), cancellationToken: cancellationToken))
         {

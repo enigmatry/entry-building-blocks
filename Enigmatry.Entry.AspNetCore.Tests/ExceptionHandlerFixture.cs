@@ -1,11 +1,11 @@
-﻿using System.Text.Json;
-using Enigmatry.Entry.AspNetCore.Exceptions;
+﻿using Enigmatry.Entry.AspNetCore.Exceptions;
 using Enigmatry.Entry.Core.Entities;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 

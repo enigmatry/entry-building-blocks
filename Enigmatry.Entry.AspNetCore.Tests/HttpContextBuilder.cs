@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Enigmatry.Entry.AspNetCore.Exceptions;
+﻿using Enigmatry.Entry.AspNetCore.Exceptions;
 using FakeItEasy;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using System.Text.Json;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 internal class HttpContextBuilder
