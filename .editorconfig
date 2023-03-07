@@ -38,6 +38,7 @@ dotnet_style_qualification_for_event = false:warning
 # Language keywords vs BCL types preferences 
 dotnet_style_predefined_type_for_locals_parameters_members = true:warning
 dotnet_style_predefined_type_for_member_access = false:warning
+dotnet_remove_unnecessary_suppression_exclusions = category: ReSharper
 # Parentheses preferences 
 dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:warning
 dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:suggestion

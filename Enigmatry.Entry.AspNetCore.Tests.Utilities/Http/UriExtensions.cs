@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Enigmatry.Entry.AspNetCore.Tests.Http;
+﻿namespace Enigmatry.Entry.AspNetCore.Tests.Utilities.Http;
 
 public static class UriExtensions
 {

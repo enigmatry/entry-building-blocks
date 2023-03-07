@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Enigmatry.Entry.AspNetCore.Tests.Utilities.Http;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Threading.Tasks;
-using Enigmatry.Entry.AspNetCore.Tests.Http;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http;
 

@@ -1,0 +1,7 @@
+﻿{
+  Type: https://asp.net/core,
+  Title: One or more validation errors occurred.,
+  Status: 400,
+  Detail: Please refer to the errors property for additional details.,
+  Instance: /WeatherForecast/ProblemDetails
+}

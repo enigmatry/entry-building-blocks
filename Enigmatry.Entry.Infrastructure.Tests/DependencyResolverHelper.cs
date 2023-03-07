@@ -1,29 +1,30 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
-namespace Enigmatry.Entry.Tests.Infrastructure
+namespace Enigmatry.Entry.Infrastructure.Tests;
+
+public class DependencyResolverHelper
 {
-    public class DependencyResolverHelper
+    private readonly IWebHost _webHost;
+
+    public DependencyResolverHelper(IWebHost webHost)
     {
-        private readonly IWebHost _webHost;
+        _webHost = webHost;
+    }
 
-        public DependencyResolverHelper(IWebHost webHost) => _webHost = webHost;
-
-        public T GetService<T>() where T : notnull
+    public T GetService<T>() where T : notnull
+    {
+        using var serviceScope = _webHost.Services.CreateScope();
+        var services = serviceScope.ServiceProvider;
+        try
         {
-            using var serviceScope = _webHost.Services.CreateScope();
-            var services = serviceScope.ServiceProvider;
-            try
-            {
-                var scopedService = services.GetRequiredService<T>();
-                return scopedService;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            var scopedService = services.GetRequiredService<T>();
+            return scopedService;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

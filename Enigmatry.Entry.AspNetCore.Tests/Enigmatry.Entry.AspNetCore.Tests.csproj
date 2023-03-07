@@ -10,22 +10,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Database\DropAllSql.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="Database\DropAllSql.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FakeItEasy" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
-    <PackageReference Include="System.Net.Http.Json" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="NUnit.Analyzers" />
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Verify.NUnit" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Entry.Core\Enigmatry.Entry.Core.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.SampleApp\Enigmatry.Entry.AspNetCore.Tests.SampleApp.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj" />
   </ItemGroup>
 
 </Project>

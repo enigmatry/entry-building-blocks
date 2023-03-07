@@ -1,23 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FakeItEasy" />
-    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="NUnit.Analyzers" />
-    <PackageReference Include="coverlet.collector" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Entry.Core\Enigmatry.Entry.Core.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson\Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests\Enigmatry.Entry.AspNetCore.Tests.csproj" />
   </ItemGroup>
 
 </Project>

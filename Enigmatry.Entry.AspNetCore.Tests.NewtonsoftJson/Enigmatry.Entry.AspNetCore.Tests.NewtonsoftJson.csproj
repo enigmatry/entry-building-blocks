@@ -10,12 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
+    <InternalsVisibleTo Include="Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests\Enigmatry.Entry.AspNetCore.Tests.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Tests.Utilities\Enigmatry.Entry.AspNetCore.Tests.Utilities.csproj" />
   </ItemGroup>
 
 </Project>

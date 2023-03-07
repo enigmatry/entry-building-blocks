@@ -1,7 +1,6 @@
-﻿using System.Net.Http;
-using System.Text.Json;
+﻿using Microsoft.Rest;
+using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Rest;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Http;
 
@@ -10,19 +9,16 @@ public static class HttpResponseMessageExtensions
     public static async Task<T?> DeserializeAsync<T>(this HttpResponseMessage response)
     {
         var content = await response.Content.ReadAsStringAsync();
-        return Deserialize<T>(content);
+        return content.Deserialize<T>();
     }
 
     public static async Task<T?> DeserializeWithStatusCodeCheckAsync<T>(this HttpResponseMessage response)
     {
         var content = await response.Content.ReadAsStringAsync();
         return response.IsSuccessStatusCode
-            ? Deserialize<T>(content)
+            ? content.Deserialize<T>()
             : throw DisposeResponseContentAndThrowException(response, content);
     }
-
-    private static T? Deserialize<T>(string content) =>
-        JsonSerializer.Deserialize<T>(content, HttpSerializationOptions.Options);
 
     public static async Task EnsureSuccessStatusCodeAsync(this HttpResponseMessage response)
     {
