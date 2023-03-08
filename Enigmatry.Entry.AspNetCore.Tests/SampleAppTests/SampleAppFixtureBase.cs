@@ -1,10 +1,11 @@
 ﻿using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Design",
+[SuppressMessage("Design",
     "CA1001:Types that own disposable fields should be disposable",
     Justification = "Fields are disposed in Teardown method")]
 public abstract class SampleAppFixtureBase
