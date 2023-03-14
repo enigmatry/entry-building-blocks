@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" />
     <PackageReference Include="NJsonSchema" />
     <PackageReference Include="NSwag.AspNetCore" />
     <PackageReference Include="JetBrains.Annotations" />

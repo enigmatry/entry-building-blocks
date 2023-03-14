@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" />
     <PackageReference Include="Serilog" />
     <PackageReference Include="System.ComponentModel.Annotations" />
   </ItemGroup>

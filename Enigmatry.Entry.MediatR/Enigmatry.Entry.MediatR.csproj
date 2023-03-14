@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" />
     <PackageReference Include="Serilog" />
   </ItemGroup>
 
