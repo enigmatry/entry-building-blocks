@@ -17,6 +17,7 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" />
     <PackageReference Include="System.Net.Http.Json" />
   </ItemGroup>
 
