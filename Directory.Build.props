@@ -9,8 +9,11 @@
     <PackageIcon>icon-192x192.png</PackageIcon>
     <PackageProjectUrl>https://github.com/enigmatry/entry-building-blocks</PackageProjectUrl>
     <PackageTags>Enigmatry;Entry</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <DebugType>embedded</DebugType>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
