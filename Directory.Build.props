@@ -12,7 +12,7 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
