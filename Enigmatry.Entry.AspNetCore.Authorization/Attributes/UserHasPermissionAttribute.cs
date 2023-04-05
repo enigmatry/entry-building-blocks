@@ -8,17 +8,11 @@ using Microsoft.Extensions.Logging;
 namespace Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 public sealed class UserHasPermissionAttribute : AuthorizeAttribute, IAuthorizationFilter
 {
-    public string? EntityType { get; }
-    public string? Action { get; }
+    public string Permission { get; }
 
-    public UserHasPermissionAttribute() : base(PolicyNames.UserHasPermission)
+    public UserHasPermissionAttribute(string permission) : base(PolicyNames.UserHasPermission)
     {
-    }
-
-    public UserHasPermissionAttribute(string entityType, string action) : base(PolicyNames.UserHasPermission)
-    {
-        EntityType = entityType;
-        Action = action;
+        Permission = permission;
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)

@@ -52,12 +52,7 @@ public static class UserHasRole
             }
 
             var userHasRoleAttribute = TryGetUserHasRoleAttribute(context);
-            if (userHasRoleAttribute is not null)
-            {
-                return _authorizationProvider.HasRole(userHasRoleAttribute.Role);
-            }
-
-            return false;
+            return userHasRoleAttribute is not null && _authorizationProvider.HasRole(userHasRoleAttribute.Role);
         }
 
         protected static UserHasRoleAttribute? TryGetUserHasRoleAttribute(AuthorizationHandlerContext context)

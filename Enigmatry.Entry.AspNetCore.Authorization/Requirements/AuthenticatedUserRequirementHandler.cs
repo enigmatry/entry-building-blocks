@@ -34,13 +34,10 @@ public abstract class AuthenticatedUserRequirementHandler<TRequirement>
             return result;
         }
 
-        if (context.Resource is AuthorizationFilterContext authContext)
+        if (context.Resource is AuthorizationFilterContext { ActionDescriptor: ControllerActionDescriptor actionDescriptor })
         {
-            if (authContext.ActionDescriptor is ControllerActionDescriptor actionDescriptor)
-            {
-                result.actionName = actionDescriptor.ActionName;
-                result.controllerName = actionDescriptor.ControllerName;
-            }
+            result.actionName = actionDescriptor.ActionName;
+            result.controllerName = actionDescriptor.ControllerName;
         }
         return result;
     }

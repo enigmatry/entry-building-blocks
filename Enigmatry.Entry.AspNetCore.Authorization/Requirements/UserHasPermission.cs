@@ -55,15 +55,7 @@ public static class UserHasPermission
 
             var userHasPermissionAttribute = TryGetUserHasPermissionAttribute(context);
 
-            //dynamically get required permissions
-            //var something = GetActionAndControllerNames(context);
-
-            if (userHasPermissionAttribute is { Action: { }, EntityType: { } })
-            {
-                return _authorizationProvider.HasPermission(userHasPermissionAttribute.Action, userHasPermissionAttribute.EntityType);
-            }
-
-            return false;
+            return userHasPermissionAttribute is not null && _authorizationProvider.HasPermission(userHasPermissionAttribute.Permission);
         }
 
         protected static UserHasPermissionAttribute? TryGetUserHasPermissionAttribute(AuthorizationHandlerContext context)

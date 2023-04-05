@@ -3,6 +3,6 @@
     public interface IAuthorizationProvider
     {
         public bool HasRole(string roleName);
-        public bool HasPermission(string action, string entity);
+        public bool HasPermission(string permission);
     }
 }
