@@ -59,7 +59,7 @@
     <PackageVersion Include="NJsonSchema" Version="10.7.2" />
     <PackageVersion Include="NSwag.AspNetCore" Version="13.16.1" />
     <PackageVersion Include="NUnit" Version="3.13.3" />
-    <PackageVersion Include="NUnit.Analyzers" Version="3.3.0" />
+    <PackageVersion Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageVersion Include="Polly" Version="7.2.3" />
     <PackageVersion Include="Quartz" Version="3.5.0" />
