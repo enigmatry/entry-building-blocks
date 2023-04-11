@@ -19,7 +19,7 @@ public class Program
 
         var app = builder.Build();
 
-        app.AppUseExceptionHandler<Program>();
+        app.AppUseExceptionHandler();
 
         app.MapControllers();
 
