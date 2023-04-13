@@ -21,30 +21,7 @@ public static class UserHasRole
             _authorizationProvider = authorizationProvider;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, Requirement requirement)
-        {
-            await base.HandleRequirementAsync(context, requirement);
-
-            if (context.HasFailed)
-            {
-                return;
-            }
-
-            if (UserHasRole(context))
-            {
-                context.Succeed(requirement);
-            }
-            else
-            {
-                var requirementName = nameof(Requirement);
-                var resource = GetActionAndControllerNames(context);
-                Logger.LogWarning("{Requirement} has not been meet for the authorization context for {@Resource}. " +
-                                  "This means that user does not have appropriate role.", requirementName, resource);
-                context.Fail();
-            }
-        }
-
-        protected virtual bool UserHasRole(AuthorizationHandlerContext context)
+        protected override bool FulfillsRequirement(AuthorizationHandlerContext context)
         {
             if (context.Resource is not AuthorizationFilterContext)
             {
@@ -52,7 +29,7 @@ public static class UserHasRole
             }
 
             var userHasRoleAttribute = TryGetUserHasRoleAttribute(context);
-            return userHasRoleAttribute is not null && _authorizationProvider.HasRole(userHasRoleAttribute.Role);
+            return userHasRoleAttribute is not null && _authorizationProvider.HasAnyRole(userHasRoleAttribute.Roles!.Split(','));
         }
 
         protected static UserHasRoleAttribute? TryGetUserHasRoleAttribute(AuthorizationHandlerContext context)

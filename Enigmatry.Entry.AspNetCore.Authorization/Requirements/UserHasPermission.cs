@@ -23,30 +23,7 @@ public static class UserHasPermission
             _authorizationProvider = authorizationProvider;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, Requirement requirement)
-        {
-            await base.HandleRequirementAsync(context, requirement);
-
-            if (context.HasFailed)
-            {
-                return;
-            }
-
-            if (UserHasPermission(context))
-            {
-                context.Succeed(requirement);
-            }
-            else
-            {
-                var requirementName = nameof(Requirement);
-                var resource = GetActionAndControllerNames(context);
-                Logger.LogWarning("{Requirement} has not been meet for the authorization context for {@Resource}. " +
-                                  "This means that user does not have appropriate permissions.", requirementName, resource);
-                context.Fail();
-            }
-        }
-
-        protected virtual bool UserHasPermission(AuthorizationHandlerContext context)
+        protected override bool FulfillsRequirement(AuthorizationHandlerContext context)
         {
             if (context.Resource is not AuthorizationFilterContext)
             {
@@ -55,7 +32,7 @@ public static class UserHasPermission
 
             var userHasPermissionAttribute = TryGetUserHasPermissionAttribute(context);
 
-            return userHasPermissionAttribute is not null && _authorizationProvider.HasPermission(userHasPermissionAttribute.Permission);
+            return userHasPermissionAttribute is not null && _authorizationProvider.HasAnyPermission(userHasPermissionAttribute.Permissions.Split(','));
         }
 
         protected static UserHasPermissionAttribute? TryGetUserHasPermissionAttribute(AuthorizationHandlerContext context)

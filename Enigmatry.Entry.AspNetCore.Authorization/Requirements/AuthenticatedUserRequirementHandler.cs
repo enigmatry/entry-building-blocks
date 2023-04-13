@@ -21,10 +21,25 @@ public abstract class AuthenticatedUserRequirementHandler<TRequirement>
         {
             Logger.LogWarning("User not authenticated.");
             context.Fail();
+            return Task.CompletedTask;
         }
 
+        if (FulfillsRequirement(context))
+        {
+            context.Succeed(requirement);
+        }
+        else
+        {
+            var requirementName = nameof(requirement);
+            var resource = GetActionAndControllerNames(context);
+            Logger.LogWarning("{Requirement} has not been meet for the authorization context for {@Resource}. " +
+                              "This means that user does not have appropriate role.", requirementName, resource);
+            context.Fail();
+        }
         return Task.CompletedTask;
     }
+
+    protected abstract bool FulfillsRequirement(AuthorizationHandlerContext context);
 
     protected static (string actionName, string controllerName) GetActionAndControllerNames(AuthorizationHandlerContext context)
     {

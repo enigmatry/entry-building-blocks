@@ -8,11 +8,13 @@ using Microsoft.Extensions.Logging;
 namespace Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 public sealed class UserHasRoleAttribute : AuthorizeAttribute, IAuthorizationFilter
 {
-    public string Role { get; }
-
-    public UserHasRoleAttribute(string role) : base(PolicyNames.UserHasRole)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserHasRoleAttribute"/> class.
+    /// </summary>
+    /// <param name="roles">A comma delimited list of roles that are allowed to access the resource.</param>
+    public UserHasRoleAttribute(string roles) : base(PolicyNames.UserHasRole)
     {
-        Role = role;
+        Roles = roles;
     }
 
     public void OnAuthorization(AuthorizationFilterContext context)

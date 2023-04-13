@@ -2,7 +2,7 @@
 {
     public interface IAuthorizationProvider
     {
-        public bool HasRole(string roleName);
-        public bool HasPermission(string permission);
+        public bool HasAnyRole(string[] roles);
+        public bool HasAnyPermission(string[] permission);
     }
 }
