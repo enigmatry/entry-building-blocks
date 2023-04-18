@@ -1,4 +1,6 @@
 ﻿using Azure.Search.Documents.Indexes.Models;
+using Enigmatry.Entry.AzureSearch.Abstractions;
+using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Logging;
 

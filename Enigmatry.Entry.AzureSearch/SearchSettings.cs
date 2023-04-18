@@ -1,7 +1,9 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 
 namespace Enigmatry.Entry.AzureSearch;
 
+[PublicAPI]
 public class SearchSettings
 {
     public Uri SearchServiceEndPoint { get; set; } = null!;

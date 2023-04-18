@@ -1,7 +1,7 @@
 ﻿using Azure.Search.Documents.Indexes;
 using JetBrains.Annotations;
 
-namespace Enigmatry.Entry.AzureSearch.Tests.Setup;
+namespace Enigmatry.Entry.AzureSearch.Tests.Documents;
 
 [UsedImplicitly]
 public class AnotherTestDocument

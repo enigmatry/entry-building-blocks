@@ -1,5 +1,6 @@
 ﻿using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Enigmatry.Entry.AzureSearch.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AzureSearch;

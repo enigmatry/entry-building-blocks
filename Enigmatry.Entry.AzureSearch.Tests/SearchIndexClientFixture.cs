@@ -1,4 +1,6 @@
 ﻿using Azure.Search.Documents.Indexes;
+using Enigmatry.Entry.AzureSearch.Abstractions;
+using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Setup;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +16,7 @@ public class SearchIndexClientFixture
     [SetUp]
     public void Setup()
     {
-        _services = new AzureSearchServiceCollectionTestBuilder().Build();
+        _services = new ServiceCollectionBuilder().Build();
 
         _searchIndexClient = _services.GetRequiredService<SearchIndexClient>();
         _indexFactory = _services.GetRequiredService<ISearchIndexFactory<TestDocument>>();

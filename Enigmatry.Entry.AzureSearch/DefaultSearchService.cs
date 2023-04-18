@@ -3,17 +3,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Search.Documents.Models;
+using Enigmatry.Entry.AzureSearch.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AzureSearch;
 
 public class DefaultSearchService<T> : ISearchService<T>
 {
     private readonly ISearchClientFactory<T> _searchClientFactory;
+    private readonly ILogger<DefaultSearchService<T>> _logger;
 
-
-    public DefaultSearchService(ISearchClientFactory<T> searchClientFactory)
+    public DefaultSearchService(ISearchClientFactory<T> searchClientFactory, ILogger<DefaultSearchService<T>> logger)
     {
         _searchClientFactory = searchClientFactory;
+        _logger = logger;
     }
 
     public async Task UpdateDocument(T document, CancellationToken cancellationToken = default) =>
@@ -26,6 +29,7 @@ public class DefaultSearchService<T> : ISearchService<T>
     {
         var client = _searchClientFactory.Create();
 
+        _logger.LogDebug("Uploading documents to index: {IndexName}", client.IndexName);
         await client.UploadDocumentsAsync(documents, cancellationToken: cancellationToken);
     }
 
@@ -33,6 +37,7 @@ public class DefaultSearchService<T> : ISearchService<T>
     {
         var client = _searchClientFactory.Create();
 
+        _logger.LogDebug("Deleting documents from index: {IndexName}", client.IndexName);
         await client.DeleteDocumentsAsync(documents, cancellationToken: cancellationToken);
     }
 
@@ -40,10 +45,13 @@ public class DefaultSearchService<T> : ISearchService<T>
         Azure.Search.Documents.SearchOptions? options = null, CancellationToken cancellationToken = default)
     {
         var client = _searchClientFactory.Create();
+        _logger.LogDebug("Searching documents in index: {IndexName}", client.IndexName);
 
         Response<SearchResults<T>>? result = await client.SearchAsync<T>(searchText, options, cancellationToken);
 
         Pageable<SearchResult<T>>? pagedResult = result.Value.GetResults()!;
+
+        _logger.LogDebug("Search results. TotalCount: {TotalCount}, ", result.Value.TotalCount);
 
         return new SearchResponse<T>(pagedResult, result.Value.TotalCount);
     }

@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Enigmatry.Entry.AzureSearch.Extensions;
+using Enigmatry.Entry.AzureSearch.Tests.Documents;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Setup;
 
-public class AzureSearchServiceCollectionTestBuilder
+public class ServiceCollectionBuilder
 {
     private const string AzureSearchApiKey = "AzureSearch:ApiKey";
     private const string AzureSearchSearchServiceEndpointKey = "AzureSearch:SearchServiceEndPoint";
@@ -16,7 +18,7 @@ public class AzureSearchServiceCollectionTestBuilder
     {
         _services.AddLogging(configure => configure.AddConsole());
 
-        var configuration = CreateConfiguration();
+        var configuration = BuildConfiguration();
         _services.AddScoped<IConfiguration>(_ => configuration);
 
         _services.AddAzureSearch(configure =>
@@ -31,7 +33,7 @@ public class AzureSearchServiceCollectionTestBuilder
         return _services.BuildServiceProvider();
     }
 
-    private static IConfigurationRoot CreateConfiguration()
+    private static IConfigurationRoot BuildConfiguration()
     {
         var configurationSource = new MemoryConfigurationSource
         {
@@ -43,7 +45,7 @@ public class AzureSearchServiceCollectionTestBuilder
 
         var configurationBuilder = new ConfigurationBuilder()
             .Add(configurationSource)
-            .AddUserSecrets<AzureSearchServiceCollectionTestBuilder>()
+            .AddUserSecrets<ServiceCollectionBuilder>()
             .AddEnvironmentVariables();
 
         return configurationBuilder.Build();

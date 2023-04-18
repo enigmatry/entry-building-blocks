@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.AzureSearch;
+namespace Enigmatry.Entry.AzureSearch.Abstractions;
 
 public interface ISearchIndexManager<T>
 {

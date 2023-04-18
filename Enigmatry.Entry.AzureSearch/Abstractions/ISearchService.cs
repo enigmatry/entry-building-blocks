@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Search.Documents;
 
-namespace Enigmatry.Entry.AzureSearch;
+namespace Enigmatry.Entry.AzureSearch.Abstractions;
 
 public interface ISearchService<T>
 {

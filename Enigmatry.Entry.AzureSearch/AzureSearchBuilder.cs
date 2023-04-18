@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Enigmatry.Entry.AzureSearch.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AzureSearch;
 
-public class AzureSearchBuilder : IAzureSearchBuilder
+internal class AzureSearchBuilder : IAzureSearchBuilder
 {
     public AzureSearchBuilder(IServiceCollection services)
     {

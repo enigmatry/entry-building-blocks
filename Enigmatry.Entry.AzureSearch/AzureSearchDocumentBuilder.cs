@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Enigmatry.Entry.AzureSearch.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AzureSearch;
 

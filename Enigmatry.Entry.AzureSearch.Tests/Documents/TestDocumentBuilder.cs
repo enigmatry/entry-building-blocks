@@ -1,6 +1,4 @@
-﻿using Enigmatry.Entry.AzureSearch.Tests.Setup;
-
-namespace Enigmatry.Entry.AzureSearch.Tests;
+﻿namespace Enigmatry.Entry.AzureSearch.Tests.Documents;
 
 public class TestDocumentBuilder
 {

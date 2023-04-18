@@ -1,4 +1,5 @@
-﻿using Humanizer;
+﻿using Enigmatry.Entry.AzureSearch.Abstractions;
+using Humanizer;
 
 namespace Enigmatry.Entry.AzureSearch;
 

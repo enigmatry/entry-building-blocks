@@ -1,4 +1,6 @@
 ﻿using Azure.Search.Documents;
+using Enigmatry.Entry.AzureSearch.Abstractions;
+using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Setup;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +18,7 @@ public class SearchServiceFixture
     [SetUp]
     public async Task Setup()
     {
-        _services = new AzureSearchServiceCollectionTestBuilder().Build();
+        _services = new ServiceCollectionBuilder().Build();
 
         _searchService = _services.GetRequiredService<ISearchService<TestDocument>>();
         _indexManager = _services.GetRequiredService<ISearchIndexManager<TestDocument>>();
@@ -30,9 +32,6 @@ public class SearchServiceFixture
 
         WaitIndexToBeUpdated();
     }
-
-
-    private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(2));
 
     [Test]
     public async Task TestSearchById()
@@ -74,4 +73,6 @@ public class SearchServiceFixture
     private static TestDocument AnotherDocument() =>
         new TestDocumentBuilder().WithId("23432432").WithName("Harry Potter").WithDescription("Hogwarts")
             .Build();
+
+    private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(2));
 }

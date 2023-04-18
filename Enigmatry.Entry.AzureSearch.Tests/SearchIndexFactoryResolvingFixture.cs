@@ -1,4 +1,6 @@
-﻿using Enigmatry.Entry.AzureSearch.Tests.Setup;
+﻿using Enigmatry.Entry.AzureSearch.Abstractions;
+using Enigmatry.Entry.AzureSearch.Tests.Documents;
+using Enigmatry.Entry.AzureSearch.Tests.Setup;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +12,7 @@ public class SearchIndexFactoryResolvingFixture
     private ServiceProvider _services = null!;
 
     [SetUp]
-    public void Setup() => _services = new AzureSearchServiceCollectionTestBuilder().Build();
+    public void Setup() => _services = new ServiceCollectionBuilder().Build();
 
     [Test]
     public void TestResolveSearchIndexTestDocument()

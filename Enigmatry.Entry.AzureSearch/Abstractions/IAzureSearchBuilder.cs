@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Enigmatry.Entry.AzureSearch;
+namespace Enigmatry.Entry.AzureSearch.Abstractions;
 
 public interface IAzureSearchBuilder
 {
