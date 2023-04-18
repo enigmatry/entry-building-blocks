@@ -6,47 +6,46 @@ using Enigmatry.Entry.Core.Helpers;
 using Enigmatry.Entry.Core.Settings;
 using Microsoft.Extensions.Logging;
 
-namespace Enigmatry.Entry.EntityFramework.Security
+namespace Enigmatry.Entry.EntityFramework.Security;
+
+public class DbContextAccessTokenProvider : IDbContextAccessTokenProvider
 {
-    public class DbContextAccessTokenProvider : IDbContextAccessTokenProvider
+    private readonly DbContextSettings _settings;
+    private readonly ILogger<DbContextAccessTokenProvider> _logger;
+
+    public DbContextAccessTokenProvider(DbContextSettings settings, ILogger<DbContextAccessTokenProvider> logger)
     {
-        private readonly DbContextSettings _settings;
-        private readonly ILogger<DbContextAccessTokenProvider> _logger;
+        _settings = settings;
+        _logger = logger;
+    }
 
-        public DbContextAccessTokenProvider(DbContextSettings settings, ILogger<DbContextAccessTokenProvider> logger)
-        {
-            _settings = settings;
-            _logger = logger;
-        }
+    public async Task<string> GetAccessTokenAsync()
+    {
+        return _settings.UseAccessToken ?
+            await GetTokenFromAzureServiceTokenProvider() :
+            await Task.FromResult(String.Empty);
+    }
 
-        public async Task<string> GetAccessTokenAsync()
+    private async Task<string> GetTokenFromAzureServiceTokenProvider()
+    {
+        try
         {
-            return _settings.UseAccessToken ?
-                await GetTokenFromAzureServiceTokenProvider() :
-                await Task.FromResult(String.Empty);
-        }
+            var tokenCredential = new DefaultAzureCredential();
+            var accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(scopes: new string[] { "https://database.windows.net/.default" }) { }
+            );
 
-        private async Task<string> GetTokenFromAzureServiceTokenProvider()
-        {
-            try
+            if (!accessToken.Token.HasContent())
             {
-                var tokenCredential = new DefaultAzureCredential();
-                var accessToken = await tokenCredential.GetTokenAsync(
-                    new TokenRequestContext(scopes: new string[] { "https://database.windows.net/.default" }) { }
-                );
-
-                if (!accessToken.Token.HasContent())
-                {
-                    _logger.LogWarning("Getting access token for managed service identity: Token is empty.");
-                }
-                return accessToken.Token;
+                _logger.LogWarning("Getting access token for managed service identity: Token is empty.");
             }
-            catch (Exception e)
-            {
-                _logger.LogError("Error when getting access token for managed service identity", e);
-                throw;
-            }
-
+            return accessToken.Token;
         }
+        catch (Exception e)
+        {
+            _logger.LogError("Error when getting access token for managed service identity", e);
+            throw;
+        }
+
     }
 }

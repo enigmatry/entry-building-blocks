@@ -1,0 +1,8 @@
+﻿[
+  SampleJobs.AJob,
+  SampleJobs.AnEntryJobWithArguments,
+  SampleJobs.AJobWithoutCronExpression,
+  SampleJobs.AJobWithoutConfiguration,
+  SampleJobs.AnEntryJobWithoutArguments,
+  SampleJobs.AnEntryJobDerivingSomeBaseJob
+]

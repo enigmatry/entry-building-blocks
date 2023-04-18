@@ -1,13 +1,15 @@
-﻿using System;
-using Enigmatry.Entry.Core;
+﻿using Enigmatry.Entry.Core;
 using JetBrains.Annotations;
+using System;
 
 namespace Enigmatry.Entry.Infrastructure
 {
-    [UsedImplicitly]
+    [PublicAPI]
     public class TimeProvider : ITimeProvider
     {
         private readonly Lazy<DateTimeOffset> _now = new(() => DateTimeOffset.UtcNow);
-        public DateTimeOffset Now => _now.Value;
+
+        public DateTimeOffset FixedUtcNow => _now.Value;
+        public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
     }
 }

@@ -1,12 +1,34 @@
 <Project>
 
 	<PropertyGroup>
-		<Copyright>Copyright © 2022 Enigmatry. All rights reserved.</Copyright>
-		<Company>Enigmatry</Company>
-		<!--Authors>TODO</Authors-->
-		<!--Product>TODO</Product-->
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-	</PropertyGroup>
+    
+    <Authors>Enigmatry</Authors>
+    <Copyright>Copyright © 2023 Enigmatry. All rights reserved.</Copyright>
+    <Company>Enigmatry</Company>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>icon-192x192.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/enigmatry/entry-building-blocks</PackageProjectUrl>
+    <PackageTags>Enigmatry;Entry</PackageTags>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+    <DebugType>embedded</DebugType>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <LangVersion>latest</LangVersion>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

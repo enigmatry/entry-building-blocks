@@ -1,76 +1,102 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using Enigmatry.Entry.AspNetCore.Validation;
+﻿using Enigmatry.Entry.AspNetCore.Validation;
 using Enigmatry.Entry.Core.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Net.Http.Headers;
+using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.AspNetCore.Filters
+namespace Enigmatry.Entry.AspNetCore.Filters;
+
+[Obsolete("ExceptionsFilter is deprecated due to limited context, please use extensions method instead since more exceptions can be caught from it.")]
+public class HandleExceptionsFilter : IAsyncExceptionFilter, IExceptionFilter
 {
-    public sealed class HandleExceptionsFilter : ExceptionFilterAttribute
-    {
-        private readonly bool _useDeveloperExceptionPage;
+    private readonly IHostEnvironment _hostEnvironment;
+    private readonly ILogger<HandleExceptionsFilter> _logger;
 
-        public HandleExceptionsFilter(bool useDeveloperExceptionPage)
+    public HandleExceptionsFilter(IHostEnvironment hostEnvironment, ILogger<HandleExceptionsFilter> logger)
+    {
+        _hostEnvironment = hostEnvironment ?? throw new ArgumentNullException(nameof(hostEnvironment));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+
+    public void OnException(ExceptionContext context)
+    {
+        if (context == null)
         {
-            _useDeveloperExceptionPage = useDeveloperExceptionPage;
+            throw new ArgumentNullException(nameof(context));
         }
 
-        public override void OnException(ExceptionContext context)
+        var handledElsewhere = OnBeforeException(context);
+        if (handledElsewhere)
         {
-            ILogger<HandleExceptionsFilter> logger = context.HttpContext.Resolve<ILogger<HandleExceptionsFilter>>();
-            if (context.Exception is ValidationException validationException)
-            {
-                logger.LogDebug(context.Exception, "Validation exception");
+            return;
+        }
+
+        switch (context.Exception)
+        {
+            case ValidationException validationException:
+                _logger.LogDebug(context.Exception, "Validation exception");
                 context.Result = context.HttpContext.CreateValidationProblemDetailsResponse(validationException);
                 return;
-            }
-
-            if (context.Exception is EntityNotFoundException exception)
-            {
-                logger.LogError(context.Exception, $"Entity: {exception.EntityName} not found");
+            case EntityNotFoundException exception:
+                _logger.LogError(context.Exception, $"Entity: {exception.EntityName} not found");
                 context.Result = new NotFoundResult();
                 return;
-            }
-
-            logger.LogError(context.Exception, "Unexpected error");
-
-            IList<MediaTypeHeaderValue> accept = context.HttpContext.Request.GetTypedHeaders().Accept;
-            if (accept != null && accept.All(header => header.MediaType != "application/json"))
-            {
-                // server does not accept Json, leaving to default MVC error page handler.
-                return;
-            }
-
-            var jsonResult = new JsonResult(GetProblemDetails(context))
-            {
-                StatusCode = (int)HttpStatusCode.InternalServerError,
-                ContentType = "application/problem+json"
-            };
-            context.Result = jsonResult;
+            default:
+                _logger.LogError(context.Exception, "Unexpected error");
+                HandleUnexpectedErrorFrom(context);
+                break;
         }
+    }
 
-        private ProblemDetails GetProblemDetails(ExceptionContext context)
+    protected virtual bool OnBeforeException(ExceptionContext context) => false;
+
+    [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract")]
+    private void HandleUnexpectedErrorFrom(ExceptionContext context)
+    {
+        var accept = context.HttpContext.Request.GetTypedHeaders().Accept;
+        if (accept != null && accept.All(header => header.MediaType != "application/json"))
         {
-            var errorDetail = _useDeveloperExceptionPage
-                ? context.Exception.Demystify().ToString()
-                : "The instance value should be used to identify the problem when calling customer support";
-
-            var problemDetails = new ProblemDetails
-            {
-                Title = "An unexpected error occurred!",
-                Instance = context.HttpContext.Request.Path,
-                Status = StatusCodes.Status500InternalServerError,
-                Detail = errorDetail
-            };
-
-            return problemDetails;
+            // server does not accept Json, leaving to default MVC error page handler.
+            return;
         }
+
+        var jsonResult = new JsonResult(GetProblemDetails(context))
+        {
+            StatusCode = (int)HttpStatusCode.InternalServerError,
+            ContentType = "application/problem+json"
+        };
+        context.Result = jsonResult;
+    }
+
+    private ProblemDetails GetProblemDetails(ExceptionContext context)
+    {
+        var errorDetail = _hostEnvironment.IsDevelopment()
+            ? context.Exception.Demystify().ToString()
+            : "The instance value should be used to identify the problem when calling customer support";
+
+        var problemDetails = new ProblemDetails
+        {
+            Title = "An unexpected error occurred!",
+            Instance = context.HttpContext.Request.Path,
+            Status = StatusCodes.Status500InternalServerError,
+            Detail = errorDetail
+        };
+
+        return problemDetails;
+    }
+
+    public Task OnExceptionAsync(ExceptionContext context)
+    {
+        OnException(context);
+        return Task.CompletedTask;
     }
 }
