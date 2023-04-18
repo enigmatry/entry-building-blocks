@@ -11,6 +11,7 @@ public class AzureSearchServiceCollectionTestBuilder
     private const string AzureSearchSearchServiceEndpointKey = "AzureSearch:SearchServiceEndPoint";
 
     private readonly ServiceCollection _services = new();
+
     public ServiceProvider Build()
     {
         _services.AddLogging(configure => configure.AddConsole());
@@ -36,8 +37,7 @@ public class AzureSearchServiceCollectionTestBuilder
         {
             InitialData = new Dictionary<string, string>
             {
-                { AzureSearchApiKey,  "USER_SECRET"},
-                { AzureSearchSearchServiceEndpointKey, "USER_SECRET" }
+                { AzureSearchApiKey, "USER_SECRET" }, { AzureSearchSearchServiceEndpointKey, "USER_SECRET" }
             }
         };
 
