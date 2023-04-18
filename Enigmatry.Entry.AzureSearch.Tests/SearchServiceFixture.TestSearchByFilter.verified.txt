@@ -1,0 +1,13 @@
+﻿{
+  TotalCount: 1,
+  PagedResult: [
+    {
+      Score: 1.0,
+      Document: {
+        Id: 23432432,
+        Name: Harry Potter,
+        Description: Hogwarts
+      }
+    }
+  ]
+}

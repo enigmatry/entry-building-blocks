@@ -78,6 +78,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests", "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests\Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests.csproj", "{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AzureSearch", "Enigmatry.Entry.AzureSearch\Enigmatry.Entry.AzureSearch.csproj", "{321E267F-91C6-4CCC-BC6C-3EF6930A077E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AzureSearch.Tests", "Enigmatry.Entry.AzureSearch.Tests\Enigmatry.Entry.AzureSearch.Tests.csproj", "{317608B7-75FF-4985-B41C-FC245055C9A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -208,6 +212,14 @@ Global
 		{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{321E267F-91C6-4CCC-BC6C-3EF6930A077E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{321E267F-91C6-4CCC-BC6C-3EF6930A077E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{321E267F-91C6-4CCC-BC6C-3EF6930A077E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{321E267F-91C6-4CCC-BC6C-3EF6930A077E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{317608B7-75FF-4985-B41C-FC245055C9A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{317608B7-75FF-4985-B41C-FC245055C9A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{317608B7-75FF-4985-B41C-FC245055C9A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{317608B7-75FF-4985-B41C-FC245055C9A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
