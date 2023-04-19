@@ -7,24 +7,24 @@ namespace Enigmatry.Entry.Infrastructure.Tests;
 public class TimeProviderFixture
 {
     [Test]
-    public async Task SameTime()
+    public void SameTime()
     {
         var provider = new TimeProvider();
 
         var firstDate = provider.FixedUtcNow;
-        await Task.Delay(TimeSpan.FromMilliseconds(1));
+        Thread.Sleep(TimeSpan.FromMilliseconds(100));
         var secondDate = provider.FixedUtcNow;
 
         firstDate.Should().BeExactly(secondDate);
     }
 
     [Test]
-    public async Task UniqueTime()
+    public void UniqueTime()
     {
         var provider = new TimeProvider();
 
         var firstDate = provider.UtcNow;
-        await Task.Delay(TimeSpan.FromMilliseconds(1));
+        Thread.Sleep(TimeSpan.FromMilliseconds(100));
         var secondDate = provider.UtcNow;
 
         firstDate.Should().BeBefore(secondDate);
