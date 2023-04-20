@@ -1,6 +1,6 @@
 ﻿namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomShortGenerator : BaseRandomGenerator
+    public sealed class RandomShortGenerator : BaseRandomGenerator
     {
         public RandomShortGenerator() : base(typeof(short)) { }
 

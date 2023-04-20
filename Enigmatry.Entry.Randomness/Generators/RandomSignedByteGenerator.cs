@@ -2,7 +2,7 @@
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomSignedByteGenerator : BaseRandomGenerator
+    public sealed class RandomSignedByteGenerator : BaseRandomGenerator
     {
         public RandomSignedByteGenerator() : base(typeof(sbyte)) { }
 

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Enigmatry.Entry.Core.Helpers
 {
+    [PublicAPI]
     public static class Enums
     {
         public static T ValueFrom<T>(string value) where T : Enum => (T)Enum.Parse(typeof(T), value);
@@ -32,7 +34,7 @@ namespace Enigmatry.Entry.Core.Helpers
             return GetAll<T>().Except(exclusions);
         }
 
-        public static List<T> GetAllOrderedAlphabetically<T>() where T : Enum =>
+        public static IList<T> GetAllOrderedAlphabetically<T>() where T : Enum =>
             GetAll<T>().OrderBy(value => value.GetDescription().ToUpperInvariant()).ToList();
     }
 }

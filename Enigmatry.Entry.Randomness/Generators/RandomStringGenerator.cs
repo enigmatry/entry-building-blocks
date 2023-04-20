@@ -1,8 +1,7 @@
 ﻿namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomStringGenerator : BaseRandomGenerator
+    public sealed class RandomStringGenerator : BaseRandomGenerator
     {
-        private readonly RandomIntGenerator _intGenerator = new();
         private readonly RandomCharGenerator _charGenerator;
 
         public RandomStringGenerator(char[]? forbiddenChars = null) : base(typeof(string))
@@ -12,7 +11,7 @@
 
         public override dynamic Generate()
         {
-            var stringLength = _intGenerator.GeneratePositiveInt(2);
+            var stringLength = RandomIntGenerator.GeneratePositiveInt(2);
             return GenerateWithGivenLength(stringLength);
         }
 
@@ -27,6 +26,12 @@
             }
 
             return new string(gottenChars);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _charGenerator.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

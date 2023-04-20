@@ -2,7 +2,7 @@
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomFloatGenerator : BaseRandomGenerator
+    public sealed class RandomFloatGenerator : BaseRandomGenerator
     {
         public RandomFloatGenerator() : base(typeof(float)) { }
 

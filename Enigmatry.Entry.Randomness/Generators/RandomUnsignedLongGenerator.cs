@@ -2,7 +2,7 @@
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomUnsignedLongGenerator : BaseRandomGenerator
+    public sealed class RandomUnsignedLongGenerator : BaseRandomGenerator
     {
         public RandomUnsignedLongGenerator() : base(typeof(ulong)) { }
 

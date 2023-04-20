@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomCharGenerator : BaseRandomGenerator
+    public sealed class RandomCharGenerator : BaseRandomGenerator
     {
         private const int FirstSignificantCharIndex = 32;
         private const int SignificantCharsCount = sbyte.MaxValue - FirstSignificantCharIndex;

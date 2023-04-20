@@ -1,6 +1,7 @@
 ﻿using Enigmatry.Entry.Randomness.Contracts;
 using JetBrains.Annotations;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
@@ -41,7 +42,20 @@ namespace Enigmatry.Entry.Randomness
             return bytes;
         }
 
-        public void Dispose() => Generator.Dispose();
+        [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly",
+            Justification = "Dispose(true) is called in Generator's Dispose method.")]
+        [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize",
+            Justification = "No finalizer is being used nor will it be used and all derived classes are sealed.")]
+        public void Dispose()
+        {
+            Dispose(true);
+            Generator.Dispose();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Generator's implementation is empty thus no action here too.
+        }
 
         public abstract dynamic Generate();
     }

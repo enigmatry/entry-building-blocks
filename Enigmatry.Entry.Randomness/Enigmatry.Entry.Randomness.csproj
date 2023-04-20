@@ -2,16 +2,11 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <Authors>nda</Authors>
-    <Company>Enigmatry</Company>
+    <PackageId>Enigmatry.Entry.Randomness</PackageId>
     <Product>Enigmatry.Entry.Randomness</Product>
-    <Description>Building Block for adding Randomness logic to a Blueprint based project</Description>
-    <RepositoryUrl>https://git.enigmatry.com/Enigmatry/enigmatry-blueprint-building-blocks.git</RepositoryUrl>
-    <PackageIcon>icon-192x192.png</PackageIcon>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Description>Building Block for adding Randomness logic to an Entry based project</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+    <PackageReference Include="JetBrains.Annotations" />
+	  <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
   </ItemGroup>
 
 </Project>

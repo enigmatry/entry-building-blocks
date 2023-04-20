@@ -4,5 +4,5 @@ public class SampleAppSettings
 {
     public bool UseNewtonsoftJson { get; set; } = true;
 
-    public static SampleAppSettings Default() => new SampleAppSettings();
+    public static SampleAppSettings Default() => new();
 }

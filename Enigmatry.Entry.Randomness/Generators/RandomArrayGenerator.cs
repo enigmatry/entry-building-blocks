@@ -7,11 +7,9 @@ using System.Linq;
 namespace Enigmatry.Entry.Randomness.Generators
 {
     [PublicAPI]
-    public class RandomArrayGenerator
+    public sealed class RandomArrayGenerator
     {
         private readonly Lazy<IEnumerable<IGenerateRandomness>> _availableGenerators;
-
-        private readonly RandomIntGenerator _intGenerator = new();
         private readonly char[] _forbiddenChars = Array.Empty<char>();
 
         public RandomArrayGenerator(char[]? forbiddenChars = null)
@@ -26,7 +24,7 @@ namespace Enigmatry.Entry.Randomness.Generators
 
         public T[] Of<T>()
         {
-            var length = _intGenerator.GeneratePositiveInt(2);
+            var length = RandomIntGenerator.GeneratePositiveInt(2);
             return Of<T>(length);
         }
 

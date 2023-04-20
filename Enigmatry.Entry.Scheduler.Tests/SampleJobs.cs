@@ -19,8 +19,8 @@ public static class SampleJobs
         [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
         internal class Request
         {
-            public string Arg1 { get; set; } = String.Empty;
-            public string Arg2 { get; set; } = String.Empty;
+            public string Arg1 { get; set; } = string.Empty;
+            public string Arg2 { get; set; } = string.Empty;
         }
 
         public AnEntryJobWithArguments(ILogger<EntryJob<Request>> logger, IConfiguration configuration) : base(logger, configuration)

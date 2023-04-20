@@ -2,7 +2,7 @@
 
 namespace Enigmatry.Entry.Randomness.Generators
 {
-    public class RandomUnsignedIntGenerator : BaseRandomGenerator
+    public sealed class RandomUnsignedIntGenerator : BaseRandomGenerator
     {
         public RandomUnsignedIntGenerator() : base(typeof(uint)) { }
 
