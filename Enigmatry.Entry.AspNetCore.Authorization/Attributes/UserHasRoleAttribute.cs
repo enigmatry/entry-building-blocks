@@ -1,6 +1,6 @@
 ﻿using Enigmatry.Entry.AspNetCore.Filters;
-using Microsoft.ApplicationInsights.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
@@ -22,7 +22,7 @@ public sealed class UserHasRoleAttribute : AuthorizeAttribute, IAuthorizationFil
         if (context.Result is ForbidResult or ChallengeResult)
         {
             var logger = context.HttpContext.Resolve<ILogger<UserHasRoleAttribute>>();
-            logger.LogWarning($"Forbidden access. Uri: {context.HttpContext.Request.GetUri()}");
+            logger.LogWarning($"Forbidden access. Uri: {context.HttpContext.Request.GetDisplayUrl()}");
         }
     }
 }

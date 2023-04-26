@@ -5,43 +5,40 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-public static class UserHasRole
+public class UserHasRoleRequirement : IAuthorizationRequirement { }
+
+public class UserHasRoleRequirementHandler : AuthenticatedUserRequirementHandler<UserHasRoleRequirement>
 {
-    public class Requirement : IAuthorizationRequirement { }
+    private readonly IAuthorizationProvider _authorizationProvider;
 
-    public class RequirementHandler : AuthenticatedUserRequirementHandler<Requirement>
+    public UserHasRoleRequirementHandler(
+        IAuthorizationProvider authorizationProvider,
+        ILogger<AuthenticatedUserRequirementHandler<UserHasRoleRequirement>> logger)
+        : base(logger)
     {
-        private readonly IAuthorizationProvider _authorizationProvider;
+        _authorizationProvider = authorizationProvider;
+    }
 
-        public RequirementHandler(
-            IAuthorizationProvider authorizationProvider,
-            ILogger<AuthenticatedUserRequirementHandler<Requirement>> logger)
-            : base(logger)
+    protected override bool FulfillsRequirement(AuthorizationHandlerContext context)
+    {
+        if (context.Resource is not AuthorizationFilterContext)
         {
-            _authorizationProvider = authorizationProvider;
+            return true;
         }
 
-        protected override bool FulfillsRequirement(AuthorizationHandlerContext context)
-        {
-            if (context.Resource is not AuthorizationFilterContext)
-            {
-                return true;
-            }
+        var userHasRoleAttribute = TryGetUserHasRoleAttribute(context);
+        return userHasRoleAttribute is not null && _authorizationProvider.HasAnyRole(userHasRoleAttribute.Roles!.Split(','));
+    }
 
-            var userHasRoleAttribute = TryGetUserHasRoleAttribute(context);
-            return userHasRoleAttribute is not null && _authorizationProvider.HasAnyRole(userHasRoleAttribute.Roles!.Split(','));
-        }
-
-        protected static UserHasRoleAttribute? TryGetUserHasRoleAttribute(AuthorizationHandlerContext context)
+    protected static UserHasRoleAttribute? TryGetUserHasRoleAttribute(AuthorizationHandlerContext context)
+    {
+        if (context.Resource is AuthorizationFilterContext authContext)
         {
-            if (context.Resource is AuthorizationFilterContext authContext)
-            {
-                var userHasRoleAttribute = authContext.Filters.SingleOrDefault(x => x is UserHasRoleAttribute);
-                return userHasRoleAttribute == null
-                    ? null
-                    : (UserHasRoleAttribute)userHasRoleAttribute;
-            }
-            return null;
+            var userHasRoleAttribute = authContext.Filters.SingleOrDefault(x => x is UserHasRoleAttribute);
+            return userHasRoleAttribute == null
+                ? null
+                : (UserHasRoleAttribute)userHasRoleAttribute;
         }
+        return null;
     }
 }

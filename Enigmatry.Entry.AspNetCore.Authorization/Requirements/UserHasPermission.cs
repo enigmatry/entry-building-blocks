@@ -5,46 +5,41 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-#pragma warning disable CA1711 // Identifiers should not have incorrect suffix
-public static class UserHasPermission
-#pragma warning restore CA1711 // Identifiers should not have incorrect suffix
+public class UserHasPermissionRequirement : IAuthorizationRequirement { }
+
+public class UserHasPermissionRequirementHandler : AuthenticatedUserRequirementHandler<UserHasPermissionRequirement>
 {
-    public class Requirement : IAuthorizationRequirement { }
+    private readonly IAuthorizationProvider _authorizationProvider;
 
-    public class RequirementHandler : AuthenticatedUserRequirementHandler<Requirement>
+    public UserHasPermissionRequirementHandler(
+        IAuthorizationProvider authorizationProvider,
+        ILogger<AuthenticatedUserRequirementHandler<UserHasPermissionRequirement>> logger)
+        : base(logger)
     {
-        private readonly IAuthorizationProvider _authorizationProvider;
+        _authorizationProvider = authorizationProvider;
+    }
 
-        public RequirementHandler(
-            IAuthorizationProvider authorizationProvider,
-            ILogger<AuthenticatedUserRequirementHandler<Requirement>> logger)
-            : base(logger)
+    protected override bool FulfillsRequirement(AuthorizationHandlerContext context)
+    {
+        if (context.Resource is not AuthorizationFilterContext)
         {
-            _authorizationProvider = authorizationProvider;
+            return true;
         }
 
-        protected override bool FulfillsRequirement(AuthorizationHandlerContext context)
+        var userHasPermissionAttribute = TryGetUserHasPermissionAttribute(context);
+
+        return userHasPermissionAttribute is not null && _authorizationProvider.HasAnyPermission(userHasPermissionAttribute.Permissions.Split(','));
+    }
+
+    protected static UserHasPermissionAttribute? TryGetUserHasPermissionAttribute(AuthorizationHandlerContext context)
+    {
+        if (context.Resource is AuthorizationFilterContext authContext)
         {
-            if (context.Resource is not AuthorizationFilterContext)
-            {
-                return true;
-            }
-
-            var userHasPermissionAttribute = TryGetUserHasPermissionAttribute(context);
-
-            return userHasPermissionAttribute is not null && _authorizationProvider.HasAnyPermission(userHasPermissionAttribute.Permissions.Split(','));
+            var userHasPermissionAttribute = authContext.Filters.SingleOrDefault(x => x is UserHasPermissionAttribute);
+            return userHasPermissionAttribute == null
+                ? null
+                : (UserHasPermissionAttribute)userHasPermissionAttribute;
         }
-
-        protected static UserHasPermissionAttribute? TryGetUserHasPermissionAttribute(AuthorizationHandlerContext context)
-        {
-            if (context.Resource is AuthorizationFilterContext authContext)
-            {
-                var userHasPermissionAttribute = authContext.Filters.SingleOrDefault(x => x is UserHasPermissionAttribute);
-                return userHasPermissionAttribute == null
-                    ? null
-                    : (UserHasPermissionAttribute)userHasPermissionAttribute;
-            }
-            return null;
-        }
+        return null;
     }
 }
