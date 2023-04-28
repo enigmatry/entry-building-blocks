@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using System;
 
-namespace Enigmatry.Entry.AspNetCore.Times
+namespace Enigmatry.Entry.Core.Times
 {
     [PublicAPI]
     public sealed record Period
@@ -11,7 +11,7 @@ namespace Enigmatry.Entry.AspNetCore.Times
             // By Serializers
         }
 
-        public Period(DateTime startDate, DateTime endDate)
+        public Period(DateTimeOffset startDate, DateTimeOffset endDate)
         {
             if (startDate > endDate)
             {
@@ -22,21 +22,15 @@ namespace Enigmatry.Entry.AspNetCore.Times
             EndDate = endDate;
         }
 
-        public DateTime StartDate { get; private set; }
+        public DateTimeOffset StartDate { get; private set; }
 
-        public DateTime EndDate { get; private set; }
+        public DateTimeOffset EndDate { get; private set; }
 
         public TimeSpan TimeSpan => EndDate - StartDate;
 
-        public bool InFuture => StartDate > DateTime.Now;
+        public bool Contains(DateTimeOffset date) => date >= StartDate && date <= EndDate;
 
-        public bool InPast => EndDate < DateTime.Now;
-
-        public bool InPresent => Contains(DateTime.Now);
-
-        public bool Contains(DateTime date) => date >= StartDate && date <= EndDate;
-
-        public bool Contains(DateTime start, DateTime end) => Contains(start) && Contains(end);
+        public bool Contains(DateTimeOffset start, DateTimeOffset end) => Contains(start) && Contains(end);
 
         public bool Contains(Period period) => Contains(period.StartDate, period.EndDate);
 
@@ -62,8 +56,8 @@ namespace Enigmatry.Entry.AspNetCore.Times
             return new Period(startDateOfOverlap, endDateOfOverlap);
         }
 
-        private static DateTime Min(DateTime d1, DateTime d2) => d1 < d2 ? d1 : d2;
+        private static DateTimeOffset Min(DateTimeOffset d1, DateTimeOffset d2) => d1 < d2 ? d1 : d2;
 
-        private static DateTime Max(DateTime d1, DateTime d2) => d1 > d2 ? d1 : d2;
+        private static DateTimeOffset Max(DateTimeOffset d1, DateTimeOffset d2) => d1 > d2 ? d1 : d2;
     }
 }

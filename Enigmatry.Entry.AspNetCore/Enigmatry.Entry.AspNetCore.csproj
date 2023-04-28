@@ -27,8 +27,4 @@
     <ProjectReference Include="..\Enigmatry.Entry.Core\Enigmatry.Entry.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Times\" />
-  </ItemGroup>
-
 </Project>

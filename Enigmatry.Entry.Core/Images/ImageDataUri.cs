@@ -8,7 +8,7 @@ namespace Enigmatry.Entry.Core.Images;
 [PublicAPI]
 public record ImageDataUri
 {
-    private const string Pattern = @"data:image/(?<type>.+?),(?<data>.+)";
+    private const string Pattern = @"data:image/(?<type>.+?),.+";
     private readonly string _content;
 
     public static ImageDataUri CreateFrom(byte[] array, string contentType)
