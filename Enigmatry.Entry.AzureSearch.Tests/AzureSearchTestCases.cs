@@ -129,7 +129,7 @@ public static class AzureSearchTestCases
         TestCaseExpectation Expectation)
     {
         public override string ToString() =>
-            $"{TestName} - SearchTextRaw: {SearchText.ValueRaw} - SearchText: {SearchText.Value}, Expectation: {Expectation}";
+            $"{TestName} - SearchTextRaw: {SearchText.OriginalValue} - SearchText: {SearchText.Value}, Expectation: {Expectation}";
 
         public record TestCaseExpectation(int TotalCount, int PagesTotalCount,
             IEnumerable<TestDocument> ExpectedDocumentsOnFirstPage, string Reason)
