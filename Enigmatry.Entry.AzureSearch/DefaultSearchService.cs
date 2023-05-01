@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Enigmatry.Entry.AzureSearch.Abstractions;
 using Microsoft.Extensions.Logging;
@@ -41,8 +42,13 @@ public class DefaultSearchService<T> : ISearchService<T>
         await client.DeleteDocumentsAsync(documents, cancellationToken: cancellationToken);
     }
 
-    public async Task<SearchResponse<T>> Search(string searchText,
-        Azure.Search.Documents.SearchOptions? options = null, CancellationToken cancellationToken = default)
+    public Task<SearchResponse<T>> Search(SearchText searchText, SearchOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        return Search(searchText.Value, options, cancellationToken);
+    }
+
+    public async Task<SearchResponse<T>> Search(string searchText, SearchOptions? options = null, CancellationToken cancellationToken = default)
     {
         var client = _searchClientFactory.Create();
         _logger.LogDebug("Searching documents in index: {IndexName}", client.IndexName);

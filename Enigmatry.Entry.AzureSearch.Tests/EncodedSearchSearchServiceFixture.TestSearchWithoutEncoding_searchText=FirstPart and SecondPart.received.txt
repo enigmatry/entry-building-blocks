@@ -1,0 +1,12 @@
+﻿{
+  PagedResult: [
+    {
+      Score: 0.7594807,
+      Document: {
+        Id: 12343,
+        Name: DocumentName,
+        Description: FirstPart and SecondPart
+      }
+    }
+  ]
+}

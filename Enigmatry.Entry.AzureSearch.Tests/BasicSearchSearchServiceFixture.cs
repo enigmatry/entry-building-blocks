@@ -1,4 +1,5 @@
 ﻿using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 using Enigmatry.Entry.AzureSearch.Abstractions;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Setup;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
 [Category("unit")]
-public class SearchServiceFixture
+public class BasicSearchSearchServiceFixture
 {
     private ServiceProvider _services = null!;
     private ISearchIndexManager<TestDocument> _indexManager = null!;
@@ -37,14 +38,28 @@ public class SearchServiceFixture
     public async Task TestSearchById()
     {
         var searchResult = await _searchService.Search(_document.Id);
-        await Verify(searchResult);
+        await Verify(searchResult, CreateVerifySettings());
     }
 
     [Test]
     public async Task TestSearchByName()
     {
         var searchResult = await _searchService.Search(_document.Name);
-        await Verify(searchResult);
+        await Verify(searchResult, CreateVerifySettings());
+    }
+
+    [Test]
+    public async Task TestSearchByIdWithOptions()
+    {
+        var searchResult = await _searchService.Search(_document.Id, ASearchOptionsWithDefaultSizeAndSkip());
+        await Verify(searchResult, CreateVerifySettings());
+    }
+
+    [Test]
+    public async Task TestSearchByNameWithOptions()
+    {
+        var searchResult = await _searchService.Search(_document.Name, ASearchOptionsWithDefaultSizeAndSkip());
+        await Verify(searchResult, CreateVerifySettings());
     }
 
     [Test]
@@ -55,17 +70,19 @@ public class SearchServiceFixture
             Filter = $"{nameof(TestDocument.Name)} eq 'Harry Potter'",
             OrderBy = { "Name" },
             HighlightFields = { "Name" },
+            Size = 10,
+            Skip = 0,
             IncludeTotalCount = true
         };
         var searchResult = await _searchService.Search("", searchOptions);
-        await Verify(searchResult);
+        await Verify(searchResult, CreateVerifySettings());
     }
 
     [Test]
     public async Task TestSearchByDescription()
     {
         var searchResult = await _searchService.Search(_document.Description);
-        await Verify(searchResult);
+        await Verify(searchResult, CreateVerifySettings());
     }
 
     private static TestDocument ADocument() => new TestDocumentBuilder().Build();
@@ -74,5 +91,16 @@ public class SearchServiceFixture
         new TestDocumentBuilder().WithId("23432432").WithName("Harry Potter").WithDescription("Hogwarts")
             .Build();
 
+    private static SearchOptions ASearchOptionsWithDefaultSizeAndSkip() =>
+        new() { Size = 10, Skip = 0, IncludeTotalCount = true };
+
     private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(2));
+
+
+    private static VerifySettings CreateVerifySettings()
+    {
+        var settings = new VerifySettings();
+        settings.IgnoreMember<SearchResult<TestDocument>>(_ => _.Score);//score is not always the same
+        return settings;
+    }
 }

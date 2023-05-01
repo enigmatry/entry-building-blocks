@@ -6,7 +6,7 @@ namespace Enigmatry.Entry.AzureSearch.Tests.Documents;
 [UsedImplicitly]
 public class TestDocument
 {
-    [SimpleField(IsKey = true, IsFilterable = true)]
+    [SearchableField(IsKey = true, IsFilterable = true)]
     public string Id { get; set; } = String.Empty;
 
     [SearchableField(IsFilterable = true, IsSortable = true)]

@@ -1,7 +1,7 @@
 ﻿{
+  TotalCount: 1,
   PagedResult: [
     {
-      Score: 0.2876821,
       Document: {
         Id: 12343,
         Name: DocumentName,
