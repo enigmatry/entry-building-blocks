@@ -2,28 +2,28 @@
 
 public record SearchText
 {
-    private SearchText(string value)
+    private SearchText(string valueRaw, string value)
     {
+        ValueRaw = valueRaw;
         Value = value;
     }
 
     public static SearchText AsPhraseSearch(string value)
     {
-        value = value.EscapeSpecialSymbols();
-        var result = value.AsPhraseSearch();
-        return new SearchText(result);
+        var result = value.EscapeSpecialSymbols();
+        result = result.AsPhraseSearch();
+        return new SearchText(value, result);
     }
 
     public static SearchText AsFullSearch(string value)
     {
-        value = value.EscapeSpecialSymbols();
-        var words = value.Split(' ');
-        var result =
+        var result = value.EscapeSpecialSymbols();
+        var words = result.Split(' ');
+        result =
             $"{value.AsPhraseSearch()} OR {(words.Length > 1 ? words.SearchAll() : $"{value.PartialSearch()} OR {value.FuzzySearch()}")}";
-        return new SearchText(result);
+        return new SearchText(value, result);
     }
 
+    public string ValueRaw { get; init; }
     public string Value { get; init; }
-
-    public void Deconstruct(out string value) => value = Value;
 }

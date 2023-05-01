@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="Enigmatry.Entry.AzureSearch.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Search.Documents" />
     <PackageReference Include="Humanizer.Core" />
     <PackageReference Include="JetBrains.Annotations" />
@@ -17,7 +21,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
-    <PackageReference Include="Newtonsoft.Json" />
   </ItemGroup>
 
 </Project>

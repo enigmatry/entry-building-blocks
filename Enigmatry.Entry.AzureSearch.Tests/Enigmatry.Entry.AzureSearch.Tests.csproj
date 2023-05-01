@@ -28,23 +28,6 @@
     <ProjectReference Include="..\Enigmatry.Entry.AzureSearch\Enigmatry.Entry.AzureSearch.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="EncodedSearchSearchServiceFixture.TestSearchWithoutEncoding_searchText=.received.txt">
-      <DependentUpon>EncodedSearchSearchServiceFixture.cs</DependentUpon>
-    </None>
-    <None Update="EncodedSearchSearchServiceFixture.TestSearchWithoutEncoding_searchText=.verified.txt">
-      <DependentUpon>EncodedSearchSearchServiceFixture.cs</DependentUpon>
-    </None>
-    <None Update="EncodedSearchSearchServiceFixture.TestSearchWithoutEncoding_searchText=FirstPart and SecondPart.received.txt">
-      <DependentUpon>EncodedSearchSearchServiceFixture.cs</DependentUpon>
-    </None>
-    <None Update="EncodedSearchSearchServiceFixture.TestSearchWithoutEncoding_searchText=FirstPart and SecondPart.verified.txt">
-      <DependentUpon>EncodedSearchSearchServiceFixture.cs</DependentUpon>
-    </None>
-    <None Update="BasicSearchSearchServiceFixture.TestSearchByFilter.verified.txt">
-      <DependentUpon>BasicSearchSearchServiceFixture.cs</DependentUpon>
-    </None>
-  </ItemGroup>
 
 
 </Project>
