@@ -4,7 +4,12 @@ public class TestDocumentBuilder
 {
     private string _id = "12343";
     private string _name = "DocumentName";
-    private string _description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+    private string _description =
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+
+    private int _rating;
+    private DateTimeOffset _createdOn;
 
     public TestDocumentBuilder WithId(string value)
     {
@@ -24,5 +29,24 @@ public class TestDocumentBuilder
         return this;
     }
 
-    public TestDocument Build() => new() { Id = _id, Name = _name, Description = _description };
+    public TestDocumentBuilder WithRating(int value)
+    {
+        _rating = value;
+        return this;
+    }
+
+    public TestDocumentBuilder WithCreatedOn(DateTimeOffset value)
+    {
+        _createdOn = value;
+        return this;
+    }
+
+    public TestDocument Build() => new()
+    {
+        Id = _id,
+        Name = _name,
+        Description = _description,
+        Rating = _rating,
+        CreatedOn = _createdOn
+    };
 }

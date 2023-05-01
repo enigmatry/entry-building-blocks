@@ -28,6 +28,4 @@
     <ProjectReference Include="..\Enigmatry.Entry.AzureSearch\Enigmatry.Entry.AzureSearch.csproj" />
   </ItemGroup>
 
-
-
 </Project>

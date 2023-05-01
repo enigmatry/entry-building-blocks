@@ -1,31 +1,12 @@
-﻿using Enigmatry.Entry.AzureSearch.Abstractions;
-using Enigmatry.Entry.AzureSearch.Tests.Documents;
-using Enigmatry.Entry.AzureSearch.Tests.Setup;
+﻿using Azure.Search.Documents.Models;
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
-
 using static Enigmatry.Entry.AzureSearch.Tests.AzureSearchTestCases;
 
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
 [Category("unit")]
-public class FullTextSearchSearchServiceFixture
+public class FullTextSearchSearchServiceFixture : SearchServiceFixtureBase
 {
-    private ServiceProvider _services = null!;
-    private ISearchIndexManager<TestDocument> _indexManager = null!;
-    private ISearchService<TestDocument> _searchService = null!;
-
-    [SetUp]
-    public async Task Setup()
-    {
-        _services = new ServiceCollectionBuilder().Build();
-
-        _searchService = _services.GetRequiredService<ISearchService<TestDocument>>();
-        _indexManager = _services.GetRequiredService<ISearchIndexManager<TestDocument>>();
-
-        await _indexManager.RecreateIndex();
-    }
-
     [TestCaseSource(typeof(AzureSearchTestCases), nameof(AzureSearchSpecialCharactersTestCases))]
     public async Task TestSpecialCharactersSearch(AzureSearchTestCase testCase) => await TestSearch(testCase);
 
@@ -42,7 +23,7 @@ public class FullTextSearchSearchServiceFixture
         var searchText = testCase.SearchText;
         var searchOptions = testCase.Options;
 
-        var searchResult = await _searchService.Search(searchText, searchOptions);
+        var searchResult = await Search(searchText, searchOptions);
         var pages = searchResult.PagedResult.AsPages().ToList();
 
         TestContext.WriteLine("Search text: " + searchText.Value);
@@ -56,12 +37,6 @@ public class FullTextSearchSearchServiceFixture
             documentsOnFirstPage.Should().BeEquivalentTo(expectation.ExpectedDocumentsOnFirstPage);
         }
     }
-
-    private async Task UpdateDocuments(IEnumerable<TestDocument> documents)
-    {
-        await _searchService.UpdateDocuments(documents);
-        WaitIndexToBeUpdated();
-    }
-
-    private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(2));
 }
+
+

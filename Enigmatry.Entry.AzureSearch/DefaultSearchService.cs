@@ -42,6 +42,12 @@ public class DefaultSearchService<T> : ISearchService<T>
         await client.DeleteDocumentsAsync(documents, cancellationToken: cancellationToken);
     }
 
+    public async Task<SearchResponse<T>> Search(string searchText, SearchOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        var escaped = SearchText.AsEscaped(searchText);
+        return await Search(escaped, options, cancellationToken);
+    }
+
     public async Task<SearchResponse<T>> Search(SearchText searchText, SearchOptions? options = null,
         CancellationToken cancellationToken = default)
     {
@@ -50,16 +56,8 @@ public class DefaultSearchService<T> : ISearchService<T>
 
         Response<SearchResults<T>>? result = await client.SearchAsync<T>(searchText.Value, options, cancellationToken);
 
-        Pageable<SearchResult<T>>? pagedResult = result.Value.GetResults()!;
-
         _logger.LogDebug("Search results. TotalCount: {TotalCount}, ", result.Value.TotalCount);
 
-        return new SearchResponse<T>(pagedResult, result.Value.TotalCount);
-    }
-
-    public async Task<SearchResponse<T>> Search(string searchText, SearchOptions? options = null, CancellationToken cancellationToken = default)
-    {
-        var searchText2 = SearchText.AsEscaped(searchText);
-        return await Search()
+        return new SearchResponse<T>(result.Value);
     }
 }

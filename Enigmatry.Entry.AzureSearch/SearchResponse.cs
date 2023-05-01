@@ -1,4 +1,6 @@
-﻿using Azure;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Azure;
 using Azure.Search.Documents.Models;
 using JetBrains.Annotations;
 
@@ -7,13 +9,16 @@ namespace Enigmatry.Entry.AzureSearch;
 [PublicAPI]
 public class SearchResponse<T>
 {
-    public SearchResponse(Pageable<SearchResult<T>> pagedResult, long? totalCount)
+    public SearchResponse(SearchResults<T> result)
     {
-        PagedResult = pagedResult;
-        TotalCount = totalCount;
+        PagedResult = result.GetResults();
+        Facets = result.Facets;
+        TotalCount = result.TotalCount;
     }
 
-    public long? TotalCount { get; }
-
     public Pageable<SearchResult<T>> PagedResult { get; }
+
+    public IDictionary<string, IList<FacetResult>> Facets { get; }
+
+    public long? TotalCount { get; }
 }
