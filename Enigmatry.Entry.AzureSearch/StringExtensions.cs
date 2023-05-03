@@ -14,6 +14,11 @@ internal static class AzureSearchStringExtensions
 
     internal static string EscapeSpecialSymbols(this string value)
     {
+        if (String.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+
         // Check if the value contains any of the illegal symbols, and if it does escape them.
         foreach (var symbol in AzureSearchSpecialCharacters)
         {
@@ -25,18 +30,32 @@ internal static class AzureSearchStringExtensions
 
     internal static string AsFullSearch(this string searchText)
     {
+        if (String.IsNullOrEmpty(searchText))
+        {
+            return searchText;
+        }
+
         var words = searchText.Split(' ');
         var result =
             $"{searchText.AsPhraseSearch()} OR {(words.Length > 1 ? words.SearchAll() : $"{searchText.PartialSearch()} OR {searchText.FuzzySearch()}")}";
         return result;
     }
 
-    internal static string AsPhraseSearch(this string phrase) => @$"""{phrase}""";
+    internal static string AsPhraseSearch(this string phrase)
+    {
+        if (String.IsNullOrEmpty(phrase))
+        {
+            return phrase;
+        }
 
-    internal static string SearchAll(this IEnumerable<string> words) => $"({String.Join(' ', words.Select(word => $"+{word}"))})";
+        return @$"""{phrase}""";
+    }
 
-    internal static string PartialSearch(this string word) => $"{word}*";
+    private static string SearchAll(this IEnumerable<string> words) =>
+        $"({String.Join(' ', words.Select(word => $"+{word}"))})";
+
+    private static string PartialSearch(this string word) => $"{word}*";
 
     //  for fuzzy search to work query type has to be full
-    internal static string FuzzySearch(this string word) => $"{word}~1";
+    private static string FuzzySearch(this string word) => $"{word}~1";
 }

@@ -6,11 +6,11 @@ public record SearchText
 {
     private SearchText(string originalValue, string value)
     {
-        OriginalValue = originalValue.ToEmptyIfNull();
-        Value = value.ToEmptyIfNull();
+        OriginalValue = originalValue;
+        Value = value;
     }
 
-    public static SearchText AsNotEscaped(string searchText) => new(searchText, searchText);
+    public static SearchText AsNotEscaped(string searchText) => new(searchText, searchText.ToEmptyIfNull());
 
     public static SearchText AsEscaped(string searchText)
     {
