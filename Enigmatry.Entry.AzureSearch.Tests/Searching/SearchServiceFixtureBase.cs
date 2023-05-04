@@ -1,12 +1,9 @@
-﻿using System.Net;
-using Azure;
-using Azure.Search.Documents;
+﻿using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Enigmatry.Entry.AzureSearch.Abstractions;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Setup;
 using Microsoft.Extensions.DependencyInjection;
-using Polly;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
@@ -16,30 +13,37 @@ public abstract class SearchServiceFixtureBase
     private ISearchIndexManager<TestDocument> _indexManager = null!;
     private ISearchService<TestDocument> _searchService = null!;
 
-    [SetUp]
-    public async Task Setup()
+    [OneTimeSetUp]
+    public async Task OneTimeSetup()
     {
         _services = new ServiceCollectionBuilder().Build();
 
         _searchService = _services.GetRequiredService<ISearchService<TestDocument>>();
         _indexManager = _services.GetRequiredService<ISearchIndexManager<TestDocument>>();
 
-        // Recover from error message: Azure.RequestFailedException : You are sending too many requests. Please try again later.
-        var retryPolicy = Policy.Handle<RequestFailedException>(
-                e => e.Status == (int)HttpStatusCode.ServiceUnavailable)
-            .WaitAndRetry(3, _ => TimeSpan.FromSeconds(5));
+        await _indexManager.RecreateIndex();
+        WaitIndexToBeUpdated();
+    }
 
-        await retryPolicy.Execute(async () =>
+    [SetUp]
+    public async Task Setup() => await DeleteAllDocuments(); // remove all leftovers from previous test run
+
+    private async Task DeleteAllDocuments()
+    {
+        var searchResponse = await _searchService.Search(SearchText.AsNotEscaped("*"));
+        var documents = searchResponse.PagedResult.AsPages().First().Values.Select(x => x.Document).ToList();
+        if (documents.Any())
         {
-            await _indexManager.RecreateIndex();
-        });
+            await _searchService.DeleteDocuments(documents);
+            WaitIndexToBeUpdated();
+        }
     }
 
     protected async Task<SearchResponse<TestDocument>> Search(SearchText searchText,
         SearchOptions? searchOptions = null) => await _searchService.Search(searchText, searchOptions);
 
     protected async Task<SearchResponse<TestDocument>> Search(string searchText, SearchOptions? searchOptions = null) =>
-        await _searchService.Search(searchText, searchOptions);
+        await _searchService.Search(SearchText.AsEscaped(searchText), searchOptions);
 
     protected async Task UpdateDocuments(IEnumerable<TestDocument> documents)
     {
@@ -47,7 +51,7 @@ public abstract class SearchServiceFixtureBase
         WaitIndexToBeUpdated();
     }
 
-    private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(2));
+    private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(1));
 
     protected static VerifySettings CreateVerifySettings()
     {

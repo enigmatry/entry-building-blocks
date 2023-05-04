@@ -12,6 +12,5 @@ public interface ISearchService<T>
     Task UpdateDocuments(IEnumerable<T> documents, CancellationToken cancellationToken = default);
     Task DeleteDocuments(IEnumerable<T> documents, CancellationToken cancellationToken = default);
 
-    Task<SearchResponse<T>> Search(string searchText, SearchOptions? options = null, CancellationToken cancellationToken = default);
     Task<SearchResponse<T>> Search(SearchText searchText, SearchOptions? options = null, CancellationToken cancellationToken = default);
 }

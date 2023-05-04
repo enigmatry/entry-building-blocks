@@ -21,7 +21,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="NUnit.Analyzers" />
     <PackageReference Include="coverlet.collector" />
-    <PackageReference Include="Polly" />
     <PackageReference Include="Verify.NUnit" />
   </ItemGroup>
 
