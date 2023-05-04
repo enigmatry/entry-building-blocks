@@ -29,4 +29,127 @@
     <ProjectReference Include="..\Enigmatry.Entry.AzureSearch\Enigmatry.Entry.AzureSearch.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Searching\BasicSearchFixture.TestSearchByDescription.verified.txt">
+      <DependentUpon>BasicSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\BasicSearchFixture.TestSearchByFilter.verified.txt">
+      <DependentUpon>BasicSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\BasicSearchFixture.TestSearchById.verified.txt">
+      <DependentUpon>BasicSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\BasicSearchFixture.TestSearchByIdWithOptions.verified.txt">
+      <DependentUpon>BasicSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\BasicSearchFixture.TestSearchByName.verified.txt">
+      <DependentUpon>BasicSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\BasicSearchFixture.TestSearchByNameWithOptions.verified.txt">
+      <DependentUpon>BasicSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearch.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearch_searchText=.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearch_searchText=-.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearch_searchText=name1.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearch_searchText=null.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearchWithFacets_searchText=.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearchWithFacets_searchText=-.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearchWithFacets_searchText=name1.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FacetedSearchFixture.TestSearchWithFacets_searchText=null.verified.txt">
+      <DependentUpon>FacetedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FullTextSearchFixture.TestSearchWithoutEncoding_searchText=.received.txt">
+      <DependentUpon>FullTextSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FullTextSearchFixture.TestSearchWithoutEncoding_searchText=.verified.txt">
+      <DependentUpon>FullTextSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FullTextSearchFixture.TestSearchWithoutEncoding_searchText=FirstPart and SecondPart.received.txt">
+      <DependentUpon>FullTextSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\FullTextSearchFixture.TestSearchWithoutEncoding_searchText=FirstPart and SecondPart.verified.txt">
+      <DependentUpon>FullTextSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearch.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=-.received.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=-.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=.received.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=name1.received.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=name1.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=null.received.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithFacets_searchText=null.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearch_searchText=-.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearch_searchText=.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearch_searchText=name1.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearch_searchText=null.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithHighlights_searchText=.verified.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithHighlights_searchText=-.verified.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithHighlights_searchText=lorem.verified.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithHighlights_searchText=name1.verified.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+    <None Update="Searching\HighlightedSearchFixture.TestSearchWithHighlights_searchText=null.verified.txt">
+      <DependentUpon>HighlightedSearchFixture.cs</DependentUpon>
+    </None>
+  </ItemGroup>
+
 </Project>

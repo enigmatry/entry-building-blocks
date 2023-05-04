@@ -1,31 +1,16 @@
 ﻿using Azure.Search.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 
-namespace Enigmatry.Entry.AzureSearch.Tests;
+namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
-public class FacetedSearchSearchServiceFixture : SearchServiceFixtureBase
+public class FacetedSearchFixture : SearchServiceFixtureBase
 {
     [SetUp]
     public new async Task Setup()
     {
-        var documents = TestDocuments();
-
+        var documents = ATestDocuments();
         await UpdateDocuments(documents);
     }
-
-    private static IEnumerable<TestDocument> TestDocuments()
-    {
-        yield return ADocument("1", "name1", "some description", 1, ADateInPast());
-        yield return ADocument("2", "name1", "some description", 1, ADateInFuture());
-        yield return ADocument("3", "name1", "some description", 5, ADateInPast());
-        yield return ADocument("4", "name1", "some description", 10, ADateInPast());
-        yield return ADocument("5", "another", "some description", 5, ADateInFuture());
-        yield return ADocument("6", "another", "some description", 10, ADateInFuture());
-    }
-
-    private static DateTimeOffset ADateInFuture() => new(2050, 1, 1, 1, 1, 1, TimeSpan.Zero);
-
-    private static DateTimeOffset ADateInPast() => new(1978, 1, 1, 1, 1, 1, TimeSpan.Zero);
 
     [TestCase("*")]
     [TestCase("")]
@@ -58,4 +43,18 @@ public class FacetedSearchSearchServiceFixture : SearchServiceFixtureBase
     private static TestDocument ADocument(string id, string name, string description, int rating,
         DateTimeOffset createdOn) => new TestDocumentBuilder()
         .WithId(id).WithName(name).WithDescription(description).WithRating(rating).WithCreatedOn(createdOn).Build();
+
+    private static IEnumerable<TestDocument> ATestDocuments()
+    {
+        yield return ADocument("1", "name1", "some description", 1, ADateInPast());
+        yield return ADocument("2", "name1", "some description", 1, ADateInFuture());
+        yield return ADocument("3", "name1", "some description", 5, ADateInPast());
+        yield return ADocument("4", "name1", "some description", 10, ADateInPast());
+        yield return ADocument("5", "another", "some description", 5, ADateInFuture());
+        yield return ADocument("6", "another", "some description", 10, ADateInFuture());
+    }
+
+    private static DateTimeOffset ADateInFuture() => new(2050, 1, 1, 1, 1, 1, TimeSpan.Zero);
+
+    private static DateTimeOffset ADateInPast() => new(1978, 1, 1, 1, 1, 1, TimeSpan.Zero);
 }

@@ -1,11 +1,10 @@
-﻿using Azure.Search.Documents.Models;
-using FluentAssertions;
-using static Enigmatry.Entry.AzureSearch.Tests.AzureSearchTestCases;
+﻿using FluentAssertions;
+using static Enigmatry.Entry.AzureSearch.Tests.Searching.AzureSearchTestCases;
 
-namespace Enigmatry.Entry.AzureSearch.Tests;
+namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
 [Category("unit")]
-public class FullTextSearchSearchServiceFixture : SearchServiceFixtureBase
+public class FullTextSearchFixture : SearchServiceFixtureBase
 {
     [TestCaseSource(typeof(AzureSearchTestCases), nameof(AzureSearchSpecialCharactersTestCases))]
     public async Task TestSpecialCharactersSearch(AzureSearchTestCase testCase) => await TestSearch(testCase);

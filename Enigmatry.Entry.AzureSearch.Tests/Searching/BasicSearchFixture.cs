@@ -1,10 +1,10 @@
 ﻿using Azure.Search.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 
-namespace Enigmatry.Entry.AzureSearch.Tests;
+namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
 [Category("unit")]
-public class BasicSearchSearchServiceFixture : SearchServiceFixtureBase
+public class BasicSearchFixture : SearchServiceFixtureBase
 {
     private TestDocument _document = null!;
     private TestDocument _document2 = null!;

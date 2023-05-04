@@ -8,7 +8,7 @@ using Enigmatry.Entry.AzureSearch.Tests.Setup;
 using Microsoft.Extensions.DependencyInjection;
 using Polly;
 
-namespace Enigmatry.Entry.AzureSearch.Tests;
+namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
 public abstract class SearchServiceFixtureBase
 {
@@ -34,7 +34,6 @@ public abstract class SearchServiceFixtureBase
             await _indexManager.RecreateIndex();
         });
     }
-
 
     protected async Task<SearchResponse<TestDocument>> Search(SearchText searchText,
         SearchOptions? searchOptions = null) => await _searchService.Search(searchText, searchOptions);

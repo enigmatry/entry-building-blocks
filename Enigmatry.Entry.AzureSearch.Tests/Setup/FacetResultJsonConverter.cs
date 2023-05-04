@@ -1,7 +1,7 @@
 ﻿using Argon;
 using Azure.Search.Documents.Models;
 
-namespace Enigmatry.Entry.AzureSearch.Tests;
+namespace Enigmatry.Entry.AzureSearch.Tests.Setup;
 
 // Not all properties of FacetResult class were shown in the VerifyTests received files.
 public class FacetResultJsonConverter : JsonConverter

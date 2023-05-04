@@ -2,9 +2,9 @@
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
-using static Enigmatry.Entry.AzureSearch.Tests.AzureSearchTestCases.AzureSearchTestCase;
+using static Enigmatry.Entry.AzureSearch.Tests.Searching.AzureSearchTestCases.AzureSearchTestCase;
 
-namespace Enigmatry.Entry.AzureSearch.Tests;
+namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
 public static class AzureSearchTestCases
 {

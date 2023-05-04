@@ -1,0 +1,19 @@
+﻿{
+  PagedResult: [
+    {
+      Document: {
+        Id: 1,
+        Name: name1,
+        Description: description
+      }
+    },
+    {
+      Document: {
+        Id: 2,
+        Name: some other name,
+        Description: lorem ipsum
+      }
+    }
+  ],
+  TotalCount: 2
+}

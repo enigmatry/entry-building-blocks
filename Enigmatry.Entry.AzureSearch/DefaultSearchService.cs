@@ -42,7 +42,8 @@ public class DefaultSearchService<T> : ISearchService<T>
         await client.DeleteDocumentsAsync(documents, cancellationToken: cancellationToken);
     }
 
-    public async Task<SearchResponse<T>> Search(string searchText, SearchOptions? options = null, CancellationToken cancellationToken = default)
+    public async Task<SearchResponse<T>> Search(string searchText, SearchOptions? options = null,
+        CancellationToken cancellationToken = default)
     {
         var escaped = SearchText.AsEscaped(searchText);
         return await Search(escaped, options, cancellationToken);
@@ -55,7 +56,6 @@ public class DefaultSearchService<T> : ISearchService<T>
         _logger.LogDebug("Searching documents in index: {IndexName}", client.IndexName);
 
         Response<SearchResults<T>>? result = await client.SearchAsync<T>(searchText.Value, options, cancellationToken);
-
         _logger.LogDebug("Search results. TotalCount: {TotalCount}, ", result.Value.TotalCount);
 
         return new SearchResponse<T>(result.Value);
