@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Enigmatry.Entry.Core.Helpers
 {
@@ -36,5 +38,7 @@ namespace Enigmatry.Entry.Core.Helpers
 
             return new string(chars);
         }
+
+        public static string JoinStringWithOnlyValuesWithContent(this IEnumerable<string> values, string separator) => String.Join(separator, values.Where(value => value.HasContent()));
     }
 }

@@ -12,7 +12,11 @@ public static class AzureSearchTestCases
     {
         get
         {
-            static string CreateDescription(string @char) => $"FirstPart {@char} SecondPart";
+            static string CreateDescription(string @char)
+            {
+                return $"FirstPart {@char} SecondPart";
+            }
+
             var testDocuments = CreateDocumentsWithSpecialCharactersInDescription(CreateDescription).ToList();
             var pageSize = testDocuments.Count + 1; // ensure all documents are on first page to keep test simpler 
             var options = CreateSearchOptions(pageSize, SearchQueryType.Full);
@@ -112,7 +116,8 @@ public static class AzureSearchTestCases
             SearchMode = SearchMode.All
         };
 
-    private static IEnumerable<TestDocument> CreateDocumentsWithSpecialCharactersInDescription(Func<string, string> createDescription) =>
+    private static IEnumerable<TestDocument> CreateDocumentsWithSpecialCharactersInDescription(
+        Func<string, string> createDescription) =>
         AzureSearchStringExtensions.AzureSearchSpecialCharacters.Select((character, index) =>
             ADocumentWith(index, "some name", createDescription(character)));
 
