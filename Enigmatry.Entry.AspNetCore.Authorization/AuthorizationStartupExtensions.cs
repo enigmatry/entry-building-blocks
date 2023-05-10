@@ -13,24 +13,14 @@ public static class AuthorizationStartupExtensions
 
     public static AuthorizationBuilder AppAddAuthorization(this IServiceCollection services, bool enable)
     {
-        if (!enable)
+        if (enable)
         {
-            return services.AddAuthorizationBuilder();
+            services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler>();
+            services.AddScoped<IAuthorizationHandler, UserHasRoleRequirementHandler>();
+
+            services.AddSingleton<IAuthorizationPolicyProvider, RolesAndPermissionsPolicyProvider>();
         }
 
-        services.AddScoped<IAuthorizationHandler, UserHasRoleRequirementHandler>();
-        services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler>();
-
-        return services.AddAuthorizationBuilder()
-            .AddPolicy(
-                PolicyNames.UserHasRole,
-                policy => policy.AddRequirements(new UserHasRoleRequirement()))
-            .AddPolicy(
-                PolicyNames.UserHasPermission,
-                policy => policy.AddRequirements(new UserHasPermissionRequirement()))
-            // TODO:This also adds the policy to swagger and healthcheck endpoints. Need to find a solution
-            .AddFallbackPolicy(
-                PolicyNames.UserAuthenticated,
-                new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
+        return services.AddAuthorizationBuilder();
     }
 }

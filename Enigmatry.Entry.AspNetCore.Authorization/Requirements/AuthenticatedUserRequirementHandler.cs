@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
-public abstract class AuthenticatedUserRequirementHandler<TRequirement>
+internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
     : AuthorizationHandler<TRequirement> where TRequirement : IAuthorizationRequirement
 {
     protected ILogger<AuthenticatedUserRequirementHandler<TRequirement>> Logger { get; }
@@ -24,7 +24,7 @@ public abstract class AuthenticatedUserRequirementHandler<TRequirement>
             return Task.CompletedTask;
         }
 
-        if (FulfillsRequirement(context))
+        if (FulfillsRequirement(context, requirement))
         {
             context.Succeed(requirement);
         }
@@ -39,7 +39,7 @@ public abstract class AuthenticatedUserRequirementHandler<TRequirement>
         return Task.CompletedTask;
     }
 
-    protected abstract bool FulfillsRequirement(AuthorizationHandlerContext context);
+    protected abstract bool FulfillsRequirement(AuthorizationHandlerContext context, TRequirement requirement);
 
     protected static (string actionName, string controllerName) GetActionAndControllerNames(AuthorizationHandlerContext context)
     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
 
@@ -35,4 +36,23 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<WeatherForecast> ProblemDetails() =>
         throw new ValidationException("AValidationExceptionMessage",
             new List<ValidationFailure> { new("AProperty", "AFailedValidationMessage") });
+
+    [HttpGet("userInRoleIsAllowed")]
+    [UserHasRole("Admin,Tester")]
+    public IEnumerable<WeatherForecast> UserInRoleIsAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("userNotInRoleIsNotAllowed")]
+    [UserHasRole("Admin")]
+    public IEnumerable<WeatherForecast> UserNotInRoleIsNotAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("UserWithPermissionIsAllowed")]
+    [UserHasPermission("Read,Write")]
+    public IEnumerable<WeatherForecast> UserWithPermissionIsAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("userNoPermissionIsNotAllowed")]
+    [UserHasPermission("Write")]
+    public IEnumerable<WeatherForecast> UserNoPermissionIsNotAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("unprotected")]
+    public IEnumerable<WeatherForecast> Unprotected() => Array.Empty<WeatherForecast>();
 }
