@@ -3,16 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-internal class UserHasRoleRequirement : IAuthorizationRequirement
-{
-    public UserHasRoleRequirement(string roles)
-    {
-        Roles = roles;
-    }
-
-    public string Roles { get; }
-}
-
 internal class UserHasRoleRequirementHandler : AuthenticatedUserRequirementHandler<UserHasRoleRequirement>
 {
     private readonly IAuthorizationProvider _authorizationProvider;

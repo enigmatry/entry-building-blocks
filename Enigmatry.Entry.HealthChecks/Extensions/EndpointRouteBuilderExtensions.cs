@@ -35,6 +35,11 @@ public static class StartupExtensions
         {
             healthCheckEndpoint.RequireAuthorization(TokenRequirement.Name);
         }
+        else
+        {
+            // TODO:test
+            healthCheckEndpoint.AllowAnonymous();
+        }
     }
 
     private static async Task WriteResponse(HttpContext context, HealthReport report) =>

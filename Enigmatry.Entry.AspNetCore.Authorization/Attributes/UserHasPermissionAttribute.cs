@@ -20,7 +20,7 @@ public sealed class UserHasPermissionAttribute : AuthorizeAttribute, IAuthorizat
     /// Initializes a new instance of the <see cref="UserHasPermissionAttribute"/> class.
     /// </summary>
     /// <param name="permissions">A comma delimited list of permissions that are required to access the resource.</param>
-    public UserHasPermissionAttribute(string permissions) : base(PolicyNames.UserHasPermission)
+    public UserHasPermissionAttribute(string permissions) : base(PolicyPrefix)
     {
         Permissions = permissions.Split(',');
     }

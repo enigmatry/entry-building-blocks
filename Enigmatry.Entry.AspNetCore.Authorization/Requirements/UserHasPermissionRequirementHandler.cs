@@ -3,16 +3,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-internal class UserHasPermissionRequirement : IAuthorizationRequirement
-{
-    public UserHasPermissionRequirement(string permissions)
-    {
-        Permissions = permissions;
-    }
-
-    public string Permissions { get; }
-}
-
 internal class UserHasPermissionRequirementHandler : AuthenticatedUserRequirementHandler<UserHasPermissionRequirement>
 {
     private readonly IAuthorizationProvider _authorizationProvider;
