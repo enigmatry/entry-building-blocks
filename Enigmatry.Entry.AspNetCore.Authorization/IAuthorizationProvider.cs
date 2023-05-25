@@ -2,6 +2,6 @@
 
 public interface IAuthorizationProvider
 {
-    public bool HasAnyRole(string[] roles);
-    public bool HasAnyPermission(string[] permission);
+    public bool HasAnyRole(IEnumerable<string> roles);
+    public bool HasAnyPermission(IEnumerable<string> permission);
 }

@@ -16,5 +16,5 @@ internal class UserHasPermissionRequirementHandler : AuthenticatedUserRequiremen
     }
 
     protected override bool FulfillsRequirement(AuthorizationHandlerContext context, UserHasPermissionRequirement requirement) =>
-        _authorizationProvider.HasAnyPermission(requirement.Permissions.Split(','));
+        _authorizationProvider.HasAnyPermission(requirement.Permissions.Split(',', StringSplitOptions.TrimEntries));
 }

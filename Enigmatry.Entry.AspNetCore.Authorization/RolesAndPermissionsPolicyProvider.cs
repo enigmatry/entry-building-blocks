@@ -5,20 +5,17 @@ namespace Enigmatry.Entry.AspNetCore.Authorization;
 
 internal class RolesAndPermissionsPolicyProvider : IAuthorizationPolicyProvider
 {
-    private const string RolePolicyPrefix = "UserHasRole";
-    private const string PermissionPolicyPrefix = "UserHasPermission";
-
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        if (policyName.StartsWith(RolePolicyPrefix, StringComparison.OrdinalIgnoreCase))
+        if (policyName.StartsWith(UserHasRoleRequirement.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
         {
-            var requirement = new UserHasRoleRequirement(policyName[RolePolicyPrefix.Length..]);
+            var requirement = new UserHasRoleRequirement(policyName[UserHasRoleRequirement.PolicyPrefix.Length..]);
             return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
         }
 
-        if (policyName.StartsWith(PermissionPolicyPrefix, StringComparison.OrdinalIgnoreCase))
+        if (policyName.StartsWith(UserHasPermissionRequirement.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
         {
-            var requirement = new UserHasPermissionRequirement(policyName[PermissionPolicyPrefix.Length..]);
+            var requirement = new UserHasPermissionRequirement(policyName[UserHasPermissionRequirement.PolicyPrefix.Length..]);
             return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
         }
 
