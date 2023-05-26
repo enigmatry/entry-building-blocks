@@ -32,16 +32,16 @@ To secure a method on a controller, you can now use 2 additional Attributes:
 
 ## Implementing authorization checks
 
-Because the actual check if the current user has the right roles or permissions can be application-specific, this building block only provides an interface `IAuthorizationProvider`, with no default implementation. Application using this building block need to register their own implementation:
+Because the actual check if the current user has the right roles or permissions can be application-specific, this building block only provides an interface `IAuthorizationProvider`, with no default implementation. Applications using this building block need to register their own implementation:
 
 ```cs
 public interface IAuthorizationProvider
 {
-    public bool HasAnyRole(string[] roles);
-    public bool HasAnyPermission(string[] permissions);
+    public bool HasAnyRole(IEnumerable<string> roles);
+    public bool HasAnyPermission(IEnumerable<string> permission);
 }
 ```
 
 ```cs
-  services.AddScoped<IAuthorizationProvider, SampleAuthorizationProvider>();
+services.AddScoped<IAuthorizationProvider, SampleAuthorizationProvider>();
 ```
