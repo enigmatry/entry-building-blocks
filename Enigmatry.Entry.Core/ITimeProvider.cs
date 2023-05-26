@@ -1,5 +1,4 @@
-﻿using Enigmatry.Entry.Core.Times;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System;
 
 namespace Enigmatry.Entry.Core
@@ -19,20 +18,5 @@ namespace Enigmatry.Entry.Core
         /// Always returns current UTC time, no matter how many times you invoke it.
         /// </summary>
         DateTimeOffset UtcNow { get; }
-
-        /// <summary>
-        /// Returns true if given period of time is in future otherwise, false.
-        /// </summary>
-        bool InFuture(Period period);
-
-        /// <summary>
-        /// Returns true if given period of time is now over otherwise, false.
-        /// </summary>
-        bool InPast(Period period);
-
-        /// <summary>
-        /// Returns true if given period of time is ongoing.
-        /// </summary>
-        bool InPresent(Period period);
     }
 }

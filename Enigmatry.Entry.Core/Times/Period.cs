@@ -34,6 +34,27 @@ namespace Enigmatry.Entry.Core.Times
 
         public bool Contains(Period period) => Contains(period.StartDate, period.EndDate);
 
+        /// <summary>
+        /// Method uses time provider to determine whether period is in future or not.
+        /// </summary>
+        /// <param name="timeProvider">Given time provider.</param>
+        /// <returns>True if given period of time is in future otherwise, false.</returns>
+        public bool IsInFuture(ITimeProvider timeProvider) => StartDate > timeProvider.UtcNow;
+
+        /// <summary>
+        /// Method uses time provider to determine whether period is in past or not.
+        /// </summary>
+        /// <param name="timeProvider">Given time provider.</param>
+        /// <returns>True if given period of time is in past otherwise, false.</returns>
+        public bool IsInPast(ITimeProvider timeProvider) => EndDate < timeProvider.UtcNow;
+
+        /// <summary>
+        /// Method uses time provider to determine whether period is ongoing.
+        /// </summary>
+        /// <param name="timeProvider">Given time provider.</param>
+        /// <returns>True if given period of time is ongoing otherwise, false.</returns>
+        public bool IsInPresent(ITimeProvider timeProvider) => Contains(timeProvider.UtcNow);
+
         public override string ToString() => $"[{StartDate:d}, {EndDate:d}]";
 
         public Period Copy() => new(StartDate, EndDate);
