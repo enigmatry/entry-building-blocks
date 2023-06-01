@@ -78,6 +78,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests", "Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests\Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests.csproj", "{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Randomness", "Enigmatry.Entry.Randomness\Enigmatry.Entry.Randomness.csproj", "{3DE3C8BF-CC8E-4818-A325-10D79E913653}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.Authorization", "Enigmatry.Entry.AspNetCore.Authorization\Enigmatry.Entry.AspNetCore.Authorization.csproj", "{79983383-A33D-438E-A777-A9445E1149D0}"
 EndProject
 Global
@@ -210,6 +212,10 @@ Global
 		{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39D8831C-B8E0-4605-8D8C-74C6E61AC7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DE3C8BF-CC8E-4818-A325-10D79E913653}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79983383-A33D-438E-A777-A9445E1149D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79983383-A33D-438E-A777-A9445E1149D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79983383-A33D-438E-A777-A9445E1149D0}.Release|Any CPU.ActiveCfg = Release|Any CPU

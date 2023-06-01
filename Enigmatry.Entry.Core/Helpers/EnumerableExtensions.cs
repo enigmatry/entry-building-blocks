@@ -13,13 +13,25 @@ namespace Enigmatry.Entry.Core.Helpers
                 throw new ArgumentNullException(nameof(action));
             }
 
-            foreach (T item in source)
+            foreach (var item in source)
             {
                 action(item);
             }
         }
 
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T>? source) => source ?? Enumerable.Empty<T>();
+
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            var knownKeys = new HashSet<TKey>();
+            foreach (var element in source)
+            {
+                if (knownKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
     }
 }
 

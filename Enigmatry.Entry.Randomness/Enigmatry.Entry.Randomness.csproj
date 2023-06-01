@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.Randomness</PackageId>
+    <Product>Enigmatry.Entry.Randomness</Product>
+    <Description>Building Block for adding Randomness logic to an Entry based project</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon-192x192.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Generators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" />
+	  <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" />
+  </ItemGroup>
+
+</Project>

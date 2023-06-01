@@ -48,11 +48,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.BlobStorage\Enigmatry.Entry.BlobStorage.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.Csv\Enigmatry.Entry.Csv.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.EmailClient\Enigmatry.Entry.Email.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.TemplatingEngine\Enigmatry.Entry.TemplatingEngine.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.Validation\Enigmatry.Entry.Validation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Images\" />
   </ItemGroup>
 
 </Project>
