@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using Enigmatry.Entry.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 
@@ -30,6 +32,14 @@ public abstract class SampleAppFixtureBase
             {
                 var mvcBuilder = serviceCollection.AddControllers();
                 Program.ConfigureMvc(mvcBuilder, _settings);
+                if (_settings.AuthenticationEnabled)
+                {
+                    mvcBuilder.Services.AddAuthentication(TestUserAuthenticationHandler.AuthenticationScheme)
+                        .AddScheme<AuthenticationSchemeOptions, TestUserAuthenticationHandler>(
+                            TestUserAuthenticationHandler.AuthenticationScheme, _ => { });
+                    mvcBuilder.Services.AppAddAuthorization(true);
+                    mvcBuilder.Services.AddScoped<IAuthorizationProvider, SampleAuthorizationProvider>();
+                }
             });
         });
 

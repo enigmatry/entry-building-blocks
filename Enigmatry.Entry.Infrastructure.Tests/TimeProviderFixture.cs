@@ -12,6 +12,7 @@ public class TimeProviderFixture
         var provider = new TimeProvider();
 
         var firstDate = provider.FixedUtcNow;
+        Thread.Sleep(TimeSpan.FromMilliseconds(100));
         var secondDate = provider.FixedUtcNow;
 
         firstDate.Should().BeExactly(secondDate);
@@ -23,6 +24,7 @@ public class TimeProviderFixture
         var provider = new TimeProvider();
 
         var firstDate = provider.UtcNow;
+        Thread.Sleep(TimeSpan.FromMilliseconds(100));
         var secondDate = provider.UtcNow;
 
         firstDate.Should().BeBefore(secondDate);

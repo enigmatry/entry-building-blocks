@@ -22,6 +22,10 @@ public class Program
         app.AppUseExceptionHandler();
 
         app.MapControllers();
+        app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.Run();
     }
