@@ -71,6 +71,6 @@
     <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.2.19" />
     <PackageVersion Include="System.Net.Http.Json" Version="6.0.0" />
     <PackageVersion Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
-    <PackageVersion Include="Verify.NUnit" Version="19.8.3" />
+    <PackageVersion Include="Verify.NUnit" Version="20.3.2" />
   </ItemGroup>
 </Project>
