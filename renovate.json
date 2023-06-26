@@ -1,9 +1,11 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
-  "labels":[
-    "dependencies"
-  ]
+  "packageRules": [{
+    "packagePatterns": ["*"],
+    "enabled": false
+  }],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"],
+    "prCreation": "immediate"
+  }
 }
