@@ -16,5 +16,5 @@ internal class UserHasRoleRequirementHandler : AuthenticatedUserRequirementHandl
     }
 
     protected override bool FulfillsRequirement(AuthorizationHandlerContext context, UserHasRoleRequirement requirement) =>
-        _authorizationProvider.HasAnyRole(requirement.Roles.Split(',', StringSplitOptions.TrimEntries));
+        _authorizationProvider.HasAnyRole(requirement.Roles);
 }

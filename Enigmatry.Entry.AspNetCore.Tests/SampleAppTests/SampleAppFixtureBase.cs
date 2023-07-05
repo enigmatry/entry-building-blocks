@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 using Enigmatry.Entry.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 

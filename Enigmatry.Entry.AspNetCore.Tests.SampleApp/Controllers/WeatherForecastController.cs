@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
 
@@ -46,12 +47,20 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<WeatherForecast> UserNotInRoleIsNotAllowed() => Array.Empty<WeatherForecast>();
 
     [HttpGet("UserWithPermissionIsAllowed")]
-    [UserHasPermission("Read,Write")]
+    [UserHasPermission("Read", "Write")]
     public IEnumerable<WeatherForecast> UserWithPermissionIsAllowed() => Array.Empty<WeatherForecast>();
 
     [HttpGet("userNoPermissionIsNotAllowed")]
     [UserHasPermission("Write")]
     public IEnumerable<WeatherForecast> UserNoPermissionIsNotAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("userWithCustomPermissionIdIsAllowed")]
+    [CustomAuthorize(CustomPermissionId.CanRead)]
+    public IEnumerable<WeatherForecast> UserWithCustomPermissionIdIsAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("userWithoutCustomPermissionIdIsNotAllowed")]
+    [CustomAuthorize(CustomPermissionId.CanWrite)]
+    public IEnumerable<WeatherForecast> UserWithoutCustomPermissionIdIsNotAllowed() => Array.Empty<WeatherForecast>();
 
     [HttpGet("unprotected")]
     public IEnumerable<WeatherForecast> Unprotected() => Array.Empty<WeatherForecast>();

@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
+﻿using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
+using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization;
@@ -7,15 +8,17 @@ internal class RolesAndPermissionsPolicyProvider : IAuthorizationPolicyProvider
 {
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        if (policyName.StartsWith(UserHasRoleRequirement.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
+        if (policyName.StartsWith(UserHasRoleAttribute.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
         {
-            var requirement = new UserHasRoleRequirement(policyName[UserHasRoleRequirement.PolicyPrefix.Length..]);
+            var requirement =
+                new UserHasRoleRequirement(PolicyNames.Parse(UserHasRoleAttribute.PolicyPrefix, policyName));
             return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
         }
 
-        if (policyName.StartsWith(UserHasPermissionRequirement.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
+        if (policyName.StartsWith(UserHasPermissionAttribute.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
         {
-            var requirement = new UserHasPermissionRequirement(policyName[UserHasPermissionRequirement.PolicyPrefix.Length..]);
+            var requirement =
+                new UserHasPermissionRequirement(PolicyNames.Parse(UserHasPermissionAttribute.PolicyPrefix, policyName));
             return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
         }
 

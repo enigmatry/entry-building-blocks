@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
+
 internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
     : AuthorizationHandler<TRequirement> where TRequirement : IAuthorizationRequirement
 {

@@ -41,6 +41,20 @@ internal class AuthorizationFixture : SampleAppFixtureBase
     }
 
     [Test]
+    public async Task TestUserWithCustomPermissionIdIsAllowed()
+    {
+        var response = await Client.GetAsync("WeatherForecast/userWithCustomPermissionIdIsAllowed");
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Test]
+    public async Task TestUserWithCustomPermissionIdIsNotAllowed()
+    {
+        var response = await Client.GetAsync("WeatherForecast/userWithoutCustomPermissionIdIsNotAllowed");
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    [Test]
     public async Task TestFallbackPolicy()
     {
         var response = await Client.GetAsync("WeatherForecast/unprotected");

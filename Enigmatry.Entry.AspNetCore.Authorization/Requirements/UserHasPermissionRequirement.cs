@@ -4,12 +4,10 @@ namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
 internal class UserHasPermissionRequirement : IAuthorizationRequirement
 {
-    public const string PolicyPrefix = "UserHasPermission";
-
-    public UserHasPermissionRequirement(string permissions)
+    public UserHasPermissionRequirement(IEnumerable<string> permissions)
     {
         Permissions = permissions;
     }
 
-    public string Permissions { get; }
+    public IEnumerable<string> Permissions { get; }
 }
