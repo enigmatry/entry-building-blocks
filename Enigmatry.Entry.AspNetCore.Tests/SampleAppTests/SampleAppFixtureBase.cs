@@ -29,17 +29,18 @@ public abstract class SampleAppFixtureBase
         _factory = new WebApplicationFactory<Program>();
         _app = _factory.WithWebHostBuilder(configuration =>
         {
-            configuration.ConfigureServices(serviceCollection =>
+            configuration.ConfigureServices(services =>
             {
-                var mvcBuilder = serviceCollection.AddControllers();
+                var mvcBuilder = services.AddControllers();
                 Program.ConfigureMvc(mvcBuilder, _settings);
                 if (_settings.AuthenticationEnabled)
                 {
-                    mvcBuilder.Services.AddAuthentication(TestUserAuthenticationHandler.AuthenticationScheme)
+                    services.AddAuthentication(TestUserAuthenticationHandler.AuthenticationScheme)
                         .AddScheme<AuthenticationSchemeOptions, TestUserAuthenticationHandler>(
                             TestUserAuthenticationHandler.AuthenticationScheme, _ => { });
-                    mvcBuilder.Services.AppAddAuthorization(true);
-                    mvcBuilder.Services.AddScoped<IAuthorizationProvider, SampleAuthorizationProvider>();
+
+                    services.AppAddAuthorization<PermissionId>();
+                    services.AddScoped<IAuthorizationProvider<PermissionId>, SampleAuthorizationProvider>();
                 }
             });
         });

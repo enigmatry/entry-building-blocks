@@ -80,7 +80,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Randomness", "Enigmatry.Entry.Randomness\Enigmatry.Entry.Randomness.csproj", "{3DE3C8BF-CC8E-4818-A325-10D79E913653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.Authorization", "Enigmatry.Entry.AspNetCore.Authorization\Enigmatry.Entry.AspNetCore.Authorization.csproj", "{79983383-A33D-438E-A777-A9445E1149D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Authorization", "Enigmatry.Entry.AspNetCore.Authorization\Enigmatry.Entry.AspNetCore.Authorization.csproj", "{79983383-A33D-438E-A777-A9445E1149D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.Authorization.Tests", "Enigmatry.Entry.AspNetCore.Authorization.Tests\Enigmatry.Entry.AspNetCore.Authorization.Tests.csproj", "{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -220,6 +222,10 @@ Global
 		{79983383-A33D-438E-A777-A9445E1149D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79983383-A33D-438E-A777-A9445E1149D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79983383-A33D-438E-A777-A9445E1149D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

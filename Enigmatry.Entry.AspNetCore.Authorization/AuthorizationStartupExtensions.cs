@@ -14,14 +14,12 @@ public static class AuthorizationStartupExtensions
         bool enable) =>
         !enable ? builder : builder.RequireAuthorization();
 
-    public static AuthorizationBuilder AppAddAuthorization(this IServiceCollection services, bool enable)
+    public static AuthorizationBuilder AppAddAuthorization<T>(this IServiceCollection services, bool enable = true)
     {
         if (enable)
         {
-            services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler>();
-            services.AddScoped<IAuthorizationHandler, UserHasRoleRequirementHandler>();
-
-            services.AddSingleton<IAuthorizationPolicyProvider, RolesAndPermissionsPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler<T>>();
+            services.AddSingleton<IAuthorizationPolicyProvider, UserHasPermissionPolicyProvider<T>>();
         }
 
         return services.AddAuthorizationBuilder();

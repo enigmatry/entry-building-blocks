@@ -2,12 +2,12 @@
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-internal class UserHasPermissionRequirement : IAuthorizationRequirement
+internal class UserHasPermissionRequirement<T> : IAuthorizationRequirement
 {
-    public UserHasPermissionRequirement(IEnumerable<string> permissions)
+    public UserHasPermissionRequirement(IEnumerable<T> permissions)
     {
         Permissions = permissions;
     }
 
-    public IEnumerable<string> Permissions { get; }
+    public IEnumerable<T> Permissions { get; }
 }

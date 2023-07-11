@@ -34,7 +34,7 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
             var requirementName = nameof(requirement);
             var resource = GetActionAndControllerNames(context);
             Logger.LogWarning("{Requirement} has not been meet for the authorization context for {@Resource}. " +
-                              "This means that user does not have appropriate role.", requirementName, resource);
+                              "This means that user does not have appropriate rights.", requirementName, resource);
             context.Fail();
         }
         return Task.CompletedTask;
@@ -44,7 +44,7 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
 
     protected static (string actionName, string controllerName) GetActionAndControllerNames(AuthorizationHandlerContext context)
     {
-        var result = (actionName: String.Empty, controllerName: String.Empty);
+        var result = (actionName: string.Empty, controllerName: string.Empty);
         if (context.Resource == null)
         {
             return result;

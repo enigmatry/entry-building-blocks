@@ -1,7 +1,6 @@
 ﻿namespace Enigmatry.Entry.AspNetCore.Authorization;
 
-public interface IAuthorizationProvider
+public interface IAuthorizationProvider<in T>
 {
-    public bool HasAnyRole(IEnumerable<string> roles);
-    public bool HasAnyPermission(IEnumerable<string> permission);
+    public bool HasAnyPermission(IEnumerable<T> permission);
 }

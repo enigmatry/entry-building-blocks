@@ -1,7 +1,7 @@
 ﻿namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
 
-public enum CustomPermissionId
+public enum PermissionId
 {
-    CanRead,
-    CanWrite
+    Read,
+    Write
 }

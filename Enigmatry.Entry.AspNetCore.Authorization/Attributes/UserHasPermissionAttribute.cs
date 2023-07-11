@@ -7,23 +7,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 
-#pragma warning disable CA1813 // Avoid unsealed attributes 
-public class UserHasPermissionAttribute : AuthorizeAttribute, IAuthorizationFilter
+public sealed class UserHasPermissionAttribute<T> : AuthorizeAttribute, IAuthorizationFilter
 {
     public const string PolicyPrefix = "UserHasPermission";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserHasPermissionAttribute"/> class.
     /// </summary>
-    /// <param name="permissions">A comma delimited list of permissions that are required to access the resource.</param>
-    public UserHasPermissionAttribute(params string[] permissions)
-        : base(PolicyNames.Format(PolicyPrefix, permissions)) { }
+    /// <param name="permissions">List of permissions that are required to access the resource.</param>
+    /// 
+    public UserHasPermissionAttribute(params T[] permissions)
+        : base(PolicyNameConverter<T>.ConvertToPolicyName(PolicyPrefix, permissions)) { }
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {
         if (context.Result is ForbidResult or ChallengeResult)
         {
-            var logger = context.HttpContext.Resolve<ILogger<UserHasPermissionAttribute>>();
+            var logger = context.HttpContext.Resolve<ILogger<UserHasPermissionAttribute<T>>>();
             logger.LogWarning($"Forbidden access. Uri: {context.HttpContext.Request.GetDisplayUrl()}");
         }
     }

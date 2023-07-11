@@ -13,20 +13,6 @@ internal class AuthorizationFixture : SampleAppFixtureBase
     }
 
     [Test]
-    public async Task TestUserInRoleIsAllowed()
-    {
-        var response = await Client.GetAsync("WeatherForecast/userInRoleIsAllowed");
-        response!.StatusCode.Should().Be(HttpStatusCode.OK);
-    }
-
-    [Test]
-    public async Task TestUserNotInRoleIsNotAllowed()
-    {
-        var response = await Client.GetAsync("WeatherForecast/userNotInRoleIsNotAllowed");
-        response!.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
     public async Task TestUserWithPermissionIsAllowed()
     {
         var response = await Client.GetAsync("WeatherForecast/userWithPermissionIsAllowed");
@@ -38,20 +24,6 @@ internal class AuthorizationFixture : SampleAppFixtureBase
     {
         var response = await Client.GetAsync("WeatherForecast/userNoPermissionIsNotAllowed");
         response!.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Test]
-    public async Task TestUserWithCustomPermissionIdIsAllowed()
-    {
-        var response = await Client.GetAsync("WeatherForecast/userWithCustomPermissionIdIsAllowed");
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-    }
-
-    [Test]
-    public async Task TestUserWithCustomPermissionIdIsNotAllowed()
-    {
-        var response = await Client.GetAsync("WeatherForecast/userWithoutCustomPermissionIdIsNotAllowed");
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 
     [Test]
