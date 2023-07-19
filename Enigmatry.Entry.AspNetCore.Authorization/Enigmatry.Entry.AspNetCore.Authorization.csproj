@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="YourProject.Tests.Unit" />
+    <InternalsVisibleTo Include="Enigmatry.Entry.AspNetCore.Authorization.Tests" />
   </ItemGroup>
 
 </Project>

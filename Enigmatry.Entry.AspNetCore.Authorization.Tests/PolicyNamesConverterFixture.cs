@@ -9,8 +9,8 @@ public class PolicyNamesConverterFixture
     [Test]
     public void TestCanConvert()
     {
-        PolicyNameConverter<PermissionEnum>.CanConvert().Should().BeTrue();
-        PolicyNameConverter<string>.CanConvert().Should().BeTrue();
+        PolicyNameConverter<PermissionEnum>.CanConvertToPolicyName().Should().BeTrue();
+        PolicyNameConverter<string>.CanConvertToPolicyName().Should().BeTrue();
     }
 
     [Test]
