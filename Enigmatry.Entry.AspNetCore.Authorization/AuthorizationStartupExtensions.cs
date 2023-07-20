@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
+﻿using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
+using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,8 @@ public static class AuthorizationStartupExtensions
     {
         if (enable)
         {
+            PermissionsConverter<T>.EnsurePermissionTypeCanBeConverted();
+
             services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler<T>>();
             services.AddSingleton<IAuthorizationPolicyProvider, UserHasPermissionPolicyProvider<T>>();
         }

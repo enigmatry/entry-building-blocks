@@ -6,34 +6,29 @@ namespace Enigmatry.Entry.AspNetCore.Authorization.Tests;
 
 public class PolicyNamesConverterFixture
 {
-    [Test]
-    public void TestCanConvert()
-    {
-        PolicyNameConverter<PermissionEnum>.CanConvertToPolicyName().Should().BeTrue();
-        PolicyNameConverter<string>.CanConvertToPolicyName().Should().BeTrue();
-    }
+
 
     [Test]
     public void TestConvertToPolicyName()
     {
-        PolicyNameConverter<PermissionEnum>
-            .ConvertToPolicyName("", new[] { PermissionEnum.Read, PermissionEnum.Write, PermissionEnum.Delete })
+        PermissionsConverter<PermissionEnum>
+            .FormatToPolicyName("", new[] { PermissionEnum.Read, PermissionEnum.Write, PermissionEnum.Delete })
             .Should().Be("Read,Write,Delete");
 
-        PolicyNameConverter<string>
-            .ConvertToPolicyName("", new[] { "Read", "Write", "Delete" })
+        PermissionsConverter<string>
+            .FormatToPolicyName("", new[] { "Read", "Write", "Delete" })
             .Should().Be("Read,Write,Delete");
     }
 
     [Test]
     public void TestConvertFromPolicyName()
     {
-        PolicyNameConverter<PermissionEnum>
-            .ConvertFromPolicyName("", "Read,Write,Delete")
+        PermissionsConverter<PermissionEnum>
+            .ParseFromPolicyName("", "Read,Write,Delete")
             .Should().Equal(PermissionEnum.Read, PermissionEnum.Write, PermissionEnum.Delete);
 
-        PolicyNameConverter<string>
-            .ConvertFromPolicyName("", "Read,Write,Delete")
+        PermissionsConverter<string>
+            .ParseFromPolicyName("", "Read,Write,Delete")
             .Should().Equal("Read", "Write", "Delete");
     }
 }

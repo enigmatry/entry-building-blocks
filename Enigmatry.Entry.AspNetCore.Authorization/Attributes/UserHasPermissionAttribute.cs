@@ -17,7 +17,7 @@ public sealed class UserHasPermissionAttribute<T> : AuthorizeAttribute, IAuthori
     /// <param name="permissions">List of permissions that are required to access the resource.</param>
     /// 
     public UserHasPermissionAttribute(params T[] permissions)
-        : base(PolicyNameConverter<T>.ConvertToPolicyName(PolicyPrefix, permissions)) { }
+        : base(PermissionsConverter<T>.FormatToPolicyName(PolicyPrefix, permissions)) { }
 
     public void OnAuthorization(AuthorizationFilterContext context)
     {

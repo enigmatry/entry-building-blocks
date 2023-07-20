@@ -11,7 +11,7 @@ internal class UserHasPermissionPolicyProvider<T> : IAuthorizationPolicyProvider
         if (policyName.StartsWith(UserHasPermissionAttribute<T>.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
         {
             var requirement =
-                new UserHasPermissionRequirement<T>(PolicyNameConverter<T>.ConvertFromPolicyName(UserHasPermissionAttribute<T>.PolicyPrefix, policyName));
+                new UserHasPermissionRequirement<T>(PermissionsConverter<T>.ParseFromPolicyName(UserHasPermissionAttribute<T>.PolicyPrefix, policyName));
             return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
         }
 
