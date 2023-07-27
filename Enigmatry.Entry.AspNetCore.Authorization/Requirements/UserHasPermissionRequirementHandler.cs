@@ -3,18 +3,18 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-internal class UserHasPermissionRequirementHandler<T> : AuthenticatedUserRequirementHandler<UserHasPermissionRequirement<T>>
+internal class UserHasPermissionRequirementHandler<TPermission> : AuthenticatedUserRequirementHandler<UserHasPermissionRequirement<TPermission>> where TPermission : notnull
 {
-    private readonly IAuthorizationProvider<T> _authorizationProvider;
+    private readonly IAuthorizationProvider<TPermission> _authorizationProvider;
 
     public UserHasPermissionRequirementHandler(
-        IAuthorizationProvider<T> authorizationProvider,
-        ILogger<AuthenticatedUserRequirementHandler<UserHasPermissionRequirement<T>>> logger)
+        IAuthorizationProvider<TPermission> authorizationProvider,
+        ILogger<AuthenticatedUserRequirementHandler<UserHasPermissionRequirement<TPermission>>> logger)
         : base(logger)
     {
         _authorizationProvider = authorizationProvider;
     }
 
-    protected override bool FulfillsRequirement(AuthorizationHandlerContext context, UserHasPermissionRequirement<T> requirement) =>
-        _authorizationProvider.HasAnyPermission(requirement.Permissions);
+    protected override bool FulfillsRequirement(AuthorizationHandlerContext context, UserHasPermissionRequirement<TPermission> requirement) =>
+        _authorizationProvider.AuthorizePermissions(requirement.Permissions);
 }

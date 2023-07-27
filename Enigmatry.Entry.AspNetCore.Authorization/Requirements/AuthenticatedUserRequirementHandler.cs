@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
@@ -8,19 +7,19 @@ namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
     : AuthorizationHandler<TRequirement> where TRequirement : IAuthorizationRequirement
 {
-    protected ILogger<AuthenticatedUserRequirementHandler<TRequirement>> Logger { get; }
+    protected readonly ILogger<AuthenticatedUserRequirementHandler<TRequirement>> _logger;
 
     protected AuthenticatedUserRequirementHandler(
         ILogger<AuthenticatedUserRequirementHandler<TRequirement>> logger)
     {
-        Logger = logger;
+        _logger = logger;
     }
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, TRequirement requirement)
     {
         if (context.User.Identity is not { IsAuthenticated: true })
         {
-            Logger.LogWarning("User not authenticated.");
+            _logger.LogWarning("User is not authenticated.");
             context.Fail();
             return Task.CompletedTask;
         }
@@ -31,10 +30,7 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
         }
         else
         {
-            var requirementName = nameof(requirement);
-            var resource = GetActionAndControllerNames(context);
-            Logger.LogWarning("{Requirement} has not been meet for the authorization context for {@Resource}. " +
-                              "This means that user does not have appropriate rights.", requirementName, resource);
+            _logger.LogWarning("{Requirement} has not been met for the resource path: {ResourcePath}.", requirement.ToString(), GetResourcePath(context));
             context.Fail();
         }
         return Task.CompletedTask;
@@ -42,19 +38,5 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
 
     protected abstract bool FulfillsRequirement(AuthorizationHandlerContext context, TRequirement requirement);
 
-    protected static (string actionName, string controllerName) GetActionAndControllerNames(AuthorizationHandlerContext context)
-    {
-        var result = (actionName: string.Empty, controllerName: string.Empty);
-        if (context.Resource == null)
-        {
-            return result;
-        }
-
-        if (context.Resource is AuthorizationFilterContext { ActionDescriptor: ControllerActionDescriptor actionDescriptor })
-        {
-            result.actionName = actionDescriptor.ActionName;
-            result.controllerName = actionDescriptor.ControllerName;
-        }
-        return result;
-    }
+    protected static string? GetResourcePath(AuthorizationHandlerContext context) => (context.Resource as HttpContext)?.Request.Path;
 }

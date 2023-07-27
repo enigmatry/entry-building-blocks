@@ -15,15 +15,18 @@ public static class AuthorizationStartupExtensions
         bool enable) =>
         !enable ? builder : builder.RequireAuthorization();
 
-    public static AuthorizationBuilder AppAddAuthorization<T>(this IServiceCollection services, bool enable = true)
+    /// <summary>
+    /// Enables permission based authorization and registers authorization services for the specified permission type.
+    /// </summary>
+    /// <typeparam name="TPermission">Permission type</typeparam>
+    /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
+    /// <returns>The <see cref="AuthorizationBuilder"/> so that additional calls can be chained.</returns>
+    public static AuthorizationBuilder AppAddAuthorization<TPermission>(this IServiceCollection services) where TPermission : notnull
     {
-        if (enable)
-        {
-            PermissionsConverter<T>.EnsurePermissionTypeCanBeConverted();
+        PermissionTypeConverter<TPermission>.EnsureConversionToPolicyNameIsPossible();
 
-            services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler<T>>();
-            services.AddSingleton<IAuthorizationPolicyProvider, UserHasPermissionPolicyProvider<T>>();
-        }
+        services.AddScoped<IAuthorizationHandler, UserHasPermissionRequirementHandler<TPermission>>();
+        services.AddSingleton<IAuthorizationPolicyProvider, UserHasPermissionPolicyProvider<TPermission>>();
 
         return services.AddAuthorizationBuilder();
     }

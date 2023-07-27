@@ -8,7 +8,7 @@ namespace Enigmatry.Entry.AspNetCore.Tests;
 [Category("integration")]
 internal class AuthorizationFixture : SampleAppFixtureBase
 {
-    public AuthorizationFixture() : base(new SampleAppSettings() { UseNewtonsoftJson = false, AuthenticationEnabled = true })
+    public AuthorizationFixture() : base(new SampleAppSettings { UseNewtonsoftJson = false, AuthenticationEnabled = true })
     {
     }
 
@@ -16,20 +16,20 @@ internal class AuthorizationFixture : SampleAppFixtureBase
     public async Task TestUserWithPermissionIsAllowed()
     {
         var response = await Client.GetAsync("WeatherForecast/userWithPermissionIsAllowed");
-        response!.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Test]
-    public async Task TestUserWithPermissionIsNotAllowed()
+    public async Task TestUserWithoutPermissionIsNotAllowed()
     {
         var response = await Client.GetAsync("WeatherForecast/userNoPermissionIsNotAllowed");
-        response!.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
 
     [Test]
     public async Task TestFallbackPolicy()
     {
         var response = await Client.GetAsync("WeatherForecast/unprotected");
-        response!.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

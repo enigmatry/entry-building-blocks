@@ -4,14 +4,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization;
 
-internal class UserHasPermissionPolicyProvider<T> : IAuthorizationPolicyProvider
+internal class UserHasPermissionPolicyProvider<T> : IAuthorizationPolicyProvider where T : notnull
 {
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
         if (policyName.StartsWith(UserHasPermissionAttribute<T>.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
         {
             var requirement =
-                new UserHasPermissionRequirement<T>(PermissionsConverter<T>.ParseFromPolicyName(UserHasPermissionAttribute<T>.PolicyPrefix, policyName));
+                new UserHasPermissionRequirement<T>(PermissionTypeConverter<T>.ConvertFromPolicyName(UserHasPermissionAttribute<T>.PolicyPrefix, policyName));
             return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
         }
 
