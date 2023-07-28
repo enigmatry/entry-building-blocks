@@ -11,19 +11,11 @@ public class PermissionTypeConverterFixture
     [Test]
     public void TestIsConversionToPolicyNamePossible()
     {
-        var conversionFromEnum = PermissionTypeConverter<PermissionEnum>.EnsureConversionToPolicyNameIsPossible;
-        conversionFromEnum.Should().NotThrow();
-
-        var conversionFromString = PermissionTypeConverter<string>.EnsureConversionToPolicyNameIsPossible;
-        conversionFromString.Should().NotThrow();
-
-        var conversionFromCustomPermissionType =
-            PermissionTypeConverter<CustomPermissionType>.EnsureConversionToPolicyNameIsPossible;
-        conversionFromCustomPermissionType.Should().NotThrow();
-
-        var conversionFromNonConvertablePermissionType =
-            PermissionTypeConverter<CustomPermissionTypeWithoutTypeConverter>.EnsureConversionToPolicyNameIsPossible;
-        conversionFromNonConvertablePermissionType.Should().Throw<ArgumentException>();
+        Assert.DoesNotThrow(PermissionTypeConverter<PermissionEnum>.EnsureConversionToPolicyNameIsPossible);
+        Assert.DoesNotThrow(PermissionTypeConverter<string>.EnsureConversionToPolicyNameIsPossible);
+        Assert.DoesNotThrow(PermissionTypeConverter<int>.EnsureConversionToPolicyNameIsPossible);
+        Assert.DoesNotThrow(PermissionTypeConverter<CustomPermissionType>.EnsureConversionToPolicyNameIsPossible);
+        Assert.Throws<ArgumentException>(PermissionTypeConverter<CustomPermissionTypeWithoutTypeConverter>.EnsureConversionToPolicyNameIsPossible);
     }
 
     [Test]
