@@ -27,7 +27,7 @@ public class RazorSampleConsoleStartup
             options.FileProviders.Add(new PhysicalFileProvider(_environment.ContentRootPath));
         });
 
-        services.AddSingleton<RazorTemplatingEngine>();
+        services.AppAddTemplatingEngine();
     }
 
     [UsedImplicitly]

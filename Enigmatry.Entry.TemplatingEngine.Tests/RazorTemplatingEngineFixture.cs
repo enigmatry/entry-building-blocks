@@ -9,9 +9,7 @@ namespace Enigmatry.Entry.TemplatingEngine.Tests;
 [Category("unit")]
 public class RazorTemplatingEngineFixture
 {
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-    private RazorTemplatingEngine _templatingEngine;
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+    private ITemplatingEngine _templatingEngine;
 
     [SetUp]
     public void Setup()
@@ -19,7 +17,7 @@ public class RazorTemplatingEngineFixture
         IHost host = BuildHost();
         IServiceScopeFactory scopeFactory = host.Services.GetRequiredService<IServiceScopeFactory>();
         IServiceScope serviceScope = scopeFactory.CreateScope();
-        _templatingEngine = serviceScope.ServiceProvider.GetRequiredService<RazorTemplatingEngine>();
+        _templatingEngine = serviceScope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
     }
 
     [Test]

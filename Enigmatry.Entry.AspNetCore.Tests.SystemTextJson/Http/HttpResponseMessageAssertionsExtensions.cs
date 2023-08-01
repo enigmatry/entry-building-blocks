@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Text.Json;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Net;
+using System.Text.Json;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Http;
 
