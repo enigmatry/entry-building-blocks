@@ -16,16 +16,18 @@ internal class UserHasPermissionPolicyProvider<TPermission> : IAuthorizationPoli
 
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        if (policyName.StartsWith(UserHasPermissionAttribute<TPermission>.PolicyPrefix, StringComparison.OrdinalIgnoreCase))
+        if (!policyName.StartsWith(UserHasPermissionAttribute<TPermission>.PolicyPrefix,
+                StringComparison.OrdinalIgnoreCase))
         {
-            // Caching could be added here; AuthorizationPolicy can be created once per policyName and cached.
-            var requirement =
-                new UserHasPermissionRequirement<TPermission>(
-                    PermissionTypeConverter<TPermission>.ConvertFromPolicyName(UserHasPermissionAttribute<TPermission>.PolicyPrefix, policyName));
-            return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
+            return _defaultPolicyProvider.GetPolicyAsync(policyName);
         }
 
-        return _defaultPolicyProvider.GetPolicyAsync(policyName);
+        var requirement =
+            new UserHasPermissionRequirement<TPermission>(
+                PermissionTypeConverter<TPermission>.ConvertFromPolicyName(UserHasPermissionAttribute<TPermission>.PolicyPrefix, policyName));
+
+        return Task.FromResult(new AuthorizationPolicyBuilder().AddRequirements(requirement).Build())!;
+
     }
 
     public Task<AuthorizationPolicy> GetDefaultPolicyAsync() => _defaultPolicyProvider.GetDefaultPolicyAsync(); // DefaultPolicy is RequireAuthenticatedUser

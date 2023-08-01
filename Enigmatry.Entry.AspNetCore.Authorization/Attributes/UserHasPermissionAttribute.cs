@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+#pragma warning disable CA1813 // Avoid unsealed attributes
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 
@@ -6,9 +7,9 @@ namespace Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 /// Authorization attribute that specifies a list of permissions that are required for the endpoint.
 /// Checking of the permissions, whether "all" or "any of" are required, depends on your implementation of the <see cref="IAuthorizationProvider{T}"/> interface. 
 /// </summary>
-public sealed class UserHasPermissionAttribute<TPermission> : AuthorizeAttribute where TPermission : notnull
+public class UserHasPermissionAttribute<TPermission> : AuthorizeAttribute where TPermission : notnull
 {
-    public const string PolicyPrefix = "UserHasPermission";
+    public const string PolicyPrefix = nameof(UserHasPermissionAttribute<TPermission>);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="UserHasPermissionAttribute{T}"/> class.
