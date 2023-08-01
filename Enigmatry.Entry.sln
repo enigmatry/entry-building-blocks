@@ -5,8 +5,6 @@ VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine", "Enigmatry.Entry.TemplatingEngine\Enigmatry.Entry.TemplatingEngine.csproj", "{C303C44E-DEAE-4924-B2F5-6B47BD173D12}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Localization", "Enigmatry.Entry.Localization\Enigmatry.Entry.Localization.csproj", "{E1D5D37E-6354-4C44-B6DA-4C763C32FCD0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Csv", "Enigmatry.Entry.Csv\Enigmatry.Entry.Csv.csproj", "{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Email", "Enigmatry.Entry.EmailClient\Enigmatry.Entry.Email.csproj", "{74BB7388-3776-40B1-B5A2-5A6C72E213FC}"
@@ -82,7 +80,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Randomness"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Authorization", "Enigmatry.Entry.AspNetCore.Authorization\Enigmatry.Entry.AspNetCore.Authorization.csproj", "{79983383-A33D-438E-A777-A9445E1149D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.AspNetCore.Authorization.Tests", "Enigmatry.Entry.AspNetCore.Authorization.Tests\Enigmatry.Entry.AspNetCore.Authorization.Tests.csproj", "{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Authorization.Tests", "Enigmatry.Entry.AspNetCore.Authorization.Tests\Enigmatry.Entry.AspNetCore.Authorization.Tests.csproj", "{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,10 +92,6 @@ Global
 		{C303C44E-DEAE-4924-B2F5-6B47BD173D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C303C44E-DEAE-4924-B2F5-6B47BD173D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C303C44E-DEAE-4924-B2F5-6B47BD173D12}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1D5D37E-6354-4C44-B6DA-4C763C32FCD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1D5D37E-6354-4C44-B6DA-4C763C32FCD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1D5D37E-6354-4C44-B6DA-4C763C32FCD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1D5D37E-6354-4C44-B6DA-4C763C32FCD0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
