@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Enigmatry.Entry.AspNetCore.Authorization.Tests" />
+  </ItemGroup>
+
 </Project>

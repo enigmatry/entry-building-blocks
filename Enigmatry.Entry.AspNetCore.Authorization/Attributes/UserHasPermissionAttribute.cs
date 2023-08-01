@@ -1,31 +1,27 @@
-﻿using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
-using Enigmatry.Entry.AspNetCore.Filters;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Authorization;
+#pragma warning disable CA1813 // Avoid unsealed attributes
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 
-public sealed class UserHasPermissionAttribute : AuthorizeAttribute, IAuthorizationFilter
+/// <summary>
+/// Authorization attribute that specifies a list of permissions that are required for the endpoint.
+/// Checking of the permissions, whether "all" or "any of" are required, depends on your implementation of the <see cref="IAuthorizationProvider{T}"/> interface. 
+/// </summary>
+public class UserHasPermissionAttribute<TPermission> : AuthorizeAttribute where TPermission : notnull
 {
+    public const string PolicyPrefix = nameof(UserHasPermissionAttribute<TPermission>);
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserHasPermissionAttribute"/> class.
+    /// Initializes a new instance of the <see cref="UserHasPermissionAttribute{T}"/> class.
     /// </summary>
-    /// <param name="permissions">A comma delimited list of permissions that are required to access the resource.</param>
-    public UserHasPermissionAttribute(string permissions) : base(UserHasPermissionRequirement.PolicyPrefix)
+    /// <param name="permissions">List of permissions that are required to access the resource.</param>
+    /// 
+    public UserHasPermissionAttribute(params TPermission[] permissions)
+        : base(PermissionTypeConverter<TPermission>.ConvertToPolicyName(PolicyPrefix, permissions))
     {
-        Policy = $"{UserHasPermissionRequirement.PolicyPrefix}{permissions}";
-    }
-
-
-    public void OnAuthorization(AuthorizationFilterContext context)
-    {
-        if (context.Result is ForbidResult or ChallengeResult)
+        if (permissions.Length == 0)
         {
-            var logger = context.HttpContext.Resolve<ILogger<UserHasPermissionAttribute>>();
-            logger.LogWarning($"Forbidden access. Uri: {context.HttpContext.Request.GetDisplayUrl()}");
+            throw new ArgumentException("Permissions cannot be an empty collection.", nameof(permissions));
         }
     }
 }
