@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
+using Enigmatry.Entry.HealthChecks.Extensions;
+using Enigmatry.Entry.Swagger;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 
@@ -15,17 +18,26 @@ public class Program
 
         var mvcBuilder = builder.Services.AddControllers();
 
+        builder.Services.AppAddAuthorization();
+
+        builder.Services.AppAddSwagger("SampleApp");
+        builder.Services.AppAddHealthChecks(builder.Configuration);
+
         ConfigureMvc(mvcBuilder, SampleAppSettings.Default());
 
         var app = builder.Build();
 
         app.AppUseExceptionHandler();
 
-        app.MapControllers();
+        app.MapControllers().RequireAuthorization();
+        app.AppMapHealthCheck(app.Configuration);
+
         app.UseRouting();
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.AppUseSwagger();
 
         app.Run();
     }

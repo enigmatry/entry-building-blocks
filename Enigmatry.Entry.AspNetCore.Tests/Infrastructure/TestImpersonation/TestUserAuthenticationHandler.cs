@@ -4,17 +4,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Enigmatry.Entry.AspNetCore.Tests;
+namespace Enigmatry.Entry.AspNetCore.Tests.Infrastructure.TestImpersonation;
 
 public class TestUserAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     public const string AuthenticationScheme = "TestUser";
 
-    public TestUserAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+    public TestUserAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger,
+        UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
     {
     }
 
-    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync() => Task.FromResult(AuthenticatedUserResult());
+
+    private static AuthenticateResult AuthenticatedUserResult()
     {
         var claims = new[]
         {
@@ -25,8 +28,6 @@ public class TestUserAuthenticationHandler : AuthenticationHandler<Authenticatio
         var principal = new ClaimsPrincipal(identity);
         var ticket = new AuthenticationTicket(principal, "Test");
 
-        var result = AuthenticateResult.Success(ticket);
-
-        return Task.FromResult(result);
+        return AuthenticateResult.Success(ticket);
     }
 }

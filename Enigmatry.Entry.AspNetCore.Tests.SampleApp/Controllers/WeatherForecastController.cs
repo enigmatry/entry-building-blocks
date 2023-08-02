@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
 
@@ -39,14 +39,17 @@ public class WeatherForecastController : ControllerBase
             new List<ValidationFailure> { new("AProperty", "AFailedValidationMessage") });
 
     [HttpGet("UserWithPermissionIsAllowed")]
-    [UserHasPermission<PermissionId>(PermissionId.Read, PermissionId.Write)]
+    [AppAuthorize(PermissionId.Read, PermissionId.Write)]
     public IEnumerable<WeatherForecast> UserWithPermissionIsAllowed() => Array.Empty<WeatherForecast>();
 
     [HttpGet("userNoPermissionIsNotAllowed")]
-    [UserHasPermission<PermissionId>(PermissionId.Write)]
+    [AppAuthorize(PermissionId.Write)]
     public IEnumerable<WeatherForecast> UserNoPermissionIsNotAllowed() => Array.Empty<WeatherForecast>();
 
+    [HttpGet("noAuthorizeAttribute")]
+    public IEnumerable<WeatherForecast> NoAuthorizeAttribute() => Array.Empty<WeatherForecast>();
 
-    [HttpGet("unprotected")]
-    public IEnumerable<WeatherForecast> Unprotected() => Array.Empty<WeatherForecast>();
+    [HttpGet("allowAnonymousAttribute")]
+    [AllowAnonymous]
+    public IEnumerable<WeatherForecast> AllowAnonymousAttribute() => Array.Empty<WeatherForecast>();
 }
