@@ -18,6 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Authorization\Enigmatry.Entry.AspNetCore.Authorization.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.HealthChecks\Enigmatry.Entry.HealthChecks.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.SwaggerSecurity\Enigmatry.Entry.Swagger.csproj" />
   </ItemGroup>
 
 </Project>

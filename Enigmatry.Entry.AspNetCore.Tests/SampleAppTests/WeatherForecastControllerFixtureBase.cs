@@ -8,10 +8,6 @@ namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 [Category("integration")]
 public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBase
 {
-    protected WeatherForecastControllerFixtureBase(SampleAppSettings settings) : base(settings)
-    {
-    }
-
     protected abstract Task<T?> GetAsync<T>(HttpClient client, string uri);
 
     protected abstract T? DeserializeJson<T>(string content);
