@@ -6,28 +6,31 @@ using Microsoft.Extensions.Options;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.Infrastructure.TestImpersonation;
 
-public class TestUserAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+public class TestUserAuthenticationHandler : AuthenticationHandler<TestAuthenticationOptions>
 {
-    public const string AuthenticationScheme = "TestUser";
+    public const string AuthenticationScheme = "TestUserAuth";
 
-    public TestUserAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger,
+    public TestUserAuthenticationHandler(IOptionsMonitor<TestAuthenticationOptions> options, ILoggerFactory logger,
         UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
     {
     }
 
-    protected override Task<AuthenticateResult> HandleAuthenticateAsync() => Task.FromResult(AuthenticatedUserResult());
-
-    private static AuthenticateResult AuthenticatedUserResult()
+    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        var claims = new[]
-        {
-            new Claim(ClaimTypes.Name, "Test user"),
-            new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
-        };
-        var identity = new ClaimsIdentity(claims, "Test");
-        var principal = new ClaimsPrincipal(identity);
-        var ticket = new AuthenticationTicket(principal, "Test");
+        var testPrincipal = Options.TestPrincipalFactory();
 
-        return AuthenticateResult.Success(ticket);
+        var authResult = testPrincipal != null
+            ? AuthenticatedUserResult(testPrincipal)
+            : AuthenticateResult.NoResult();  // no user authenticated
+
+        return Task.FromResult(authResult);
     }
+
+    private static AuthenticateResult AuthenticatedUserResult(ClaimsPrincipal testPrincipal)
+        => AuthenticateResult.Success(new AuthenticationTicket(testPrincipal, AuthenticationScheme));
+}
+
+public class TestAuthenticationOptions : AuthenticationSchemeOptions
+{
+    public Func<ClaimsPrincipal?> TestPrincipalFactory { get; set; } = () => null;
 }

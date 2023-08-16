@@ -28,14 +28,10 @@ public abstract class SampleAppFixtureBase
                 var mvcBuilder = services.AddControllers();
                 Program.ConfigureMvc(mvcBuilder, _settings);
 
-                if (_settings.IsUserAuthenticated)
-                {
-                    services.AddTestUserAuthentication();
-                }
-                else
-                {
-                    services.AddNoResultAuthentication();
-                }
+                services.AddAuthentication(TestUserAuthenticationHandler.AuthenticationScheme)
+                    .AddScheme<TestAuthenticationOptions, TestUserAuthenticationHandler>(
+                        TestUserAuthenticationHandler.AuthenticationScheme,
+                        options => options.TestPrincipalFactory = () => _settings.IsUserAuthenticated ? TestUserData.CreateClaimsPrincipal() : null);
             });
         });
 
@@ -44,7 +40,7 @@ public abstract class SampleAppFixtureBase
 
     protected void UseNewtonsoftJson() => _settings.UseNewtonsoftJson = true;
 
-    protected void AsUnauthenticatedUser() => _settings.IsUserAuthenticated = false;
+    protected void DisableUserAuthentication() => _settings.IsUserAuthenticated = false;
 
 
     [TearDown]
