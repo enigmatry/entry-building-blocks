@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
+﻿
+using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization;
 
+// authorization building block targets only NET7 
+#if NET7_0_OR_GREATER
 [PublicAPI]
 public static class AuthorizationStartupExtensions
 {
@@ -35,3 +38,4 @@ public static class AuthorizationStartupExtensions
         return services.AddAuthorizationBuilder();
     }
 }
+#endif

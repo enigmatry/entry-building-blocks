@@ -11,12 +11,15 @@ internal class UnauthenticatedAccessFixture : SampleAppFixtureBase
         DisableUserAuthentication();
     }
 
+    // authorization building block targets only NET7 
+#if NET7_0_OR_GREATER
     [Test]
     public async Task EndpointWithAuthorizeAttributeIsNotAllowed()
     {
         var response = await Client.GetAsync("WeatherForecast/userNoPermissionIsNotAllowed");
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
+#endif
 
     [Test]
     public async Task EndpointWithoutAuthorizeAttributeIsNotAllowed()
