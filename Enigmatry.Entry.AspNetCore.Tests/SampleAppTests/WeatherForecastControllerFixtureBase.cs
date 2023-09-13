@@ -29,6 +29,15 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
     }
 
     [Test]
+    public async Task TestGetNotFoundError()
+    {
+        var response = await Client.GetAsync("WeatherForecast/throwsEntityNotFoundException");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        response.Content.Headers.ContentType!.Should().BeNull();
+    }
+
+    [Test]
     public async Task TestGetNotFound()
     {
         var response = await Client.GetAsync("WeatherForecast/NotFound");

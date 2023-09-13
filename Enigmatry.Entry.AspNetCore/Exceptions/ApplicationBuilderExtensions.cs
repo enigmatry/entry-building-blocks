@@ -11,9 +11,10 @@ public static class ApplicationBuilderExtensions
 {
     public static void AppUseExceptionHandler(this IApplicationBuilder builder,
         Func<HttpContext, Task<bool>>? onBeforeException = null) =>
-        builder.UseExceptionHandler(exceptionHandlerApp =>
+        builder.UseExceptionHandler(new ExceptionHandlerOptions
         {
-            exceptionHandlerApp.Run(async context =>
+            AllowStatusCode404Response = true,
+            ExceptionHandler = async context =>
             {
                 var handledElsewhere = false;
                 if (onBeforeException != null)
@@ -27,6 +28,6 @@ public static class ApplicationBuilderExtensions
                 }
 
                 await ExceptionHandler.HandleExceptionFrom(context);
-            });
+            }
         });
 }
