@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
+using Enigmatry.Entry.Core.Entities;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,10 @@ public class WeatherForecastController : ControllerBase
 
     [HttpGet("throwsError")]
     public IEnumerable<WeatherForecast> ThrowsError() => throw new InvalidOperationException("Some exception");
+
+    [HttpGet("throwsEntityNotFoundException")]
+    public IEnumerable<WeatherForecast> ThrowsEntityNotFoundException() =>
+        throw new EntityNotFoundException("Entity not found");
 
     [HttpGet("problemDetails")]
     public IEnumerable<WeatherForecast> ProblemDetails() =>
