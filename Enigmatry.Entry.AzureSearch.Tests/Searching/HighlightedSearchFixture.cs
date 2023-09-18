@@ -30,7 +30,7 @@ public class HighlightedSearchFixture : SearchServiceFixtureBase
 
     private static SearchOptions ASearchOptionsWithHighlighting()
     {
-        var options = new SearchOptions { Skip = 0, Size = 10, IncludeTotalCount = true };
+        var options = new SearchOptions { Skip = 0, Size = 10, IncludeTotalCount = true, OrderBy = { "Id" } };
         // https://learn.microsoft.com/en-us/azure/search/search-pagination-page-layout#hit-highlighting
         options.HighlightFields.Add($"{nameof(TestDocument.Name)}, {nameof(TestDocument.Description)}");
         options.HighlightPreTag = "<b>";

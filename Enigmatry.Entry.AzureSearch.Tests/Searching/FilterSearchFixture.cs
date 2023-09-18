@@ -75,7 +75,14 @@ public class FilterSearchFixture : SearchServiceFixtureBase
     private static SearchOptions ASearchOptionsWithFilter(string filter)
     {
         TestContext.WriteLine(filter);
-        var options = new SearchOptions { Skip = 0, Size = 10, IncludeTotalCount = true, Filter = filter };
+        var options = new SearchOptions
+        {
+            Skip = 0,
+            Size = 10,
+            IncludeTotalCount = true,
+            Filter = filter,
+            OrderBy = { "Id" }
+        };
         return options;
     }
 

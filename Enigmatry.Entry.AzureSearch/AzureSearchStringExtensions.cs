@@ -14,7 +14,7 @@ internal static class AzureSearchStringExtensions
 
     internal static string EscapeSpecialSymbols(this string value)
     {
-        if (String.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(value))
         {
             return value;
         }
@@ -30,7 +30,7 @@ internal static class AzureSearchStringExtensions
 
     internal static string AsFullSearch(this string searchText)
     {
-        if (String.IsNullOrEmpty(searchText))
+        if (string.IsNullOrEmpty(searchText))
         {
             return searchText;
         }
@@ -43,7 +43,7 @@ internal static class AzureSearchStringExtensions
 
     internal static string AsPhraseSearch(this string phrase)
     {
-        if (String.IsNullOrEmpty(phrase))
+        if (string.IsNullOrEmpty(phrase))
         {
             return phrase;
         }
@@ -52,7 +52,7 @@ internal static class AzureSearchStringExtensions
     }
 
     private static string SearchAll(this IEnumerable<string> words) =>
-        $"({String.Join(' ', words.Select(word => $"+{word}"))})";
+        $"({string.Join(' ', words.Select(word => $"+{word}"))})";
 
     private static string PartialSearch(this string word) => $"{word}*";
 
