@@ -1,0 +1,47 @@
+﻿{
+  PagedResult: [],
+  Facets: {
+    CreatedOn: [
+      {
+        to: 2000-02-01 +0,
+        FacetType: Range,
+        Count: 3
+      },
+      {
+        from: 2000-02-01 +0,
+        FacetType: Range,
+        Count: 3
+      }
+    ],
+    Name: [
+      {
+        value: name1,
+        FacetType: Value,
+        Count: 4
+      },
+      {
+        value: another,
+        FacetType: Value,
+        Count: 2
+      }
+    ],
+    Rating: [
+      {
+        value: 0,
+        FacetType: Value,
+        Count: 2
+      },
+      {
+        value: 5,
+        FacetType: Value,
+        Count: 2
+      },
+      {
+        value: 10,
+        FacetType: Value,
+        Count: 2
+      }
+    ]
+  },
+  TotalCount: 6
+}

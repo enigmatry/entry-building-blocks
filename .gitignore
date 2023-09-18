@@ -312,3 +312,6 @@ typings/
 *.css.map
 *.sass.map
 *.scss.map
+
+#VerifyTests
+*.received.*

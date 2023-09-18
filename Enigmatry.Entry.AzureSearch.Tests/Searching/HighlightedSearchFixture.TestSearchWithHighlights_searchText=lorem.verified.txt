@@ -1,0 +1,17 @@
+﻿{
+  PagedResult: [
+    {
+      Highlights: {
+        Description: [
+          <b>lorem</b> ipsum
+        ]
+      },
+      Document: {
+        Id: 2,
+        Name: some other name,
+        Description: lorem ipsum
+      }
+    }
+  ],
+  TotalCount: 1
+}

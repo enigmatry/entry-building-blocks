@@ -1,0 +1,17 @@
+﻿{
+  PagedResult: [
+    {
+      Highlights: {
+        Name: [
+          <b>name1</b>
+        ]
+      },
+      Document: {
+        Id: 1,
+        Name: name1,
+        Description: description
+      }
+    }
+  ],
+  TotalCount: 1
+}

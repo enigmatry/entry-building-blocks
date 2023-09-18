@@ -1,0 +1,10 @@
+﻿{
+  PagedResult: [],
+  Facets: {
+    Name: [
+      {
+        value: name1
+      }
+    ]
+  }
+}
