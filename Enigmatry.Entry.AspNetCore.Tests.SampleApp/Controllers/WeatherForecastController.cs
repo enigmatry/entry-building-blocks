@@ -1,10 +1,13 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
+using Enigmatry.Entry.Core.Entities;
+using FluentValidation;
+using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
 
@@ -31,8 +34,27 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("throwsError")]
     public IEnumerable<WeatherForecast> ThrowsError() => throw new InvalidOperationException("Some exception");
 
+    [HttpGet("throwsEntityNotFoundException")]
+    public IEnumerable<WeatherForecast> ThrowsEntityNotFoundException() =>
+        throw new EntityNotFoundException("Entity not found");
+
     [HttpGet("problemDetails")]
     public IEnumerable<WeatherForecast> ProblemDetails() =>
         throw new ValidationException("AValidationExceptionMessage",
             new List<ValidationFailure> { new("AProperty", "AFailedValidationMessage") });
+
+    [HttpGet("UserWithPermissionIsAllowed")]
+    [AppAuthorize(PermissionId.Read, PermissionId.Write)]
+    public IEnumerable<WeatherForecast> UserWithPermissionIsAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("userNoPermissionIsNotAllowed")]
+    [AppAuthorize(PermissionId.Write)]
+    public IEnumerable<WeatherForecast> UserNoPermissionIsNotAllowed() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("noAuthorizeAttribute")]
+    public IEnumerable<WeatherForecast> NoAuthorizeAttribute() => Array.Empty<WeatherForecast>();
+
+    [HttpGet("allowAnonymousAttribute")]
+    [AllowAnonymous]
+    public IEnumerable<WeatherForecast> AllowAnonymousAttribute() => Array.Empty<WeatherForecast>();
 }

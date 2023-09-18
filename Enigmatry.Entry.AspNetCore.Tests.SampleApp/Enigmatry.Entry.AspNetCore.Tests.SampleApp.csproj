@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <Product>Enigmatry.Entry.AspNetCore.SampleApp</Product>
     <Description>Sample AspNetCore application</Description>
@@ -16,7 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Entry.AspNetCore.Authorization\Enigmatry.Entry.AspNetCore.Authorization.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.HealthChecks\Enigmatry.Entry.HealthChecks.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.SwaggerSecurity\Enigmatry.Entry.Swagger.csproj" />
   </ItemGroup>
 
 </Project>

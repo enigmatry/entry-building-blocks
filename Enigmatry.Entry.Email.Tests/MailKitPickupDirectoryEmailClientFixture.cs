@@ -1,31 +1,26 @@
-﻿using System.Text;
-using Enigmatry.Entry.Email.MailKit;
+﻿using Enigmatry.Entry.Email.MailKit;
 using Enigmatry.Entry.Email.Tests.Infrastructure;
 using FluentAssertions;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using System.Text;
 
 namespace Enigmatry.Entry.Email.Tests;
 
 [Category("unit")]
 public class MailKitPickupDirectoryEmailClientFixture
 {
-#pragma warning disable CS8618
     private IEmailClient _client;
-#pragma warning restore CS8618
 
     [SetUp]
     public void Setup()
     {
         var configuration = TestConfigurationBuilder.Build();
-
-        var webHost = WebHost.CreateDefaultBuilder()
-            .UseConfiguration(configuration)
-            .UseStartup<TestStartup>()
-            .Build();
-
-        _client = new DependencyResolverHelper(webHost).GetService<IEmailClient>();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AppAddEmailClient(configuration);
+        var provider = services.BuildServiceProvider();
+        _client = provider.GetService<IEmailClient>();
     }
 
     [Test]

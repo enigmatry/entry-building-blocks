@@ -1,8 +1,7 @@
-﻿using Enigmatry.Entry.Email;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace Enigmatry.Entry.Tests.Mail;
+namespace Enigmatry.Entry.Email.Tests;
 
 [Category("unit")]
 public class EmailMessageFixture

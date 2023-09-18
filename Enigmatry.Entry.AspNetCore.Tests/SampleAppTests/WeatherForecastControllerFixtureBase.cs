@@ -8,10 +8,6 @@ namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 [Category("integration")]
 public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBase
 {
-    protected WeatherForecastControllerFixtureBase(SampleAppSettings settings) : base(settings)
-    {
-    }
-
     protected abstract Task<T?> GetAsync<T>(HttpClient client, string uri);
 
     protected abstract T? DeserializeJson<T>(string content);
@@ -29,6 +25,15 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
         var response = await Client.GetAsync("WeatherForecast/ThrowsError");
 
         response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        response.Content.Headers.ContentType!.Should().BeNull();
+    }
+
+    [Test]
+    public async Task TestGetNotFoundError()
+    {
+        var response = await Client.GetAsync("WeatherForecast/throwsEntityNotFoundException");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         response.Content.Headers.ContentType!.Should().BeNull();
     }
 

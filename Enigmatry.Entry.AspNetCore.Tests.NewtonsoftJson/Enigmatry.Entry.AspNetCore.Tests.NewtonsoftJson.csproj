@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <PackageId>Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson</PackageId>
@@ -14,6 +14,10 @@
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>

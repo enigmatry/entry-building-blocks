@@ -2,7 +2,8 @@
 
 public class SampleAppSettings
 {
-    public bool UseNewtonsoftJson { get; set; } = true;
+    public bool IsUserAuthenticated { get; set; } = true;
+    public bool UseNewtonsoftJson { get; set; }
 
-    public static SampleAppSettings Default() => new SampleAppSettings();
+    public static SampleAppSettings Default() => new();
 }

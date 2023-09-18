@@ -9,10 +9,8 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="JetBrains.Annotations" />
-    <PackageReference Include="Microsoft.AspNetCore" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -22,10 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Enigmatry.Entry.EmailClient\Enigmatry.Entry.Email.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>
