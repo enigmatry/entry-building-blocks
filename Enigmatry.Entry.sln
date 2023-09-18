@@ -82,6 +82,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore.Authorization.Tests", "Enigmatry.Entry.AspNetCore.Authorization.Tests\Enigmatry.Entry.AspNetCore.Authorization.Tests.csproj", "{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AzureSearch", "Enigmatry.Entry.AzureSearch\Enigmatry.Entry.AzureSearch.csproj", "{2D75572C-A26C-4F67-A04B-BEE7F5DD41EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AzureSearch.Tests", "Enigmatry.Entry.AzureSearch.Tests\Enigmatry.Entry.AzureSearch.Tests.csproj", "{FA16BA60-C62D-4BD9-B146-AD07EE9BF917}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -220,6 +224,14 @@ Global
 		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39CBD7BD-E6A4-4FB0-BF0B-BD14106B6349}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D75572C-A26C-4F67-A04B-BEE7F5DD41EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D75572C-A26C-4F67-A04B-BEE7F5DD41EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D75572C-A26C-4F67-A04B-BEE7F5DD41EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D75572C-A26C-4F67-A04B-BEE7F5DD41EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA16BA60-C62D-4BD9-B146-AD07EE9BF917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA16BA60-C62D-4BD9-B146-AD07EE9BF917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA16BA60-C62D-4BD9-B146-AD07EE9BF917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA16BA60-C62D-4BD9-B146-AD07EE9BF917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

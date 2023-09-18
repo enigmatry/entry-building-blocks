@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Enigmatry.Entry.Core.Helpers;
 
@@ -53,4 +55,7 @@ public static class StringExtensions
 
         return new string(chars);
     }
+
+    public static string JoinStringWithOnlyValuesWithContent(this IEnumerable<string> values, string separator) =>
+        string.Join(separator, values.Where(value => value.HasContent()));
 }
