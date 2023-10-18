@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+  
 </Project>
