@@ -22,6 +22,16 @@ stages:
 - stage: 'ci_build'
   displayName: 'Build the web application'
   jobs: 
+  - job: build_prerequisites
+    displayName: Get the prerequisites for the build
+    steps:
+    - bash: |
+        HASH=$(git rev-parse --short $BUILD_SOURCEVERSION)
+        VERSION=$BUILD_BUILDNUMBER-$HASH
+      
+        echo "Hash: $HASH. Setting build number to: $VERSION"
+        echo '##vso[build.updatebuildnumber]'$VERSION
+      displayName: 'Set Build number'
   - template: build-dotnet-api-job.yml@templates
     parameters:
       artifactName: $(artifactName)
