@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
@@ -10,47 +5,72 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  buildConfiguration: 'Release'
+  artifactName: 'Release'
+  projectNameAngularApp:
+  projectNamePrefix: Enigmatry.Entry
 
 # This determines the build number
 name: $(MajorMinorVersion)$(Rev:.r)
 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Build package'
-  inputs:
-    command: 'build'
-    projects: '$(ProjectNamePrefix).sln'
-    configuration: $(buildConfiguration)
-    arguments: /p:TreatWarningsAsErrors=true
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Enigmatry - Azure Pipelines Templates/enigmatry-azure-pipelines-templates
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run Unit tests'
-  inputs:
-    command: 'test'
-    projects: '$(ProjectNamePrefix)**/*.Tests.csproj'
-    arguments: '--filter TestCategory=unit|TestCategory=smoke /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
-    configuration: $(buildConfiguration)
-    buildProperties: 
+stages:
+- stage: 'ci_build'
+  displayName: 'Build the web application'
+  jobs: 
+  - template: build-dotnet-api-job.yml@templates
+    parameters:
+      artifactName: $(artifactName)
+      displayName: 'Build Package'
+      projectNamePrefix: $(projectNamePrefix)
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage report'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+  - template: build-report-job.yml@templates
+    parameters:
+      artifactName: $(artifactName)
+      displayName: 'Generate Reports'
+      projectNameAngularApp: $(projectNameAngularApp)
+      projectNamePrefix: $(projectNamePrefix)
 
-- task: DotNetCoreCLI@2
-  displayName: 'Create NuGet Packages'
-  inputs:
-    command: 'pack'
-    packagesToPack: '$(ProjectNamePrefix).sln'
-    versioningScheme: 'byBuildNumber'
-    configuration: $(buildConfiguration)
+# steps:
+# - task: DotNetCoreCLI@2
+#   displayName: 'Build package'
+#   inputs:
+#     command: 'build'
+#     projects: '$(ProjectNamePrefix).sln'
+#     configuration: $(buildConfiguration)
+#     arguments: /p:TreatWarningsAsErrors=true
 
-- task: DotNetCoreCLI@2
-  displayName: 'Push NuGet Packages'
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
+# - task: DotNetCoreCLI@2
+#   displayName: 'Run Unit tests'
+#   inputs:
+#     command: 'test'
+#     projects: '$(ProjectNamePrefix)**/*.Tests.csproj'
+#     arguments: '--filter TestCategory=unit|TestCategory=smoke /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+#     configuration: $(buildConfiguration)
+#     buildProperties: 
+
+# - task: PublishCodeCoverageResults@1
+#   displayName: 'Publish code coverage report'
+#   inputs:
+#     codeCoverageTool: 'Cobertura'
+#     summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'Create NuGet Packages'
+#   inputs:
+#     command: 'pack'
+#     packagesToPack: '$(ProjectNamePrefix).sln'
+#     versioningScheme: 'byBuildNumber'
+#     configuration: $(buildConfiguration)
+
+# - task: DotNetCoreCLI@2
+#   displayName: 'Push NuGet Packages'
+#   inputs:
+#     command: 'push'
+#     packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+#     nuGetFeedType: 'internal'
+#     publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
