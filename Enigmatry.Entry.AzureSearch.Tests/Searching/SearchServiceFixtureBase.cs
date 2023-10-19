@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
+[Category("integration")]
 public abstract class SearchServiceFixtureBase
 {
     private ServiceProvider _services = null!;
