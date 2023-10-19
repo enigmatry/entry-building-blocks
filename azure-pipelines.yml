@@ -75,7 +75,7 @@ stages:
       displayName: Publish artifacts
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: ${{ parameters.artifactName }}-$(Build.BuildNumber)
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
         publishLocation: 'Container'
 
   # - template: build-report-job.yml@templates
