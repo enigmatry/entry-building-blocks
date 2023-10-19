@@ -66,6 +66,7 @@ dotnet_style_prefer_simplified_boolean_expressions = true:warning
 dotnet_style_prefer_simplified_interpolation = true:warning
 # Parameter preferences
 dotnet_diagnostic_unused_parameters = all:warning
+dotnet_style_namespace_match_folder = true:suggestion
 ############################### 
 # C# Coding Conventions       # 
 ############################### 
@@ -500,8 +501,8 @@ dotnet_diagnostic.IDE0001.severity = warning # IDE0001: Simplify name
 dotnet_diagnostic.IDE0002.severity = warning # IDE0002: Simplify member access
 dotnet_diagnostic.IDE0004.severity = error # IDE0004: Remove Unnecessary Cast
 dotnet_diagnostic.IDE0004WithoutSuggestion.severity = error # IDE0004: Remove Unnecessary Cast
-dotnet_diagnostic.IDE0005.severity = warning # IDE0005: Using directive is unnecessary
-dotnet_diagnostic.IDE0005_gen.severity = warning # IDE0005: Using directive is unnecessary
+dotnet_diagnostic.IDE0005.severity = suggestion # IDE0005: Using directive is unnecessary
+dotnet_diagnostic.IDE0005_gen.severity = suggestion # IDE0005: Using directive is unnecessary
 # dotnet_diagnostic.IDE0007.severity = warning # IDE0007: Use implicit type
 # dotnet_diagnostic.IDE0007WithoutSuggestion.severity = warning # IDE0007: Use implicit type
 # dotnet_diagnostic.IDE0008.severity = none # IDE0008: Use explicit type
@@ -618,6 +619,9 @@ dotnet_diagnostic.IDE1005.severity = error # IDE1005: Delegate invocation can be
 dotnet_diagnostic.IDE1005WithoutSuggestion.severity = error # IDE1005: Delegate invocation can be simplified
 dotnet_diagnostic.IDE1006.severity = error # IDE1006: Naming styles
 dotnet_diagnostic.IDE1006WithoutSuggestion.severity = error # IDE1006: Naming styles
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = true:suggestion
 
 [*Fixture.cs]
 dotnet_diagnostic.CA1707.severity = none # CA1707: Identifiers should not contain underscores
