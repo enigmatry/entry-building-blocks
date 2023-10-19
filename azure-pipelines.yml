@@ -24,20 +24,20 @@ stages:
   - job: build_prerequisites
     displayName: Get the version for the build
     steps:
+    - checkout: self
+      fetchDepth: 0
     - task: DotNetCoreCLI@2
       displayName: Add Manifest for tool installation
       inputs:
         command: 'custom'
         custom: 'new '
         arguments: tool-manifest
-
     - task: DotNetCoreCLI@2
       displayName: Install minver
       inputs:
         command: 'custom'
         custom: 'tool '
         arguments: install minver-cli
-
     - task: PowerShell@2
       displayName: 'Set MinVer Version'
       inputs:
@@ -52,7 +52,6 @@ stages:
     steps:
     - task: NuGetToolInstaller@1
       displayName: Install NuGet Tool
-
     - task: Cache@2
       displayName: 'NuGet Cache'
       inputs:
@@ -62,12 +61,10 @@ stages:
             nuget
         path: $(NUGET_PACKAGES)
         cacheHitVar: 'NUGET_CACHE_RESTORED'
-
     - task: NuGetCommand@2
       displayName: Nuget Restore
       inputs:
         restoreSolution: '$(projectNamePrefix).sln'
-
     - task: DotNetCoreCLI@2
       displayName: 'Build package'
       inputs:
@@ -75,14 +72,12 @@ stages:
         projects: '$(ProjectNamePrefix).sln'
         configuration: $(buildConfiguration)
         arguments: /p:TreatWarningsAsErrors=true
-
     - task: DotNetCoreCLI@2
       displayName: Run Unit Tests
       inputs:
         command: 'test'
         projects: $(projectNamePrefix)**/*.Tests.csproj
         arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration)'
-    
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
       inputs:
@@ -122,6 +117,7 @@ stages:
                 packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
                 nuGetFeedType: 'internal'
                 publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
+
     
 # steps:
 # - task: DotNetCoreCLI@2
