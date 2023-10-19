@@ -18,7 +18,7 @@ public class CsvFixture
                 FirstName = "John",
                 LastName = "Doe",
                 Age = 30,
-                LastLogon = new DateTimeOffset(2022, 4, 30, 9, 30, 0, TimeSpan.FromHours(2)),
+                LastLogon = new DateTimeOffset(2022, 4, 30, 9, 30, 0, DateTimeOffset.Now.Offset),
                 SomeDateTime = new DateTime(2022, 4, 27, 9, 30, 0)
             }
         };
