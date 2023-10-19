@@ -69,7 +69,7 @@ stages:
       inputs:
         command: 'test'
         projects: $(projectNamePrefix)**/*.Tests.csproj
-        arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration) --no-build'
+        arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration)'
     
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
