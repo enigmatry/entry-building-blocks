@@ -11,9 +11,6 @@ variables:
   projectNamePrefix: Enigmatry.Entry
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
 
-# This determines the build number
-name: $(MajorMinorVersion)$(Rev:.r)
-
 resources:
   repositories:
     - repository: templates
@@ -25,15 +22,30 @@ stages:
   displayName: 'Build the web application'
   jobs: 
   - job: build_prerequisites
-    displayName: Get the prerequisites for the build
+    displayName: Get the version for the build
     steps:
-    - bash: |
-        HASH=$(git rev-parse --short $BUILD_SOURCEVERSION)
-        VERSION=$BUILD_BUILDNUMBER-$HASH
-      
-        echo "Hash: $HASH. Setting build number to: $VERSION"
-        echo '##vso[build.updatebuildnumber]'$VERSION
-      displayName: 'Set Build number'
+    - task: DotNetCoreCLI@2
+      displayName: Add Manifest for tool installation
+      inputs:
+        command: 'custom'
+        custom: 'new '
+        arguments: tool-manifest
+
+    - task: DotNetCoreCLI@2
+      displayName: Install minver
+      inputs:
+        command: 'custom'
+        custom: 'tool '
+        arguments: install minver-cli
+
+    - task: PowerShell@2
+      displayName: 'Set MinVer Version'
+      inputs:
+        targetType: inline
+        script: |
+          $version = dotnet minver -p preview
+          echo "##vso[build.updatebuildnumber]$version"
+          Write-Host "Setting MinVer to '$version'"
 
   - job: 'Build_Package'
     displayName: Build Package
