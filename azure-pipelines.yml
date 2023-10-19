@@ -69,8 +69,7 @@ stages:
       inputs:
         command: 'test'
         projects: $(projectNamePrefix)**/*.Tests.csproj
-        arguments: '--filter TestCategory=unit|TestCategory=smoke /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
-        configuration: $(buildConfiguration)
+        arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration) --no-build'
     
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
@@ -86,6 +85,32 @@ stages:
       projectNameAngularApp: ''
       projectNamePrefix: $(projectNamePrefix)
 
+- stage: publish_nuget
+  displayName: publish packages to NuGet
+  dependsOn:
+  jobs:
+  - deployment: 
+    environment: nuget
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: DotNetCoreCLI@2
+              displayName: 'Create NuGet Packages'
+              inputs:
+                command: 'pack'
+                packagesToPack: '$(projectNamePrefix).sln'
+                versioningScheme: 'byBuildNumber'
+                configuration: $(buildConfiguration)
+
+            - task: DotNetCoreCLI@2
+              displayName: 'Push NuGet Packages'
+              inputs:
+                command: 'push'
+                packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+                nuGetFeedType: 'internal'
+                publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
+    
 # steps:
 # - task: DotNetCoreCLI@2
 #   displayName: 'Build package'
