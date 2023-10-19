@@ -14,11 +14,11 @@ variables:
 # This determines the build number
 name: $(MajorMinorVersion)$(Rev:.r)
 
-# resources:
-#   repositories:
-#     - repository: templates
-#       type: git
-#       name: Enigmatry - Azure Pipelines Templates/enigmatry-azure-pipelines-templates
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Enigmatry - Azure Pipelines Templates/enigmatry-azure-pipelines-templates
 
 stages:
 - stage: 'ci_build'
@@ -56,20 +56,21 @@ stages:
       inputs:
         restoreSolution: '$(projectNamePrefix).sln'
 
-    - task: VSBuild@1
-      displayName: Build package
+    - task: DotNetCoreCLI@2
+      displayName: 'Build package'
       inputs:
-        solution: '$(projectNamePrefix).sln'
-        msbuildArgs: '/p:DeployOnBuild=true;WebPublishMethod=Package;PackageAsSingleFile=true;SkipInvalidConfigurations=true;PackageLocation=$(Build.ArtifactStagingDirectory);Version=$(Build.BuildNumber);TreatWarningsAsErrors=true;WarningsNotAsErrors=CS0612;EnforceCodeStyleInBuild=true'
-        # platform: '$(buildPlatform)'
-        configuration: '$(buildConfiguration)'
+        command: 'build'
+        projects: '$(ProjectNamePrefix).sln'
+        configuration: $(buildConfiguration)
+        arguments: /p:TreatWarningsAsErrors=true
 
     - task: DotNetCoreCLI@2
       displayName: Run Unit Tests
       inputs:
         command: 'test'
         projects: $(projectNamePrefix)**/*.Tests.csproj
-        arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration) --no-build'
+        arguments: '--filter TestCategory=unit|TestCategory=smoke /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+        configuration: $(buildConfiguration)
     
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
@@ -78,12 +79,12 @@ stages:
         ArtifactName: $(artifactName)-$(Build.BuildNumber)
         publishLocation: 'Container'
 
-  # - template: build-report-job.yml@templates
-  #   parameters:
-  #     artifactName: $(artifactName)
-  #     displayName: 'Generate Reports'
-  #     projectNameAngularApp: $(projectNameAngularApp)
-  #     projectNamePrefix: $(projectNamePrefix)
+  - template: build-report-job.yml@templates
+    parameters:
+      artifactName: $(artifactName)
+      displayName: 'Generate Reports'
+      projectNameAngularApp: ''
+      projectNamePrefix: $(projectNamePrefix)
 
 # steps:
 # - task: DotNetCoreCLI@2
