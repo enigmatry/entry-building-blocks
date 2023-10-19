@@ -3,7 +3,7 @@ using static Enigmatry.Entry.AzureSearch.Tests.Searching.AzureSearchTestCases;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
-[Category("unit")]
+[Category("integration")]
 public class FullTextSearchFixture : SearchServiceFixtureBase
 {
     [TestCaseSource(typeof(AzureSearchTestCases), nameof(AzureSearchSpecialCharactersTestCases))]
