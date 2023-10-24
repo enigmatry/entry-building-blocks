@@ -13,7 +13,7 @@
     <PackageVersion Include="CachingFramework.Redis.NewtonsoftJson" Version="14.1.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
-    <PackageVersion Include="CsvHelper" Version="28.0.1" />
+    <PackageVersion Include="CsvHelper" Version="30.0.1" />
     <PackageVersion Include="EmailValidation" Version="1.0.10" />
     <PackageVersion Include="FakeItEasy" Version="7.4.0" />
     <PackageVersion Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
