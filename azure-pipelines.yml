@@ -81,6 +81,7 @@ stages:
         arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration)'
         nobuild: true
     - task: DotNetCoreCLI@2
+      displayName: Pack the NuGet packages
       inputs:
         command: 'pack'
         packagesToPack: '**/*.csproj'
@@ -124,6 +125,7 @@ stages:
               nuGetFeedType: 'internal'
               publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
           # - task: DotNetCoreCLI@2
+          #   displayName: 'Push NuGet Packages'
           #   inputs:
           #     command: 'push'
           #     packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
