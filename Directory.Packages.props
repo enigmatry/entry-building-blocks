@@ -5,9 +5,9 @@
   <ItemGroup>
     <PackageVersion Include="AspNetCore.HealthChecks.System" Version="6.0.5" />
     <PackageVersion Include="AutoMapper" Version="11.0.1" />
-    <PackageVersion Include="Azure.Identity" Version="1.6.1" />
+    <PackageVersion Include="Azure.Identity" Version="1.10.3" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.4.0" />
-    <PackageVersion Include="Azure.Storage.Blobs" Version="12.13.0" />
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.18.0" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
     <PackageVersion Include="CachingFramework.Redis" Version="14.1.0" />
     <PackageVersion Include="CachingFramework.Redis.NewtonsoftJson" Version="14.1.0" />
@@ -59,7 +59,6 @@
     <PackageVersion Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageVersion Include="Microsoft.Graph" Version="4.36.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-    <PackageVersion Include="Microsoft.Rest.ClientRuntime" Version="2.3.24" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
     <PackageVersion Include="MimeKit" Version="4.2.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.1" />

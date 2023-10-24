@@ -1,5 +1,4 @@
-﻿using Microsoft.Rest;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http;
@@ -29,15 +28,15 @@ public static class HttpResponseMessageExtensions
         }
     }
 
-    private static HttpOperationException DisposeResponseContentAndThrowException(HttpResponseMessage response,
+    private static HttpRequestException DisposeResponseContentAndThrowException(HttpResponseMessage response,
         string content)
     {
         // Disposing the content should help users: If users call EnsureSuccessStatusCode(), an exception is
         // thrown if the statusCode status code is != 2xx. I.e. the behavior is similar to a failed request (e.g.
         // connection failure). Users are not expected to dispose the content in this case: If an exception is 
-        // thrown, the object is responsible fore cleaning up its state.
+        // thrown, the object is responsible for cleaning up its state.
         response.Content?.Dispose();
-        throw new HttpOperationException(
+        throw new HttpRequestException(
             $"StatusCode: {response.StatusCode}, ReasonPhrase: {response.ReasonPhrase}, RequestUri: {response.RequestMessage?.RequestUri}, Content: {content}.");
     }
 }
