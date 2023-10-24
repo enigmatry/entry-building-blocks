@@ -11,10 +11,10 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" />
+    <PackageReference Include="MediatR" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" />
     <PackageReference Include="Serilog" />
-    <PackageReference Include="MediatR" />
   </ItemGroup>
 
 </Project>
