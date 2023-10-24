@@ -19,7 +19,7 @@ resources:
 
 stages:
 - stage: 'ci_build'
-  displayName: 'Build the pacakges'
+  displayName: 'Build the packages'
   jobs: 
   - job: build_prerequisites
     displayName: Get the version for the build
