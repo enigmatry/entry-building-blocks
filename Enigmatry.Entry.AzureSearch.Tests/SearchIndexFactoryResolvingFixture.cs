@@ -14,6 +14,9 @@ public class SearchIndexFactoryResolvingFixture
     [SetUp]
     public void Setup() => _services = new ServiceCollectionBuilder().Build();
 
+    [TearDown]
+    public void TearDown() => _services.Dispose();
+
     [Test]
     public void TestResolveSearchIndexTestDocument()
     {

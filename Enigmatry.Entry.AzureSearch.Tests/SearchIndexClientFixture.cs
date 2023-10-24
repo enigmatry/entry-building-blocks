@@ -22,6 +22,9 @@ public class SearchIndexClientFixture
         _indexFactory = _services.GetRequiredService<ISearchIndexFactory<TestDocument>>();
     }
 
+    [TearDown]
+    public void TearDown() => _services.Dispose();
+
     [Test]
     public async Task TestCreateOrUpdateIndex()
     {

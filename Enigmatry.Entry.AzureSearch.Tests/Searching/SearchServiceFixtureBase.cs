@@ -25,6 +25,9 @@ public abstract class SearchServiceFixtureBase
         WaitIndexToBeUpdated();
     }
 
+    [OneTimeTearDown]
+    public void OneTimeTearDown() => _services.Dispose();
+
     [SetUp]
     public async Task Setup() => await DeleteAllDocuments(); // remove all leftovers from previous test run
 

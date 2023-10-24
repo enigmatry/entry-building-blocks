@@ -25,7 +25,7 @@ public class AzureSearchFilterBuilder
         CloseBracket();
     }
 
-    public void AddStatement(string statement)
+    public void AddStatement(string? statement)
     {
         if (statement.HasContent())
         {
@@ -54,7 +54,7 @@ public class AzureSearchFilterBuilder
         }
     }
 
-    private void Append(string condition) => _searchFilter.Append(condition);
+    private void Append(string? condition) => _searchFilter.Append(condition);
 
     public string Build() => _searchFilter.ToString();
 }

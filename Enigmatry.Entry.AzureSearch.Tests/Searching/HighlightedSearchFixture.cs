@@ -17,7 +17,7 @@ public class HighlightedSearchFixture : SearchServiceFixtureBase
     [TestCase(null)]
     [TestCase("name1")]
     [TestCase("lorem")]
-    public async Task TestSearchWithHighlights(string searchText)
+    public async Task TestSearchWithHighlights(string? searchText)
     {
         var options = ASearchOptionsWithHighlighting();
 

@@ -21,6 +21,7 @@
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
     <LangVersion>latest</LangVersion>
+    <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 
   </PropertyGroup>
 
