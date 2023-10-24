@@ -1,5 +1,5 @@
 trigger:
-- master
+- '*'
 
 pool:
   vmImage: ubuntu-latest
@@ -87,7 +87,6 @@ stages:
         packagesToPack: '**/*.csproj'
         configuration: '$(buildConfiguration)'
         versioningScheme: 'byBuildNumber'
-        nobuild: true
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
       inputs:
