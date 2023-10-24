@@ -49,6 +49,7 @@ stages:
 
   - job: 'Build_Package'
     displayName: Build Package
+    dependsOn: build_prerequisites
     steps:
     - task: NuGetToolInstaller@1
       displayName: Install NuGet Tool
@@ -122,4 +123,9 @@ stages:
               packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
               nuGetFeedType: 'internal'
               publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
-              
+          # - task: DotNetCoreCLI@2
+          #   inputs:
+          #     command: 'push'
+          #     packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
+          #     nuGetFeedType: 'external'
+          #     publishFeedCredentials: 'nuget_org'
