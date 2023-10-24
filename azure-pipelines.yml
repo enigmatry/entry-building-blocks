@@ -102,7 +102,7 @@ stages:
 
 - stage: publish_nuget
   displayName: publish packages to NuGet
-  dependsOn:
+  dependsOn: ci_build
   jobs:
   - deployment: 
     environment: nuget
