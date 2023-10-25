@@ -80,13 +80,21 @@ stages:
         projects: $(projectNamePrefix)**/*.Tests.csproj
         arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration)'
         nobuild: true
+    # - task: DotNetCoreCLI@2
+    #   displayName: Pack the NuGet packages
+    #   inputs:
+    #     command: 'pack'
+    #     packagesToPack: '**/*.csproj'
+    #     configuration: '$(buildConfiguration)'
+    #     versioningScheme: 'byBuildNumber'
     - task: DotNetCoreCLI@2
       displayName: Pack the NuGet packages
       inputs:
         command: 'pack'
         packagesToPack: '**/*.csproj'
         configuration: '$(buildConfiguration)'
-        versioningScheme: 'byBuildNumber'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'BUILD_BUILDNUMBER'
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
       inputs:
