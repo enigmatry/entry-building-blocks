@@ -112,29 +112,27 @@ stages:
 - stage: publish_nuget
   displayName: publish packages to NuGet
   dependsOn: ci_build
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
-  - deployment: 
-    environment: nuget
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadBuildArtifacts@1
-            inputs:
-              buildType: 'current'
-              downloadType: 'specific'
-              downloadPath: '$(System.ArtifactsDirectory)'
-          - task: DotNetCoreCLI@2
-            displayName: 'Push NuGet Packages'
-            inputs:
-              command: 'push'
-              packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
-              nuGetFeedType: 'internal'
-              publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
-          # - task: DotNetCoreCLI@2
-          #   displayName: 'Push NuGet Packages'
-          #   inputs:
-          #     command: 'push'
-          #     packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
-          #     nuGetFeedType: 'external'
-          #     publishFeedCredentials: 'nuget_org'
+  - job: publish
+    displayName: Publish to NuGet
+    steps:
+    - task: DownloadBuildArtifacts@1
+      inputs:
+        buildType: 'current'
+        downloadType: 'specific'
+        downloadPath: '$(System.ArtifactsDirectory)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Push NuGet Packages'
+      inputs:
+        command: 'push'
+        packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
+        nuGetFeedType: 'internal'
+        publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Push NuGet Packages'
+    #   inputs:
+    #     command: 'push'
+    #     packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
+    #     nuGetFeedType: 'external'
+    #     publishFeedCredentials: 'nuget_org'
