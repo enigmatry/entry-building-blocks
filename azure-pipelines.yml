@@ -4,7 +4,7 @@ trigger:
     - "*"
  tags:
    include:
-     - "v*"
+     - "release-*"
 
 pool:
   vmImage: ubuntu-latest
@@ -48,7 +48,7 @@ stages:
       inputs:
         targetType: inline
         script: |
-          $version = dotnet minver -p preview -t v
+          $version = dotnet minver -p preview -t 'release-'
           echo "##vso[build.updatebuildnumber]$version"
           Write-Host "Setting MinVer to '$version'"
 
@@ -117,7 +117,7 @@ stages:
 - stage: publish_nuget
   displayName: publish packages to NuGet
   dependsOn: ci_build
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/tags/v'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/release-'))
   jobs:
   - job: publish
     displayName: Publish to NuGet
