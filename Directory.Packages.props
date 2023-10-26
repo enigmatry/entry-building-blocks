@@ -58,7 +58,7 @@
     <PackageVersion Include="NUnit" Version="3.13.3" />
     <PackageVersion Include="NUnit.Analyzers" Version="3.8.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageVersion Include="Polly" Version="7.2.3" />
+    <PackageVersion Include="Polly" Version="8.0.0" />
     <PackageVersion Include="Quartz" Version="3.7.0" />
     <PackageVersion Include="Quartz.Extensions.DependencyInjection" Version="3.7.0" />
     <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.7.0" />
