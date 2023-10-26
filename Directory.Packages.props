@@ -9,8 +9,8 @@
     <PackageVersion Include="Azure.Search.Documents" Version="11.4.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.18.0" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageVersion Include="CachingFramework.Redis" Version="14.1.0" />
-    <PackageVersion Include="CachingFramework.Redis.NewtonsoftJson" Version="14.1.0" />
+    <PackageVersion Include="CachingFramework.Redis" Version="15.0.2" />
+    <PackageVersion Include="CachingFramework.Redis.NewtonsoftJson" Version="15.0.2" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
     <PackageVersion Include="CsvHelper" Version="30.0.1" />
