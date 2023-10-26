@@ -5,7 +5,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  artifactName: enigmatry-entry
+  artifactName: enigmatry-entry-building-blocks
   buildConfiguration: 'Release'
   projectNamePrefix: Enigmatry.Entry
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
@@ -69,9 +69,8 @@ stages:
       displayName: 'Build package'
       inputs:
         command: 'build'
-        projects: '$(ProjectNamePrefix).sln'
+        projects: '$(projectNamePrefix).sln'
         configuration: $(buildConfiguration)
-        arguments: /p:TreatWarningsAsErrors=true
     - task: DotNetCoreCLI@2
       displayName: Run Unit Tests
       inputs:
