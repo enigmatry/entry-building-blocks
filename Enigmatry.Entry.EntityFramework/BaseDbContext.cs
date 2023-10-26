@@ -1,16 +1,12 @@
 ﻿using Enigmatry.Entry.Core.Entities;
 using Enigmatry.Entry.Core.Helpers;
-using Enigmatry.Entry.EntityFramework.MediatR;
 using Enigmatry.Entry.EntityFramework.Security;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Enigmatry.Entry.EntityFramework;
 
@@ -71,33 +67,4 @@ public abstract class BaseDbContext : DbContext
             entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, Array.Empty<object>());
         }
     }
-
-    public override int SaveChanges()
-    {
-        var task = Task.Run(async () => await SaveChangesAsync());
-        return task.GetAwaiter().GetResult();
-    }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        // we need to gather domain events before saving, so that we include events
-        // for deleted entities (otherwise they are lost due to deletion of the object from context)
-        var domainEvents = this.GatherDomainEventsFromContext();
-
-        // Dispatch Domain Events collection. 
-        // Choices:
-        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
-        // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
-        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
-
-        // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
-        // performed through the DbContext will be committed
-        var saved = await base.SaveChangesAsync(cancellationToken);
-
-        await Dispatch(domainEvents);
-        return saved;
-    }
-
-    protected abstract Task Dispatch(IEnumerable<DomainEvent> domainEvents);
 }
