@@ -15,7 +15,7 @@ public class SchedulingConfigurationBuilder
     {
 #pragma warning disable IDE0055
         // this configuration reflects jobs found in SampleJobs.cs
-        var items = new Dictionary<string, string>
+        var items = new Dictionary<string, string?>
         {
             { "Scheduling:Host", "HostName" },
 

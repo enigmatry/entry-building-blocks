@@ -25,7 +25,7 @@ public class FilterSearchFixture : SearchServiceFixtureBase
 
     [TestCase(null)]
     [TestCase("")]
-    public async Task TestSearchWithEmptyStatement(string statement)
+    public async Task TestSearchWithEmptyStatement(string? statement)
     {
         var filterBuilder = new AzureSearchFilterBuilder();
         filterBuilder.AddStatement(statement);

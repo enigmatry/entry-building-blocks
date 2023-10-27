@@ -7,8 +7,8 @@ namespace Enigmatry.Entry.Core.Helpers;
 
 public static class StringExtensions
 {
-    public static bool HasNoContent(this string value) => !value.HasContent();
-    public static bool HasContent(this string value) => !string.IsNullOrEmpty(value);
+    public static bool HasNoContent(this string? value) => !value.HasContent();
+    public static bool HasContent(this string? value) => !string.IsNullOrEmpty(value);
 
     public static bool Contains(this string source, string value, StringComparison comparisonType) =>
         source.Contains(value, comparisonType);

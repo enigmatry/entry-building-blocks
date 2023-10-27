@@ -16,7 +16,6 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" />
     <PackageReference Include="System.Net.Http.Json" />
   </ItemGroup>

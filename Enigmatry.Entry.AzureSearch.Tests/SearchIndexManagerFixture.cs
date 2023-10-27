@@ -20,6 +20,9 @@ public class SearchIndexManagerFixture
         _indexManager = _services.GetRequiredService<ISearchIndexManager<TestDocument>>();
     }
 
+    [TearDown]
+    public void TearDown() => _services.Dispose();
+
     [Test]
     public async Task TestRebuildIndex() => await _indexManager.RecreateIndex();
 

@@ -53,8 +53,8 @@ public class AzurePrivateBlobStorageFixture
     {
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
-                   "?sv=2021-08-06&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=oWr83Y83Is%2Fyxlai1U7dTFK6ckYoy4IhKVFV2KFwhLU%3D";
+                   "?sv=2023-08-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
+                   "&sig=PkWAXLYeYlKxZuCkPlyJ2TYJ4whscQznBdK4AZYc0KI%3D";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeTrue();
     }
@@ -64,8 +64,8 @@ public class AzurePrivateBlobStorageFixture
     {
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
-                   "?sv=2021-08-06&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=w" +
-                   "&sig=oWr83Y83Is%2Fyxlai1U7dTFK6ckYoy4IhKVFV2KFwhLU%3D";
+                   "?sv=2023-08-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=w" +
+                   "&sig=PkWAXLYeYlKxZuCkPlyJ2TYJ4whscQznBdK4AZYc0KI%3D";
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 
@@ -74,8 +74,9 @@ public class AzurePrivateBlobStorageFixture
     {
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
-                   "?sv=2021-08-06&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=OWr83Y83Is%2Fyxlai1U7dTFK6ckYoy4IhKVFV2KFwhLU%3D";
+                   "?sv=2023-08-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
+                   "&sig=pkWAXLYeYlKxZuCkPlyJ2TYJ4whscQznBdK4AZYc0KI%3D";
+
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 
@@ -84,8 +85,8 @@ public class AzurePrivateBlobStorageFixture
     {
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResourcee.pdf" +
-                   "?sv=2021-08-06&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=oWr83Y83Is%2Fyxlai1U7dTFK6ckYoy4IhKVFV2KFwhLU%3D";
+                   "?sv=2023-08-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
+                   "&sig=PkWAXLYeYlKxZuCkPlyJ2TYJ4whscQznBdK4AZYc0KI%3D";
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 }
