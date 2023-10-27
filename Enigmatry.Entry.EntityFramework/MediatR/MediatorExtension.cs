@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Enigmatry.Entry.Core.Entities;
 using MediatR;
@@ -28,7 +29,7 @@ internal static class MediatorExtension
         return domainEvents;
     }
 
-    public static async Task DispatchDomainEventsAsync(this IMediator mediator, IEnumerable<DomainEvent> domainEvents, ILogger logger)
+    public static async Task PublishDomainEventsAsync(this IMediator mediator, IEnumerable<DomainEvent> domainEvents, ILogger logger, CancellationToken cancellationToken = default)
     {
         var stopWatch = Stopwatch.StartNew();
         // sequentially publish domain events to avoid problems with same DbContext used by different threads 
@@ -36,7 +37,7 @@ internal static class MediatorExtension
         // this happens when one event handler is doing DbContext saving while some other one is doing the reading
         foreach (DomainEvent domainEvent in domainEvents)
         {
-            await mediator.Publish(domainEvent);
+            await mediator.Publish(domainEvent, cancellationToken);
             TimeSpan ts = stopWatch.Elapsed;
 
             // Format and display the TimeSpan value.
