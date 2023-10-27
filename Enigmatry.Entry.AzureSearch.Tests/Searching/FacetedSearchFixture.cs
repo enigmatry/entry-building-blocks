@@ -3,6 +3,7 @@ using Enigmatry.Entry.AzureSearch.Tests.Documents;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
+[Category("integration")]
 public class FacetedSearchFixture : SearchServiceFixtureBase
 {
     [SetUp]
@@ -16,7 +17,7 @@ public class FacetedSearchFixture : SearchServiceFixtureBase
     [TestCase("")]
     [TestCase(null)]
     [TestCase("name1")]
-    public async Task TestSearchWithFacets(string searchText)
+    public async Task TestSearchWithFacets(string? searchText)
     {
         var options = ASearchOptionsWithFaceting();
 

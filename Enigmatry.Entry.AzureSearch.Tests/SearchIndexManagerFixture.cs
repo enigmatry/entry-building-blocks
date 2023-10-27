@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
-[Category("unit")]
+[Category("integration")]
 public class SearchIndexManagerFixture
 {
     private ServiceProvider _services = null!;
@@ -19,6 +19,9 @@ public class SearchIndexManagerFixture
 
         _indexManager = _services.GetRequiredService<ISearchIndexManager<TestDocument>>();
     }
+
+    [TearDown]
+    public void TearDown() => _services.Dispose();
 
     [Test]
     public async Task TestRebuildIndex() => await _indexManager.RecreateIndex();

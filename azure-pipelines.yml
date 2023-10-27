@@ -1,56 +1,124 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- master
+- '*'
 
 pool:
   vmImage: ubuntu-latest
 
 variables:
+  artifactName: enigmatry-entry-building-blocks
   buildConfiguration: 'Release'
+  projectNamePrefix: Enigmatry.Entry
+  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
 
-# This determines the build number
-name: $(MajorMinorVersion)$(Rev:.r)
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Enigmatry - Azure Pipelines Templates/enigmatry-azure-pipelines-templates
 
-steps:
-- task: DotNetCoreCLI@2
-  displayName: 'Build package'
-  inputs:
-    command: 'build'
-    projects: '$(ProjectNamePrefix).sln'
-    configuration: $(buildConfiguration)
-    arguments: /p:TreatWarningsAsErrors=true
+stages:
+- stage: 'ci_build'
+  displayName: 'Build the packages'
+  jobs: 
+  - job: build_prerequisites
+    displayName: Get the version for the build
+    steps:
+    - checkout: self
+      fetchDepth: 0
+    - task: DotNetCoreCLI@2
+      displayName: Add Manifest for tool installation
+      inputs:
+        command: 'custom'
+        custom: 'new '
+        arguments: tool-manifest
+    - task: DotNetCoreCLI@2
+      displayName: Install minver
+      inputs:
+        command: 'custom'
+        custom: 'tool '
+        arguments: install minver-cli
+    - task: PowerShell@2
+      displayName: 'Set MinVer Version'
+      inputs:
+        targetType: inline
+        script: |
+          $version = dotnet minver -p preview
+          echo "##vso[build.updatebuildnumber]$version"
+          Write-Host "Setting MinVer to '$version'"
 
-- task: DotNetCoreCLI@2
-  displayName: 'Run Unit tests'
-  inputs:
-    command: 'test'
-    projects: '$(ProjectNamePrefix)**/*.Tests.csproj'
-    arguments: '--filter TestCategory=unit|TestCategory=smoke /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
-    configuration: $(buildConfiguration)
-    buildProperties: 
+  - job: 'Build_Package'
+    displayName: Build Package
+    dependsOn: build_prerequisites
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Install NuGet Tool
+    - task: Cache@2
+      displayName: 'NuGet Cache'
+      inputs:
+        key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
+        restoreKeys: |
+            nuget | "$(Agent.OS)"
+            nuget
+        path: $(NUGET_PACKAGES)
+        cacheHitVar: 'NUGET_CACHE_RESTORED'
+    - task: NuGetCommand@2
+      displayName: Nuget Restore
+      inputs:
+        restoreSolution: '$(projectNamePrefix).sln'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build package'
+      inputs:
+        command: 'build'
+        projects: '$(projectNamePrefix).sln'
+        configuration: $(buildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: Run Unit Tests
+      inputs:
+        command: 'test'
+        projects: $(projectNamePrefix)**/*.Tests.csproj
+        arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration)'
+        nobuild: true
+    - task: DotNetCoreCLI@2
+      displayName: Pack the NuGet packages
+      inputs:
+        command: 'pack'
+        packagesToPack: '**/*.csproj'
+        configuration: '$(buildConfiguration)'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'BUILD_BUILDNUMBER'
+    - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: $(artifactName)-$(Build.BuildNumber)
+        publishLocation: 'Container'
 
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage report'
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+  - template: build-report-job.yml@templates
+    parameters:
+      artifactName: $(artifactName)
+      displayName: 'Generate Reports'
+      projectNameAngularApp: ''
+      projectNamePrefix: $(projectNamePrefix)
 
-- task: DotNetCoreCLI@2
-  displayName: 'Create NuGet Packages'
-  inputs:
-    command: 'pack'
-    packagesToPack: '$(ProjectNamePrefix).sln'
-    versioningScheme: 'byBuildNumber'
-    configuration: $(buildConfiguration)
-
-- task: DotNetCoreCLI@2
-  displayName: 'Push NuGet Packages'
-  inputs:
-    command: 'push'
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-    nuGetFeedType: 'internal'
-    publishVstsFeed: 'b10976dd-2e80-4940-82ff-0f27c8e76baa/d86fc1c0-d5ab-4b0a-8b57-5dc7dd5a60cb'
+- stage: publish_nuget
+  displayName: publish packages to NuGet
+  dependsOn: ci_build
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+  jobs:
+  - deployment: Publish
+    environment: Publish to NuGet
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'specific'
+              downloadPath: '$(System.ArtifactsDirectory)'
+          - task: NuGetCommand@2
+            inputs:
+              command: 'push'
+              packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg;!$(System.ArtifactsDirectory)/**/*.symbols.nupkg'
+              nuGetFeedType: 'external'
+              publishFeedCredentials: 'nuget_org'

@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.Core.Settings;
+﻿using System;
+using Enigmatry.Entry.Core.Settings;
 using Enigmatry.Entry.Email.MailKit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,9 +10,17 @@ namespace Enigmatry.Entry.Email
     {
         public static void AppAddEmailClient(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<SmtpSettings>(configuration.GetSection(SmtpSettings.AppSmtp));
+            var section = configuration.GetSection(SmtpSettings.AppSmtp);
 
-            var smtpSettings = configuration.GetSection(SmtpSettings.AppSmtp).Get<SmtpSettings>();
+            if (!section.Exists())
+            {
+                throw new InvalidOperationException(
+                    $"Section is missing from configuration. Section Name: {SmtpSettings.AppSmtp}");
+            }
+
+            services.Configure<SmtpSettings>(section);
+
+            var smtpSettings = section.Get<SmtpSettings>()!;
 
             if (smtpSettings.UsePickupDirectory)
             {

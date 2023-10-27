@@ -3,6 +3,7 @@ using Enigmatry.Entry.AzureSearch.Tests.Documents;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
+[Category("integration")]
 public class HighlightedSearchFixture : SearchServiceFixtureBase
 {
     [SetUp]
@@ -17,7 +18,7 @@ public class HighlightedSearchFixture : SearchServiceFixtureBase
     [TestCase(null)]
     [TestCase("name1")]
     [TestCase("lorem")]
-    public async Task TestSearchWithHighlights(string searchText)
+    public async Task TestSearchWithHighlights(string? searchText)
     {
         var options = ASearchOptionsWithHighlighting();
 

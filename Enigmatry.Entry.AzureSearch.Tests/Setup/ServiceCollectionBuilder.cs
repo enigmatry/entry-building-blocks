@@ -23,8 +23,8 @@ public class ServiceCollectionBuilder
 
         _services.AddAzureSearch(configure =>
             {
-                configure.ApiKey = configuration[AzureSearchApiKey];
-                configure.SearchServiceEndPoint = new Uri(configuration[AzureSearchSearchServiceEndpointKey]);
+                configure.ApiKey = configuration[AzureSearchApiKey]!;
+                configure.SearchServiceEndPoint = new Uri(configuration[AzureSearchSearchServiceEndpointKey]!);
             })
             .AddDocument<TestDocument>()
             .AddSearchIndexFactory<TestDocumentSearchIndexFactory>()
@@ -37,7 +37,7 @@ public class ServiceCollectionBuilder
     {
         var configurationSource = new MemoryConfigurationSource
         {
-            InitialData = new Dictionary<string, string>
+            InitialData = new Dictionary<string, string?>
             {
                 { AzureSearchApiKey, "USER_SECRET" }, { AzureSearchSearchServiceEndpointKey, "USER_SECRET" }
             }

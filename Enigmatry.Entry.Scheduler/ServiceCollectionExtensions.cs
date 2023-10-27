@@ -20,7 +20,6 @@ public static class ServiceCollectionExtensions
 
         services.AddQuartz(quartz =>
         {
-            quartz.UseMicrosoftDependencyInjectionJobFactory();
             quartz.AddJobs(configuration, assembly, logger);
         });
 

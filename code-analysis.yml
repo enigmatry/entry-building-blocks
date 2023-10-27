@@ -1,0 +1,22 @@
+trigger: none
+
+schedules:
+- cron: '0 0 * * *'
+  displayName: Daily midnight build
+  branches:
+    include:
+    - master
+  always: false
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Enigmatry - Azure Pipelines Templates/enigmatry-azure-pipelines-templates
+
+jobs:
+- template: code-analysis.yml@templates
+  parameters:
+    projectName: 'Enigmatry - Entry Building Blocks'
+    sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
+    displayName: 'Code Analysis'

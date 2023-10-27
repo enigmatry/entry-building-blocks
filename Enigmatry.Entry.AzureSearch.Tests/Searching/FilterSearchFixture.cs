@@ -3,6 +3,7 @@ using Enigmatry.Entry.AzureSearch.Tests.Documents;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
+[Category("integration")]
 public class FilterSearchFixture : SearchServiceFixtureBase
 {
     [SetUp]
@@ -24,7 +25,7 @@ public class FilterSearchFixture : SearchServiceFixtureBase
 
     [TestCase(null)]
     [TestCase("")]
-    public async Task TestSearchWithEmptyStatement(string statement)
+    public async Task TestSearchWithEmptyStatement(string? statement)
     {
         var filterBuilder = new AzureSearchFilterBuilder();
         filterBuilder.AddStatement(statement);

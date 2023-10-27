@@ -3,7 +3,7 @@ using Enigmatry.Entry.AzureSearch.Tests.Documents;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
-[Category("unit")]
+[Category("integration")]
 public class BasicSearchFixture : SearchServiceFixtureBase
 {
     private TestDocument _document = null!;
