@@ -4,12 +4,12 @@
     "net6.0": {
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
         "type": "Direct",
-        "requested": "[6.0.20, )",
-        "resolved": "6.0.20",
-        "contentHash": "45ZDwPX9gO0H8VQKHGI7CAugDJUx/p50arwE3oMz7ipdBADf7leykHKpKxQol/BdG19I0zxqpYNYO6a0LDmkog==",
+        "requested": "[6.0.24, )",
+        "resolved": "6.0.24",
+        "contentHash": "HM1nOvb4XwZn1U6AhtzGIedCf6qgyrooMborO91OjcdlRNzQL5B228wAHT+UqQP3vqL9K9d/MbuOkmvfVY6x+w==",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "6.0.20",
-          "Microsoft.CodeAnalysis.Razor": "6.0.20",
+          "Microsoft.AspNetCore.Mvc.Razor.Extensions": "6.0.24",
+          "Microsoft.CodeAnalysis.Razor": "6.0.24",
           "Microsoft.Extensions.DependencyModel": "6.0.0"
         }
       },
@@ -31,17 +31,17 @@
       },
       "Microsoft.AspNetCore.Mvc.Razor.Extensions": {
         "type": "Transitive",
-        "resolved": "6.0.20",
-        "contentHash": "YqkHPsusU1fN7PoGh6Ia6Z37GfKDU4XHv+pRu1/FvFqycp+3lJenfB3kl9uhlqZZFheX6jF7pGHzahWXEa75FA==",
+        "resolved": "6.0.24",
+        "contentHash": "z+3tMaqaulZ5nL5LK3EC2PkdeSEcL2EstL9xmVIQwSam6iHeTW/wVCmreTldL48nRF8nxNWnuyyDJG8RVMtAMg==",
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "6.0.20",
-          "Microsoft.CodeAnalysis.Razor": "6.0.20"
+          "Microsoft.AspNetCore.Razor.Language": "6.0.24",
+          "Microsoft.CodeAnalysis.Razor": "6.0.24"
         }
       },
       "Microsoft.AspNetCore.Razor.Language": {
         "type": "Transitive",
-        "resolved": "6.0.20",
-        "contentHash": "kk+bqzne4/RXX+JzZHdHu7fhEXaKtICJe+NVE6agTg4N4r9SbgErRrB99VTo5pWcEfS7tAhU6dVk7izTOmf8VA=="
+        "resolved": "6.0.24",
+        "contentHash": "kBL6ljTREp/3fk8EKN27mrPy3WTqWUjiqCkKFlCKHUKRO3/9rAasKizX3vPWy4ZTcNsIPmVWUHwjDFmiW4MyNA=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -77,10 +77,10 @@
       },
       "Microsoft.CodeAnalysis.Razor": {
         "type": "Transitive",
-        "resolved": "6.0.20",
-        "contentHash": "p+UpOAFuBsOahLH9S3C7Tkqwom7IElrL+NFAS+Nd7F46EG4vYS0QU3ndNS+TCeODFl8jNaxiJedL0wgEj07BNg==",
+        "resolved": "6.0.24",
+        "contentHash": "xIAjR6l/1PO2ILT6/lOGYfe8OzMqfqxh1lxFuM4Exluwc2sQhJw0kS7pEyJ0DE/UMYu6Jcdc53DmjOxQUDT2Pg==",
         "dependencies": {
-          "Microsoft.AspNetCore.Razor.Language": "6.0.20",
+          "Microsoft.AspNetCore.Razor.Language": "6.0.24",
           "Microsoft.CodeAnalysis.CSharp": "4.0.0",
           "Microsoft.CodeAnalysis.Common": "4.0.0"
         }
