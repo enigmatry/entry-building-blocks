@@ -1,5 +1,4 @@
 ﻿using Enigmatry.Entry.Core.Entities;
-using Enigmatry.Entry.EntityFramework.Security;
 using FakeItEasy;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +17,7 @@ public class PublishDomainEventsInterceptorTests
     private TestDbContext _testDbContext = null!;
 #pragma warning restore NUnit1032
     private IMediator _testMediator = null!;
-
+    
     [SetUp]
     public void Setup()
     {
@@ -64,7 +63,7 @@ public class PublishDomainEventsInterceptorTests
             ConfigurationAssembly = typeof(PublishDomainEventsInterceptorTests).Assembly,
             EntitiesAssembly = typeof(PublishDomainEventsInterceptorTests).Assembly
         });
-        collection.AddSingleton<IDbContextAccessTokenProvider, NullDbContextAccessTokenProvider>();
+
         collection.AddScoped<ISaveChangesInterceptor, PublishDomainEventsInterceptor>();
 
         collection.AddDbContext<TestDbContext>((sp, optionsBuilder) =>
@@ -77,9 +76,8 @@ public class PublishDomainEventsInterceptorTests
 
 public class TestDbContext : BaseDbContext
 {
-    public TestDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options,
-        IDbContextAccessTokenProvider dbContextAccessTokenProvider) : base(entitiesDbContextOptions, options,
-        dbContextAccessTokenProvider)
+    public TestDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options) : base(
+        entitiesDbContextOptions, options)
     {
     }
 }
