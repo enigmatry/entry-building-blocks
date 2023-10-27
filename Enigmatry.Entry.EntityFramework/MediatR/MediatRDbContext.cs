@@ -1,5 +1,4 @@
 ﻿using Enigmatry.Entry.Core.Entities;
-using Enigmatry.Entry.EntityFramework.Security;
 using JetBrains.Annotations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +15,8 @@ namespace Enigmatry.Entry.EntityFramework.MediatR
         private readonly ILogger<MediatRDbContext> _logger;
 
         protected MediatRDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options, IMediator mediator,
-            ILogger<MediatRDbContext> logger, IDbContextAccessTokenProvider dbContextAccessTokenProvider) :
-            base(entitiesDbContextOptions, options, dbContextAccessTokenProvider)
+            ILogger<MediatRDbContext> logger) :
+            base(entitiesDbContextOptions, options)
         {
             _mediator = mediator;
             _logger = logger;
