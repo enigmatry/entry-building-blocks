@@ -29,7 +29,7 @@ internal static class MediatorExtension
         return domainEvents;
     }
 
-    public static async Task PublishDomainEventsAsync(this IMediator mediator, IEnumerable<DomainEvent> domainEvents, ILogger logger, CancellationToken cancellationToken = new())
+    public static async Task PublishDomainEventsAsync(this IMediator mediator, IEnumerable<DomainEvent> domainEvents, ILogger logger, CancellationToken cancellationToken = default)
     {
         var stopWatch = Stopwatch.StartNew();
         // sequentially publish domain events to avoid problems with same DbContext used by different threads 

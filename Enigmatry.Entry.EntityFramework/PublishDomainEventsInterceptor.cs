@@ -27,14 +27,14 @@ public class PublishDomainEventsInterceptor : SaveChangesInterceptor
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
-        GatherDomainEventsFromContext(eventData.Context);
+        GatherDomainEventsFromContext(eventData.Context!);
         return base.SavingChanges(eventData, result);
     }
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData,
-        InterceptionResult<int> result, CancellationToken cancellationToken = new())
+        InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
-        GatherDomainEventsFromContext(eventData.Context);
+        GatherDomainEventsFromContext(eventData.Context!);
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 
@@ -46,23 +46,18 @@ public class PublishDomainEventsInterceptor : SaveChangesInterceptor
     }
 
     public override async ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result,
-        CancellationToken cancellationToken = new())
+        CancellationToken cancellationToken = default)
     {
         await PublishDomainEvents(cancellationToken);
         return await base.SavedChangesAsync(eventData, result, cancellationToken);
     }
 
-    private void GatherDomainEventsFromContext(DbContext? dbContext)
-    {
+    private void GatherDomainEventsFromContext(DbContext dbContext) =>
         // We need to gather domain events before saving, so that we include events
         // for deleted entities (otherwise they are lost due to deletion of the object from context)
-        if (dbContext != null)
-        {
-            _domainEvents = dbContext.GatherDomainEventsFromContext();
-        }
-    }
+        _domainEvents = dbContext.GatherDomainEventsFromContext();
 
-    private async Task PublishDomainEvents(CancellationToken cancellationToken = new()) =>
+    private async Task PublishDomainEvents(CancellationToken cancellationToken = default) =>
         // Publish Domain Events collection. 
         // Choices:
         // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
