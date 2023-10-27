@@ -14,7 +14,9 @@ namespace Enigmatry.Entry.EntityFramework.Tests;
 public class PublishDomainEventsInterceptorTests
 {
     private IServiceScope _testScope = null!;
+#pragma warning disable NUnit1032 // TestDbContext will be disposed with the testScope
     private TestDbContext _testDbContext = null!;
+#pragma warning restore NUnit1032
     private IMediator _testMediator = null!;
 
     [SetUp]
