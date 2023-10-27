@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
+#pragma warning disable IDE0055
 
 namespace Enigmatry.Entry.EntityFramework;
 
@@ -58,11 +59,11 @@ public class PublishDomainEventsInterceptor : SaveChangesInterceptor
         _domainEvents = dbContext.GatherDomainEventsFromContext();
 
     private async Task PublishDomainEvents(CancellationToken cancellationToken = default) =>
-        // Publish Domain Events collection. 
+        // Publish Domain Events collection.
         // Choices:
-        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
+        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including
         // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
-        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
+        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions.
+        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers.
         await _mediator.PublishDomainEventsAsync(_domainEvents, _logger, cancellationToken);
 }
