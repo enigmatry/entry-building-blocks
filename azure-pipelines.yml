@@ -116,10 +116,9 @@ stages:
               buildType: 'current'
               downloadType: 'specific'
               downloadPath: '$(System.ArtifactsDirectory)'
-          - task: DotNetCoreCLI@2
-            displayName: 'Push NuGet Packages'
+          - task: NuGetCommand@2
             inputs:
               command: 'push'
-              packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg'
+              packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg;!$(System.ArtifactsDirectory)/**/*.symbols.nupkg'
               nuGetFeedType: 'external'
               publishFeedCredentials: 'nuget_org'
