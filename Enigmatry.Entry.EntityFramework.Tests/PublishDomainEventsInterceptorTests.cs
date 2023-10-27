@@ -17,7 +17,7 @@ public class PublishDomainEventsInterceptorTests
     private TestDbContext _testDbContext = null!;
 #pragma warning restore NUnit1032
     private IMediator _testMediator = null!;
-    
+
     [SetUp]
     public void Setup()
     {
