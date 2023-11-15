@@ -8,6 +8,10 @@ schedules:
     - master
   always: false
 
+variables:
+  artifactName: enigmatry-entry-building-blocks
+  projectNamePrefix: Enigmatry.Entry
+  
 resources:
   repositories:
     - repository: templates
@@ -20,3 +24,10 @@ jobs:
     projectName: 'Enigmatry - Entry Building Blocks'
     sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
     displayName: 'Code Analysis'
+
+- template: build-report-job.yml@templates
+  parameters:
+    artifactName: $(artifactName)
+    displayName: 'Generate Reports'
+    projectNameAngularApp: ''
+    projectNamePrefix: $(projectNamePrefix)
