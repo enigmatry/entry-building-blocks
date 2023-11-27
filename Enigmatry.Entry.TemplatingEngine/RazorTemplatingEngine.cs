@@ -19,7 +19,7 @@ namespace Enigmatry.Entry.TemplatingEngine
         private readonly IServiceProvider _serviceProvider;
         private readonly ITempDataProvider _tempDataProvider;
         private readonly IRazorViewEngine _viewEngine;
-        private static readonly Dictionary<string, object> EmptyViewBagDictionary = new();
+        private static readonly Dictionary<string, object> EmptyViewBagDictionary = [];
 
         public RazorTemplatingEngine(
             IRazorViewEngine viewEngine,

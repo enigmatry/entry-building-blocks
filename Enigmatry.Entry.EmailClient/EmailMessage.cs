@@ -71,10 +71,10 @@ namespace Enigmatry.Entry.Email
         }
 
         public EmailMessageAddress From { get; set; }
-        public EmailMessageAddressCollection To { get; } = new();
-        public EmailMessageAddressCollection Cc { get; } = new();
-        public EmailMessageAddressCollection Bcc { get; set; } = new();
-        public EmailMessageAttachmentCollection Attachments { get; set; } = new();
+        public EmailMessageAddressCollection To { get; } = [];
+        public EmailMessageAddressCollection Cc { get; } = [];
+        public EmailMessageAddressCollection Bcc { get; set; } = [];
+        public EmailMessageAttachmentCollection Attachments { get; set; } = [];
         public string Subject { get; }
         public string Body { get; }
 
