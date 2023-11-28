@@ -7,7 +7,7 @@ namespace Enigmatry.Entry.Core.Entities
     public abstract class Entity
     {
         // needs to be private so that EF does not map the field
-        private readonly Dictionary<DomainEvent, DomainEvent> _domainEvents = new();
+        private readonly Dictionary<DomainEvent, DomainEvent> _domainEvents = [];
 
 #pragma warning disable CA1024
         public IEnumerable<DomainEvent> GetDomainEvents() => _domainEvents.Values;
@@ -29,7 +29,7 @@ namespace Enigmatry.Entry.Core.Entities
 
         public void ClearDomainEvents<TEvent>() where TEvent : DomainEvent
         {
-            var toRemove = _domainEvents.OfType<TEvent>().ToList();
+            var toRemove = _domainEvents.Keys.OfType<TEvent>().ToList();
 
             foreach (var item in toRemove)
             {

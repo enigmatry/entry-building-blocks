@@ -14,7 +14,8 @@ public class CsvFixture
         Console.WriteLine(DateTimeOffset.Now);
         var users = new List<User>
         {
-            new User {
+            new()
+            {
                 FirstName = "John",
                 LastName = "Doe",
                 Age = 30,

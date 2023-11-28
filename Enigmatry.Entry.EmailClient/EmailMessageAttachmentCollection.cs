@@ -8,7 +8,7 @@ namespace Enigmatry.Entry.Email
 {
     public class EmailMessageAttachmentCollection : ICollection<EmailMessageAttachment>
     {
-        private readonly Collection<EmailMessageAttachment> _inner = new();
+        private readonly Collection<EmailMessageAttachment> _inner = [];
 
         public IEnumerator<EmailMessageAttachment> GetEnumerator() => _inner.GetEnumerator();
 
