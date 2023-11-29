@@ -97,6 +97,6 @@ public static class EntityQueryableExtensions
         };
     }
 
-    private static IQueryable<T> OrderByDynamic<T>(this IQueryable<T> query, string? orderBy, string? orderDirection) =>
+    private static IQueryable<T> OrderByDynamic<T>(this IQueryable<T> query, string? orderBy, string orderDirection = "asc") =>
         String.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
 }
