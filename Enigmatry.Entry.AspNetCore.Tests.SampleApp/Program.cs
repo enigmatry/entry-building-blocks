@@ -18,11 +18,7 @@ public class Program
 
         var mvcBuilder = builder.Services.AddControllers();
 
-        // authorization building block targets only NET7 
-#if NET7_0_OR_GREATER
         builder.Services.AppAddAuthorization();
-#endif
-
         builder.Services.AppAddSwagger("SampleApp");
         builder.Services.AppAddHealthChecks(builder.Configuration);
 

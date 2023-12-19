@@ -6,25 +6,19 @@ namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests.Authorization;
 [Category("integration")]
 internal class AuthorizationFixture : SampleAppFixtureBase
 {
-    // authorization building block targets only NET7 
-#if NET7_0_OR_GREATER
     [Test]
     public async Task UserWithPermissionIsAllowed()
     {
         var response = await Client.GetAsync("WeatherForecast/userWithPermissionIsAllowed");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
-#endif
 
-    // authorization building block targets only NET7 
-#if NET7_0_OR_GREATER
     [Test]
     public async Task UserNoPermissionIsNotAllowed()
     {
         var response = await Client.GetAsync("WeatherForecast/userNoPermissionIsNotAllowed");
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
     }
-#endif
 
     [Test]
     public async Task EndpointWithoutAuthorizeIsAllowed()

@@ -47,8 +47,8 @@
       },
       "Azure.Core": {
         "type": "Transitive",
-        "resolved": "1.35.0",
-        "contentHash": "hENcx03Jyuqv05F4RBEPbxz29UrM3Nbhnr6Wl6NQpoU9BCIbL3XLentrxDCTrH54NLS11Exxi/o8MYgT/cnKFA==",
+        "resolved": "1.36.0",
+        "contentHash": "vwqFZdHS4dzPlI7FFRkPx9ctA+aGGeRev3gnzG8lntWvKMmBhAmulABi1O9CEvS3/jzYt7yA+0pqVdxkpAd7dQ==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
           "System.Diagnostics.DiagnosticSource": "6.0.1",
@@ -61,10 +61,10 @@
       },
       "Azure.Storage.Common": {
         "type": "Transitive",
-        "resolved": "12.17.0",
-        "contentHash": "/h8SpUkxMuQy/MbNFeJQGmhYt3JnYfEiGeDojtNgLNzzhyDnRYgjF3ZKYgjORYQpn0Spr+4+v2MZy+0GNJBLrg==",
+        "resolved": "12.18.1",
+        "contentHash": "ohCslqP9yDKIn+DVjBEOBuieB1QwsUCz+BwHYNaJ3lcIsTSiI4Evnq81HcKe8CqM8qvdModbipVQKpnxpbdWqA==",
         "dependencies": {
-          "Azure.Core": "1.35.0",
+          "Azure.Core": "1.36.0",
           "System.IO.Hashing": "6.0.0"
         }
       },
@@ -174,7 +174,7 @@
       "enigmatry.entry.blobstorage": {
         "type": "Project",
         "dependencies": {
-          "Azure.Storage.Blobs": "[12.18.0, )",
+          "Azure.Storage.Blobs": "[12.19.1, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
           "Microsoft.Bcl.AsyncInterfaces": "[8.0.0, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[8.0.0, )",
@@ -196,11 +196,11 @@
       },
       "Azure.Storage.Blobs": {
         "type": "CentralTransitive",
-        "requested": "[12.18.0, )",
-        "resolved": "12.18.0",
-        "contentHash": "IUqHRXnabXCzmmvkzqPK4FuGzLxmKSugDEt5Hm5B/JlJFR+aHDsPW4nCLbG0txThqBSKPqcBBU/oA6c5TaFJgA==",
+        "requested": "[12.19.1, )",
+        "resolved": "12.19.1",
+        "contentHash": "x43hWFJ4sPQ23TD4piCwT+KlQpZT8pNDAzqj6yUCqh+WJ2qcQa17e1gh6ZOeT2QNFQTTDSuR56fm2bIV7i11/w==",
         "dependencies": {
-          "Azure.Storage.Common": "12.17.0",
+          "Azure.Storage.Common": "12.18.1",
           "System.Text.Json": "4.7.2"
         }
       },

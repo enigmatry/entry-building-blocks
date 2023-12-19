@@ -126,11 +126,11 @@
       },
       "Azure.Core": {
         "type": "Transitive",
-        "resolved": "1.25.0",
-        "contentHash": "X8Dd4sAggS84KScWIjEbFAdt2U1KDolQopTPoHVubG2y3CM54f9l6asVrP5Uy384NWXjsspPYaJgz5xHc+KvTA==",
+        "resolved": "1.36.0",
+        "contentHash": "vwqFZdHS4dzPlI7FFRkPx9ctA+aGGeRev3gnzG8lntWvKMmBhAmulABi1O9CEvS3/jzYt7yA+0pqVdxkpAd7dQ==",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "1.1.1",
-          "System.Diagnostics.DiagnosticSource": "4.6.0",
+          "System.Diagnostics.DiagnosticSource": "6.0.1",
           "System.Memory.Data": "1.0.2",
           "System.Numerics.Vectors": "4.5.0",
           "System.Text.Encodings.Web": "4.7.2",
@@ -270,8 +270,11 @@
       },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",
-        "resolved": "4.6.0",
-        "contentHash": "mbBgoR0rRfl2uimsZ2avZY8g7Xnh1Mza0rJZLPcxqiMWlkGukjmRkuMJ/er+AhQuiRIh80CR/Hpeztr80seV5g=="
+        "resolved": "6.0.1",
+        "contentHash": "KiLYDu2k2J82Q9BJpWiuQqCkFjRBWVq4jDzKKWawVi9KWzyD0XG3cmfX0vqTQlL14Wi9EufJrbL0+KCLTbqWiQ==",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        }
       },
       "System.Diagnostics.EventLog": {
         "type": "Transitive",
@@ -309,6 +312,11 @@
         "type": "Transitive",
         "resolved": "1.6.0",
         "contentHash": "COC1aiAJjCoA5GBF+QKL2uLqEBew4JsCkQmoHKbN3TlOZKa2fKLz5CpiRQKDz0RsAOEGsVKqOD5bomsXq/4STQ=="
+      },
+      "System.Runtime.CompilerServices.Unsafe": {
+        "type": "Transitive",
+        "resolved": "6.0.0",
+        "contentHash": "/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg=="
       },
       "System.Security.Cryptography.ProtectedData": {
         "type": "Transitive",
@@ -353,7 +361,7 @@
       "enigmatry.entry.azuresearch": {
         "type": "Project",
         "dependencies": {
-          "Azure.Search.Documents": "[11.4.0, )",
+          "Azure.Search.Documents": "[11.5.1, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
           "Humanizer.Core": "[2.14.1, )",
           "JetBrains.Annotations": "[2023.3.0, )",
@@ -375,11 +383,11 @@
       },
       "Azure.Search.Documents": {
         "type": "CentralTransitive",
-        "requested": "[11.4.0, )",
-        "resolved": "11.4.0",
-        "contentHash": "6NjPHMrba6GeCV2ngVvDYIjJvkAeEtwbjEzoIRp0NSdiLsLJ0CVFFnSn2j5DJ/KMrHbcof4ZLOOHNUwEDsarGg==",
+        "requested": "[11.5.1, )",
+        "resolved": "11.5.1",
+        "contentHash": "Vg+1mtM3LXVYwKQ+DDi7Wd/Rf2Ajo6rl5/7bFPfouUMBe/cNg71TIU62PY/eEtKfUI3Y7wdFXNcgGkpUG+OVnw==",
         "dependencies": {
-          "Azure.Core": "1.25.0",
+          "Azure.Core": "1.36.0",
           "System.Text.Json": "4.7.2",
           "System.Threading.Channels": "4.7.1"
         }

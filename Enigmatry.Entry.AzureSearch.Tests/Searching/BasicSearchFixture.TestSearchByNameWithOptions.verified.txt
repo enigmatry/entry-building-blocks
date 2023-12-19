@@ -1,6 +1,7 @@
 ﻿{
   PagedResult: [
     {
+      SemanticSearch: {},
       Document: {
         Id: 12343,
         Name: DocumentName,
