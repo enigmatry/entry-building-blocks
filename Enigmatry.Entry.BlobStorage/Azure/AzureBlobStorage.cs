@@ -24,7 +24,7 @@ internal class AzureBlobStorage : IBlobStorage
     public string Name { get; }
 
     public string BuildResourcePath(string relativePath) =>
-        !String.IsNullOrWhiteSpace(relativePath)
+        !string.IsNullOrWhiteSpace(relativePath)
             ? new UriBuilder { Scheme = Container.Uri.Scheme, Host = Container.Uri.Host, Path = Path.Combine(Container.Name, relativePath) }.ToString()
             : relativePath;
 
@@ -46,12 +46,15 @@ internal class AzureBlobStorage : IBlobStorage
 
     public async Task<bool> RemoveAsync(string relativePath, CancellationToken cancellationToken = default)
     {
-        if (!relativePath.Contains('*'))
+        if (!relativePath.Contains('*', StringComparison.OrdinalIgnoreCase))
         {
             return await Container.DeleteBlobIfExistsAsync(relativePath, cancellationToken: cancellationToken);
         }
 
-        await foreach (var blob in Container.GetBlobsAsync(prefix: relativePath.Replace('\\', '/').Remove(relativePath.IndexOf('*')), cancellationToken: cancellationToken))
+        await foreach (var blob in Container.GetBlobsAsync(
+                           prefix: relativePath.Replace('\\', '/')
+                               .Remove(relativePath.IndexOf('*', StringComparison.OrdinalIgnoreCase)),
+                           cancellationToken: cancellationToken))
         {
             await Container.GetBlobClient(blob.Name).DeleteAsync(cancellationToken: cancellationToken);
         }

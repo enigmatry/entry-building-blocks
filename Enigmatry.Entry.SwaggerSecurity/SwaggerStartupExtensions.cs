@@ -19,7 +19,7 @@ namespace Enigmatry.Entry.Swagger
         public static void AppUseSwagger(this IApplicationBuilder app, string path = "")
         {
             app.UseOpenApi();
-            app.UseSwaggerUi3(c => c.Path = path);
+            app.UseSwaggerUi(c => c.Path = path);
         }
 
         /// <summary>
@@ -33,10 +33,10 @@ namespace Enigmatry.Entry.Swagger
             string clientSecret = "", string path = "")
         {
             app.UseOpenApi();
-            app.UseSwaggerUi3(options =>
+            app.UseSwaggerUi(options =>
             {
                 options.Path = path;
-                if (!String.IsNullOrEmpty(clientId))
+                if (!string.IsNullOrEmpty(clientId))
                 {
                     options.OAuth2Client = new OAuth2ClientSettings
                     {
@@ -87,12 +87,12 @@ namespace Enigmatry.Entry.Swagger
             string appVersion = "v1",
             Action<AspNetCoreOpenApiDocumentGeneratorSettings>? configureSettings = null)
         {
-            if (String.IsNullOrEmpty(authorizationUrl))
+            if (string.IsNullOrEmpty(authorizationUrl))
             {
                 throw new ArgumentException("Authorization URL cannot be empty", nameof(authorizationUrl));
             }
 
-            if (String.IsNullOrEmpty(tokenUrl))
+            if (string.IsNullOrEmpty(tokenUrl))
             {
                 throw new ArgumentException("Token URL cannot be empty", nameof(tokenUrl));
             }
@@ -147,12 +147,12 @@ namespace Enigmatry.Entry.Swagger
             string appVersion = "v1",
             Action<AspNetCoreOpenApiDocumentGeneratorSettings>? configureSettings = null)
         {
-            if (String.IsNullOrEmpty(authorizationUrl))
+            if (string.IsNullOrEmpty(authorizationUrl))
             {
                 throw new ArgumentException("Authorization URL cannot be empty", nameof(authorizationUrl));
             }
 
-            if (String.IsNullOrEmpty(tokenUrl))
+            if (string.IsNullOrEmpty(tokenUrl))
             {
                 throw new ArgumentException("Token URL cannot be empty", nameof(tokenUrl));
             }

@@ -28,9 +28,9 @@ namespace Enigmatry.Entry.BlobStorage.Azure
             PrivateBlobPermission permission = PrivateBlobPermission.Read)
         {
             DateTimeOffset expiresOn = DateTime.UtcNow.Add(Settings.SasDuration);
-            if (String.IsNullOrWhiteSpace(relativePath))
+            if (string.IsNullOrWhiteSpace(relativePath))
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             var uri = new Uri(BuildResourcePath(relativePath));

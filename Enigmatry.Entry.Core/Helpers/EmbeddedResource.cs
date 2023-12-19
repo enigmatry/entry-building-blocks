@@ -14,7 +14,7 @@ namespace Enigmatry.Entry.Core.Helpers
                 using var stream = assembly.GetManifestResourceStream(namespaceAndFileName);
                 if (stream == null)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
                 using var reader = new StreamReader(stream, Encoding.UTF8);
                 return reader.ReadToEnd();

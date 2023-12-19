@@ -31,7 +31,7 @@ public static class HttpResponseMessageAssertionsExtensions
 
             if (json != null && json.Errors.TryGetValue(fieldName, out var errorsField))
             {
-                errorFound = String.IsNullOrEmpty(expectedValidationMessage)
+                errorFound = string.IsNullOrEmpty(expectedValidationMessage)
                     ? errorsField.Any()
                     : errorsField.Any(msg =>
                         msg.Contains(expectedValidationMessage, StringComparison.OrdinalIgnoreCase));
@@ -46,7 +46,7 @@ public static class HttpResponseMessageAssertionsExtensions
         AssertionScope assertionScope = assertion.ForCondition(errorFound).BecauseOf(because, becauseArgs);
         string message;
         object[] failArgs;
-        if (String.IsNullOrEmpty(expectedValidationMessage))
+        if (string.IsNullOrEmpty(expectedValidationMessage))
         {
             message = "Expected response to have validation message with key: {0}{reason}, but found {1}.";
             failArgs = new object[] { fieldName, responseContent };

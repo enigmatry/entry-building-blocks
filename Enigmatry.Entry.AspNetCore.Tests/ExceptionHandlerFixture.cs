@@ -53,7 +53,7 @@ public class ExceptionHandlerFixture
 
         await HandleExceptionFrom(context);
 
-        (await GetResponseStringFrom(context)).Should().Be(String.Empty);
+        (await GetResponseStringFrom(context)).Should().Be(string.Empty);
     }
 
     [Test]

@@ -12,7 +12,7 @@ namespace Enigmatry.Entry.Swagger
             settings.DocumentName = appVersion;
             settings.Title = appTitle;
             settings.Version = appVersion;
-            settings.SchemaNameGenerator = new CustomSwaggerSchemaNameGenerator();
+            settings.SchemaSettings.SchemaNameGenerator = new CustomSwaggerSchemaNameGenerator();
 
             configureSettings?.Invoke(settings);
         }
@@ -20,6 +20,6 @@ namespace Enigmatry.Entry.Swagger
         [PublicAPI]
         public static void
             MarkNonNullablePropertiesAsRequired(this AspNetCoreOpenApiDocumentGeneratorSettings settings) =>
-            settings.SchemaProcessors.Add(new MarkAsRequiredIfNonNullableSchemaProcessor());
+            settings.SchemaSettings.SchemaProcessors.Add(new MarkAsRequiredIfNonNullableSchemaProcessor());
     }
 }

@@ -6,7 +6,7 @@ public static class StringExtensionsForSql
 {
     public static string[] SplitStatements(this string sql)
     {
-        var sqlBatch = String.Empty;
+        var sqlBatch = string.Empty;
         var result = new List<string>();
         sql += "\nGO"; // make sure last batch is executed.
 
@@ -15,7 +15,7 @@ public static class StringExtensionsForSql
             if (line.ToUpperInvariant().Trim() == "GO")
             {
                 result.Add(sqlBatch);
-                sqlBatch = String.Empty;
+                sqlBatch = string.Empty;
             }
             else
             {
