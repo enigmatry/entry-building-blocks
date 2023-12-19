@@ -10,12 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Generators\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" />
-	  <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" />
   </ItemGroup>
 
