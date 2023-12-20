@@ -16,7 +16,7 @@ namespace Enigmatry.Entry.Swagger
             GetAllDeclaringTypes(declaringTypes, type);
 
             return declaringTypes.Count > 0
-                ? $"{String.Join("", declaringTypes.Select(t => t.Name))}{type.Name}"
+                ? $"{string.Join("", declaringTypes.Select(t => t.Name))}{type.Name}"
                 : base.Generate(type);
         }
 

@@ -15,7 +15,7 @@ namespace Enigmatry.Entry.Email.MailKit
         }
 
         private static MailboxAddress? ParseMailAddress(string? mailAddress) =>
-            !String.IsNullOrEmpty(mailAddress) && MailboxAddress.TryParse(mailAddress, out var mailboxAddress)
+            !string.IsNullOrEmpty(mailAddress) && MailboxAddress.TryParse(mailAddress, out var mailboxAddress)
                 ? mailboxAddress
                 : null;
     }

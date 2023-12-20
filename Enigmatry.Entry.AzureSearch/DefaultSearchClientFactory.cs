@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Enigmatry.Entry.AzureSearch;
 
-internal class DefaultSearchClientFactory<T> : ISearchClientFactory<T>
+public class DefaultSearchClientFactory<T> : ISearchClientFactory<T>
 {
     private readonly ISearchIndexNameResolver<T> _indexNameResolver;
     private readonly IOptions<SearchSettings> _searchSettings;

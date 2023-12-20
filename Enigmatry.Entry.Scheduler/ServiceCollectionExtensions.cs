@@ -11,7 +11,12 @@ namespace Enigmatry.Entry.Scheduler;
 [PublicAPI]
 public static class ServiceCollectionExtensions
 {
+    [Obsolete("Use AddEntryQuartz instead")]
     public static void AppAddQuartz(this IServiceCollection services, IConfiguration configuration, Assembly assembly,
+        ILogger logger) =>
+        services.AddEntryQuartz(configuration, assembly, logger);
+
+    public static void AddEntryQuartz(this IServiceCollection services, IConfiguration configuration, Assembly assembly,
         ILogger logger)
     {
         // Quartz configuration reference:

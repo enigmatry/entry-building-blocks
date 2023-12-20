@@ -93,17 +93,12 @@ stages:
         ArtifactName: $(artifactName)-$(Build.BuildNumber)
         publishLocation: 'Container'
 
-  - template: build-report-job.yml@templates
-    parameters:
-      artifactName: $(artifactName)
-      displayName: 'Generate Reports'
-      projectNameAngularApp: ''
-      projectNamePrefix: $(projectNamePrefix)
-
 - stage: publish_nuget
   displayName: publish packages to NuGet
   dependsOn: ci_build
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+  # TODO BP-637: Uncomment this condition before the merge to master
+  ## condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), contains(variables['Build.SourceBranch'], 'BP-637')))
   jobs:
   - deployment: Publish
     environment: Publish to NuGet

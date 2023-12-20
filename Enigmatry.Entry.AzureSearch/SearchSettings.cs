@@ -7,7 +7,7 @@ namespace Enigmatry.Entry.AzureSearch;
 public class SearchSettings
 {
     public Uri SearchServiceEndPoint { get; set; } = null!;
-    public string ApiKey { get; set; } = String.Empty;
+    public string ApiKey { get; set; } = string.Empty;
 
     internal void CopyPropertiesTo(SearchSettings target)
     {

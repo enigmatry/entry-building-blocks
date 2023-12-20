@@ -6,13 +6,13 @@ namespace Enigmatry.Entry.Core.Settings
     {
         public const string AppSmtp = "App:Smtp";
 
-        public string Server { get; set; } = String.Empty;
+        public string Server { get; set; } = string.Empty;
         public int Port { get; set; }
-        public string Username { get; set; } = String.Empty;
-        public string Password { get; set; } = String.Empty;
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
         public bool UsePickupDirectory { get; set; }
-        public string PickupDirectoryLocation { get; set; } = String.Empty;
-        public string From { get; set; } = String.Empty;
-        public string CatchAllAddress { get; set; } = String.Empty;
+        public string PickupDirectoryLocation { get; set; } = string.Empty;
+        public string From { get; set; } = string.Empty;
+        public string CatchAllAddress { get; set; } = string.Empty;
     }
 }

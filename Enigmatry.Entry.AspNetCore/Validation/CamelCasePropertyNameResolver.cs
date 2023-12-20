@@ -30,6 +30,6 @@ public static class CamelCasePropertyNameResolver
                 return chain.ToString();
         }
 
-        return memberInfo != null ? memberInfo.Name : String.Empty;
+        return memberInfo != null ? memberInfo.Name : string.Empty;
     }
 }

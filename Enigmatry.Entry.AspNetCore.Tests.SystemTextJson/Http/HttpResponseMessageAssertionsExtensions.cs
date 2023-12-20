@@ -13,6 +13,11 @@ namespace Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Http;
 [PublicAPI]
 public static class HttpResponseMessageAssertionsExtensions
 {
+    private static readonly JsonSerializerOptions Options = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
     public static AndConstraint<HttpResponseMessageAssertions> BeBadRequest(this HttpResponseMessageAssertions constraints, string because = "", params object[] becauseArgs) =>
         constraints.HaveStatusCode(HttpStatusCode.BadRequest, because, becauseArgs);
 
@@ -27,11 +32,11 @@ public static class HttpResponseMessageAssertionsExtensions
         var errorFound = false;
         try
         {
-            var json = JsonSerializer.Deserialize<ValidationProblemDetails>(responseContent);
+            var json = JsonSerializer.Deserialize<ValidationProblemDetails>(responseContent, Options);
 
             if (json != null && json.Errors.TryGetValue(fieldName, out var errorsField))
             {
-                errorFound = String.IsNullOrEmpty(expectedValidationMessage)
+                errorFound = string.IsNullOrEmpty(expectedValidationMessage)
                     ? errorsField.Any()
                     : errorsField.Any(msg =>
                         msg.Contains(expectedValidationMessage, StringComparison.OrdinalIgnoreCase));
@@ -42,11 +47,11 @@ public static class HttpResponseMessageAssertionsExtensions
             Console.WriteLine(exception);
         }
 
-        AssertionScope assertion = Execute.Assertion;
-        AssertionScope assertionScope = assertion.ForCondition(errorFound).BecauseOf(because, becauseArgs);
+        var assertion = Execute.Assertion;
+        var assertionScope = assertion.ForCondition(errorFound).BecauseOf(because, becauseArgs);
         string message;
         object[] failArgs;
-        if (String.IsNullOrEmpty(expectedValidationMessage))
+        if (string.IsNullOrEmpty(expectedValidationMessage))
         {
             message = "Expected response to have validation message with key: {0}{reason}, but found {1}.";
             failArgs = new object[] { fieldName, responseContent };

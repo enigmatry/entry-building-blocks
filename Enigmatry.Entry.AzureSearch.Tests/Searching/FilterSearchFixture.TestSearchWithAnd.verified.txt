@@ -1,6 +1,7 @@
 ﻿{
   PagedResult: [
     {
+      SemanticSearch: {},
       Document: {
         Id: 1,
         Name: name1,
@@ -8,6 +9,7 @@
       }
     },
     {
+      SemanticSearch: {},
       Document: {
         Id: 2,
         Name: name1,
@@ -15,6 +17,7 @@
       }
     },
     {
+      SemanticSearch: {},
       Document: {
         Id: 3,
         Name: name1,
@@ -22,6 +25,7 @@
       }
     },
     {
+      SemanticSearch: {},
       Document: {
         Id: 4,
         Name: name1,

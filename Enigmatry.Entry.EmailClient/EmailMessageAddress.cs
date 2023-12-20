@@ -9,11 +9,11 @@ namespace Enigmatry.Entry.Email
 
         private EmailMessageAddress()
         {
-            Name = String.Empty;
-            Address = String.Empty;
+            Name = string.Empty;
+            Address = string.Empty;
         }
 
-        public EmailMessageAddress(string address) : this(String.Empty, address)
+        public EmailMessageAddress(string address) : this(string.Empty, address)
         {
         }
 
@@ -46,13 +46,7 @@ namespace Enigmatry.Entry.Email
                                 (obj.GetType() == GetType() &&
                                  Equals((EmailMessageAddress)obj)));
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (Name.GetHashCode() * 397) ^ Address.GetHashCode();
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(Name, Address);
 
         public override string ToString() => $"{Name} <{Address}>";
     }

@@ -33,15 +33,6 @@ namespace Enigmatry.Entry.Email
                                 (obj.GetType() == GetType() &&
                                  Equals((EmailMessageAttachment)obj)));
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = FileName.GetHashCode();
-                hashCode = (hashCode * 397) ^ Data.GetHashCode();
-                hashCode = (hashCode * 397) ^ ContentType.GetHashCode();
-                return hashCode;
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(FileName, Data, ContentType);
     }
 }

@@ -7,7 +7,7 @@ namespace Enigmatry.Entry.Core.Paging
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public string SortBy { get; set; } = String.Empty;
-        public string SortDirection { get; set; } = String.Empty;
+        public string SortBy { get; set; } = string.Empty;
+        public string SortDirection { get; set; } = string.Empty;
     }
 }

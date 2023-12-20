@@ -2,5 +2,5 @@
 
 public class EmailModel
 {
-    public string SampleText { get; set; } = String.Empty;
+    public string SampleText { get; set; } = string.Empty;
 }

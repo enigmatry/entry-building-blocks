@@ -13,14 +13,14 @@ namespace Enigmatry.Entry.Core.Helpers
         {
             var attribute = value.GetAttribute<DisplayAttribute>();
 
-            return attribute?.Name ?? String.Empty;
+            return attribute?.Name ?? string.Empty;
         }
 
         public static string GetDescription(this Enum value)
         {
             var attribute = value.GetAttribute<DescriptionAttribute>();
 
-            return attribute?.Description ?? String.Empty;
+            return attribute?.Description ?? string.Empty;
         }
 
         public static T? GetAttribute<T>(this Enum value)

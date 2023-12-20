@@ -57,6 +57,6 @@ namespace Enigmatry.Entry.Email
             items.ForEach(Add);
         }
 
-        public override string ToString() => String.Join(", ", _inner);
+        public override string ToString() => string.Join(", ", _inner);
     }
 }

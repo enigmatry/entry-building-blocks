@@ -13,6 +13,8 @@ public abstract class SearchServiceFixtureBase
     private ISearchIndexManager<TestDocument> _indexManager = null!;
     private ISearchService<TestDocument> _searchService = null!;
 
+    private static readonly TimeSpan DefaultIndexRecreateWait = TimeSpan.FromSeconds(1);
+
     [OneTimeSetUp]
     public async Task OneTimeSetup()
     {
@@ -48,19 +50,24 @@ public abstract class SearchServiceFixtureBase
     protected async Task<SearchResponse<TestDocument>> Search(string searchText, SearchOptions? searchOptions = null) =>
         await _searchService.Search(SearchText.AsEscaped(searchText), searchOptions);
 
-    protected async Task UpdateDocuments(IEnumerable<TestDocument> documents)
+    protected async Task UpdateDocuments(IEnumerable<TestDocument> documents) =>
+        await UpdateDocuments(documents, DefaultIndexRecreateWait);
+
+    protected async Task UpdateDocuments(IEnumerable<TestDocument> documents, TimeSpan waitTimeSpan)
     {
         await _searchService.UpdateDocuments(documents);
-        WaitIndexToBeUpdated();
+        WaitIndexToBeUpdated(waitTimeSpan);
     }
 
-    private static void WaitIndexToBeUpdated() => Thread.Sleep(TimeSpan.FromSeconds(1));
+    private static void WaitIndexToBeUpdated() => WaitIndexToBeUpdated(DefaultIndexRecreateWait);
+
+    private static void WaitIndexToBeUpdated(TimeSpan waitTimeSpan) => Thread.Sleep(waitTimeSpan);
 
     protected static VerifySettings CreateVerifySettings()
     {
         var settings = new VerifySettings();
         // not all properties were displayed when serializing FacetResult so custom converter was needed
-        settings.AddExtraSettings(_ => _.Converters.Add(new FacetResultJsonConverter()));
+        settings.AddExtraSettings(serializerSettings => serializerSettings.Converters.Add(new FacetResultJsonConverter()));
         settings.IgnoreMember<SearchResult<TestDocument>>(_ => _.Score); //score is not always the same
         return settings;
     }
