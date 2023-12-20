@@ -6,6 +6,7 @@
           <b>name1</b>
         ]
       },
+      SemanticSearch: {},
       Document: {
         Id: 1,
         Name: name1,

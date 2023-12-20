@@ -1,6 +1,7 @@
 ﻿{
   PagedResult: [
     {
+      SemanticSearch: {},
       Document: {
         Id: 23432432,
         Name: Harry Potter,

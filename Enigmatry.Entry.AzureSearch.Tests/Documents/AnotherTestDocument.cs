@@ -7,5 +7,5 @@ namespace Enigmatry.Entry.AzureSearch.Tests.Documents;
 public class AnotherTestDocument
 {
     [SimpleField(IsKey = true, IsFilterable = true)]
-    public string Id { get; set; } = String.Empty;
+    public string Id { get; set; } = string.Empty;
 }

@@ -9,7 +9,7 @@ namespace Enigmatry.Entry.Core.Settings
     {
         public const string ApplicationInsightsSectionName = "ApplicationInsights";
 
-        public string InstrumentationKey { get; set; } = String.Empty;
+        public string InstrumentationKey { get; set; } = string.Empty;
         public LogEventLevel SerilogLogsRestrictedToMinimumLevel { get; set; }
     }
 }

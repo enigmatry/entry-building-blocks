@@ -21,7 +21,7 @@ namespace Enigmatry.Entry.Email.MailKit
                 await mailService.ConnectAsync(settings.Server, settings.Port, SecureSocketOptions.StartTls, cancellationToken);
             }
 
-            if (!String.IsNullOrEmpty(settings.Username) && !String.IsNullOrEmpty(settings.Password))
+            if (!string.IsNullOrEmpty(settings.Username) && !string.IsNullOrEmpty(settings.Password))
             {
                 await mailService.AuthenticateAsync(settings.Username, settings.Password, cancellationToken);
             }

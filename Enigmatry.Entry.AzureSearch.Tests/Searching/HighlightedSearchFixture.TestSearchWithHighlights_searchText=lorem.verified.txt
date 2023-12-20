@@ -6,6 +6,7 @@
           <b>lorem</b> ipsum
         ]
       },
+      SemanticSearch: {},
       Document: {
         Id: 2,
         Name: some other name,

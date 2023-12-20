@@ -35,7 +35,7 @@ namespace Enigmatry.Entry.Core.Collections
         public static TCollection AddOrUpdate<T, TCollection>(this ICollection<TCollection> collection, T value,
             Func<TCollection, bool> matcher, Func<T, TCollection> creator, Action<T, TCollection> updater)
         {
-            TCollection entity = collection.SingleOrDefault(matcher);
+            var entity = collection.SingleOrDefault(matcher);
 
             if (entity == null)
             {

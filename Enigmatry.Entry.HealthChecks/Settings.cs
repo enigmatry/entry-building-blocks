@@ -10,7 +10,7 @@ internal class Settings
     internal const string SectionName = "HealthChecks";
 
     public int MaximumAllowedMemoryInMegaBytes { get; set; }
-    public string RequiredToken { get; set; } = String.Empty;
+    public string RequiredToken { get; set; } = string.Empty;
 
     internal bool TokenAuthorizationEnabled => RequiredToken.HasContent();
 }

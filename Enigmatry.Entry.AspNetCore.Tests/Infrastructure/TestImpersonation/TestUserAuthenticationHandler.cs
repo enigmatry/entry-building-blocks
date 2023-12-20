@@ -11,7 +11,7 @@ public class TestUserAuthenticationHandler : AuthenticationHandler<TestAuthentic
     public const string AuthenticationScheme = "TestUserAuth";
 
     public TestUserAuthenticationHandler(IOptionsMonitor<TestAuthenticationOptions> options, ILoggerFactory logger,
-        UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+        UrlEncoder encoder) : base(options, logger, encoder)
     {
     }
 

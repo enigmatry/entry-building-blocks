@@ -11,10 +11,10 @@ namespace Enigmatry.Entry.BlobStorage.Azure
         private static readonly AzureBlobSharedUri Empty = new();
         private AzureBlobSharedUri() { }
 
-        public string BlobName { get; private set; } = String.Empty;
+        public string BlobName { get; private set; } = string.Empty;
         public PrivateBlobPermission Permission { get; private set; }
         public DateTimeOffset ExpiresOn { get; private set; }
-        public string Signature { get; set; } = String.Empty;
+        public string Signature { get; set; } = string.Empty;
 
         public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
         {

@@ -7,10 +7,10 @@ public static class UriExtensions
         var resourceUri = uri.ToString();
         var filteredParameters = parameters.Where(p => p.Value != null);
 
-        var paramsUri = String.Join("&",
+        var paramsUri = string.Join("&",
             filteredParameters.Select(p => Uri.EscapeDataString(p.Key) + "=" + Uri.EscapeDataString(p.Value)));
 
-        if (!String.IsNullOrEmpty(paramsUri))
+        if (!string.IsNullOrEmpty(paramsUri))
         {
             resourceUri += "?" + paramsUri;
         }

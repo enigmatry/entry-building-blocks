@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{0FB89D0E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.BlobStorage", "Enigmatry.Entry.BlobStorage\Enigmatry.Entry.BlobStorage.csproj", "{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.CacheManager", "Enigmatry.Entry.CacheManager\Enigmatry.Entry.CacheManager.csproj", "{77133C63-207B-4F3F-A9BC-D23D98B94A93}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Core", "Enigmatry.Entry.Core\Enigmatry.Entry.Core.csproj", "{7735C55C-207E-411D-9831-9EC642E17EA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Swagger", "Enigmatry.Entry.SwaggerSecurity\Enigmatry.Entry.Swagger.csproj", "{A31B0A27-A84F-4790-8194-C4A4763930EF}"
@@ -86,7 +84,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AzureSearch
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AzureSearch.Tests", "Enigmatry.Entry.AzureSearch.Tests\Enigmatry.Entry.AzureSearch.Tests.csproj", "{FA16BA60-C62D-4BD9-B146-AD07EE9BF917}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.EntityFramework.Tests", "Enigmatry.Entry.EntityFramework.Tests\Enigmatry.Entry.EntityFramework.Tests.csproj", "{5AB7DDE8-0644-47AF-AA72-742785090EDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.EntityFramework.Tests", "Enigmatry.Entry.EntityFramework.Tests\Enigmatry.Entry.EntityFramework.Tests.csproj", "{5AB7DDE8-0644-47AF-AA72-742785090EDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,10 +108,6 @@ Global
 		{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E2DCA8E-4103-4663-8819-D711DD8C6EE7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77133C63-207B-4F3F-A9BC-D23D98B94A93}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7735C55C-207E-411D-9831-9EC642E17EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7735C55C-207E-411D-9831-9EC642E17EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7735C55C-207E-411D-9831-9EC642E17EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -93,7 +93,7 @@ namespace Enigmatry.Entry.Core.Collections
             var updated = new List<(T, TCollection)>();
             foreach (T value in values)
             {
-                TCollection match = _target.FirstOrDefault(t => matcher(value, t));
+                var match = _target.FirstOrDefault(t => matcher(value, t));
                 if (match != null)
                 {
                     updater(value, match);
