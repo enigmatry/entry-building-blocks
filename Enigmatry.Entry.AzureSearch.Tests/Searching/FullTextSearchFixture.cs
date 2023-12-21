@@ -17,7 +17,7 @@ public class FullTextSearchFixture : SearchServiceFixtureBase
 
     private async Task TestSearch(AzureSearchTestCase testCase)
     {
-        await UpdateDocuments(testCase.Documents);
+        await UpdateDocuments(testCase.Documents, TimeSpan.FromSeconds(2));
 
         var searchText = testCase.SearchText;
         var searchOptions = testCase.Options;
