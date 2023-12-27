@@ -1,27 +1,27 @@
-﻿using System;
-using Azure;
+﻿using Azure;
 using Azure.Search.Documents.Indexes;
 using Enigmatry.Entry.AzureSearch.Abstractions;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace Enigmatry.Entry.AzureSearch.Extensions;
 
 [PublicAPI]
 public static class ServiceCollectionExtensions
 {
-    public static IAzureSearchBuilder AddAzureSearch(this ServiceCollection services, SearchSettings searchSettings) => services.AddAzureSearch(searchSettings.CopyPropertiesTo);
+    public static IAzureSearchBuilder AddAzureSearch(this IServiceCollection services, SearchSettings searchSettings) => services.AddAzureSearch(searchSettings.CopyPropertiesTo);
 
-    public static IAzureSearchBuilder AddAzureSearch(this ServiceCollection services, IConfiguration configuration)
+    public static IAzureSearchBuilder AddAzureSearch(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<SearchSettings>(configuration);
 
         return services.AddAzureSearch();
     }
 
-    public static IAzureSearchBuilder AddAzureSearch(this ServiceCollection services,
+    public static IAzureSearchBuilder AddAzureSearch(this IServiceCollection services,
         Action<SearchSettings> searchOptions)
     {
         services.Configure(searchOptions);
@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
         return services.AddAzureSearch();
     }
 
-    public static IAzureSearchBuilder AddAzureSearch(this ServiceCollection services)
+    public static IAzureSearchBuilder AddAzureSearch(this IServiceCollection services)
     {
         services.AddScoped(serviceProvider =>
         {
