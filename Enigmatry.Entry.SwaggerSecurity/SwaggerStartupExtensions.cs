@@ -16,7 +16,7 @@ namespace Enigmatry.Entry.Swagger
         /// </summary>
         /// <param name="app">The application to configure</param>
         /// <param name="path">The internal swagger route (must start with '/')</param>
-        public static void AppUseSwagger(this IApplicationBuilder app, string path = "")
+        public static void UseEntrySwagger(this IApplicationBuilder app, string path = "")
         {
             app.UseOpenApi();
             app.UseSwaggerUi(c => c.Path = path);
@@ -29,7 +29,7 @@ namespace Enigmatry.Entry.Swagger
         /// <param name="clientId">The Client Id used by the OAuth2 Client</param>
         /// <param name="clientSecret">The optional Client Secret used by the OAuth2 Client</param>
         /// <param name="path">The internal swagger route (must start with '/')</param>
-        public static void AppUseSwaggerWithOAuth2Client(this IApplicationBuilder app, string clientId,
+        public static void UseEntrySwaggerWithOAuth2Client(this IApplicationBuilder app, string clientId,
             string clientSecret = "", string path = "")
         {
             app.UseOpenApi();
@@ -58,7 +58,7 @@ namespace Enigmatry.Entry.Swagger
         ///     Action to configure the OpenApi document generator settings after the initial settings
         ///     have been configured.
         /// </param>
-        public static void AppAddSwagger(this IServiceCollection services, string appTitle, string appVersion = "v1",
+        public static void AddEntrySwagger(this IServiceCollection services, string appTitle, string appVersion = "v1",
             Action<AspNetCoreOpenApiDocumentGeneratorSettings>? configureSettings = null) =>
             services.AddOpenApiDocument(settings =>
                 settings.ConfigureSwaggerSettings(appTitle, appVersion, configureSettings));
@@ -78,7 +78,7 @@ namespace Enigmatry.Entry.Swagger
         ///     Action to configure the OpenApi document generator settings after the initial settings
         ///     have been configured.
         /// </param>
-        public static void AppAddSwaggerWithAuthorizationCode(
+        public static void AddEntrySwaggerWithAuthorizationCode(
             this IServiceCollection services,
             string appTitle,
             string authorizationUrl,
@@ -138,7 +138,7 @@ namespace Enigmatry.Entry.Swagger
         ///     Action to configure the OpenApi document generator settings after the initial settings
         ///     have been configured.
         /// </param>
-        public static void AppAddSwaggerWithImplicitGrant(
+        public static void AddEntrySwaggerWithImplicitGrant(
             this IServiceCollection services,
             string appTitle,
             string authorizationUrl,

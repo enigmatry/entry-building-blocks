@@ -7,7 +7,7 @@ public static class AuthorizationStartupExtensions
 {
     public static void AppAddAuthorization(this IServiceCollection services)
     {
-        services.AppAddAuthorization<PermissionId>();
+        services.AddEntryAuthorization<PermissionId>();
         services.AddScoped<IAuthorizationProvider<PermissionId>, SampleAuthorizationProvider>();
     }
 }

@@ -11,7 +11,7 @@ namespace Enigmatry.Entry.HealthChecks.Extensions;
 public static class ServiceCollectionExtensions
 {
     [PublicAPI]
-    public static IHealthChecksBuilder AppAddHealthChecks(this IServiceCollection services, IConfiguration configuration)
+    public static IHealthChecksBuilder EntryAddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
         if (services == null)
         {

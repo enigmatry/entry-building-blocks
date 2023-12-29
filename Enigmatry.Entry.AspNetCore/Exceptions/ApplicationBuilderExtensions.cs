@@ -9,7 +9,7 @@ namespace Enigmatry.Entry.AspNetCore.Exceptions;
 [PublicAPI]
 public static class ApplicationBuilderExtensions
 {
-    public static void AppUseExceptionHandler(this IApplicationBuilder builder,
+    public static void UseEntryExceptionHandler(this IApplicationBuilder builder,
         Func<HttpContext, Task<bool>>? onBeforeException = null) =>
         builder.UseExceptionHandler(new ExceptionHandlerOptions
         {

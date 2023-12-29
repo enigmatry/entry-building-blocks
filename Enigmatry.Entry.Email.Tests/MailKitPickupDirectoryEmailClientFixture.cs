@@ -18,7 +18,7 @@ public class MailKitPickupDirectoryEmailClientFixture
         var configuration = TestConfigurationBuilder.Build();
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AppAddEmailClient(configuration);
+        services.AddEntryEmailClient(configuration);
         var provider = services.BuildServiceProvider();
         _client = provider.GetService<IEmailClient>();
     }

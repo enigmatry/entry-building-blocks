@@ -27,15 +27,13 @@ public class RazorSampleConsoleStartup
             options.FileProviders.Add(new PhysicalFileProvider(_environment.ContentRootPath));
         });
 
-        services.AppAddTemplatingEngine();
+        services.AddEntryTemplatingEngine();
     }
 
     [UsedImplicitly]
-#pragma warning disable CA1801 // Review unused parameters
-#pragma warning disable IDE0060 // Remove unused parameter
+#pragma warning disable IDE0060
     public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-#pragma warning restore IDE0060 // Remove unused parameter
-#pragma warning restore CA1801 // Review unused parameters
+#pragma warning restore IDE0060
     {
     }
 }

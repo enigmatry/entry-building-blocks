@@ -15,7 +15,7 @@ namespace Enigmatry.Entry.HealthChecks.Extensions;
 [PublicAPI]
 public static class StartupExtensions
 {
-    public static void AppMapHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
+    public static void MapEntryHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
     {
         var settings = configuration.ResolveHealthCheckSettings();
         var healthCheckEndpoint = endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions

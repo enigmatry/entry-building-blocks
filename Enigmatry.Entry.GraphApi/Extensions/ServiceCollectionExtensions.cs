@@ -6,7 +6,7 @@ using Microsoft.Graph;
 namespace Enigmatry.Entry.GraphApi.Extensions;
 public static class ServiceCollectionExtensions
 {
-    public static void AppAddGraphApi(this IServiceCollection services, IConfiguration configuration) =>
+    public static void AddEntryGraphApi(this IServiceCollection services, IConfiguration configuration) =>
         services.AddScoped<GraphServiceClient>(provider => CreateGraphServiceClient(configuration));
 
 

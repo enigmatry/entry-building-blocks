@@ -11,7 +11,7 @@ namespace Enigmatry.Entry.AspNetCore.Authorization;
 [PublicAPI]
 public static class AuthorizationStartupExtensions
 {
-    public static ControllerActionEndpointConventionBuilder AppRequireAuthorization(
+    public static ControllerActionEndpointConventionBuilder RequireEntryAuthorization(
         this ControllerActionEndpointConventionBuilder builder,
         bool enable) =>
         !enable ? builder : builder.RequireAuthorization();
@@ -26,7 +26,7 @@ public static class AuthorizationStartupExtensions
     /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
     /// <exception cref="ArgumentException">Thrown when the TPermission type can not be converted to or from string. You need to implement <see cref="System.ComponentModel.TypeConverter" /> when using custom permission type.</exception>
     /// <returns>The <see cref="AuthorizationBuilder"/> so that additional calls can be chained.</returns>
-    public static AuthorizationBuilder AppAddAuthorization<TPermission>(this IServiceCollection services) where TPermission : notnull
+    public static AuthorizationBuilder AddEntryAuthorization<TPermission>(this IServiceCollection services) where TPermission : notnull
     {
         PermissionTypeConverter<TPermission>.EnsureConversionToPolicyNameIsPossible();
 

@@ -8,7 +8,7 @@ namespace Enigmatry.Entry.Email
 {
     public static class EmailClientStartupExtension
     {
-        public static void AppAddEmailClient(this IServiceCollection services, IConfiguration configuration)
+        public static void AddEntryEmailClient(this IServiceCollection services, IConfiguration configuration)
         {
             var section = configuration.GetSection(SmtpSettings.AppSmtp);
 

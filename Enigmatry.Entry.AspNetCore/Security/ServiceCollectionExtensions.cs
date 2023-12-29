@@ -10,7 +10,7 @@ namespace Enigmatry.Entry.AspNetCore.Security;
 [PublicAPI]
 public static class ServiceCollectionExtensions
 {
-    public static void AppAddHttps(this IServiceCollection services, IHostEnvironment environment)
+    public static void AddEntryHttps(this IServiceCollection services, IHostEnvironment environment)
     {
         var isDevelopmentEnvironment = environment.IsDevelopment();
 

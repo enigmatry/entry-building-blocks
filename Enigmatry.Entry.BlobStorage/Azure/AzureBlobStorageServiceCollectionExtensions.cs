@@ -17,7 +17,7 @@ namespace Enigmatry.Entry.BlobStorage.Azure
         /// </summary>
         /// <param name="services">Service collection.</param>
         /// <param name="name">Azure Blob Storage container name.</param>
-        public static IServiceCollection AppAddPublicAzBlobStorage(this IServiceCollection services, string name) =>
+        public static IServiceCollection AddEntryPublicAzBlobStorage(this IServiceCollection services, string name) =>
             services.AddSingleton<IBlobStorage>(provider =>
             {
                 var settings = ResolveSettings(provider);
@@ -32,7 +32,7 @@ namespace Enigmatry.Entry.BlobStorage.Azure
         /// </summary>
         /// <param name="services">Service collection.</param>
         /// <param name="name">Azure Blob Storage container name.</param>
-        public static IServiceCollection AppAddPrivateAzBlobStorage(this IServiceCollection services, string name) =>
+        public static IServiceCollection AddEntryPrivateAzBlobStorage(this IServiceCollection services, string name) =>
             services.AddSingleton<IPrivateBlobStorage>(provider =>
             {
                 var settings = ResolveSettings(provider);
