@@ -8,7 +8,7 @@ using MediatR;
 namespace Enigmatry.Entry.MediatR
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : IBaseRequest
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
