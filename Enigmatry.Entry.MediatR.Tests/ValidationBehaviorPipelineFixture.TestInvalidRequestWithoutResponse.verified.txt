@@ -1,0 +1,24 @@
+﻿{
+  Type: ValidationException,
+  Errors: [
+    {
+      PropertyName: Name,
+      ErrorMessage: 'Name' must not be empty.,
+      AttemptedValue: ,
+      ErrorCode: NotEmptyValidator,
+      FormattedMessagePlaceholderValues: {
+        PropertyName: Name,
+        PropertyPath: Name,
+        PropertyValue: 
+      }
+    }
+  ],
+  Message:
+Validation failed: 
+ -- Name: 'Name' must not be empty. Severity: Error,
+  StackTrace:
+at Enigmatry.Entry.MediatR.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+at MediatR.Wrappers.RequestHandlerWrapperImpl`1.<>c__DisplayClass1_1.<Handle>b__2()
+at Enigmatry.Entry.MediatR.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
+at Enigmatry.Entry.MediatR.Tests.ValidationBehaviorPipelineFixture.TestInvalidRequestWithoutResponse()
+}
