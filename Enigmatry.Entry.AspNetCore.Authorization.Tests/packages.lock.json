@@ -146,7 +146,7 @@
       },
       "FluentValidation": {
         "type": "CentralTransitive",
-        "requested": "[11.8.1, )",
+        "requested": "[11.9.0, )",
         "resolved": "11.9.0",
         "contentHash": "VneVlTvwYDkfHV5av3QrQ0amALgrLX6LV94wlYyEsh0B/klJBW7C8y2eAtj5tOZ3jH6CAVpr4s1ZGgew/QWyig=="
       },
