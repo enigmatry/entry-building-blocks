@@ -4,6 +4,7 @@ using static Enigmatry.Entry.AzureSearch.Tests.Searching.AzureSearchTestCases;
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
 [Category("integration")]
+// TODO BP-815: Remove Explicit attribute
 [Explicit]
 public class FullTextSearchFixture : SearchServiceFixtureBase
 {
