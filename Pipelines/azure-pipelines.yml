@@ -96,8 +96,9 @@ stages:
 - stage: publish_nuget
   displayName: publish packages to NuGet
   dependsOn: ci_build
-  # TODO BP-637: Remove this condition before the merge to master
-  condition: and(succeeded(), or(contains(variables['Build.SourceBranch'], 'BP-637'), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))))
+  # TODO BP-637: Uncomment this condition before the merge to master
+  ## condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), contains(variables['Build.SourceBranch'], 'BP-637')))
   jobs:
   - deployment: Publish
     environment: Publish to NuGet
