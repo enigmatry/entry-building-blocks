@@ -18,7 +18,6 @@ Validation failed:
  -- Name: 'Name' must not be empty. Severity: Error,
   StackTrace:
 at Enigmatry.Entry.MediatR.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
-at MediatR.Wrappers.RequestHandlerWrapperImpl`1.<>c__DisplayClass1_1.<Handle>b__2()
 at Enigmatry.Entry.MediatR.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken)
 at Enigmatry.Entry.MediatR.Tests.ValidationBehaviorPipelineFixture.TestInvalidRequestWithoutResponse()
 }
