@@ -1,4 +1,5 @@
 ﻿
+using System.Runtime.CompilerServices;
 using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 using JetBrains.Annotations;
@@ -15,6 +16,11 @@ public static class AuthorizationStartupExtensions
         this ControllerActionEndpointConventionBuilder builder,
         bool enable) =>
         !enable ? builder : builder.RequireAuthorization();
+
+    [Obsolete("Use AddEntryAuthorization instead")]
+    public static AuthorizationBuilder AppAddAuthorization<TPermission>(this IServiceCollection services)
+        where TPermission : notnull =>
+        services.AddEntryAuthorization<TPermission>();
 
     /// <summary>
     /// Registers authorization services for the chosen permission type and enables permission-based authorization.

@@ -20,7 +20,7 @@ public class Program
 
         builder.Services.AppAddAuthorization();
         builder.Services.AddEntrySwagger("SampleApp");
-        builder.Services.EntryAddHealthChecks(builder.Configuration);
+        builder.Services.AddEntryHealthChecks(builder.Configuration);
 
         ConfigureMvc(mvcBuilder, SampleAppSettings.Default());
 

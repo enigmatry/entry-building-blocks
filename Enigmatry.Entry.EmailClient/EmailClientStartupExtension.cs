@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Enigmatry.Entry.Core.Settings;
 using Enigmatry.Entry.Email.MailKit;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,9 @@ namespace Enigmatry.Entry.Email
 {
     public static class EmailClientStartupExtension
     {
+        [Obsolete("Use AddEntryEmailClient instead")]
+        public static void AppAddEmailClient(this IServiceCollection services, IConfiguration configuration) => services.AddEntryEmailClient(configuration);
+
         public static void AddEntryEmailClient(this IServiceCollection services, IConfiguration configuration)
         {
             var section = configuration.GetSection(SmtpSettings.AppSmtp);
