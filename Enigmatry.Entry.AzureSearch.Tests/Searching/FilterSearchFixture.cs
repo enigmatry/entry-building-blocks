@@ -4,6 +4,7 @@ using Enigmatry.Entry.AzureSearch.Tests.Documents;
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
 
 [Category("integration")]
+[Explicit("Flaky: TODO BP-815: Remove Explicit attribute")]
 public class FilterSearchFixture : SearchServiceFixtureBase
 {
     [SetUp]

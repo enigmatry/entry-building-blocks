@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.HealthChecks.Authorization;
+﻿using System;
+using Enigmatry.Entry.HealthChecks.Authorization;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -15,7 +16,10 @@ namespace Enigmatry.Entry.HealthChecks.Extensions;
 [PublicAPI]
 public static class StartupExtensions
 {
-    public static void AppMapHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
+    [Obsolete("Use MapEntryHealthCheck instead")]
+    public static void AppMapHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration) => endpoints.MapEntryHealthCheck(configuration);
+
+    public static void MapEntryHealthCheck(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
     {
         var settings = configuration.ResolveHealthCheckSettings();
         var healthCheckEndpoint = endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions

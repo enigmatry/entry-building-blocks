@@ -4,9 +4,9 @@
     "net8.0": {
       "FluentValidation": {
         "type": "Direct",
-        "requested": "[11.8.1, )",
-        "resolved": "11.8.1",
-        "contentHash": "N72rnlE99XYB7EGA1u9y7m7kNTTynqOPBhZqDE8zr1Y0aSR4t5si94LRA7UVdAV09GaXWCErW+EiFhfbg3DSbg=="
+        "requested": "[11.9.0, )",
+        "resolved": "11.9.0",
+        "contentHash": "VneVlTvwYDkfHV5av3QrQ0amALgrLX6LV94wlYyEsh0B/klJBW7C8y2eAtj5tOZ3jH6CAVpr4s1ZGgew/QWyig=="
       },
       "MediatR": {
         "type": "Direct",
@@ -91,7 +91,7 @@
       },
       "Microsoft.Extensions.Options": {
         "type": "CentralTransitive",
-        "requested": "[8.0.0, )",
+        "requested": "[8.0.1, )",
         "resolved": "8.0.0",
         "contentHash": "JOVOfqpnqlVLUzINQ2fox8evY2SKLYJ3BV8QDe/Jyp21u1T7r45x/R/5QdteURMR5r01GxeJSBBUOCOyaNXA3g==",
         "dependencies": {
