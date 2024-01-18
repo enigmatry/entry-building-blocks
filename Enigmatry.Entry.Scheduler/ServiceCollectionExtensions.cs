@@ -34,7 +34,7 @@ public static class ServiceCollectionExtensions
     private static void AddJobs(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration,
         Assembly assembly, ILogger logger)
     {
-        var jobTypes = assembly.FinAllJobTypes();
+        var jobTypes = assembly.FindAllJobTypes();
         var configurations = configuration.FindAllJobConfigurations(jobTypes);
         configurations.ForEach(section => quartz.AddJob(section, logger));
     }

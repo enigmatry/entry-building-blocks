@@ -9,7 +9,7 @@ public class TypeExtensionsFixture
     [Test]
     public async Task TestFindJobTypes()
     {
-        var jobs = ThisAssembly().FinAllJobTypes().ToList();
+        var jobs = ThisAssembly().FindAllJobTypes().ToList();
 
         jobs.Should().Contain(typeof(SampleJobs.AJob), "this type is implementing IJob interface");
         jobs.Should().Contain(typeof(SampleJobs.AnEntryJobWithArguments), "this type is deriving from EntryJob");
