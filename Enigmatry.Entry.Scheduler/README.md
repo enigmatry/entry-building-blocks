@@ -15,6 +15,23 @@ You can use the `AppAddQuartz` extension method on `IServiceCollection` to add a
 ```
 This wil scan your currently executing assembly for all types that match the Quartz jobs that are configured in the appSettings, and provide them to Quartz as a job to be run. 
 
+### Add application insights
+
+- Install the [Microsoft.ApplicationInsights.WorkerService](https://www.nuget.org/packages/Microsoft.ApplicationInsights.WorkerService) package.
+
+- Add services.AddApplicationInsightsTelemetryWorkerService(); to the ConfigureServices() method
+
+- In the `AppAddQuartz` extension method, use AddEntryApplicationInsights() to register job listener for application insights, as in the example:
+
+```cs
+services.AddEntryQuartz(configuration, Assembly.GetExecutingAssembly(), logger, quartz =>
+    {
+        quartz.AddEntryApplicationInsights();
+    });
+
+services.AddApplicationInsightsTelemetryWorkerService();
+```
+
 ## Configuration
 
 Example:

@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddEntryQuartz(configuration, assembly, logger);
 
     public static void AddEntryQuartz(this IServiceCollection services, IConfiguration configuration, Assembly assembly,
-        ILogger logger, Action<IServiceCollectionQuartzConfigurator>? configure = null)
+        ILogger logger, Action<IServiceCollectionQuartzConfigurator>? configureQuartz = null)
     {
         // Quartz configuration reference:
         // https://www.quartz-scheduler.net/documentation/quartz-3.x/configuration/reference.html#quartz-net-configuration-reference
@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
         services.AddQuartz(quartz =>
         {
             quartz.AddJobs(configuration, assembly, logger);
-            configure?.Invoke(quartz);
+            configureQuartz?.Invoke(quartz);
         });
 
         services.AddQuartzHostedService(quartz => quartz.WaitForJobsToComplete = true);
