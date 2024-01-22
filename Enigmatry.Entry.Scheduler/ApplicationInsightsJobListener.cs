@@ -5,10 +5,9 @@ using Quartz;
 
 namespace Enigmatry.Entry.Scheduler;
 
-internal sealed class ApplicationInsightsJobListener : IJobListener, IDisposable
+internal sealed class ApplicationInsightsJobListener : IJobListener
 {
     private readonly TelemetryClient _telemetryClient;
-    private readonly Dictionary<JobKey, IOperationHolder<RequestTelemetry>> _telemetryOperations = [];
 
     public ApplicationInsightsJobListener(TelemetryClient telemetryClient)
     {
@@ -21,11 +20,8 @@ internal sealed class ApplicationInsightsJobListener : IJobListener, IDisposable
         return Task.CompletedTask;
     }
 
-    public Task JobExecutionVetoed(IJobExecutionContext context, CancellationToken cancellationToken = default)
-    {
-        StopTelemetryOperation(context);
-        return Task.CompletedTask;
-    }
+    public Task JobExecutionVetoed(IJobExecutionContext context, CancellationToken cancellationToken = default) =>
+        Task.CompletedTask;
 
     public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException? jobException,
         CancellationToken cancellationToken = default)
@@ -36,29 +32,31 @@ internal sealed class ApplicationInsightsJobListener : IJobListener, IDisposable
 
     private void StartTelemetryOperation(IJobExecutionContext context)
     {
-        var operation = _telemetryClient.StartOperation<RequestTelemetry>(context.JobDetail.Key.Name);
-        _telemetryOperations.TryAdd(context.JobDetail.Key, operation);
+        var telemetryOperation = _telemetryClient.StartOperation<RequestTelemetry>(context.JobDetail.Key.Name);
+        context.Put(StorageKeyForTelemetry, telemetryOperation);
     }
 
     private void StopTelemetryOperation(IJobExecutionContext context, JobExecutionException? jobException = null)
     {
-        if (!_telemetryOperations.TryGetValue(context.JobDetail.Key, out var operation))
+        using var telemetryOperation = context.Get(StorageKeyForTelemetry) as IOperationHolder<RequestTelemetry>;
+        if (telemetryOperation == null)
         {
             return;
         }
 
-        if (jobException is not null)
+        if (jobException != null)
         {
-            // Response code needs to be set in order for operation to show in ApplicationInsights 'Failed' list
-            operation.Telemetry.Success = false;
-            operation.Telemetry.ResponseCode = jobException.GetType().Name;
+            // Both Success and Response code should be set in order for operation to show in the ApplicationInsights 'Failed' list
+            telemetryOperation.Telemetry.Success = false;
+            telemetryOperation.Telemetry.ResponseCode = "500";
+
+            _telemetryClient.TrackException(jobException);
         }
 
-        _telemetryClient.StopOperation(operation);
-        _telemetryOperations.Remove(context.JobDetail.Key);
+        _telemetryClient.StopOperation(telemetryOperation);
     }
 
-    public void Dispose() => _telemetryClient.Flush();
+    private const string StorageKeyForTelemetry = "Telemetry_Operation_Holder";
 
     public string Name => nameof(ApplicationInsightsJobListener);
 }
