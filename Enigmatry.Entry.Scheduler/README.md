@@ -4,13 +4,13 @@ Building Block with startup extensions for a scheduler webjob using Quartz jobs.
 
 ## Registration
 
-You can use the `AppAddQuartz` extension method on `IServiceCollection` to add a Quartz hosted service to th IoC container. This extension method will also configure Quartz and dynamicall add all the jobs from your scheduler project:
+You can use the `AddEntryQuartz` extension method on `IServiceCollection` to add a Quartz hosted service to th IoC container. This extension method will also configure Quartz and dynamicall add all the jobs from your scheduler project:
 
 ```cs
  public void ConfigureServices(IServiceCollection services)
     {
         ...
-        services.AppAddQuartz(context.Configuration, Assembly.GetExecutingAssembly());
+        services.AddEntryQuartz(context.Configuration, Assembly.GetExecutingAssembly());
     }
 ```
 This wil scan your currently executing assembly for all types that match the Quartz jobs that are configured in the appSettings, and provide them to Quartz as a job to be run. 
@@ -21,7 +21,7 @@ This wil scan your currently executing assembly for all types that match the Qua
 
 - Add services.AddApplicationInsightsTelemetryWorkerService(); to the ConfigureServices() method
 
-- In the `AppAddQuartz` extension method, use AddEntryApplicationInsights() to register job listener for application insights, as in the example:
+- In the `AddEntryQuartz` extension method, use AddEntryApplicationInsights() to register job listener for application insights, as in the example:
 
 ```cs
 services.AddEntryQuartz(configuration, Assembly.GetExecutingAssembly(), logger, quartz =>
