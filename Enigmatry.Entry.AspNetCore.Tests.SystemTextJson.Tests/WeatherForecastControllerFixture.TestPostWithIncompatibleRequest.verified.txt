@@ -1,0 +1,12 @@
+﻿{
+  title: One or more validation errors occurred.,
+  status: 400,
+  errors: {
+    request: [
+      The request field is required.
+    ],
+    $.IntProperty: [
+      The JSON value could not be converted to System.Nullable`1[System.Int32]. Path: $.IntProperty | LineNumber: 0 | BytePositionInLine: 102.
+    ]
+  }
+}

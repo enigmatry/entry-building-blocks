@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
 using Enigmatry.Entry.Core.Entities;
 using FluentValidation;
 using FluentValidation.Results;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
@@ -15,21 +16,26 @@ namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = {
+    private static readonly string[] Summaries =
+    {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
+    private readonly IMediator _mediator;
+
+    public WeatherForecastController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpGet]
-    [SuppressMessage("Security", "CA5394:Do not use insecure randomness",
-        Justification = "Suppressed until random utilities are merged.")]
     public IEnumerable<WeatherForecast> Get() =>
-        Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        Enumerable.Range(0, Summaries.Length).Select(index => new WeatherForecast
         {
             Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-            .ToArray();
+            TemperatureC = index * 10,
+            Summary = Summaries[index]
+        }).ToArray();
 
     [HttpGet("throwsError")]
     public IEnumerable<WeatherForecast> ThrowsError() => throw new InvalidOperationException("Some exception");
@@ -42,6 +48,10 @@ public class WeatherForecastController : ControllerBase
     public IEnumerable<WeatherForecast> ProblemDetails() =>
         throw new ValidationException("AValidationExceptionMessage",
             new List<ValidationFailure> { new("AProperty", "AFailedValidationMessage") });
+
+    [HttpPost]
+    public async Task UpdateWeatherForecast([FromBody] UpdateWeatherForecast.Request request) =>
+        await _mediator.Send(request);
 
     [HttpGet("UserWithPermissionIsAllowed")]
     [AppAuthorize(PermissionId.Read, PermissionId.Write)]

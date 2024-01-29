@@ -36,10 +36,11 @@ public static class JsonHttpClientExtensions
         return await response.DeserializeWithStatusCodeCheckAsync<TResponse>();
     }
 
-    public static async Task PostAsync<T>(this HttpClient client, string uri, T content)
+    public static async Task<HttpResponseMessage> PostAsync<T>(this HttpClient client, string uri, T content)
     {
         var response = await client.PostAsync(uri, content, CreateFormatter());
         await response.EnsureSuccessStatusCodeAsync();
+        return response;
     }
 
     public static async Task<TResponse?> PostAsync<T, TResponse>(this HttpClient client, string uri, T content)
@@ -48,9 +49,13 @@ public static class JsonHttpClientExtensions
         return await response.DeserializeWithStatusCodeCheckAsync<TResponse>();
     }
 
+    public static async Task<HttpResponseMessage> PostWithoutResponseCheckAsync<T>(this HttpClient client, string uri,
+        T content)
+    {
+        var response = await client.PostAsync(uri, content, CreateFormatter());
+        return response;
+    }
+
     private static JsonMediaTypeFormatter CreateFormatter() =>
-        new()
-        {
-            SerializerSettings = HttpSerializationSettings.Settings
-        };
+        new() { SerializerSettings = HttpSerializationSettings.Settings };
 }

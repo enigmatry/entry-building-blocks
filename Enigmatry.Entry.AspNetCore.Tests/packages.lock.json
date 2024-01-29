@@ -541,7 +541,9 @@
           "Enigmatry.Entry.AspNetCore": "[1.0.0, )",
           "Enigmatry.Entry.AspNetCore.Authorization": "[1.0.0, )",
           "Enigmatry.Entry.HealthChecks": "[1.0.0, )",
+          "Enigmatry.Entry.MediatR": "[1.0.0, )",
           "Enigmatry.Entry.Swagger": "[1.0.0, )",
+          "FluentValidation.DependencyInjectionExtensions": "[11.9.0, )",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "[8.0.1, )"
         }
       },
@@ -561,6 +563,15 @@
           "AspNetCore.HealthChecks.System": "[8.0.0, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
           "JetBrains.Annotations": "[2023.3.0, )"
+        }
+      },
+      "enigmatry.entry.mediatr": {
+        "type": "Project",
+        "dependencies": {
+          "FluentValidation": "[11.9.0, )",
+          "MediatR": "[12.2.0, )",
+          "Microsoft.Extensions.Logging": "[8.0.0, )",
+          "Serilog": "[3.1.1, )"
         }
       },
       "enigmatry.entry.swagger": {
@@ -605,6 +616,16 @@
         "requested": "[11.9.0, )",
         "resolved": "11.9.0",
         "contentHash": "VneVlTvwYDkfHV5av3QrQ0amALgrLX6LV94wlYyEsh0B/klJBW7C8y2eAtj5tOZ3jH6CAVpr4s1ZGgew/QWyig=="
+      },
+      "FluentValidation.DependencyInjectionExtensions": {
+        "type": "CentralTransitive",
+        "requested": "[11.9.0, )",
+        "resolved": "11.9.0",
+        "contentHash": "Ko++xvN7HUf4WlHJL6bhsybUj/uho8ApOYIdxGjpF8Ot7Fukz6LRfRJ06H0KXhWqmMHWEbu89hJbjKJHtg7b9g==",
+        "dependencies": {
+          "FluentValidation": "11.9.0",
+          "Microsoft.Extensions.Dependencyinjection.Abstractions": "2.1.0"
+        }
       },
       "JetBrains.Annotations": {
         "type": "CentralTransitive",

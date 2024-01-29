@@ -1,0 +1,18 @@
+﻿{
+  type: https://asp.net/core,
+  title: One or more validation errors occurred.,
+  status: 400,
+  detail: Please refer to the errors property for additional details.,
+  instance: /WeatherForecast,
+  errors: {
+    GuidProperty: [
+      'Guid Property' must not be empty.
+    ],
+    StringProperty: [
+      'String Property' must not be empty.
+    ],
+    IntProperty: [
+      'Int Property' must not be empty.
+    ]
+  }
+}

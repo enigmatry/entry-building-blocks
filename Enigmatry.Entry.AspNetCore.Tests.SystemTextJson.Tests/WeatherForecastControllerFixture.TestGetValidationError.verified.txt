@@ -1,0 +1,12 @@
+﻿{
+  type: https://asp.net/core,
+  title: One or more validation errors occurred.,
+  status: 400,
+  detail: Please refer to the errors property for additional details.,
+  instance: /WeatherForecast/ProblemDetails,
+  errors: {
+    AProperty: [
+      AFailedValidationMessage
+    ]
+  }
+}
