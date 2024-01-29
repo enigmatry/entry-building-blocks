@@ -22,7 +22,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AppAddMediatR(ThisAssembly);
-        builder.Services.AppAddValidation(ThisAssembly);
+        builder.Services.AppAddFluentValidation(ThisAssembly);
 
         var mvcBuilder = builder.Services.AddControllers();
 

@@ -7,6 +7,8 @@
       Could not convert string to integer: a1bc4ffb-005a-4752-a481-21e84257cc72. Path 'IntProperty', line 1, position 102.
     ]
   },
+  type: https://tools.ietf.org/html/rfc9110#section-15.5.1,
   title: One or more validation errors occurred.,
-  status: 400
+  status: 400,
+  traceId: ScrubbedtraceId
 }

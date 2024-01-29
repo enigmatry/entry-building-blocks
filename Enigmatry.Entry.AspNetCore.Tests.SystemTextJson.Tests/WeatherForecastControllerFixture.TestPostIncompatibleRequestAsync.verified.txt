@@ -10,5 +10,5 @@
       The JSON value could not be converted to System.Nullable`1[System.Int32]. Path: $.IntProperty | LineNumber: 0 | BytePositionInLine: 102.
     ]
   },
-  traceId: 00-ccb0100c5cc2ae8dbd4324050cfdbb1d-dd4b518ad873e12b-00
+  traceId: ScrubbedtraceId
 }
