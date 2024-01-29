@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Controllers;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp.Startup;
 using Enigmatry.Entry.HealthChecks.Extensions;
 using Enigmatry.Entry.Swagger;
 
@@ -12,9 +15,14 @@ namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp;
     Justification = "This rule doesn't apply for Program.cs")]
 public class Program
 {
+    private static readonly Assembly ThisAssembly = typeof(UpdateWeatherForecast.Request).Assembly;
+
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AppAddMediatR(ThisAssembly);
+        builder.Services.AppAddValidation(ThisAssembly);
 
         var mvcBuilder = builder.Services.AddControllers();
 

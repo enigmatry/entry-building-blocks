@@ -1,0 +1,64 @@
+﻿{
+  Status: RanToCompletion,
+  Result: [
+    {
+      Date: DateTime_1,
+      TemperatureF: 32,
+      Summary: Freezing
+    },
+    {
+      Date: DateTime_2,
+      TemperatureC: 10,
+      TemperatureF: 49,
+      Summary: Bracing
+    },
+    {
+      Date: DateTime_3,
+      TemperatureC: 20,
+      TemperatureF: 67,
+      Summary: Chilly
+    },
+    {
+      Date: DateTime_4,
+      TemperatureC: 30,
+      TemperatureF: 85,
+      Summary: Cool
+    },
+    {
+      Date: DateTime_5,
+      TemperatureC: 40,
+      TemperatureF: 103,
+      Summary: Mild
+    },
+    {
+      Date: DateTime_6,
+      TemperatureC: 50,
+      TemperatureF: 121,
+      Summary: Warm
+    },
+    {
+      Date: DateTime_7,
+      TemperatureC: 60,
+      TemperatureF: 139,
+      Summary: Balmy
+    },
+    {
+      Date: DateTime_8,
+      TemperatureC: 70,
+      TemperatureF: 157,
+      Summary: Hot
+    },
+    {
+      Date: DateTime_9,
+      TemperatureC: 80,
+      TemperatureF: 175,
+      Summary: Sweltering
+    },
+    {
+      Date: DateTime_10,
+      TemperatureC: 90,
+      TemperatureF: 193,
+      Summary: Scorching
+    }
+  ]
+}

@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.AspNetCore.Authorization;
+﻿using System.Collections.Generic;
+using Enigmatry.Entry.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleApp.Authorization;
