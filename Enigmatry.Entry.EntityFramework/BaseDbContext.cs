@@ -21,7 +21,8 @@ public abstract class BaseDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(_entitiesDbContextOptions.ConfigurationAssembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(_entitiesDbContextOptions.ConfigurationAssembly,
+            _entitiesDbContextOptions.ConfigurationTypePredicate);
 
         RegisterEntities(modelBuilder);
 
@@ -44,7 +45,13 @@ public abstract class BaseDbContext : DbContext
 
         foreach (var type in entityTypes)
         {
-            entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, Array.Empty<object>());
+            if (_entitiesDbContextOptions.EntityTypePredicate != null &&
+                !_entitiesDbContextOptions.EntityTypePredicate(type))
+            {
+                continue;
+            }
+
+            entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, []);
         }
     }
 }
