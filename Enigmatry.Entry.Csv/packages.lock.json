@@ -4,9 +4,9 @@
     "net8.0": {
       "CsvHelper": {
         "type": "Direct",
-        "requested": "[30.0.1, )",
-        "resolved": "30.0.1",
-        "contentHash": "rcZtgbWR+As4G3Vpgx0AMNmShGuQLFjkHAPIIflzrfkJCx8/AOd4m96ZRmiU1Wi39qS5UVjV0P8qdgqOo5Cwyg=="
+        "requested": "[31.0.2, )",
+        "resolved": "31.0.2",
+        "contentHash": "ndlIN77XcFm6qqGlNPzl0XjVupMCBVhVSiO+1+X2UhJtnnvkx9f//7FOvlkLuEQ76NC3Y7owa8IOhgtKVa4H7Q=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",

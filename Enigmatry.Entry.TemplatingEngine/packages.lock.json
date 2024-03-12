@@ -4,9 +4,9 @@
     "net8.0": {
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "4Gy4Vz4koUBroyu1J57XIQ8zT6oOzggjn/mWc3YTpB/rnaR27Y+msTM8+/ecZ/V26KARrFq2HFylmKFQQtiD+A==",
+        "requested": "[8.0.3, )",
+        "resolved": "8.0.3",
+        "contentHash": "LTOn67K9Qc09ux/y3qaXnce8pNgHg8yftPruCUQCGH7MLEe0PLGTqoIlg1yZrfkljdiB7yLCrn0lrjSZKxU0bw==",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Razor.Extensions": "6.0.0",
           "Microsoft.CodeAnalysis.Razor": "6.0.0",
@@ -15,9 +15,9 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Direct",
-        "requested": "[8.0.0, )",
-        "resolved": "8.0.0",
-        "contentHash": "cjWrLkJXK0rs4zofsK4bSdg+jhDLTaxrkXu4gS6Y7MAlCvRyNNgwY/lJi5RDlQOnSZweHqoyvgvbdvQsRIW+hg=="
+        "requested": "[8.0.1, )",
+        "resolved": "8.0.1",
+        "contentHash": "fGLiCRLMYd00JYpClraLjJTNKLmMJPnqxMaiRzEBIIvevlzxz33mXy39Lkd48hu1G+N21S7QpaO5ZzKsI6FRuA=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
