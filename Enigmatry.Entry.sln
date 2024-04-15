@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine", "Enigmatry.Entry.TemplatingEngine\Enigmatry.Entry.TemplatingEngine.csproj", "{C303C44E-DEAE-4924-B2F5-6B47BD173D12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine.Razor", "Enigmatry.Entry.TemplatingEngine.Razor\Enigmatry.Entry.TemplatingEngine.Razor.csproj", "{C303C44E-DEAE-4924-B2F5-6B47BD173D12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Csv", "Enigmatry.Entry.Csv\Enigmatry.Entry.Csv.csproj", "{B769CA58-0B77-4E48-82BC-E4C0A2A48F00}"
 EndProject
@@ -58,7 +58,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Csv.Tests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Email.Tests", "Enigmatry.Entry.Email.Tests\Enigmatry.Entry.Email.Tests.csproj", "{0EB33A95-49F4-46BA-9840-A5D6A5273DE5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine.Tests", "Enigmatry.Entry.TemplatingEngine.Tests\Enigmatry.Entry.TemplatingEngine.Tests.csproj", "{1E122C99-D6B6-48D1-981A-8A5F2231220B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.TemplatingEngine.Razor.Tests", "Enigmatry.Entry.TemplatingEngine.Razor.Tests\Enigmatry.Entry.TemplatingEngine.Razor.Tests.csproj", "{1E122C99-D6B6-48D1-981A-8A5F2231220B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.Scheduler", "Enigmatry.Entry.Scheduler\Enigmatry.Entry.Scheduler.csproj", "{2C32CAB5-4DD4-4623-947F-F85A4C61BB42}"
 EndProject
@@ -93,6 +93,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.MediatR.Tests", "Enigmatry.Entry.MediatR.Tests\Enigmatry.Entry.MediatR.Tests.csproj", "{A97D6573-EB68-45BE-96D0-74AE7DEE9DF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.TemplatingEngine.Fluid", "Enigmatry.Entry.TemplatingEngine.Fluid\Enigmatry.Entry.TemplatingEngine.Fluid.csproj", "{9D50409E-3508-463D-B508-785B03F2CE3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.TemplatingEngine.Fluid.Tests", "Enigmatry.Entry.TemplatingEngine.Fluid.Tests\Enigmatry.Entry.TemplatingEngine.Fluid.Tests.csproj", "{944C3B78-D165-4412-B49A-2247AC5D2DC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +248,14 @@ Global
 		{A97D6573-EB68-45BE-96D0-74AE7DEE9DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A97D6573-EB68-45BE-96D0-74AE7DEE9DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A97D6573-EB68-45BE-96D0-74AE7DEE9DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D50409E-3508-463D-B508-785B03F2CE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D50409E-3508-463D-B508-785B03F2CE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D50409E-3508-463D-B508-785B03F2CE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D50409E-3508-463D-B508-785B03F2CE3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

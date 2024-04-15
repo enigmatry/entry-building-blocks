@@ -4,9 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
-    <PackageId>Enigmatry.Entry.TemplatingEngine</PackageId>
+    <PackageId>Enigmatry.Entry.TemplatingEngine.Razor</PackageId>
     <Product>Enigmatry.Entry.TemplatingEngine</Product>
     <Description>Building Block for adding Email Templating to an Entry based project</Description>
+    <RootNamespace>Enigmatry.Entry.TemplatingEngine</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
