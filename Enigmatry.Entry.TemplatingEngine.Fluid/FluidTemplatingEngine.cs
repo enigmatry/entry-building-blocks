@@ -33,8 +33,8 @@ public class FluidTemplatingEngine : ITemplatingEngine
         var options = new TemplateOptions
         {
             MemberAccessStrategy =
-                new LoggingUnsafeMemberAccessStrategy(_logger) { MemberNameStrategy = MemberNameStrategies.SnakeCase },
-            CultureInfo = CultureInfo.GetCultureInfo("nl-NL")
+                new LoggingUnsafeMemberAccessStrategy(_logger) { MemberNameStrategy = _options.MemberNameStrategy },
+            CultureInfo = _options.CultureInfo
         };
 
         if (_options.ConvertEnumToString)
@@ -43,7 +43,7 @@ public class FluidTemplatingEngine : ITemplatingEngine
         }
 
         options.ValueConverters.Add(value => value is DateTimeOffset dateTime
-            ? dateTime.ToDutchDateTime().ToString("dd-MM-yyyy HH:mm:ss")
+            ? dateTime.ToDutchDateTime().ToString("dd-MM-yyyy HH:mm:ss", _options.CultureInfo)
             : null);
 
         foreach (var filter in _fluidFilters)

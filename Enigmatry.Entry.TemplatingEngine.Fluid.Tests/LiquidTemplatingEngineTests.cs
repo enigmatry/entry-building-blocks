@@ -1,7 +1,9 @@
 using Enigmatry.Entry.TemplatingEngine.Liquid;
 using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using FluentAssertions;
+using Fluid;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 namespace Enigmatry.Entry.TemplatingEngine.Fluid.Tests;
 
@@ -27,7 +29,12 @@ public class LiquidTemplatingEngineTests
     {
         var services = new ServiceCollection();
         _ = services.AddLogging();
-        services.AddLiquidTemplatingEngine(options => options.ConvertEnumToString = true);
+        services.AddLiquidTemplatingEngine(options =>
+        {
+            options.ConvertEnumToString = true;
+            options.MemberNameStrategy = MemberNameStrategies.SnakeCase;
+            options.CultureInfo = CultureInfo.GetCultureInfo("nl-NL");
+        });
         _ = services.AddScoped<ICustomFluidFilter, ToCurrencyCustomFluidFilter>();
         _scope = services
             .BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true })
