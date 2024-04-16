@@ -2,7 +2,7 @@
 {
     public interface ITemplatingEngine
     {
-        Task<string> RenderFromFileAsync<T>(string path, T model);
-        Task<string> RenderFromFileAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary);
+        Task<string> RenderAsync<T>(string path, T model);
+        Task<string> RenderAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary);
     }
 }

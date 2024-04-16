@@ -24,7 +24,7 @@ public class FluidTemplatingEngine : ITemplatingEngine
         _options = options;
     }
 
-    public async Task<string> RenderFromFileAsync<T>(string path, T model)
+    public async Task<string> RenderAsync<T>(string path, T model)
     {
         ArgumentNullException.ThrowIfNull(path);
         ArgumentNullException.ThrowIfNull(model);
@@ -33,8 +33,8 @@ public class FluidTemplatingEngine : ITemplatingEngine
         var options = new TemplateOptions
         {
             MemberAccessStrategy =
-                new LoggingUnsafeMemberAccessStrategy(_logger) { MemberNameStrategy = MemberNameStrategies.CamelCase },
-            CultureInfo = CultureInfo.InvariantCulture
+                new LoggingUnsafeMemberAccessStrategy(_logger) { MemberNameStrategy = MemberNameStrategies.SnakeCase },
+            CultureInfo = CultureInfo.GetCultureInfo("nl-NL")
         };
 
         if (_options.ConvertEnumToString)
@@ -43,7 +43,7 @@ public class FluidTemplatingEngine : ITemplatingEngine
         }
 
         options.ValueConverters.Add(value => value is DateTimeOffset dateTime
-            ? dateTime.ToDutchDateTime().ToString("dd-MM-yyyy HH:mm:ss", CultureInfo.InvariantCulture)
+            ? dateTime.ToDutchDateTime().ToString("dd-MM-yyyy HH:mm:ss")
             : null);
 
         foreach (var filter in _fluidFilters)
@@ -55,6 +55,6 @@ public class FluidTemplatingEngine : ITemplatingEngine
         return await fluidTemplate.RenderAsync(context);
     }
 
-    public async Task<string> RenderFromFileAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary) =>
-        await RenderFromFileAsync(path, model);
+    public async Task<string> RenderAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary) =>
+        await RenderAsync(path, model);
 }
