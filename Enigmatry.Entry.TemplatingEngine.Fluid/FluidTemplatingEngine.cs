@@ -43,7 +43,8 @@ public class FluidTemplatingEngine : ITemplatingEngine
         }
 
         options.ValueConverters.Add(value => value is DateTimeOffset dateTime
-            ? dateTime.ToDutchDateTime().ToString("dd-MM-yyyy HH:mm:ss", _options.CultureInfo)
+            ? TimeZoneInfo.ConvertTimeFromUtc(dateTime.UtcDateTime.ToUniversalTime(), _options.TimeZoneInfo)
+                .ToString(_options.DateTimeFormat, _options.CultureInfo)
             : null);
 
         foreach (var filter in _fluidFilters)
@@ -51,10 +52,11 @@ public class FluidTemplatingEngine : ITemplatingEngine
             options.Filters.AddFilter(filter.FilterName, filter.Filter);
         }
 
-        var context = new TemplateContext(model, options) { TimeZone = DateTimeOffsetExtensions.WestEuropeZone };
+        var context = new TemplateContext(model, options) { TimeZone = _options.TimeZoneInfo };
         return await fluidTemplate.RenderAsync(context);
     }
 
-    public async Task<string> RenderFromFileAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary) =>
+    public async Task<string> RenderFromFileAsync<T>(string path, T model,
+        IDictionary<string, object> viewBagDictionary) =>
         await RenderFromFileAsync(path, model);
 }

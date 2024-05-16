@@ -36,7 +36,8 @@ public class LiquidTemplatingEngineTests
         {
             ConvertEnumToString = true,
             MemberNameStrategy = MemberNameStrategies.SnakeCase,
-            CultureInfo = CultureInfo.GetCultureInfo("nl-NL")
+            CultureInfo = CultureInfo.GetCultureInfo("nl-NL"),
+            TimeZoneInfo = TimeZoneInfo.Utc
         };
         services.AddSingleton(Options.Create(options));
         services.AddLiquidTemplatingEngine();
@@ -104,7 +105,7 @@ public class LiquidTemplatingEngineTests
 
     [TestCase(null, "{{ date_time }}", "")]
     [TestCase(null, """{{ date_time | date: "%d-%m-%Y" }}""", "")]
-    [TestCase("2022-09-14 23:59:59+02:00", "{{ date_time }}", "14-09-2022 23:59:59")]
+    [TestCase("2022-09-14 23:59:59+02:00", "{{ date_time }}", "14-09-2022 21:59:59")]
     [TestCase("2022-09-14 23:59:59+02:00", """{{ date_time | date: "%d-%m-%Y" }}""", "14-09-2022")]
     public async Task TestNullableDateTimeOffsetRendering(string? value, string template, string expected)
     {
