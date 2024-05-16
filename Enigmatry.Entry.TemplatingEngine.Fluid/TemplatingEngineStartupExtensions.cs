@@ -1,5 +1,4 @@
-﻿using Enigmatry.Entry.Core.Templating;
-using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
+﻿using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using Fluid;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

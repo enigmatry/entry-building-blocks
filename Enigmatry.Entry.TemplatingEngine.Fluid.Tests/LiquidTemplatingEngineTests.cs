@@ -1,4 +1,3 @@
-using Enigmatry.Entry.Core.Templating;
 using Enigmatry.Entry.TemplatingEngine.Liquid;
 using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using FluentAssertions;
@@ -56,7 +55,7 @@ public class LiquidTemplatingEngineTests
         foreach (var value in Enum.GetValues<Foo>())
         {
             var model = new { Record = new { EnumValue = value } };
-            var result = await engine.RenderFromFileAsync(template, model);
+            var result = await engine.RenderAsync(template, model);
             _ = result.Should().Be(model.Record.EnumValue.ToString().ToUpperInvariant());
         }
     }
@@ -73,7 +72,7 @@ public class LiquidTemplatingEngineTests
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
         var template = "{{ record.amount | " + customFluidFilter + " }}";
         var model = new { Record = new { Amount = amount } };
-        var result = await engine.RenderFromFileAsync(template, model);
+        var result = await engine.RenderAsync(template, model);
         _ = result.Should().Be(expectedAmount);
     }
 
@@ -84,11 +83,11 @@ public class LiquidTemplatingEngineTests
 
         var model = new { IdentifierConsistingOfMultipleWords = "hello from template" };
 
-        var snakeCaseResult = await engine.RenderFromFileAsync("{{identifier_consisting_of_multiple_words}}", model);
+        var snakeCaseResult = await engine.RenderAsync("{{identifier_consisting_of_multiple_words}}", model);
         _ = snakeCaseResult.Should().Be(model.IdentifierConsistingOfMultipleWords);
 
         var pascalCaseResult =
-            await engine.RenderFromFileAsync($"{{{{{nameof(model.IdentifierConsistingOfMultipleWords)}}}}}", model);
+            await engine.RenderAsync($"{{{{{nameof(model.IdentifierConsistingOfMultipleWords)}}}}}", model);
         _ = pascalCaseResult.Should().Be(string.Empty);
     }
 
@@ -99,7 +98,7 @@ public class LiquidTemplatingEngineTests
 
         var model = new { Foo = 42, Bar = "Qux" };
 
-        var result = await engine.RenderFromFileAsync("{{foo}}{{does_not_exist}}{{bar}}", model);
+        var result = await engine.RenderAsync("{{foo}}{{does_not_exist}}{{bar}}", model);
         _ = result.Should().Be(model.Foo + model.Bar);
     }
 
@@ -112,7 +111,7 @@ public class LiquidTemplatingEngineTests
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
 
         object model = value == null ? new { DateTime = null as DateTimeOffset? } : new { DateTime = DateTimeOffset.Parse(value) };
-        var result = await engine.RenderFromFileAsync(template, model);
+        var result = await engine.RenderAsync(template, model);
 
         _ = result.Should().Be(expected);
     }

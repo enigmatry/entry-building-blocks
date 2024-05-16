@@ -1,5 +1,4 @@
 ﻿using Enigmatry.Entry.Core.Helpers;
-using Enigmatry.Entry.Core.Templating;
 using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using Fluid;
 using Fluid.Values;
@@ -24,12 +23,12 @@ public class FluidTemplatingEngine : ITemplatingEngine
         _options = options;
     }
 
-    public async Task<string> RenderFromFileAsync<T>(string path, T model)
+    public async Task<string> RenderAsync<T>(string pattern, T model)
     {
-        ArgumentNullException.ThrowIfNull(path);
+        ArgumentNullException.ThrowIfNull(pattern);
         ArgumentNullException.ThrowIfNull(model);
 
-        var fluidTemplate = _templateProvider.GetTemplate(path);
+        var fluidTemplate = _templateProvider.GetTemplate(pattern);
         var options = new TemplateOptions
         {
             MemberAccessStrategy =
@@ -55,8 +54,4 @@ public class FluidTemplatingEngine : ITemplatingEngine
         var context = new TemplateContext(model, options) { TimeZone = _options.TimeZoneInfo };
         return await fluidTemplate.RenderAsync(context);
     }
-
-    public async Task<string> RenderFromFileAsync<T>(string path, T model,
-        IDictionary<string, object> viewBagDictionary) =>
-        await RenderFromFileAsync(path, model);
 }
