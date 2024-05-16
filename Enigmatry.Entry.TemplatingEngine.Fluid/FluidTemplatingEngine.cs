@@ -36,15 +36,7 @@ public class FluidTemplatingEngine : ITemplatingEngine
             CultureInfo = _options.CultureInfo
         };
 
-        if (_options.ConvertEnumToString)
-        {
-            options.ValueConverters.Add(value => value is Enum e ? new StringValue(e.GetDescription()) : null);
-        }
-
-        options.ValueConverters.Add(value => value is DateTimeOffset dateTime
-            ? TimeZoneInfo.ConvertTimeFromUtc(dateTime.UtcDateTime.ToUniversalTime(), _options.TimeZoneInfo)
-                .ToString(_options.DateTimeFormat, _options.CultureInfo)
-            : null);
+        options.ValueConverters.AddRange(_options.ValueConverters);
 
         foreach (var filter in _fluidFilters)
         {

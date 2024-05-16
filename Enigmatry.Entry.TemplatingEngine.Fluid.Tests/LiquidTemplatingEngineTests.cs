@@ -1,7 +1,9 @@
+using Enigmatry.Entry.Core.Helpers;
 using Enigmatry.Entry.TemplatingEngine.Liquid;
 using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using FluentAssertions;
 using Fluid;
+using Fluid.Values;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Globalization;
@@ -33,10 +35,17 @@ public class LiquidTemplatingEngineTests
 
         var options = new FluidTemplateEngineOptions
         {
-            ConvertEnumToString = true,
             MemberNameStrategy = MemberNameStrategies.SnakeCase,
             CultureInfo = CultureInfo.GetCultureInfo("nl-NL"),
-            TimeZoneInfo = TimeZoneInfo.Utc
+            TimeZoneInfo = TimeZoneInfo.Utc,
+            ValueConverters =
+            [
+                value => value is Enum e ? new StringValue(e.GetDescription()) : null,
+                value => value is DateTimeOffset dateTime
+                    ? TimeZoneInfo.ConvertTimeFromUtc(dateTime.UtcDateTime.ToUniversalTime(), TimeZoneInfo.Utc)
+                        .ToString("dd-MM-yyyy HH:mm:ss", CultureInfo.GetCultureInfo("nl-NL"))
+                    : null
+            ]
         };
         services.AddSingleton(Options.Create(options));
         services.AddLiquidTemplatingEngine();
