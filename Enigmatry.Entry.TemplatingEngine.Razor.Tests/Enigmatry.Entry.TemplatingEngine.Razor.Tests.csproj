@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Entry.Core\Enigmatry.Entry.Core.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.TemplatingEngine.Razor\Enigmatry.Entry.TemplatingEngine.Razor.csproj" />
   </ItemGroup>
 

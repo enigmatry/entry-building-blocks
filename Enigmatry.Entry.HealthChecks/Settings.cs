@@ -1,5 +1,4 @@
-﻿using System;
-using Enigmatry.Entry.Core.Helpers;
+﻿using Enigmatry.Entry.Core.Helpers;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Enigmatry.Entry.HealthChecks;

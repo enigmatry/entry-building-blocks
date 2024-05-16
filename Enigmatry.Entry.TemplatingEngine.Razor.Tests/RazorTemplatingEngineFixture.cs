@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Enigmatry.Entry.Core.Templating;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

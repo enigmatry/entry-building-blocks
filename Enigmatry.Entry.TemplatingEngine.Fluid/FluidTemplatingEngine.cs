@@ -1,9 +1,9 @@
 ﻿using Enigmatry.Entry.Core.Helpers;
+using Enigmatry.Entry.Core.Templating;
 using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using Fluid;
 using Fluid.Values;
 using Microsoft.Extensions.Logging;
-using System.Globalization;
 
 namespace Enigmatry.Entry.TemplatingEngine.Liquid;
 
@@ -24,7 +24,7 @@ public class FluidTemplatingEngine : ITemplatingEngine
         _options = options;
     }
 
-    public async Task<string> RenderAsync<T>(string path, T model)
+    public async Task<string> RenderFromFileAsync<T>(string path, T model)
     {
         ArgumentNullException.ThrowIfNull(path);
         ArgumentNullException.ThrowIfNull(model);
@@ -55,6 +55,6 @@ public class FluidTemplatingEngine : ITemplatingEngine
         return await fluidTemplate.RenderAsync(context);
     }
 
-    public async Task<string> RenderAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary) =>
-        await RenderAsync(path, model);
+    public async Task<string> RenderFromFileAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary) =>
+        await RenderFromFileAsync(path, model);
 }
