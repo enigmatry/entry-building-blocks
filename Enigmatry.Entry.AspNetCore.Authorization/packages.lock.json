@@ -31,7 +31,7 @@
           "AutoMapper": "[13.0.1, )",
           "Ben.Demystifier": "[0.4.1, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
-          "FluentValidation": "[11.9.0, )"
+          "FluentValidation": "[11.9.1, )"
         }
       },
       "enigmatry.entry.core": {
@@ -64,9 +64,9 @@
       },
       "FluentValidation": {
         "type": "CentralTransitive",
-        "requested": "[11.9.0, )",
-        "resolved": "11.9.0",
-        "contentHash": "VneVlTvwYDkfHV5av3QrQ0amALgrLX6LV94wlYyEsh0B/klJBW7C8y2eAtj5tOZ3jH6CAVpr4s1ZGgew/QWyig=="
+        "requested": "[11.9.1, )",
+        "resolved": "11.9.1",
+        "contentHash": "C+PqISSMdlOZZJx0Hx25atW32tv4vbpsaiQB+PLjK+ZGLzOFuHl1fUJ3Lny77mIZ31ZtYtNG0JgUjxa3wwLsWg=="
       },
       "JetBrains.Annotations": {
         "type": "CentralTransitive",

@@ -4,9 +4,9 @@
     "net8.0": {
       "coverlet.collector": {
         "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "q/8r0muHlF7TbhMUTBAk43KteZYG2ECV96pbzkToQwgjp3BvbS766svUcO6va+cohWOkigeBWmHs0Vu5vQnESA=="
+        "requested": "[6.0.2, )",
+        "resolved": "6.0.2",
+        "contentHash": "bJShQ6uWRTQ100ZeyiMqcFlhP7WJ+bCuabUs885dJiBEzMsJMSFr7BOyeCw4rgvQokteGi5rKQTlkhfQPUXg2A=="
       },
       "FluentAssertions": {
         "type": "Direct",
@@ -62,9 +62,9 @@
       },
       "NUnit.Analyzers": {
         "type": "Direct",
-        "requested": "[4.0.1, )",
-        "resolved": "4.0.1",
-        "contentHash": "zhTn0POj5eEA4bi+zbaeIPT6F5HlgM0XH7sAWkNcUihzsl7Pn1J6eLGj/E/tPQiR6spFuh12u1tpWB6+xA0giQ=="
+        "requested": "[4.2.0, )",
+        "resolved": "4.2.0",
+        "contentHash": "4fJojPkzdoa4nB2+p6U+fITvPnVvwWSnsmiJ/Dl30xqiL3oxNbYvfeSLVd91hOmEjoUqSwN3Z7j1aFedjqWbUA=="
       },
       "NUnit3TestAdapter": {
         "type": "Direct",
@@ -127,11 +127,6 @@
         "resolved": "1.6.0",
         "contentHash": "COC1aiAJjCoA5GBF+QKL2uLqEBew4JsCkQmoHKbN3TlOZKa2fKLz5CpiRQKDz0RsAOEGsVKqOD5bomsXq/4STQ=="
       },
-      "System.Runtime.CompilerServices.Unsafe": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg=="
-      },
       "System.Security.Cryptography.Pkcs": {
         "type": "Transitive",
         "resolved": "8.0.0",
@@ -144,11 +139,6 @@
         "type": "Transitive",
         "resolved": "4.4.0",
         "contentHash": "cJV7ScGW7EhatRsjehfvvYVBvtiSMKgN8bOVI0bQhnF5bU7vnHVIsH49Kva7i7GWaWYvmEzkYVk1TC+gZYBEog=="
-      },
-      "System.Text.Encoding.CodePages": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "OZIsVplFGaVY90G2SbpgU7EnCoOO5pw1t4ic21dBF3/1omrJFpAGoNAVpPyMVOC90/hvgkGG3VFqR13YgZMQfg=="
       },
       "enigmatry.entry.core": {
         "type": "Project",
@@ -165,12 +155,12 @@
         "dependencies": {
           "EmailValidation": "[1.0.10, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
-          "MailKit": "[4.4.0, )",
+          "MailKit": "[4.5.0, )",
           "Microsoft.Extensions.Configuration.Binder": "[8.0.1, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[8.0.1, )",
           "Microsoft.Extensions.Options": "[8.0.2, )",
           "Microsoft.Extensions.Options.ConfigurationExtensions": "[8.0.0, )",
-          "MimeKit": "[4.4.0, )"
+          "MimeKit": "[4.5.0, )"
         }
       },
       "EmailValidation": {
@@ -184,11 +174,11 @@
       },
       "MailKit": {
         "type": "CentralTransitive",
-        "requested": "[4.4.0, )",
-        "resolved": "4.4.0",
-        "contentHash": "cv+oiAOn2+LhhGUVvxpJjEOIZOTZBFDIDO9ebOfxqqU1f/PllHpKr5VjWOBsqeLrb+zLisxWSQDzM5C64XrRNA==",
+        "requested": "[4.5.0, )",
+        "resolved": "4.5.0",
+        "contentHash": "EaXHODUdIV5oPdWvBJGazwaEpKt1LI/H/S//EEozANYCsfOSKHntX+Skk2kW616lSQp+fkRTmSjk0CYxEuOyEA==",
         "dependencies": {
-          "MimeKit": "4.4.0"
+          "MimeKit": "4.5.0"
         }
       },
       "MediatR": {
@@ -268,14 +258,12 @@
       },
       "MimeKit": {
         "type": "CentralTransitive",
-        "requested": "[4.4.0, )",
-        "resolved": "4.4.0",
-        "contentHash": "pKvznVpvK35cJb21LdjvhB3MW2FrlAqG3PH36uVKHhlgnfMS5tIRsKJEMgo0hiPyJJhN2f1llHptu2w8CvF9Vg==",
+        "requested": "[4.5.0, )",
+        "resolved": "4.5.0",
+        "contentHash": "OYn8b8b66J4mgtDzoImepiUtdkJOAVGoTj/ghzJ+az4wVixA5L5Z8GmgFhRvQ1btAIwZh/d9zvZLCALndQdz5w==",
         "dependencies": {
           "BouncyCastle.Cryptography": "2.3.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Security.Cryptography.Pkcs": "8.0.0",
-          "System.Text.Encoding.CodePages": "8.0.0"
+          "System.Security.Cryptography.Pkcs": "8.0.0"
         }
       },
       "Newtonsoft.Json": {

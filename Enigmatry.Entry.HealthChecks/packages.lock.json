@@ -4,9 +4,9 @@
     "net8.0": {
       "AspNetCore.HealthChecks.System": {
         "type": "Direct",
-        "requested": "[8.0.0, )",
-        "resolved": "8.0.0",
-        "contentHash": "7FsVSezL+FTVDI79qkqR55VuvfCl6ILxHmPLBPynj2yRyMoFgx/hr0WHRPZ7jEKCWJoyWTDC7Y72p+9xqb0UTA==",
+        "requested": "[8.0.1, )",
+        "resolved": "8.0.1",
+        "contentHash": "xnLwn5NbSpHx7WXdykahki3gJd6s5R/0ynzPdTHN3A7vX+sEv+g1pU4ue/mivE0YoAzk7zCUipxNlwxiXEFOaw==",
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.0",
           "System.ServiceProcess.ServiceController": "8.0.0"

@@ -13,11 +13,11 @@
       },
       "MailKit": {
         "type": "Direct",
-        "requested": "[4.4.0, )",
-        "resolved": "4.4.0",
-        "contentHash": "cv+oiAOn2+LhhGUVvxpJjEOIZOTZBFDIDO9ebOfxqqU1f/PllHpKr5VjWOBsqeLrb+zLisxWSQDzM5C64XrRNA==",
+        "requested": "[4.5.0, )",
+        "resolved": "4.5.0",
+        "contentHash": "EaXHODUdIV5oPdWvBJGazwaEpKt1LI/H/S//EEozANYCsfOSKHntX+Skk2kW616lSQp+fkRTmSjk0CYxEuOyEA==",
         "dependencies": {
-          "MimeKit": "4.4.0"
+          "MimeKit": "4.5.0"
         }
       },
       "Microsoft.Extensions.Configuration.Binder": {
@@ -70,14 +70,12 @@
       },
       "MimeKit": {
         "type": "Direct",
-        "requested": "[4.4.0, )",
-        "resolved": "4.4.0",
-        "contentHash": "pKvznVpvK35cJb21LdjvhB3MW2FrlAqG3PH36uVKHhlgnfMS5tIRsKJEMgo0hiPyJJhN2f1llHptu2w8CvF9Vg==",
+        "requested": "[4.5.0, )",
+        "resolved": "4.5.0",
+        "contentHash": "OYn8b8b66J4mgtDzoImepiUtdkJOAVGoTj/ghzJ+az4wVixA5L5Z8GmgFhRvQ1btAIwZh/d9zvZLCALndQdz5w==",
         "dependencies": {
           "BouncyCastle.Cryptography": "2.3.0",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Security.Cryptography.Pkcs": "8.0.0",
-          "System.Text.Encoding.CodePages": "8.0.0"
+          "System.Security.Cryptography.Pkcs": "8.0.0"
         }
       },
       "BouncyCastle.Cryptography": {
@@ -110,11 +108,6 @@
         "resolved": "8.0.0",
         "contentHash": "AJukBuLoe3QeAF+mfaRKQb2dgyrvt340iMBHYv+VdBzCUM06IxGlvl0o/uPOS7lHnXPN6u8fFRHSHudx5aTi8w=="
       },
-      "System.Runtime.CompilerServices.Unsafe": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg=="
-      },
       "System.Security.Cryptography.Pkcs": {
         "type": "Transitive",
         "resolved": "8.0.0",
@@ -122,11 +115,6 @@
         "dependencies": {
           "System.Formats.Asn1": "8.0.0"
         }
-      },
-      "System.Text.Encoding.CodePages": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "OZIsVplFGaVY90G2SbpgU7EnCoOO5pw1t4ic21dBF3/1omrJFpAGoNAVpPyMVOC90/hvgkGG3VFqR13YgZMQfg=="
       },
       "enigmatry.entry.core": {
         "type": "Project",
