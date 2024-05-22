@@ -54,7 +54,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=Z%2FqCBdA073EKBj3PdsX4MWkNchH8Mdot1nf2R2mpVDM%3D";
+                   "&sig=B37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeTrue();
     }
@@ -65,7 +65,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=w" +
-                   "&sig=Z%2FqCBdA073EKBj3PdsX4MWkNchH8Mdot1nf2R2mpVDM%3D";
+                   "&sig=B37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 
@@ -75,7 +75,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=z%2FqCBdA073EKBj3PdsX4MWkNchH8Mdot1nf2R2mpVDM%3D";
+                   "&sig=b37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
@@ -86,7 +86,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResourcee.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=Z%2FqCBdA073EKBj3PdsX4MWkNchH8Mdot1nf2R2mpVDM%3D";
+                   "&sig=B37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 }

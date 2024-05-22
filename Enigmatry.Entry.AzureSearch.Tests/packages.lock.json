@@ -4,15 +4,15 @@
     "net8.0": {
       "coverlet.collector": {
         "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "q/8r0muHlF7TbhMUTBAk43KteZYG2ECV96pbzkToQwgjp3BvbS766svUcO6va+cohWOkigeBWmHs0Vu5vQnESA=="
+        "requested": "[6.0.2, )",
+        "resolved": "6.0.2",
+        "contentHash": "bJShQ6uWRTQ100ZeyiMqcFlhP7WJ+bCuabUs885dJiBEzMsJMSFr7BOyeCw4rgvQokteGi5rKQTlkhfQPUXg2A=="
       },
       "FakeItEasy": {
         "type": "Direct",
-        "requested": "[8.1.0, )",
-        "resolved": "8.1.0",
-        "contentHash": "KYNUq1hyfCE9LsMg4UGlX9zuCKd6pZNNKImjU+CaGCLU0Uf7EDr4WklOMgmsv4aGjqGtXh0WKCiklsUDCuTGqQ==",
+        "requested": "[8.2.0, )",
+        "resolved": "8.2.0",
+        "contentHash": "oauv0CnDbOGA4jCSP6KepU7EyPfnQGq3eNbMbqWAvWzpKsSc2FNzLAgTHMrrzCF/VUsiR0gjNCXksMVzdsHRdw==",
         "dependencies": {
           "Castle.Core": "5.1.1"
         }
@@ -98,9 +98,9 @@
       },
       "NUnit.Analyzers": {
         "type": "Direct",
-        "requested": "[4.0.1, )",
-        "resolved": "4.0.1",
-        "contentHash": "zhTn0POj5eEA4bi+zbaeIPT6F5HlgM0XH7sAWkNcUihzsl7Pn1J6eLGj/E/tPQiR6spFuh12u1tpWB6+xA0giQ=="
+        "requested": "[4.2.0, )",
+        "resolved": "4.2.0",
+        "contentHash": "4fJojPkzdoa4nB2+p6U+fITvPnVvwWSnsmiJ/Dl30xqiL3oxNbYvfeSLVd91hOmEjoUqSwN3Z7j1aFedjqWbUA=="
       },
       "NUnit3TestAdapter": {
         "type": "Direct",
@@ -110,13 +110,12 @@
       },
       "Verify.NUnit": {
         "type": "Direct",
-        "requested": "[23.5.0, )",
-        "resolved": "23.5.0",
-        "contentHash": "SgA+LznMybSKDdFCpIIeA5MnYPZLYg6Covear0BSbI6geURJo5lJiXC9s/tzdd7N/b0gLnNAbe10tVSjHayDvA==",
+        "requested": "[24.2.0, )",
+        "resolved": "24.2.0",
+        "contentHash": "Dgi2i0Dzzv0t+KoaLZNx995koRlw9XVRwZiM5agtcn2cJoBJRsEKd5kMj9y4hml+qWcFshfHqSiwtS735z4jlQ==",
         "dependencies": {
-          "EmptyFiles": "8.2.0",
           "NUnit": "4.1.0",
-          "Verify": "23.5.0"
+          "Verify": "24.2.0"
         }
       },
       "Argon": {
@@ -148,11 +147,11 @@
       },
       "DiffEngine": {
         "type": "Transitive",
-        "resolved": "15.3.0",
-        "contentHash": "5UJqcGfk4tDs4FFikkV2cva2pY7bRM6MnEVRRM+HX+8yTA/vFWjeiceZUf1ZkJPrO5mdPtmYmXXFbNdxgeG5ng==",
+        "resolved": "15.4.0",
+        "contentHash": "2UTLer/h9u6zKTEXuHmgG7lQPjUiOP7YuIWKY5XP25v7uCDQmJXQnyaNbW6g4JzG5gyMhgbulVYPyqaglwP1zw==",
         "dependencies": {
           "EmptyFiles": "8.2.0",
-          "System.Management": "6.0.2"
+          "System.Management": "8.0.0"
         }
       },
       "EmptyFiles": {
@@ -251,8 +250,8 @@
       },
       "System.CodeDom": {
         "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA=="
+        "resolved": "8.0.0",
+        "contentHash": "WTlRjL6KWIMr/pAaq3rYqh0TJlzpouaQ/W1eelssHgtlwHAH25jXTkUphTYx9HaIIf7XA6qs/0+YhtLEQRkJ+Q=="
       },
       "System.Configuration.ConfigurationManager": {
         "type": "Transitive",
@@ -282,10 +281,10 @@
       },
       "System.Management": {
         "type": "Transitive",
-        "resolved": "6.0.2",
-        "contentHash": "s6c9x2Kghd+ncEDnT6ApYVOacDXr/Y57oSUSx6wjegMOfKxhtrXn3PdASPNU59y3kB9OJ1yb3l5k6uKr3bhqew==",
+        "resolved": "8.0.0",
+        "contentHash": "jrK22i5LRzxZCfGb+tGmke2VH7oE0DvcDlJ1HAKYU8cPmD8XnpUT0bYn2Gy98GEhGjtfbR/sxKTVb+dE770pfA==",
         "dependencies": {
-          "System.CodeDom": "6.0.0"
+          "System.CodeDom": "8.0.0"
         }
       },
       "System.Memory.Data": {
@@ -342,12 +341,11 @@
       },
       "Verify": {
         "type": "Transitive",
-        "resolved": "23.5.0",
-        "contentHash": "3GnXebEzc5OGndziOpNv8ZJOBKiEKbX6BfehXXgK3Vpz97oYvV2cAM0Y2Frs8TekT6Qg3peQfREUpw8J52SQNg==",
+        "resolved": "24.2.0",
+        "contentHash": "PlWBOlByTPNp9cEc22TZ6I04yfbqICKDMJOw1k+6eWomVl1qSOhbc8QITBkoNspOsSb4oyrkYusjd3DspFerPg==",
         "dependencies": {
           "Argon": "0.17.0",
-          "DiffEngine": "15.3.0",
-          "EmptyFiles": "8.2.0",
+          "DiffEngine": "15.4.0",
           "SimpleInfoName": "2.2.0",
           "System.IO.Hashing": "8.0.0"
         }
