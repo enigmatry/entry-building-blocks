@@ -14,7 +14,7 @@ namespace Enigmatry.Entry.BlobStorage.Azure
         public string BlobName { get; private set; } = string.Empty;
         public PrivateBlobPermission Permission { get; private set; }
         public DateTimeOffset ExpiresOn { get; private set; }
-        public string Signature { get; set; } = string.Empty;
+        public string Signature { get; private set; } = string.Empty;
 
         public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
         {
@@ -34,9 +34,8 @@ namespace Enigmatry.Entry.BlobStorage.Azure
 
         private static AzureBlobSharedUri Parse(Uri uri)
         {
-            var decodedUri = new Uri(HttpUtility.UrlDecode(uri.AbsoluteUri));
-            var decodedUriParams = HttpUtility.ParseQueryString(decodedUri.Query);
-            var blobName = ParseBlobName(decodedUri.Segments);
+            var decodedUriParams = HttpUtility.ParseQueryString(uri.Query);
+            var blobName = ParseBlobName(uri.Segments);
             var permission = ParseBlobPermission(decodedUriParams);
             var expiresOn = ParseExpiryDate(decodedUriParams);
             var signature = ParseSignature(decodedUriParams);
