@@ -43,9 +43,9 @@
       },
       "Quartz": {
         "type": "Direct",
-        "requested": "[3.8.1, )",
-        "resolved": "3.8.1",
-        "contentHash": "HlKm+43iG8LmXfejL1kIijO107x8ozEShLT2PFIkOWNSHUj7O7yTl6icFrn6DocPvigudQ90a6h2gdFShOwyXw==",
+        "requested": "[3.9.0, )",
+        "resolved": "3.9.0",
+        "contentHash": "vfdug3lRbLYagkrOkeSKqmfT8pBLPY7c/qUsbif+qAJXVkmRQvDbF83fRAK4vzrfz07uDuPJQD+HbIWuliGKiQ==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "2.1.1",
           "System.Configuration.ConfigurationManager": "6.0.1"
@@ -53,24 +53,24 @@
       },
       "Quartz.Extensions.DependencyInjection": {
         "type": "Direct",
-        "requested": "[3.8.1, )",
-        "resolved": "3.8.1",
-        "contentHash": "wXHLkm9fTFsIfaR8JHp4ttYYZB6fRjH7ZEgbhPtiiMp6V4LposWLC0UpG5ZLWjjIFk2LTr/N9fK983W+lJAo7w==",
+        "requested": "[3.9.0, )",
+        "resolved": "3.9.0",
+        "contentHash": "94wJHZTERdtlIzUhawoE+TiVpTnO5tZUKsqYnIdYJOgorn/DkEmh5o9DJdNEpDc/+T+m2DmTnWqOv7MTcBA3Wg==",
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Options": "8.0.0",
-          "Quartz": "3.8.1"
+          "Quartz": "3.9.0"
         }
       },
       "Quartz.Extensions.Hosting": {
         "type": "Direct",
-        "requested": "[3.8.1, )",
-        "resolved": "3.8.1",
-        "contentHash": "pgxrlRNF8b0kFLduCknTxoQ8zhB+HB6i8NrTD6LxS8aw4ByRSl1Gb9hsgWff7YGAeJ/OK92p7tptQhSDWn8G4Q==",
+        "requested": "[3.9.0, )",
+        "resolved": "3.9.0",
+        "contentHash": "sCNMvOJ9G5oZXN5PC+7OnAlwQBlU7ALLe1Rw/vlkLM3Yl18+iUWQq5RjXfc4/ov6OcmuTz4n5iqFuydbbKe2+g==",
         "dependencies": {
           "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
-          "Quartz.Extensions.DependencyInjection": "3.8.1"
+          "Quartz.Extensions.DependencyInjection": "3.9.0"
         }
       },
       "MediatR.Contracts": {

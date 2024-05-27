@@ -1,6 +1,5 @@
 ﻿using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
-using Microsoft.ApplicationInsights.Extensibility;
 using Quartz;
 
 namespace Enigmatry.Entry.Scheduler;
@@ -14,49 +13,40 @@ internal sealed class ApplicationInsightsJobListener : IJobListener
         _telemetryClient = telemetryClient;
     }
 
-    public Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default)
+    public Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
+
+    public Task JobExecutionVetoed(IJobExecutionContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
+
+    public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException? jobException, CancellationToken cancellationToken = default)
     {
-        StartTelemetryOperation(context);
+        TrackJobExecution(context, jobException);
         return Task.CompletedTask;
     }
 
-    public Task JobExecutionVetoed(IJobExecutionContext context, CancellationToken cancellationToken = default) =>
-        Task.CompletedTask;
-
-    public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException? jobException,
-        CancellationToken cancellationToken = default)
+    private void TrackJobExecution(IJobExecutionContext context, JobExecutionException? jobException = null)
     {
-        StopTelemetryOperation(context, jobException);
-        return Task.CompletedTask;
-    }
+        var jobName = context.JobDetail.Key.Name;
 
-    private void StartTelemetryOperation(IJobExecutionContext context)
-    {
-        var telemetryOperation = _telemetryClient.StartOperation<RequestTelemetry>(context.JobDetail.Key.Name);
-        context.Put(StorageKeyForTelemetry, telemetryOperation);
-    }
-
-    private void StopTelemetryOperation(IJobExecutionContext context, JobExecutionException? jobException = null)
-    {
-        using var telemetryOperation = context.Get(StorageKeyForTelemetry) as IOperationHolder<RequestTelemetry>;
-        if (telemetryOperation == null)
+        var requestTelemetry = new RequestTelemetry
         {
-            return;
-        }
+            Name = jobName,
+            Timestamp = context.FireTimeUtc,
+            Duration = context.JobRunTime
+        };
+
+        requestTelemetry.GenerateOperationId();
+        requestTelemetry.Context.Operation.Name = jobName;
 
         if (jobException != null)
         {
-            // Both Success and Response code should be set in order for operation to show in the ApplicationInsights 'Failed' list
-            telemetryOperation.Telemetry.Success = false;
-            telemetryOperation.Telemetry.ResponseCode = "500";
+            requestTelemetry.ResponseCode = "500";
+            requestTelemetry.Success = false;
 
             _telemetryClient.TrackException(jobException);
         }
 
-        _telemetryClient.StopOperation(telemetryOperation);
+        _telemetryClient.TrackRequest(requestTelemetry);
     }
-
-    private const string StorageKeyForTelemetry = "Telemetry_Operation_Holder";
 
     public string Name => nameof(ApplicationInsightsJobListener);
 }
