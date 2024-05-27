@@ -1,7 +1,5 @@
-﻿using Enigmatry.Entry.Core.Helpers;
-using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
+﻿using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
 using Fluid;
-using Fluid.Values;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.TemplatingEngine.Liquid;
