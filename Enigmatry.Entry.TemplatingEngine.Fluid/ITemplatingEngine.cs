@@ -1,4 +1,4 @@
-namespace Enigmatry.Entry.TemplatingEngine.Liquid;
+﻿namespace Enigmatry.Entry.TemplatingEngine.Liquid;
 
 public interface ITemplatingEngine
 {

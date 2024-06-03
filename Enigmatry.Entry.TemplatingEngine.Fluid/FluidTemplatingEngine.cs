@@ -1,42 +1,39 @@
-﻿using Enigmatry.Entry.TemplatingEngine.Liquid.CustomFilters;
+﻿using Enigmatry.Entry.TemplatingEngine.Liquid.Filters;
+using Enigmatry.Entry.TemplatingEngine.Liquid.ValueConverters;
 using Fluid;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Enigmatry.Entry.TemplatingEngine.Liquid;
 
-public class FluidTemplatingEngine : ITemplatingEngine
+public class FluidTemplatingEngine(
+    IFluidTemplateProvider templateProvider,
+    IOptionsSnapshot<FluidTemplateEngineOptions> options,
+    IEnumerable<IFluidValueConverter> valueConverters,
+    IEnumerable<IFluidFilter> customFilters,
+    ILogger<FluidTemplatingEngine> logger)
+    : ITemplatingEngine
 {
-    private readonly ILogger<FluidTemplatingEngine> _logger;
-    private readonly IFluidTemplateProvider _templateProvider;
-    private readonly IEnumerable<ICustomFluidFilter> _fluidFilters;
-    private readonly FluidTemplateEngineOptions _options;
-
-
-    public FluidTemplatingEngine(ILogger<FluidTemplatingEngine> logger, IFluidTemplateProvider templateProvider,
-        IEnumerable<ICustomFluidFilter> fluidFilters, FluidTemplateEngineOptions options)
-    {
-        _logger = logger;
-        _templateProvider = templateProvider;
-        _fluidFilters = fluidFilters;
-        _options = options;
-    }
+    private readonly FluidTemplateEngineOptions _options = options.Value;
 
     public async Task<string> RenderAsync<T>(string pattern, T model)
     {
         ArgumentNullException.ThrowIfNull(pattern);
         ArgumentNullException.ThrowIfNull(model);
 
-        var fluidTemplate = _templateProvider.GetTemplate(pattern);
+        var fluidTemplate = templateProvider.GetTemplate(pattern);
+
         var options = new TemplateOptions
         {
             MemberAccessStrategy =
-                new LoggingUnsafeMemberAccessStrategy(_logger) { MemberNameStrategy = _options.MemberNameStrategy },
+                new LoggingUnsafeMemberAccessStrategy(logger) { MemberNameStrategy = _options.MemberNameStrategy },
             CultureInfo = _options.CultureInfo
         };
 
-        options.ValueConverters.AddRange(_options.ValueConverters);
+        options.ValueConverters.AddRange(
+            valueConverters.Select<IFluidValueConverter, Func<object?, object?>>(converter => converter.Convert));
 
-        foreach (var filter in _fluidFilters)
+        foreach (var filter in customFilters)
         {
             options.Filters.AddFilter(filter.FilterName, filter.Filter);
         }

@@ -13,14 +13,12 @@
       },
       "Fluid.Core": {
         "type": "Direct",
-        "requested": "[2.8.0, )",
-        "resolved": "2.8.0",
-        "contentHash": "2b/bWUdNeUV9q7RFdkFwOAppdjXIE2Va8yi/RNcDQ+3DHfUoj+Q3gEZjf08b+a08IKw019yyWI0ecvP8P3nTtA==",
+        "requested": "[2.10.0, )",
+        "resolved": "2.10.0",
+        "contentHash": "RPYpUCzzQRc2mZDJJL/vhRY0axiT+SboxsxI6aiGi+Evd7qBUoz6i8xqG9OPL5d7Dde3C6FW8UnAv/OKELeEVA==",
         "dependencies": {
           "Microsoft.Extensions.FileProviders.Abstractions": "8.0.0",
-          "Microsoft.SourceLink.GitHub": "8.0.0",
           "Parlot": "0.0.25",
-          "PolySharp": "1.14.1",
           "TimeZoneConverter": "6.1.0"
         }
       },
@@ -55,11 +53,6 @@
         "resolved": "2.0.1",
         "contentHash": "FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ=="
       },
-      "Microsoft.Build.Tasks.Git": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "bZKfSIKJRXLTuSzLudMFte/8CempWjVamNUR5eHJizsy+iuOuO/k2gnh7W0dHJmYY0tBf+gUErfluCv5mySAOQ=="
-      },
       "Microsoft.Extensions.FileProviders.Abstractions": {
         "type": "Transitive",
         "resolved": "8.0.0",
@@ -73,20 +66,10 @@
         "resolved": "8.0.0",
         "contentHash": "bXJEZrW9ny8vjMF1JV253WeLhpEVzFo1lyaZu1vQ4ZxWUlVvknZ/+ftFgVheLubb4eZPSwwxBeqS1JkCOjxd8g=="
       },
-      "Microsoft.SourceLink.Common": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "dk9JPxTCIevS75HyEQ0E4OVAFhB2N+V9ShCXf8Q6FkUQZDkgLI12y679Nym1YqsiSysuQskT7Z+6nUf3yab6Vw=="
-      },
       "Parlot": {
         "type": "Transitive",
         "resolved": "0.0.25",
         "contentHash": "NUs/4AUisBmCl5R+PIKYZR+K/59AvCgqGqY+6KCyctIRMbap8EmtmpPD3W7ZEjgOwonNBC2Y4lDRKtwLxlfqTQ=="
-      },
-      "PolySharp": {
-        "type": "Transitive",
-        "resolved": "1.14.1",
-        "contentHash": "mOOmFYwad3MIOL14VCjj02LljyF1GNw1wP0YVlxtcPvqdxjGGMNdNJJxHptlry3MOd8b40Flm8RPOM8JOlN2sQ=="
       },
       "System.Configuration.ConfigurationManager": {
         "type": "Transitive",
@@ -149,16 +132,6 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Primitives": "8.0.0"
-        }
-      },
-      "Microsoft.SourceLink.GitHub": {
-        "type": "CentralTransitive",
-        "requested": "[8.0.0, )",
-        "resolved": "8.0.0",
-        "contentHash": "G5q7OqtwIyGTkeIOAc3u2ZuV/kicQaec5EaRnc0pIeSnh9LUjj+PYQrJYBURvDt7twGl2PKA7nSN0kz1Zw5bnQ==",
-        "dependencies": {
-          "Microsoft.Build.Tasks.Git": "8.0.0",
-          "Microsoft.SourceLink.Common": "8.0.0"
         }
       },
       "Serilog": {
