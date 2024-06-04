@@ -100,14 +100,29 @@ public class LiquidTemplatingEngineTests
     }
 
     [TestCase(null, "{{ date_time }}", "")]
-    [TestCase("2022-09-14 21:59:59+02:00", "{{ date_time }}", "14-09-2022 21:59:59")]
-    [TestCase("2022-09-14 21:59:59+00:00", "{{ date_time }}", "14-09-2022 23:59:59")]
+    [TestCase("2022-09-14 23:59:59+02:00", "{{ date_time }}", "14-09-2022 23:59:59")]
+    [TestCase("2022-09-14 23:59:59+00:00", "{{ date_time }}", "15-09-2022 01:59:59")]
     [TestCase("2022-09-14 23:59:59+02:00", """{{ date_time | date: "%d-%m-%Y" }}""", "14-09-2022")]
     public async Task DateTimeOffsetShouldBeCorrectlyFormatted(string? value, string template, string expected)
     {
         object model = value == null
             ? new { DateTime = null as DateTimeOffset? }
             : new { DateTime = DateTimeOffset.Parse(value) };
+
+        var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
+        var result = await engine.RenderAsync(template, model);
+
+        _ = result.Should().Be(expected);
+    }
+
+    [TestCase(null, "{{ date_time }}", "")]
+    [TestCase("2022-09-14 23:59:59Z", "{{ date_time }}", "15-09-2022 01:59:59")]
+    [TestCase("2022-09-14 23:59:59Z", """{{ date_time | date: "%d-%m-%Y" }}""", "15-09-2022")]
+    public async Task DateTimeShouldBeCorrectlyFormatted(string? value, string template, string expected)
+    {
+        object model = value == null
+            ? new { DateTime = null as DateTime? }
+            : new { DateTime = DateTime.Parse(value) };
 
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
         var result = await engine.RenderAsync(template, model);
