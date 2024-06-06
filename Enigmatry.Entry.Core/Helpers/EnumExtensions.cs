@@ -20,7 +20,7 @@ namespace Enigmatry.Entry.Core.Helpers
         {
             var attribute = value.GetAttribute<DescriptionAttribute>();
 
-            return attribute?.Description ?? string.Empty;
+            return attribute?.Description ?? value.ToString();
         }
 
         public static T? GetAttribute<T>(this Enum value)

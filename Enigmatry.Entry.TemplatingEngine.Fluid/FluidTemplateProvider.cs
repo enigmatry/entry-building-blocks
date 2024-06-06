@@ -7,10 +7,7 @@ public class FluidTemplateProvider(ILogger<FluidTemplateProvider> logger, FluidP
 {
     public IFluidTemplate GetTemplate(string text)
     {
-        if (text == null)
-        {
-            throw new ArgumentNullException(nameof(text));
-        }
+        ArgumentNullException.ThrowIfNull(text);
 
         try
         {
