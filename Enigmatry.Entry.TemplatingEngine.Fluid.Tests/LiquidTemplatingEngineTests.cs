@@ -17,6 +17,7 @@ public class LiquidTemplatingEngineTests
         Bar,
         [System.ComponentModel.Description("Baz")]
         Baz,
+        [System.ComponentModel.Description("Qux")]
         Qux
     }
 
@@ -30,7 +31,7 @@ public class LiquidTemplatingEngineTests
         {
             options.MemberNameStrategy = MemberNameStrategies.SnakeCase;
             options.CultureInfo = CultureInfo.GetCultureInfo("nl-NL");
-            options.TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard time");
+            options.TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
         });
 
         _scope = services
