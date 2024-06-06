@@ -89,7 +89,7 @@ public class LiquidTemplatingEngineTests
     [TestCase(59250, "format_number: 'c2'", "€ 59.250,00")]
     [TestCase(15, "format_number: 'c2'", "€ 15,00")]
     [TestCase(15, "format_number: 'c3'", "€ 15,000")]
-    [TestCase(null, "format_nullable_number: 'n2'", "")]
+    [TestCase(null, "format_number: 'n2'", "")]
     public async Task NumbersShouldBeCorrectlyFormatted(decimal? amount, string fluidFilter, string expectedAmount)
     {
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();

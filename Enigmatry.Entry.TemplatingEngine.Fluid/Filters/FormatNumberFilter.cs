@@ -4,9 +4,12 @@ using System.Globalization;
 
 namespace Enigmatry.Entry.TemplatingEngine.Liquid.Filters;
 
-public class FormatNullableNumberFluidFilter : IFluidFilter
+// This filter is a copy of the format_number filter from the Fluid library,
+// with additional fix for the null input value to be written as an empty string
+// https://github.com/sebastienros/fluid/blob/main/Fluid/Filters/MiscFilters.cs
+public class FormatNumberFilter : IFluidFilter
 {
-    public string FilterName => "format_nullable_number";
+    public string FilterName => "format_number";
 
     public ValueTask<FluidValue> Filter(FluidValue input, FilterArguments arguments, TemplateContext context)
     {
@@ -14,6 +17,7 @@ public class FormatNullableNumberFluidFilter : IFluidFilter
         {
             return new StringValue(string.Empty);
         }
+
         if (arguments.At(0).IsNil())
         {
             return NilValue.Instance;

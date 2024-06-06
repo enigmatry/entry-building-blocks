@@ -1,5 +1,4 @@
-﻿using Enigmatry.Entry.Core.Templating;
-using System;
+﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.TemplatingEngine

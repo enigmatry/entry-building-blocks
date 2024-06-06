@@ -2,23 +2,23 @@
 
 namespace Enigmatry.Entry.TemplatingEngine.Liquid.ValueConverters;
 
-public class DateTimeOffsetValueConverter(IOptions<FluidTemplateEngineOptions> options) : IFluidValueConverter
+public class DateTimeOffsetValueConverter(IOptionsSnapshot<FluidTemplateEngineOptions> options) : IFluidValueConverter
 {
     private readonly FluidTemplateEngineOptions _options = options.Value;
 
     public object? Convert(object? value)
     {
-        if (value is not DateTimeOffset dateTimeOffset)
+        if (value is not DateTimeOffset inputDateTime)
         {
             return null;
         }
 
-        var localOffset = _options.TimeZoneInfo.GetUtcOffset(dateTimeOffset);
-        if (dateTimeOffset.Offset != localOffset)
+        var localOffset = _options.TimeZoneInfo.GetUtcOffset(inputDateTime);
+        if (inputDateTime.Offset != localOffset)
         {
-            dateTimeOffset = dateTimeOffset.ToOffset(localOffset);
+            inputDateTime = inputDateTime.ToOffset(localOffset);
         }
 
-        return dateTimeOffset.DateTime.ToString(_options.CultureInfo);
+        return inputDateTime.DateTime.ToString(_options.CultureInfo);
     }
 }

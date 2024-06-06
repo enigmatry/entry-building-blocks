@@ -31,7 +31,8 @@ public class FluidTemplatingEngine(
         };
 
         options.ValueConverters.AddRange(
-            valueConverters.Select<IFluidValueConverter, Func<object?, object?>>(converter => converter.Convert));
+            // Reversing the order of the value converters to ensure that custom registered ones are executed before the default (entry) ones
+            valueConverters.Reverse().Select<IFluidValueConverter, Func<object?, object?>>(converter => converter.Convert));
 
         foreach (var filter in customFilters)
         {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.Core.Templating
+namespace Enigmatry.Entry.TemplatingEngine
 {
     public interface ITemplatingEngine
     {

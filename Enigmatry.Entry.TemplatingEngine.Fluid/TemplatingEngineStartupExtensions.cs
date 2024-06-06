@@ -15,10 +15,10 @@ public static class TemplatingEngineStartupExtensions
         services.AddSingleton<IFluidTemplateProvider, FluidTemplateProvider>();
         services.AddScoped<ITemplatingEngine, FluidTemplatingEngine>();
 
-        services.AddSingleton<IFluidValueConverter, EnumValueConverter>();
-        services.AddSingleton<IFluidValueConverter, DateTimeOffsetValueConverter>();
-        services.AddSingleton<IFluidValueConverter, DateTimeValueConverter>();
+        services.AddScoped<IFluidValueConverter, EnumValueConverter>();
+        services.AddScoped<IFluidValueConverter, DateTimeValueConverter>();
+        services.AddScoped<IFluidValueConverter, DateTimeOffsetValueConverter>();
 
-        services.AddSingleton<IFluidFilter, FormatNullableNumberFluidFilter>();
+        services.AddScoped<IFluidFilter, FormatNumberFilter>();
     }
 }

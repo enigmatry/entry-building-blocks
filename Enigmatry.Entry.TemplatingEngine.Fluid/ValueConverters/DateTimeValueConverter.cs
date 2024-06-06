@@ -2,7 +2,7 @@
 
 namespace Enigmatry.Entry.TemplatingEngine.Liquid.ValueConverters;
 
-public class DateTimeValueConverter(IOptions<FluidTemplateEngineOptions> options) : IFluidValueConverter
+public class DateTimeValueConverter(IOptionsSnapshot<FluidTemplateEngineOptions> options) : IFluidValueConverter
 {
     private readonly FluidTemplateEngineOptions _options = options.Value;
 
