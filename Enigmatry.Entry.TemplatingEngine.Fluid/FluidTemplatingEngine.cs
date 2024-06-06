@@ -30,8 +30,8 @@ public class FluidTemplatingEngine(
             CultureInfo = _options.CultureInfo
         };
 
+        // Reversing the order of the value converters to ensure that custom registered ones are executed before the default (entry) ones
         options.ValueConverters.AddRange(
-            // Reversing the order of the value converters to ensure that custom registered ones are executed before the default (entry) ones
             valueConverters.Reverse().Select<IFluidValueConverter, Func<object?, object?>>(converter => converter.Convert));
 
         foreach (var filter in customFilters)
