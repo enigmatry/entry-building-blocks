@@ -1,5 +1,4 @@
-﻿using System;
-using MimeKit;
+﻿using MimeKit;
 
 namespace Enigmatry.Entry.Email.MailKit
 {

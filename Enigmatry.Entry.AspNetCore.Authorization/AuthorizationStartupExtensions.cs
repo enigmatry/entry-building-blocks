@@ -1,6 +1,4 @@
-﻿
-using System.Runtime.CompilerServices;
-using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
+﻿using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
 using Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Authorization;
