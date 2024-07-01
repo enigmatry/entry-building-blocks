@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="AspNetCore.HealthChecks.System" Version="8.0.1" />
+	<PackageVersion Include="Autofac" Version="8.0.0" />
     <PackageVersion Include="AutoMapper" Version="13.0.1" />
     <PackageVersion Include="Azure.Identity" Version="1.11.3" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.5.1" />

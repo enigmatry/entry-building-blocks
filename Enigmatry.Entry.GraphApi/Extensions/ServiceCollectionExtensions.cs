@@ -1,19 +1,30 @@
-﻿using System;
-using Azure.Identity;
+﻿using Azure.Identity;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Graph;
+using System;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
 
+[UsedImplicitly]
 public static class ServiceCollectionExtensions
 {
     [Obsolete("Use AddEntryGraphApi instead")]
     public static void AppAddGraphApi(this IServiceCollection services, IConfiguration configuration) =>
         services.AddEntryGraphApi(configuration);
 
+    [PublicAPI]
     public static void AddEntryGraphApi(this IServiceCollection services, IConfiguration configuration) =>
-        services.AddScoped<GraphServiceClient>(provider => CreateGraphServiceClient(configuration));
+        services.AddScoped<GraphServiceClient>(_ => CreateGraphServiceClient(configuration));
+
+    [PublicAPI]
+    public static void AddEntryGraphApi(this IServiceCollection services) =>
+        services.AddScoped(_ =>
+        {
+            var managedIdentityCredential = new ManagedIdentityCredential();
+            return new GraphServiceClient(managedIdentityCredential);
+        });
 
     private static GraphServiceClient CreateGraphServiceClient(IConfiguration configuration)
     {

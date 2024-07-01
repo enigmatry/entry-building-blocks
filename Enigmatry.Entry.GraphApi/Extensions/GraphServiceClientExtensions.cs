@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using System;
 using System.IO;
 using System.Linq;
-using Microsoft.Graph;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using GraphUser = Microsoft.Graph.User;
@@ -15,13 +15,24 @@ public static class GraphServiceClientExtensions
     /// </summary>
     /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
     /// <param name="userId">The id of the user to retrieve.</param>
+    /// <param name="selectExpression">Lambda expression tree that selects the properties of the returned <see cref="GraphUser"/></param>
     /// <returns><see cref="GraphUser"/></returns>
-    public static async Task<GraphUser> GetUserById(this GraphServiceClient graph, string userId) =>
+    public static async Task<GraphUser> GetUserById(this GraphServiceClient graph, string userId,
+        Expression<Func<GraphUser, object>> selectExpression) =>
         await graph
             .Users[userId]
             .Request()
-            .Select(SelectExpression())
+            .Select(selectExpression)
             .GetAsync();
+
+    /// <summary>
+    /// Retrieve a user by id.
+    /// </summary>
+    /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
+    /// <param name="userId">The id of the user to retrieve.</param>
+    /// <returns><see cref="GraphUser"/></returns>
+    public static async Task<GraphUser> GetUserById(this GraphServiceClient graph, string userId) =>
+        await GetUserById(graph, userId, SelectExpression());
 
     /// <summary>
     /// Retrieve a user by issuer assigned id.
@@ -86,9 +97,18 @@ public static class GraphServiceClientExtensions
     /// <param name="userId">UserID.</param>
     /// <returns>Stream with user photo or null.</returns>
     public static async Task<Stream> GetUserPhoto(this GraphServiceClient graph, string userId) =>
-        await graph
-            .Users[userId]
-            .Photo
+        await GetUserPhoto(graph.Users[userId]);
+
+    /// <summary>
+    /// Helper to get the photo of a current user.
+    /// </summary>
+    /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
+    /// <returns>Stream with user photo or null.</returns>
+    public static async Task<Stream> GetCurrentUserPhoto(this GraphServiceClient graph) =>
+        await GetUserPhoto(graph.Me);
+
+    private static Task<Stream> GetUserPhoto(IUserRequestBuilder userBuilder) =>
+        userBuilder.Photo
             .Content
             .Request()
             .GetAsync();
@@ -210,6 +230,47 @@ public static class GraphServiceClientExtensions
             .Request()
             .UpdateAsync(user);
     }
+
+    /// <summary>
+    /// Removes user from B2C directory.
+    /// </summary>
+    /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
+    /// <param name="issuerAssignedId">The id of the user to retrieve. For local accounts this is emailAddress.</param>
+    /// <param name="issuer">Issuer of the identity. For local accounts this property is the local AD tenant default domain name.</param>
+    /// <returns></returns>
+    public static async Task<GraphUser?> RemoveUser(this GraphServiceClient graph, string issuerAssignedId, string issuer)
+    {
+        var user = await graph.GetUserByIssuerAssignedId(issuerAssignedId, issuer);
+        if (user != null)
+        {
+            await graph.Users[user.Id].Request().DeleteAsync();
+        }
+        return user;
+    }
+
+    /// <summary>
+    /// Tries removal of user from B2C directory.
+    /// </summary>
+    /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
+    /// <param name="issuerAssignedId">The id of the user to retrieve. For local accounts this is emailAddress.</param>
+    /// <param name="issuer">Issuer of the identity. For local accounts this property is the local AD tenant default domain name.</param>
+    /// <returns>User data of deleted user.</returns>
+    public static async Task<GraphUser?> TryRemovingUser(this GraphServiceClient graph, string issuerAssignedId, string issuer)
+    {
+        var user = await graph.GetUserByIssuerAssignedId(issuerAssignedId, issuer);
+        if (user != null)
+        {
+            await graph.RemoveUser(user.Id);
+        }
+        return user;
+    }
+
+    /// <summary>
+    /// Removes user from B2C directory.
+    /// </summary>
+    /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
+    /// <param name="userId">The id of the user to retrieve.</param>
+    public static async Task RemoveUser(this GraphServiceClient graph, string userId) => await graph.Users[userId].Request().DeleteAsync();
 
     private static Expression<Func<GraphUser, object>> SelectExpression() =>
         graphUser =>
