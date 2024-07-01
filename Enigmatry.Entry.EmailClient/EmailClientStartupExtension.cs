@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Enigmatry.Entry.Core.Settings;
 using Enigmatry.Entry.Email.MailKit;
 using Microsoft.Extensions.Configuration;

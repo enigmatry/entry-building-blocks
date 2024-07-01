@@ -1,4 +1,5 @@
-﻿namespace Enigmatry.Entry.Core.Settings;
+﻿
+namespace Enigmatry.Entry.Core.Settings;
 
 public class GraphApiSettings
 {
