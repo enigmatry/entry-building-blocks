@@ -34,11 +34,11 @@
       },
       "Microsoft.Graph": {
         "type": "Direct",
-        "requested": "[4.36.0, )",
-        "resolved": "4.36.0",
-        "contentHash": "KFsVgiQb7pyCZgD7oMkFGtq8jXdMc1n5W3mnsXSR7CkVvIOHKtddsWA01WxVYwfYpDO6lA0xRa/oeB2El574tw==",
+        "requested": "[4.37.0, )",
+        "resolved": "4.37.0",
+        "contentHash": "XfbRLmmyJkNcNFbjC+FP+LgeFiOk2cNn7TeLh9A2T24UXCwy8Kz4rKTvfmdgYUAO8fcSe4kkGNOmfG1H6Myktg==",
         "dependencies": {
-          "Microsoft.Graph.Core": "2.0.11"
+          "Microsoft.Graph.Core": "2.0.12"
         }
       },
       "Microsoft.SourceLink.GitHub": {
@@ -88,11 +88,11 @@
       },
       "Microsoft.Graph.Core": {
         "type": "Transitive",
-        "resolved": "2.0.11",
-        "contentHash": "okcJnzEndl+JQ0ymjfH4Zg6xKqrNijU6iJVJ4NOtMyz83wCP2kYigNRTHWLjMuu6BXuaPxEkZuxx0PlrWBuBXQ==",
+        "resolved": "2.0.12",
+        "contentHash": "3a6vQADJMDJX0ZrU+lVYjlJxpsDAJNUmgB8vXodwrlGHkHJP7TqsQZ43MeU35XkoPfWtEj06+Hed3SLFlkoqAg==",
         "dependencies": {
           "Azure.Core": "1.25.0",
-          "Microsoft.Identity.Client": "4.46.0",
+          "Microsoft.Identity.Client": "4.46.1",
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "6.22.0",
           "System.Diagnostics.DiagnosticSource": "4.7.1",
           "System.Net.Http": "4.3.4",
@@ -218,7 +218,7 @@
       "runtime.native.System.Security.Cryptography.Apple": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "DloMk88juo0OuOWr56QG7MNchmafTLYWvABy36izkrLI5VledI0rq28KGs1i9wbpeT9NPQrx/wTf8U2vazqQ3Q==",
+        "contentHash": "jwjwlEL0Elv6gwoyaokRn12nv/JE+UW/DXJEbzhjCPvGbef36StnHKc9XaZD/rGWqYicrphZ7eumR/jdmNcjRg==",
         "dependencies": {
           "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.Apple": "4.3.0"
         }
@@ -253,7 +253,7 @@
       "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.Apple": {
         "type": "Transitive",
         "resolved": "4.3.0",
-        "contentHash": "kVXCuMTrTlxq4XOOMAysuNwsXWpYeboGddNGpIgNSZmv1b6r/s/DPk0fYMB7Q5Qo4bY68o48jt4T4y5BVecbCQ=="
+        "contentHash": "Kh9W4agE0r/hK8AX1LvyQI2NrKHBL8pO0gRoDTdDb0LL6Ta1Z2OtFx3lOaAE0ZpCUc/dt9Wzs3rA7a3IsKdOVA=="
       },
       "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": {
         "type": "Transitive",
