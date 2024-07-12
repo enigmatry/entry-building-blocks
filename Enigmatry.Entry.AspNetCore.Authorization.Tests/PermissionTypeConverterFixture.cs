@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Tests;
 
+[NUnit.Framework.Category("unit")]
 public class PermissionTypeConverterFixture
 {
     [Test]
