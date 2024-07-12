@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 
+[Category("unit")]
 [Obsolete("ExceptionsFilter is deprecated due to limited context, please use extensions method instead since more exceptions can be caught from it.")]
 public class HandleExceptionsFilterFixture
 {

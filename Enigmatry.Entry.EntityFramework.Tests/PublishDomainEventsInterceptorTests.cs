@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Enigmatry.Entry.EntityFramework.Tests;
 
+[Category("unit")]
 public class PublishDomainEventsInterceptorTests
 {
     private IServiceScope _testScope = null!;
