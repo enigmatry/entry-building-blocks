@@ -9,7 +9,7 @@ public static class TestConfigurationBuilder
     {
         var configurationBuilder = new ConfigurationBuilder();
 
-        var dict = new Dictionary<string, string>
+        var dict = new Dictionary<string, string?>
         {
             {"App:Smtp:UsePickupDirectory", "true"},
             {"App:Smtp:PickupDirectoryLocation", GetSmtpPickupDirectoryLocation()},

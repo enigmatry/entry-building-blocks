@@ -1,7 +1,10 @@
 <Project>
 
 	<PropertyGroup>
-    
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
     <Authors>Enigmatry</Authors>
     <Copyright>Copyright © 2023 Enigmatry. All rights reserved.</Copyright>
     <Company>Enigmatry</Company>
@@ -20,7 +23,7 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisLevel>8.0</AnalysisLevel>
     <LangVersion>latest</LangVersion>
     <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 

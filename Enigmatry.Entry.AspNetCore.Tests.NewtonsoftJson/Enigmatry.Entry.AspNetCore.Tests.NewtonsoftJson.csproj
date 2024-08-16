@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <PackageId>Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson</PackageId>
     <Product>Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson</Product>
