@@ -20,7 +20,7 @@ public class MailKitPickupDirectoryEmailClientFixture
         services.AddLogging();
         services.AddEntryEmailClient(configuration);
         var provider = services.BuildServiceProvider();
-        _client = provider.GetService<IEmailClient>();
+        _client = provider.GetService<IEmailClient>()!;
     }
 
     [Test]
