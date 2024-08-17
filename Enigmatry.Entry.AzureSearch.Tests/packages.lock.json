@@ -339,17 +339,6 @@
         "resolved": "4.5.4",
         "contentHash": "zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg=="
       },
-      "Verify": {
-        "type": "Transitive",
-        "resolved": "25.0.3",
-        "contentHash": "FjII1oe9sYziS/QF7/A9V5ObsXdovmLnchomgl/DBUQyi+IgY9X/2RfJ4KcsMl8J7QN29pXRTr8B+dmv40NQxA==",
-        "dependencies": {
-          "Argon": "0.17.0",
-          "DiffEngine": "15.4.3",
-          "SimpleInfoName": "2.2.0",
-          "System.IO.Hashing": "8.0.0"
-        }
-      },
       "enigmatry.entry.azuresearch": {
         "type": "Project",
         "dependencies": {
@@ -508,6 +497,18 @@
         "requested": "[5.0.0, )",
         "resolved": "5.0.0",
         "contentHash": "dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg=="
+      },
+      "Verify": {
+        "type": "CentralTransitive",
+        "requested": "[26.2.0, )",
+        "resolved": "25.0.3",
+        "contentHash": "FjII1oe9sYziS/QF7/A9V5ObsXdovmLnchomgl/DBUQyi+IgY9X/2RfJ4KcsMl8J7QN29pXRTr8B+dmv40NQxA==",
+        "dependencies": {
+          "Argon": "0.17.0",
+          "DiffEngine": "15.4.3",
+          "SimpleInfoName": "2.2.0",
+          "System.IO.Hashing": "8.0.0"
+        }
       }
     }
   }

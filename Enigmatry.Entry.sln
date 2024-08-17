@@ -102,7 +102,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.EntityFramework", "Enigmatry.Entry.SmartEnums.EntityFramework\Enigmatry.Entry.SmartEnums.EntityFramework.csproj", "{E2E79C9E-0423-4E17-A9C8-EA158E28660F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.NSwag", "Enigmatry.Entry.SmartEnums.NSwag\Enigmatry.Entry.SmartEnums.NSwag.csproj", "{A765BD03-D709-4944-B4BE-42F6CA32832B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.Swagger", "Enigmatry.Entry.SmartEnums.Swagger\Enigmatry.Entry.SmartEnums.Swagger.csproj", "{A765BD03-D709-4944-B4BE-42F6CA32832B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.SystemTextJson", "Enigmatry.Entry.SmartEnums.SystemTextJson\Enigmatry.Entry.SmartEnums.SystemTextJson.csproj", "{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.VerifyTests", "Enigmatry.Entry.SmartEnums.VerifyTests\Enigmatry.Entry.SmartEnums.VerifyTests.csproj", "{805C10AC-0BDF-4938-94FF-2414C2F83FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -274,6 +278,14 @@ Global
 		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
