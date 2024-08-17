@@ -370,16 +370,6 @@
           "NSwag.Core": "14.0.8"
         }
       },
-      "NSwag.Generation.AspNetCore": {
-        "type": "Transitive",
-        "resolved": "14.0.8",
-        "contentHash": "EIIt9aw9EacinwfAUcKKRwRQkf60hwefny9DdzZIPK3teq7yL9xuQqqQPioefZYoOelmztw+wLkG4lQxkwS3lA==",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
-          "Microsoft.Extensions.Options": "8.0.0",
-          "NSwag.Generation": "14.0.8"
-        }
-      },
       "SimpleInfoName": {
         "type": "Transitive",
         "resolved": "2.2.0",
@@ -455,17 +445,6 @@
         "contentHash": "OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
         "dependencies": {
           "System.Text.Encodings.Web": "8.0.0"
-        }
-      },
-      "Verify": {
-        "type": "Transitive",
-        "resolved": "25.0.3",
-        "contentHash": "FjII1oe9sYziS/QF7/A9V5ObsXdovmLnchomgl/DBUQyi+IgY9X/2RfJ4KcsMl8J7QN29pXRTr8B+dmv40NQxA==",
-        "dependencies": {
-          "Argon": "0.17.0",
-          "DiffEngine": "15.4.3",
-          "SimpleInfoName": "2.2.0",
-          "System.IO.Hashing": "8.0.0"
         }
       },
       "YamlDotNet": {
@@ -822,6 +801,17 @@
           "NSwag.Generation.AspNetCore": "14.0.8"
         }
       },
+      "NSwag.Generation.AspNetCore": {
+        "type": "CentralTransitive",
+        "requested": "[14.0.8, )",
+        "resolved": "14.0.8",
+        "contentHash": "EIIt9aw9EacinwfAUcKKRwRQkf60hwefny9DdzZIPK3teq7yL9xuQqqQPioefZYoOelmztw+wLkG4lQxkwS3lA==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Options": "8.0.0",
+          "NSwag.Generation": "14.0.8"
+        }
+      },
       "Serilog": {
         "type": "CentralTransitive",
         "requested": "[4.0.0, )",
@@ -841,6 +831,18 @@
         "contentHash": "48Bxrd6zcGeQzS4GMEDVjuqCcAw/9wcEWnIu48FQJ5IzfKPiMR1nGtz9LrvGzU4+3TLbx/9FDlGmCUeLin1Eqg==",
         "dependencies": {
           "System.Text.Json": "8.0.0"
+        }
+      },
+      "Verify": {
+        "type": "CentralTransitive",
+        "requested": "[26.2.0, )",
+        "resolved": "25.0.3",
+        "contentHash": "FjII1oe9sYziS/QF7/A9V5ObsXdovmLnchomgl/DBUQyi+IgY9X/2RfJ4KcsMl8J7QN29pXRTr8B+dmv40NQxA==",
+        "dependencies": {
+          "Argon": "0.17.0",
+          "DiffEngine": "15.4.3",
+          "SimpleInfoName": "2.2.0",
+          "System.IO.Hashing": "8.0.0"
         }
       },
       "Verify.NUnit": {
