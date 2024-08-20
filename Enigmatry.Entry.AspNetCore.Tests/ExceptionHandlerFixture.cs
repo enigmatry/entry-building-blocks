@@ -9,6 +9,7 @@ using System.Text.Json;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 
+[Category("unit")]
 public class ExceptionHandlerFixture
 {
     [Test]
