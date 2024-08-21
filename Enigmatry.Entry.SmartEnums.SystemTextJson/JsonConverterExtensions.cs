@@ -8,6 +8,11 @@ namespace Enigmatry.Entry.SmartEnums.SystemTextJson;
 [PublicAPI]
 public static class JsonConverterExtensions
 {
+    /// <summary>
+    /// Register SmartEnum json converters for System.Text.Json
+    /// </summary>
+    /// <param name="converters">List of converters to add converters to</param>
+    /// <param name="assembliesWithSmartEnums">Assemblies containing SmartEnums</param>
     public static void EntryAddSmartEnumJsonConverters(this IList<JsonConverter> converters, IEnumerable<Assembly> assembliesWithSmartEnums)
     {
         IEnumerable<(Type EnumType, Type ValueType)> smartEnums = assembliesWithSmartEnums.FindSmartEnums();
