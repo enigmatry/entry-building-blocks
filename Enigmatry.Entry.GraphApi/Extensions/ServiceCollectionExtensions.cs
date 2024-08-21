@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
 
     [PublicAPI]
     public static void AddEntryGraphApi(this IServiceCollection services, IConfiguration configuration) =>
-        services.AddScoped<GraphServiceClient>(_ => CreateGraphServiceClient(configuration));
+        services.AddScoped(_ => CreateGraphServiceClient(configuration));
 
     [PublicAPI]
     public static void AddEntryGraphApi(this IServiceCollection services) =>

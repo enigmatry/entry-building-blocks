@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using JetBrains.Annotations;
 using Microsoft.Graph;
+using Microsoft.Kiota.Abstractions.Authentication;
 using System;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace Enigmatry.Entry.GraphApi.Injection;
 
@@ -17,12 +16,9 @@ public abstract class BaseBearerModule : Module
     private static GraphServiceClient CreateAuthenticatedClientForUser(string userToken)
     {
         const string baseUrl = "https://graph.microsoft.com/v1.0";
-        const string scheme = "bearer";
-        var graphClient = new GraphServiceClient(baseUrl, new DelegateAuthenticationProvider(async requestMessage =>
-        {
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue(scheme, userToken);
-            await Task.CompletedTask;
-        }));
+
+        var authenticationProvider = new BaseBearerTokenAuthenticationProvider(new FixedTokenProvider(userToken));
+        var graphClient = new GraphServiceClient(authenticationProvider, baseUrl);
         return graphClient;
     }
 
