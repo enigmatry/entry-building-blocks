@@ -7,6 +7,11 @@ namespace Enigmatry.Entry.SmartEnums.VerifyTests;
 [PublicAPI]
 public static class JsonConvertersExtensions
 {
+    /// <summary>
+    /// Register SmartEnum converters for Argon (VerifyTests)
+    /// </summary>
+    /// <param name="converters">List of converters to add converters to</param>
+    /// <param name="assembliesWithSmartEnums">Assemblies containing SmartEnums</param>
     public static void EntryAddSmartEnumJsonConverters(this IList<JsonConverter> converters, IEnumerable<Assembly> assembliesWithSmartEnums)
     {
         var smartEnums = assembliesWithSmartEnums.FindSmartEnums();

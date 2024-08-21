@@ -7,6 +7,10 @@ namespace Enigmatry.Entry.SmartEnums.EntityFramework;
 [PublicAPI]
 public static class ModelConfigurationBuilderExtensions
 {
+    /// <summary>
+    /// Configure SmartEnums for EntityFramework
+    /// </summary>
+    /// <param name="configurationBuilder"></param>
     public static void EntryConfigureSmartEnum(this ModelConfigurationBuilder configurationBuilder)
         => configurationBuilder.ConfigureSmartEnum();
 }

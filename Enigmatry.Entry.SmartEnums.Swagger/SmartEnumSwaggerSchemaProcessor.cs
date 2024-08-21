@@ -5,6 +5,9 @@ using NJsonSchema.Generation;
 
 namespace Enigmatry.Entry.SmartEnums.Swagger;
 
+/// <summary>
+/// Generate schema for SmartEnum. Value is integer, enumeration is values of SmartEnum
+/// </summary>
 internal class SmartEnumSwaggerSchemaProcessor : ISchemaProcessor
 {
     public void Process(SchemaProcessorContext context)

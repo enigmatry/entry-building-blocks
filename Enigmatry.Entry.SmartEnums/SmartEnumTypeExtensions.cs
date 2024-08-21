@@ -3,7 +3,9 @@ using Ardalis.SmartEnum;
 
 namespace Enigmatry.Entry.SmartEnums;
 
-// Taken from SmartEnum.EFCore
+/// <summary>
+/// Reflection extensions for SmartEnums. Taken from SmartEnum.EFCore
+/// </summary>
 public static class SmartEnumTypeExtensions
 {
     public static IEnumerable<(Type EnumType, Type ValueType)> FindSmartEnums(
