@@ -427,7 +427,6 @@
           "JetBrains.Annotations": "[2023.3.0, )",
           "MediatR": "[12.3.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.0.1, )",
-          "Serilog": "[4.0.0, )",
           "System.ComponentModel.Annotations": "[5.0.0, )"
         }
       },
@@ -523,12 +522,6 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.Extensions.Primitives": "8.0.0"
         }
-      },
-      "Serilog": {
-        "type": "CentralTransitive",
-        "requested": "[4.0.0, )",
-        "resolved": "4.0.0",
-        "contentHash": "2jDkUrSh5EofOp7Lx5Zgy0EB+7hXjjxE2ktTb1WVQmU00lDACR2TdROGKU0K1pDTBSJBN1PqgYpgOZF8mL7NJw=="
       },
       "System.ComponentModel.Annotations": {
         "type": "CentralTransitive",

@@ -42,10 +42,11 @@ public class RazorTemplatingEngineFixture
         result.Should().Contain("Congratulations!");
     }
 
-    private static IHost BuildHost() =>
-        Host.CreateDefaultBuilder()
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<RazorSampleConsoleStartup>();
-            }).Build();
+    private static IHost BuildHost()
+    {
+        var builder = Host.CreateApplicationBuilder();
+        builder.Services.AddEntryTemplatingEngine();
+
+        return builder.Build();
+    }
 }
