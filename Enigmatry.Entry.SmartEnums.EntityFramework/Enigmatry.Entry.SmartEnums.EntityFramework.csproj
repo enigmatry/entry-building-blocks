@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Entry.Core.EntityFramework\Enigmatry.Entry.Core.EntityFramework.csproj" />
     <ProjectReference Include="..\Enigmatry.Entry.SmartEnums\Enigmatry.Entry.SmartEnums.csproj" />
   </ItemGroup>
 

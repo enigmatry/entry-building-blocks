@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using Ardalis.SmartEnum;
 using NJsonSchema;
 using NJsonSchema.Generation;
 
 namespace Enigmatry.Entry.SmartEnums.Swagger;
 
 /// <summary>
-/// Generate schema for SmartEnum. Value is integer, enumeration is values of SmartEnum
+/// Generate schema for SmartEnum type. Value is integer, enumeration is values of SmartEnum
 /// </summary>
 internal class SmartEnumSwaggerSchemaProcessor : ISchemaProcessor
 {
@@ -25,18 +24,17 @@ internal class SmartEnumSwaggerSchemaProcessor : ISchemaProcessor
             schema.EnumerationNames.Clear();
             schema.Properties.Clear();
 
-            if (type.TryGetValues(out IEnumerable<object> values))
-            {
-                foreach (var smartEnum in values)
-                {
-                    var valuePropertyInfo = type.GetRuntimeProperty("Value")!;
-                    var namePropertyInfo = type.GetRuntimeProperty("Name")!;
-                    var value = valuePropertyInfo.GetValue(smartEnum)!;
-                    var name = (string)namePropertyInfo.GetValue(smartEnum)!;
+            var smartEnumValues = type.GetSmartEnumValues();
 
-                    schema.Enumeration.Add(value);
-                    schema.EnumerationNames.Add(name);
-                }
+            foreach (var smartEnum in smartEnumValues)
+            {
+                var valuePropertyInfo = type.GetRuntimeProperty("Value")!;
+                var namePropertyInfo = type.GetRuntimeProperty("Name")!;
+                var value = valuePropertyInfo.GetValue(smartEnum)!;
+                var name = (string)namePropertyInfo.GetValue(smartEnum)!;
+
+                schema.Enumeration.Add(value);
+                schema.EnumerationNames.Add(name);
             }
         }
     }
