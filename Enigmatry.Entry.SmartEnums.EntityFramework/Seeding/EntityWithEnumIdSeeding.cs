@@ -17,7 +17,7 @@ public class EntityWithEnumIdSeeding<T, TId> : ISeeding
     where TId : SmartEnum<TId>
 {
     /// <summary>
-    /// default entity facotry
+    /// default entity factory
     /// </summary>
     private readonly Func<TId, object> _entityFactory = id => new { Id = id, id.Name };
 
