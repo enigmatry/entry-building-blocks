@@ -76,7 +76,7 @@ public class FilterSearchFixture : SearchServiceFixtureBase
 
     private static SearchOptions ASearchOptionsWithFilter(string filter)
     {
-        TestContext.WriteLine(filter);
+        TestContext.Out.WriteLine(filter);
         var options = new SearchOptions
         {
             Skip = 0,
