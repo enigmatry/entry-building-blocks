@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 
     <Authors>Enigmatry</Authors>
-    <Copyright>Copyright © 2023 Enigmatry. All rights reserved.</Copyright>
+    <Copyright>Copyright © 2024 Enigmatry. All rights reserved.</Copyright>
     <Company>Enigmatry</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>icon-192x192.png</PackageIcon>
@@ -16,6 +16,7 @@
     <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
 
