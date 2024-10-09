@@ -10,7 +10,7 @@
     <PackageVersion Include="AutoMapper" Version="13.0.1" />
     <PackageVersion Include="Azure.Identity" Version="1.12.1" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.6.0" />
-    <PackageVersion Include="Azure.Storage.Blobs" Version="12.20.0" />
+    <PackageVersion Include="Azure.Storage.Blobs" Version="12.22.1" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
