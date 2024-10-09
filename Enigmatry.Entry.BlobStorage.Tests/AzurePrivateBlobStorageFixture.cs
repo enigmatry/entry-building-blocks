@@ -51,10 +51,13 @@ public class AzurePrivateBlobStorageFixture
     [Test]
     public void VerifySharedResourcePathReturnsTrueWhenPathSignatureIsValid()
     {
+        // if this test starts to fail with the upgrade of Azure.Storage.Blob nuget
+        // it might be caused by the change in the algorithm of the signature
+        // the fix is to grab the new signature in the debugger and update the test 
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=B37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
+                   "&sig=2trbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeTrue();
     }
@@ -65,7 +68,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=w" +
-                   "&sig=B37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
+                   "&sig=2trbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 
@@ -75,7 +78,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=b37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
+                   "&sig=2TrbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
@@ -86,7 +89,7 @@ public class AzurePrivateBlobStorageFixture
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResourcee.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=B37A4Lx59pRmu6fEiJgzSIfP0lUWEM9XQ%2BDy6Mj%2BkdA%3D";
+                   "&sig=2trbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
     }
 }
