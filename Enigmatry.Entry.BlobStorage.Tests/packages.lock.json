@@ -207,7 +207,7 @@
       },
       "Azure.Storage.Blobs": {
         "type": "CentralTransitive",
-        "requested": "[12.21.0, )",
+        "requested": "[12.22.1, )",
         "resolved": "12.22.1",
         "contentHash": "x0TZRhkLQwVf+BYjFJybRu0G8OdIXm0mYZJUgUX2I27DHxHmW6+qR4q3VsbOKYT1r/CFwDKBt7wDVohr14k4bQ==",
         "dependencies": {
