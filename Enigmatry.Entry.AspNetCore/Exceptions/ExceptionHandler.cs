@@ -29,7 +29,7 @@ internal class ExceptionHandler
             case ValidationException validationException:
                 await HandleValidationExceptionFrom(context, validationException);
                 return;
-            case EntityNotFoundException notFoundException:
+            case EntityNotFoundException:
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             default:
