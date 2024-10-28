@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -23,7 +23,6 @@ internal class ExceptionHandler
         Justification = "If handler path feature could not be found it means error handling doesn't work!")]
     internal static async Task HandleExceptionFrom(HttpContext context)
     {
-        var logger = context.Resolve<ILogger<ExceptionHandler>>();
         var exception = context.Features.Get<IExceptionHandlerPathFeature>()!.Error;
         switch (exception)
         {
