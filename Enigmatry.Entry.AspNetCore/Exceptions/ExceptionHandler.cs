@@ -28,15 +28,12 @@ internal class ExceptionHandler
         switch (exception)
         {
             case ValidationException validationException:
-                logger.LogDebug(exception, "Validation exception");
                 await HandleValidationExceptionFrom(context, validationException);
                 return;
             case EntityNotFoundException notFoundException:
-                logger.LogError(exception, $"Entity: {notFoundException.EntityName} not found");
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             default:
-                logger.LogError(exception, "Unexpected error");
                 await HandleUnexpectedErrorFrom(context, exception);
                 break;
         }
