@@ -5,7 +5,7 @@ namespace Enigmatry.Entry.Csv;
 public class CsvHelperOptions
 {
     public CultureInfo Culture { get; private set; } = CultureInfo.CurrentCulture;
-    public Func<string, string> ColumnNameReplacer { get; private set; } = name => name;
+    public Func<string, string> HeaderNameReplacer { get; private set; } = name => name;
 
     public CsvHelperOptions WithCulture(CultureInfo culture)
     {
@@ -13,9 +13,9 @@ public class CsvHelperOptions
         return this;
     }
 
-    public CsvHelperOptions WithColumnNameReplacer(Func<string, string> nameReplacer)
+    public CsvHelperOptions WithHeaderNameReplacer(Func<string, string> headerNameReplacer)
     {
-        ColumnNameReplacer = nameReplacer;
+        HeaderNameReplacer = headerNameReplacer;
         return this;
     }
 }

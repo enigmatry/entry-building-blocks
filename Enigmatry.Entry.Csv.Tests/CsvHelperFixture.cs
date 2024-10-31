@@ -37,7 +37,7 @@ public class CsvHelperFixture
                 "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(SerbianCulture).WithColumnNameReplacer(SimulateSerbianStringLocalizer),
+            options => options.WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AWriteTestCase(
             [
@@ -46,7 +46,7 @@ public class CsvHelperFixture
             ],
             [AUser],
             options => options.WithCulture(DutchCulture)
-                .WithColumnNameReplacer(DuplicateNameReplacer),
+                .WithHeaderNameReplacer(DuplicateHeaderNameReplacer),
             "DutchCulture_ReplaceColumnNames");
     }
 
@@ -76,13 +76,13 @@ public class CsvHelperFixture
             "Ime;Prezime;Starost;Datum logovanja;Neki datum\n" +
             "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
-            options => options.WithCulture(SerbianCulture).WithColumnNameReplacer(SimulateSerbianStringLocalizer),
+            options => options.WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AReadTestCase(
             "FirstName-FirstName;LastName-LastName;Age-Age;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime\n" +
             "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
-            options => options.WithCulture(DutchCulture).WithColumnNameReplacer(DuplicateNameReplacer),
+            options => options.WithCulture(DutchCulture).WithHeaderNameReplacer(DuplicateHeaderNameReplacer),
             "DutchCulture_ReplaceColumnNames");
     }
 
@@ -131,7 +131,7 @@ public class CsvHelperFixture
             SomeDateTime = new DateTime(2022, 4, 27, 9, 30, 0, DateTimeKind.Local)
         };
 
-    private static Func<string, string> DuplicateNameReplacer => name => $"{name}-{name}";
+    private static Func<string, string> DuplicateHeaderNameReplacer => name => $"{name}-{name}";
 
     private static string SimulateSerbianStringLocalizer(string name) =>
         name switch
