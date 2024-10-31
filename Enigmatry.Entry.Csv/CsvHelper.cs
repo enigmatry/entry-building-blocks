@@ -80,11 +80,11 @@ public class CsvHelper<T>
                 classMap.Map(typeof(T), member).Ignore();
             }
 
-            var name = _options.ColumnNameReplacer(member.Name);
+            var name = _options.HeaderNameReplacer(member.Name);
             var nameAttribute = member.GetCustomAttribute<NameAttribute>();
             if (nameAttribute != null)
             {
-                name = _options.ColumnNameReplacer(nameAttribute.Name);
+                name = _options.HeaderNameReplacer(nameAttribute.Name);
             }
 
             classMap.Map(typeof(T), member).Name(name);
