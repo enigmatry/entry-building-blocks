@@ -88,7 +88,8 @@
       "enigmatry.entry.csv": {
         "type": "Project",
         "dependencies": {
-          "CsvHelper": "[33.0.1, )"
+          "CsvHelper": "[33.0.1, )",
+          "JetBrains.Annotations": "[2024.2.0, )"
         }
       },
       "CsvHelper": {
@@ -96,6 +97,12 @@
         "requested": "[33.0.1, )",
         "resolved": "33.0.1",
         "contentHash": "fev4lynklAU2A9GVMLtwarkwaanjSYB4wUqO2nOJX5hnzObORzUqVLe+bDYCUyIIRQM4o5Bsq3CcyJR89iMmEQ=="
+      },
+      "JetBrains.Annotations": {
+        "type": "CentralTransitive",
+        "requested": "[2024.2.0, )",
+        "resolved": "2024.2.0",
+        "contentHash": "GNnqCFW/163p1fOehKx0CnAqjmpPrUSqrgfHM6qca+P+RN39C9rhlfZHQpJhxmQG/dkOYe/b3Z0P8b6Kv5m1qw=="
       },
       "Newtonsoft.Json": {
         "type": "CentralTransitive",
