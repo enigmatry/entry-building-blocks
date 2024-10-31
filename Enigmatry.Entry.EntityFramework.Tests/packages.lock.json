@@ -465,7 +465,8 @@
           "Enigmatry.Entry.Core.EntityFramework": "[1.0.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[8.0.10, )",
           "Microsoft.Extensions.Logging.Abstractions": "[8.0.2, )",
-          "System.Formats.Asn1": "[8.0.1, )"
+          "System.Formats.Asn1": "[8.0.1, )",
+          "System.Text.Json": "[8.0.5, )"
         }
       },
       "AutoMapper": {
@@ -617,8 +618,8 @@
       "System.Text.Json": {
         "type": "CentralTransitive",
         "requested": "[8.0.5, )",
-        "resolved": "4.7.2",
-        "contentHash": "TcMd95wcrubm9nHvJEQs70rC0H/8omiSGGpU4FQ/ZA1URIqD4pjmFJh2Mfv1yH1eHgJDWTi2hMDXwTET+zOOyg=="
+        "resolved": "8.0.5",
+        "contentHash": "0f1B50Ss7rqxXiaBJyzUu9bWFOO2/zSlifZ/UNMdiIpDYe4cY4LQQicP4nirK1OS31I43rn062UIJ1Q9bpmHpg=="
       }
     }
   }
