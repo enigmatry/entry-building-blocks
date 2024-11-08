@@ -12,6 +12,12 @@
           "Microsoft.SourceLink.Common": "8.0.0"
         }
       },
+      "MinVer": {
+        "type": "Direct",
+        "requested": "[6.0.0, )",
+        "resolved": "6.0.0",
+        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
+      },
       "NSwag.Generation.AspNetCore": {
         "type": "Direct",
         "requested": "[14.1.0, )",

@@ -2,6 +2,12 @@
   "version": 2,
   "dependencies": {
     "net8.0": {
+      "MinVer": {
+        "type": "Direct",
+        "requested": "[6.0.0, )",
+        "resolved": "6.0.0",
+        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
+      },
       "MediatR.Contracts": {
         "type": "Transitive",
         "resolved": "2.0.1",
