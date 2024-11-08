@@ -27,6 +27,12 @@
           "Microsoft.TestPlatform.TestHost": "17.11.1"
         }
       },
+      "MinVer": {
+        "type": "Direct",
+        "requested": "[6.0.0, )",
+        "resolved": "6.0.0",
+        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
+      },
       "NUnit": {
         "type": "Direct",
         "requested": "[4.2.2, )",
