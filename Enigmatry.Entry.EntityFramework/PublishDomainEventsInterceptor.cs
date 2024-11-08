@@ -41,17 +41,17 @@ public class PublishDomainEventsInterceptor(IMediator mediator, ILogger<PublishD
         return await base.SavedChangesAsync(eventData, result, cancellationToken);
     }
 
+    // We need to gather domain events before saving, so that we include events
+    // for deleted entities (otherwise they are lost due to deletion of the object from context)
     private void GatherDomainEventsFromContext(DbContext dbContext) =>
-        // We need to gather domain events before saving, so that we include events
-        // for deleted entities (otherwise they are lost due to deletion of the object from context)
         _domainEvents = dbContext.GatherDomainEventsFromContext();
 
+    // Publish Domain Events collection.
+    // Choices:
+    // A: Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including
+    // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
+    // B: Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions.
+    // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers.
     private async Task PublishDomainEvents(CancellationToken cancellationToken = default) =>
-        // Publish Domain Events collection.
-        // Choices:
-        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including
-        // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions.
-        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers.
         await mediator.PublishDomainEventsAsync(_domainEvents, logger, cancellationToken);
 }
