@@ -46,14 +46,11 @@ public abstract class SaveChangesBehavior<TDbContext, TRequest, TResponse>(
                     using (logger.BeginScope(
                                new List<KeyValuePair<string, object>> { new("TransactionContext", transactionId) }))
                     {
-                        logger.LogInformation("Begin transaction {TransactionId} for {CommandName} ({@Command})",
-                            transactionId, typeName,
-                            request);
+                        logger.LogDebug("Begin transaction {TransactionId} for {CommandName}", transactionId, typeName);
 
                         response = await next();
 
-                        logger.LogInformation("Commit transaction {TransactionId} for {CommandName}", transactionId,
-                            typeName);
+                        logger.LogDebug("Commit transaction {TransactionId} for {CommandName}", transactionId, typeName);
 
                         await unitOfWork.SaveChangesAsync(cancellationToken);
                         await dbContext.CommitTransactionAsync(transaction, cancellationToken);
@@ -64,7 +61,7 @@ public abstract class SaveChangesBehavior<TDbContext, TRequest, TResponse>(
             {
                 response = await next();
 
-                logger.LogDebug("Saving changes without transaction for {CommandName} ({@Command})", typeName, request);
+                logger.LogDebug("Saving changes without transaction for {CommandName}", typeName);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
             }
 
@@ -72,7 +69,7 @@ public abstract class SaveChangesBehavior<TDbContext, TRequest, TResponse>(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error Handling transaction for {CommandName} ({@Command})", typeName, request);
+            logger.LogError(ex, "Error Handling transaction for {CommandName}", typeName);
             throw;
         }
     }
