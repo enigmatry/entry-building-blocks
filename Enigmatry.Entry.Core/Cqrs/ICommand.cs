@@ -10,7 +10,7 @@ public interface IBaseCommand
     /// <summary>
     /// Transaction behavior of the command. 
     /// </summary>
-    public CommandTransactionBehavior TransactionBehavior => CommandTransactionBehavior.RequiresDbTransaction;
+    public TransactionBehavior TransactionBehavior => TransactionBehavior.RequiresDbTransaction;
 }
 
 /// <summary>
