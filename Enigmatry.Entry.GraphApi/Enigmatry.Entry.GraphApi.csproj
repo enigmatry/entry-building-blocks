@@ -5,6 +5,7 @@
     <PackageId>Enigmatry.Entry.GraphApi</PackageId>
     <Product>Enigmatry.Entry.GraphApi</Product>
     <Description>Building Block for adding MS Graph Api</Description>
+    <NoWarn>NU1902</NoWarn><!-- TODO BP-457: remove this warning when this story is done -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,11 +18,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Text.Json"/>
-  </ItemGroup>
-
-  <!-- TODO BP-457: remove this warning when this story is done -->
-  <ItemGroup>
-    <NoWarn>NU1902</NoWarn>
   </ItemGroup>
   
   <ItemGroup>
