@@ -27,12 +27,6 @@
           "Microsoft.TestPlatform.TestHost": "17.11.1"
         }
       },
-      "MinVer": {
-        "type": "Direct",
-        "requested": "[6.0.0, )",
-        "resolved": "6.0.0",
-        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
-      },
       "NUnit": {
         "type": "Direct",
         "requested": "[4.2.2, )",
@@ -204,7 +198,7 @@
       },
       "Azure.Storage.Blobs": {
         "type": "CentralTransitive",
-        "requested": "[12.23.0, )",
+        "requested": "[12.22.2, )",
         "resolved": "12.22.2",
         "contentHash": "/BK63qx31dhXjnqOXB90DP8mJM+pHbti45+v/D3SiEgP2A+ekvJlGWGLVGQznriT5UAOerM+3vAAEJNKolVSIQ==",
         "dependencies": {

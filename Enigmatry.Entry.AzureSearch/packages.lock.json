@@ -62,12 +62,6 @@
           "Microsoft.Extensions.Primitives": "8.0.0"
         }
       },
-      "MinVer": {
-        "type": "Direct",
-        "requested": "[6.0.0, )",
-        "resolved": "6.0.0",
-        "contentHash": "+/SsmiySsXJlvQLCGBqaZKNVt3s/Y/HbAdwtop7Km2CnuZbaScoqkWJEBQ5Cy9ebkn6kCYKrHsXgwrFdTgcb3g=="
-      },
       "System.Text.Json": {
         "type": "Direct",
         "requested": "[8.0.5, )",

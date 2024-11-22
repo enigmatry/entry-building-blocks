@@ -30,9 +30,12 @@ if (Test-Path $artifacts)
     Remove-Item $artifacts -Force -Recurse
 }
 
+# if minver is missing install it using: dotnet tool install --global minver-cli
+$version = exec { & minver }
+
 exec { & dotnet clean -c Release }
 
-exec { & dotnet build -c Release }
+exec { & dotnet build -c Release -p:Version=$version }
 
 exec { & dotnet test -c Release --no-build -l trx --verbosity=normal --filter "Category=unit|Category=smoke" }
 
@@ -43,7 +46,7 @@ foreach ($project in $projects)
     $content = Get-Content $project.FullName
     if ($content -match '<IsPackable>true</IsPackable>')
     {
-        exec { & dotnet pack $project.FullName -c Release -o $artifacts --no-build }
+        exec { & dotnet pack $project.FullName -c Release -o $artifacts --no-build -p:Version=$version }
     }
 }
 
