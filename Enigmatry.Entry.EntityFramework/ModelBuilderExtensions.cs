@@ -37,9 +37,6 @@ public static class ModelBuilderExtensions
     /// <param name="options">Registration options</param>
     public static void RegisterEntities(this ModelBuilder modelBuilder, EntitiesDbContextOptions options)
     {
-        var entityMethod =
-            typeof(ModelBuilder).GetMethods().First(m => m is { Name: "Entity", IsGenericMethod: true });
-
         var entitiesAssembly = options.EntitiesAssembly;
         var types = entitiesAssembly.GetTypes();
 
@@ -54,7 +51,7 @@ public static class ModelBuilderExtensions
                 continue;
             }
 
-            entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, []);
+            modelBuilder.Entity(type);
         }
     }
 }

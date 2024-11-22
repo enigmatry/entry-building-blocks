@@ -14,7 +14,7 @@ public record CommandTransactionBehavior(bool RequiresTransaction, IsolationLeve
     /// <summary>
     /// Command will not create or enroll to an existing transaction 
     /// </summary>
-    public static CommandTransactionBehavior NoTransaction { get; private set; } = new(false, IsolationLevel.Chaos);
+    public static CommandTransactionBehavior NoTransaction { get; private set; } = new(false, IsolationLevel.Unspecified);
 
     /// <summary>
     /// Default transaction behavior - uses transactions with IsolationLevel.ReadCommited
