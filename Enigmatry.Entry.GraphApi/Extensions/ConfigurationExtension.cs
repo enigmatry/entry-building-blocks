@@ -1,11 +1,10 @@
-﻿using System;
-using Enigmatry.Entry.Core.Settings;
+﻿using Enigmatry.Entry.Core.Settings;
 using Microsoft.Extensions.Configuration;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
 internal static class ConfigurationExtension
 {
-    internal static GraphApiSettings ResolveHealthCheckSettings(this IConfiguration configuration)
+    internal static GraphApiSettings ResolveGraphApiSettings(this IConfiguration configuration)
         => configuration.ResolveFrom<GraphApiSettings>(GraphApiSettings.GraphApiSectionName);
 
     // TODO: remove this and replace it with utility from utilities library when https://jira.enigmatry.com/browse/ETL-349 is done

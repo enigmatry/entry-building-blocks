@@ -3,7 +3,6 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Graph;
-using System;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
 
@@ -28,7 +27,7 @@ public static class ServiceCollectionExtensions
 
     private static GraphServiceClient CreateGraphServiceClient(IConfiguration configuration)
     {
-        var settings = configuration.ResolveHealthCheckSettings();
+        var settings = configuration.ResolveGraphApiSettings();
         var scopes =
             new[]
             {
