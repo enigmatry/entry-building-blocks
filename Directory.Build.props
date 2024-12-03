@@ -1,9 +1,12 @@
 <Project>
 
 	<PropertyGroup>
-    
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
     <Authors>Enigmatry</Authors>
-    <Copyright>Copyright © 2023 Enigmatry. All rights reserved.</Copyright>
+    <Copyright>Copyright © 2024 Enigmatry. All rights reserved.</Copyright>
     <Company>Enigmatry</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>icon-192x192.png</PackageIcon>
@@ -13,6 +16,7 @@
     <RepositoryUrl>https://github.com/enigmatry/entry-building-blocks</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
 
@@ -20,7 +24,7 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisLevel>8.0</AnalysisLevel>
     <LangVersion>latest</LangVersion>
     <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 

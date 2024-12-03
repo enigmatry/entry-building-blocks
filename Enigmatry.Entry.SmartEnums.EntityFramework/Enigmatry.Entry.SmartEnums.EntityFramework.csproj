@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.SmartEnums.EntityFramework</PackageId>
+    <Product>Enigmatry.Entry.SmartEnums.EntityFramework</Product>
+    <Description>Building Block for support of SmartEnums with EntityFramework in an Entry based project</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.SmartEnum.EFCore" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Entry.Core.EntityFramework\Enigmatry.Entry.Core.EntityFramework.csproj" />
+    <ProjectReference Include="..\Enigmatry.Entry.SmartEnums\Enigmatry.Entry.SmartEnums.csproj" />
+  </ItemGroup>
+
+</Project>

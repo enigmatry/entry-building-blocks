@@ -26,7 +26,7 @@ public class FullTextSearchFixture : SearchServiceFixtureBase
         var searchResult = await Search(searchText, searchOptions);
         var pages = searchResult.PagedResult.AsPages().ToList();
 
-        TestContext.WriteLine("Search text: " + searchText.Value);
+        await TestContext.Out.WriteLineAsync("Search text: " + searchText.Value);
 
         var expectation = testCase.Expectation;
         searchResult.TotalCount.Should().Be(expectation.TotalCount, expectation.Reason);

@@ -1,19 +1,15 @@
-﻿using Enigmatry.Entry.AspNetCore.Filters;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using Enigmatry.Entry.AspNetCore.Filters;
 using Enigmatry.Entry.AspNetCore.Validation;
 using Enigmatry.Entry.Core.Entities;
-using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace Enigmatry.Entry.AspNetCore.Exceptions;
 
@@ -23,20 +19,16 @@ internal class ExceptionHandler
         Justification = "If handler path feature could not be found it means error handling doesn't work!")]
     internal static async Task HandleExceptionFrom(HttpContext context)
     {
-        var logger = context.Resolve<ILogger<ExceptionHandler>>();
         var exception = context.Features.Get<IExceptionHandlerPathFeature>()!.Error;
         switch (exception)
         {
             case ValidationException validationException:
-                logger.LogDebug(exception, "Validation exception");
                 await HandleValidationExceptionFrom(context, validationException);
                 return;
-            case EntityNotFoundException notFoundException:
-                logger.LogError(exception, $"Entity: {notFoundException.EntityName} not found");
+            case EntityNotFoundException:
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
                 return;
             default:
-                logger.LogError(exception, "Unexpected error");
                 await HandleUnexpectedErrorFrom(context, exception);
                 break;
         }
@@ -65,17 +57,13 @@ internal class ExceptionHandler
         }
 
         var problemDetails = GetProblemDetails(context, exception);
-        var jsonResult = new JsonResult(problemDetails)
-        {
-            ContentType = "application/problem+json",
-            StatusCode = 500
-        };
+        var jsonResult = new JsonResult(problemDetails) { ContentType = "application/problem+json", StatusCode = 500 };
         await ExecuteResult(context, jsonResult);
     }
 
     private static async Task ExecuteResult(HttpContext context, IActionResult actionResult)
     {
-        RouteData routeData = context.GetRouteData();
+        var routeData = context.GetRouteData();
         var actionDescriptor = new ActionDescriptor();
         var actionContext = new ActionContext(context, routeData, actionDescriptor);
         await actionResult.ExecuteResultAsync(actionContext);

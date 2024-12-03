@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <PackageId>Enigmatry.Entry.GraphApi</PackageId>
     <Product>Enigmatry.Entry.GraphApi</Product>
     <Description>Building Block for adding MS Graph Api</Description>
+    <NoWarn>NU1902</NoWarn><!-- TODO BP-457: remove this warning when this story is done -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +18,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Text.Json"/>
   </ItemGroup>
 
   <ItemGroup>

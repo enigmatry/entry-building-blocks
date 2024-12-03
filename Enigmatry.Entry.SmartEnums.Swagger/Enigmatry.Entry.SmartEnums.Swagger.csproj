@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.SmartEnums.Swagger</PackageId>
+    <Product>Enigmatry.Entry.SmartEnums.NSwag</Product>
+    <Description>Building Block for support of SmartEnums with NSWag in an Entry based project</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NSwag.Generation.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Enigmatry.Entry.SmartEnums\Enigmatry.Entry.SmartEnums.csproj" />
+  </ItemGroup>
+
+</Project>

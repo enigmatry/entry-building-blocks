@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 		nuget.config = nuget.config
+		build.ps1 = build.ps1
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enigmatry.Entry.AspNetCore", "Enigmatry.Entry.AspNetCore\Enigmatry.Entry.AspNetCore.csproj", "{66FDC9ED-ED2B-498C-A3BB-2DA8AE340666}"
@@ -97,6 +98,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.TemplatingEngine.Fluid", "Enigmatry.Entry.TemplatingEngine.Fluid\Enigmatry.Entry.TemplatingEngine.Fluid.csproj", "{9D50409E-3508-463D-B508-785B03F2CE3A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.TemplatingEngine.Fluid.Tests", "Enigmatry.Entry.TemplatingEngine.Fluid.Tests\Enigmatry.Entry.TemplatingEngine.Fluid.Tests.csproj", "{944C3B78-D165-4412-B49A-2247AC5D2DC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums", "Enigmatry.Entry.SmartEnums\Enigmatry.Entry.SmartEnums.csproj", "{699BABB2-7DDD-4407-AD13-743A1EE6E556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.EntityFramework", "Enigmatry.Entry.SmartEnums.EntityFramework\Enigmatry.Entry.SmartEnums.EntityFramework.csproj", "{E2E79C9E-0423-4E17-A9C8-EA158E28660F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.Swagger", "Enigmatry.Entry.SmartEnums.Swagger\Enigmatry.Entry.SmartEnums.Swagger.csproj", "{A765BD03-D709-4944-B4BE-42F6CA32832B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.SystemTextJson", "Enigmatry.Entry.SmartEnums.SystemTextJson\Enigmatry.Entry.SmartEnums.SystemTextJson.csproj", "{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enigmatry.Entry.SmartEnums.VerifyTests", "Enigmatry.Entry.SmartEnums.VerifyTests\Enigmatry.Entry.SmartEnums.VerifyTests.csproj", "{805C10AC-0BDF-4938-94FF-2414C2F83FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -256,6 +267,26 @@ Global
 		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{944C3B78-D165-4412-B49A-2247AC5D2DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{699BABB2-7DDD-4407-AD13-743A1EE6E556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{699BABB2-7DDD-4407-AD13-743A1EE6E556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{699BABB2-7DDD-4407-AD13-743A1EE6E556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{699BABB2-7DDD-4407-AD13-743A1EE6E556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2E79C9E-0423-4E17-A9C8-EA158E28660F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2E79C9E-0423-4E17-A9C8-EA158E28660F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2E79C9E-0423-4E17-A9C8-EA158E28660F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2E79C9E-0423-4E17-A9C8-EA158E28660F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A765BD03-D709-4944-B4BE-42F6CA32832B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7152A1DE-A867-4D54-B4B0-5D7BFB80C117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{805C10AC-0BDF-4938-94FF-2414C2F83FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

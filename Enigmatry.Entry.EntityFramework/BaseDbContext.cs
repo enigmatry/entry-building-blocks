@@ -1,57 +1,83 @@
-﻿using Enigmatry.Entry.Core.Entities;
+﻿using System.Data;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Enigmatry.Entry.EntityFramework;
 
 [UsedImplicitly]
-public abstract class BaseDbContext : DbContext
+public abstract class BaseDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options)
+    : DbContext(options)
 {
-    private readonly EntitiesDbContextOptions _entitiesDbContextOptions;
+    private IDbContextTransaction? _currentTransaction;
 
+    public bool HasActiveTransaction => _currentTransaction != null;
     public Action<ModelBuilder>? ModelBuilderConfigurator { get; set; }
-
-    protected BaseDbContext(EntitiesDbContextOptions entitiesDbContextOptions, DbContextOptions options) : base(options)
-    {
-        _entitiesDbContextOptions = entitiesDbContextOptions;
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(_entitiesDbContextOptions.ConfigurationAssembly,
-            _entitiesDbContextOptions.ConfigurationTypePredicate);
+        modelBuilder.ApplyConfigurationsFromAssembly(entitiesDbContextOptions.ConfigurationAssembly,
+            entitiesDbContextOptions.ConfigurationTypePredicate);
 
-        RegisterEntities(modelBuilder);
+        modelBuilder.RegisterEntities(entitiesDbContextOptions);
 
         ModelBuilderConfigurator?.Invoke(modelBuilder);
 
         base.OnModelCreating(modelBuilder);
     }
 
-    [SuppressMessage("ReSharper", "ConditionalAccessQualifierIsNonNullableAccordingToAPIContract")]
-    private void RegisterEntities(ModelBuilder modelBuilder)
+    public async Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel,
+        CancellationToken cancellationToken)
     {
-        var entityMethod =
-            typeof(ModelBuilder).GetMethods().First(m => m.Name == "Entity" && m.IsGenericMethod);
-
-        var entitiesAssembly = _entitiesDbContextOptions.EntitiesAssembly;
-        var types = entitiesAssembly?.GetTypes() ?? Enumerable.Empty<Type>();
-
-        var entityTypes = types
-            .Where(x => x.IsSubclassOf(typeof(Entity)) && !x.IsAbstract);
-
-        foreach (var type in entityTypes)
+        if (_currentTransaction != null)
         {
-            if (_entitiesDbContextOptions.EntityTypePredicate != null &&
-                !_entitiesDbContextOptions.EntityTypePredicate(type))
-            {
-                continue;
-            }
+            throw new InvalidOperationException("A transaction is already active");
+        }
 
-            entityMethod.MakeGenericMethod(type).Invoke(modelBuilder, []);
+        _currentTransaction = await Database.BeginTransactionAsync(isolationLevel, cancellationToken);
+        return _currentTransaction;
+    }
+
+    public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(transaction);
+        if (transaction != _currentTransaction)
+        {
+            throw new InvalidOperationException($"Transaction {transaction.TransactionId} is not current");
+        }
+
+        try
+        {
+            await transaction.CommitAsync(cancellationToken);
+        }
+        catch
+        {
+            RollbackTransaction();
+            throw;
+        }
+        finally
+        {
+            if (HasActiveTransaction)
+            {
+                _currentTransaction!.Dispose();
+                _currentTransaction = null;
+            }
+        }
+    }
+
+    private void RollbackTransaction()
+    {
+        try
+        {
+            _currentTransaction?.Rollback();
+        }
+        finally
+        {
+            if (HasActiveTransaction)
+            {
+                _currentTransaction!.Dispose();
+                _currentTransaction = null;
+            }
         }
     }
 }

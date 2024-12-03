@@ -1,10 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <IsTestProject>true</IsTestProject>
     <PackageId>Enigmatry.Entry.AspNetCore.Tests</PackageId>
     <Product>Enigmatry.Entry.AspNetCore.Tests</Product>
     <Description>Building Block for writing tests in an Entry AspNetCore based project</Description>
