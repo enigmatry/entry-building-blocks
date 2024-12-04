@@ -9,15 +9,13 @@ namespace Enigmatry.Entry.GraphApi.Extensions;
 [UsedImplicitly]
 public static class ServiceCollectionExtensions
 {
-    [Obsolete("Use AddEntryGraphApi instead")]
-    public static void AppAddGraphApi(this IServiceCollection services, IConfiguration configuration) =>
-        services.AddEntryGraphApi(configuration);
-
     [PublicAPI]
+    [Obsolete("Use BaseBearerModule or BaseClientSecretModule instead")]
     public static void AddEntryGraphApi(this IServiceCollection services, IConfiguration configuration) =>
         services.AddScoped(_ => CreateGraphServiceClient(configuration));
 
     [PublicAPI]
+    [Obsolete("Use BaseBearerModule or BaseClientSecretModule instead")]
     public static void AddEntryGraphApi(this IServiceCollection services) =>
         services.AddScoped(_ =>
         {
