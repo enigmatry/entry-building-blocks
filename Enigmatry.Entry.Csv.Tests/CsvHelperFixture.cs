@@ -21,6 +21,19 @@ public class CsvHelperFixture
         }
     }
 
+    [TestCaseSource(nameof(WriteTestCases))]
+    public void WriteRecordsToStream(CsvWriteTestCase testCase)
+    {
+        var helper = ACsvHelper(testCase.Options);
+
+        var result = WriteRecordsToStream(helper, testCase.Users);
+
+        foreach (var csvRow in testCase.CsvRows)
+        {
+            result.Should().Contain(csvRow);
+        }
+    }
+
     private static IEnumerable<TestCaseData> WriteTestCases()
     {
         yield return AWriteTestCase(
@@ -107,6 +120,14 @@ public class CsvHelperFixture
     private static string WriteRecords<T>(CsvHelper<T> helper, IEnumerable<T> records)
     {
         var bytes = helper.WriteRecords(records);
+        var result = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+        return result;
+    }
+
+    private static string WriteRecordsToStream<T>(CsvHelper<T> helper, IEnumerable<T> records)
+    {
+        using var stream = helper.WriteRecordsToStream(records);
+        var bytes = stream.ToArray();
         var result = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
         return result;
     }

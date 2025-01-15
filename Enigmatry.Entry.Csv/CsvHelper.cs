@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
+using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
@@ -53,17 +55,39 @@ public class CsvHelper<T>
         using var streamWriter = new StreamWriter(memoryStream, _options.Encoding);
         using var writer = new CsvWriter(streamWriter, _options.Culture);
 
-        writer.Context.TypeConverterOptionsCache.AddOptions<DateTime>(
+        WriteRecordsToStream(records, memoryStream, streamWriter, writer);
+
+        return memoryStream.ToArray();
+    }
+
+    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
+    public MemoryStream WriteRecordsToStream(IEnumerable<T> records)
+    {
+        var memoryStream = new MemoryStream();
+        var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
+        var writer = new CsvWriter(streamWriter, _options.Culture);
+
+        WriteRecordsToStream(records, memoryStream, streamWriter, writer);
+
+        return memoryStream;
+    }
+
+    private MemoryStream WriteRecordsToStream(IEnumerable<T> records, MemoryStream memoryStream, StreamWriter streamWriter,
+        CsvWriter csvWriter)
+    {
+        csvWriter.Context.TypeConverterOptionsCache.AddOptions<DateTime>(
             new TypeConverterOptions { Formats = ["yyyy-MM-dd HH:mm:ss"] });
-        writer.Context.TypeConverterCache.AddConverter<DateTimeOffset>(
+        csvWriter.Context.TypeConverterCache.AddConverter<DateTimeOffset>(
             new DateTimeOffsetToLocalDateTimeConverter());
 
         var classMap = CreateClassMap();
-        writer.Context.RegisterClassMap(classMap);
+        csvWriter.Context.RegisterClassMap(classMap);
 
-        writer.WriteRecords(records);
+        csvWriter.WriteRecords(records);
         streamWriter.Flush();
-        return memoryStream.ToArray();
+        memoryStream.Position = 0;
+
+        return memoryStream;
     }
 
     private DefaultClassMap<T> CreateClassMap()
