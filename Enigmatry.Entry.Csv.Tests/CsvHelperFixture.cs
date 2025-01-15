@@ -38,24 +38,24 @@ public class CsvHelperFixture
     {
         yield return AWriteTestCase(
             [
-                "FirstName;LastName;Age;Ingelogd op;SomeDateTime",
-                "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
+                "FirstName;LastName;Age;Username;Ingelogd op;SomeDateTime",
+                "John;Doe;30;john.doe;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
             options => options.WithEncoding(Encoding.UTF8).WithCulture(DutchCulture),
             "DutchCulture");
         yield return AWriteTestCase(
             [
-                "Ime;Prezime;Starost;Datum logovanja;Neki datum",
-                "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
+                "Ime;Prezime;Starost;Korisničko ime;Datum logovanja;Neki datum",
+                "John;Doe;30;john.doe;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
             options => options.WithEncoding(Encoding.UTF8).WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AWriteTestCase(
             [
-                "FirstName-FirstName;LastName-LastName;Age-Age;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime",
-                "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
+                "FirstName-FirstName;LastName-LastName;Age-Age;Username-Username;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime",
+                "John;Doe;30;john.doe;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
             options => options.WithEncoding(Encoding.UTF8).WithCulture(DutchCulture)
@@ -75,25 +75,26 @@ public class CsvHelperFixture
         row.FirstName.Should().Be(user.FirstName);
         row.LastName.Should().Be(user.LastName);
         row.Age.Should().Be(user.Age);
+        row.Username.Should().Be(user.Username);
     }
 
     private static IEnumerable<TestCaseData> ReadTestCases()
     {
         yield return AReadTestCase(
-            "FirstName;LastName;Age;Ingelogd op;SomeDateTime\n" +
-            "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
+            "FirstName;LastName;Age;Username;Ingelogd op;SomeDateTime\n" +
+            "John;Doe;30;john.doe;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
             options => options.WithCulture(DutchCulture),
             "DutchCulture");
         yield return AReadTestCase(
-            "Ime;Prezime;Starost;Datum logovanja;Neki datum\n" +
-            "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
+            "Ime;Prezime;Starost;Korisničko ime;Datum logovanja;Neki datum\n" +
+            "John;Doe;30;john.doe;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
             options => options.WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AReadTestCase(
-            "FirstName-FirstName;LastName-LastName;Age-Age;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime\n" +
-            "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
+            "FirstName-FirstName;LastName-LastName;Age-Age;Username-Username;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime\n" +
+            "John;Doe;30;john.doe;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
             options => options.WithCulture(DutchCulture).WithHeaderNameReplacer(DuplicateHeaderNameReplacer),
             "DutchCulture_ReplaceColumnNames");
@@ -137,7 +138,7 @@ public class CsvHelperFixture
 
     private static MemoryStream AsCsvStream(string csv)
     {
-        var bytes = Encoding.ASCII.GetBytes(csv);
+        var bytes = Encoding.UTF8.GetBytes(csv);
         var stream = new MemoryStream(bytes);
         return stream;
     }
@@ -148,6 +149,7 @@ public class CsvHelperFixture
             FirstName = "John",
             LastName = "Doe",
             Age = 30,
+            Username = "john.doe",
             LastLogon = new DateTimeOffset(new DateTime(2023, 12, 19, 9, 30, 0, DateTimeKind.Local)),
             SomeDateTime = new DateTime(2022, 4, 27, 9, 30, 0, DateTimeKind.Local)
         };
@@ -160,6 +162,7 @@ public class CsvHelperFixture
             "FirstName" => "Ime",
             "LastName" => "Prezime",
             "Age" => "Starost",
+            "Username" => "Korisničko ime",
             "Ingelogd op" => "Datum logovanja",
             "SomeDateTime" => "Neki datum",
             _ => name
