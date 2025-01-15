@@ -52,29 +52,22 @@ public class CsvHelper<T>
     public byte[] WriteRecords(IEnumerable<T> records)
     {
         using var memoryStream = new MemoryStream();
-        using var streamWriter = new StreamWriter(memoryStream, _options.Encoding);
-        using var writer = new CsvWriter(streamWriter, _options.Culture);
-
-        WriteRecordsToStream(records, memoryStream, streamWriter, writer);
-
+        WriteRecordsToStream(records, memoryStream);
         return memoryStream.ToArray();
     }
 
-    [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope")]
     public MemoryStream WriteRecordsToStream(IEnumerable<T> records)
     {
         var memoryStream = new MemoryStream();
-        var streamWriter = new StreamWriter(memoryStream, _options.Encoding);
-        var writer = new CsvWriter(streamWriter, _options.Culture);
-
-        WriteRecordsToStream(records, memoryStream, streamWriter, writer);
-
+        WriteRecordsToStream(records, memoryStream);
         return memoryStream;
     }
 
-    private MemoryStream WriteRecordsToStream(IEnumerable<T> records, MemoryStream memoryStream, StreamWriter streamWriter,
-        CsvWriter csvWriter)
+    private MemoryStream WriteRecordsToStream(IEnumerable<T> records, MemoryStream memoryStream)
     {
+        using var streamWriter = new StreamWriter(memoryStream, _options.Encoding, leaveOpen: true);
+        using var csvWriter = new CsvWriter(streamWriter, _options.Culture, leaveOpen: true);
+
         csvWriter.Context.TypeConverterOptionsCache.AddOptions<DateTime>(
             new TypeConverterOptions { Formats = ["yyyy-MM-dd HH:mm:ss"] });
         csvWriter.Context.TypeConverterCache.AddConverter<DateTimeOffset>(

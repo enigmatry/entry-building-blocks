@@ -21,6 +21,18 @@ public class CsvHelperFixture
         }
     }
 
+    [Test]
+    public void WriteRecordsToStream_ShouldNotDisposeStream()
+    {
+        List<User> users = [AUser];
+        var helper = ACsvHelper(options => options.WithEncoding(Encoding.UTF8));
+
+        var result = helper.WriteRecordsToStream(users);
+
+        var readAction = () => result.ReadByte();
+        readAction.Should().NotThrow<ObjectDisposedException>();
+    }
+
     [TestCaseSource(nameof(WriteTestCases))]
     public void WriteRecordsToStream(CsvWriteTestCase testCase)
     {
