@@ -64,7 +64,7 @@ public class CsvHelper<T>
     public MemoryStream WriteRecordsToStream(IEnumerable<T> records)
     {
         var memoryStream = new MemoryStream();
-        var streamWriter = new StreamWriter(memoryStream, Encoding.UTF8);
+        var streamWriter = new StreamWriter(memoryStream, _options.Encoding);
         var writer = new CsvWriter(streamWriter, _options.Culture);
 
         WriteRecordsToStream(records, memoryStream, streamWriter, writer);
