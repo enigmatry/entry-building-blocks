@@ -29,7 +29,7 @@ public class CsvHelperFixture
                 "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(DutchCulture),
+            options => options.WithEncoding(Encoding.UTF8).WithCulture(DutchCulture),
             "DutchCulture");
         yield return AWriteTestCase(
             [
@@ -37,7 +37,7 @@ public class CsvHelperFixture
                 "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
+            options => options.WithEncoding(Encoding.UTF8).WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AWriteTestCase(
             [
@@ -45,7 +45,7 @@ public class CsvHelperFixture
                 "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(DutchCulture)
+            options => options.WithEncoding(Encoding.UTF8).WithCulture(DutchCulture)
                 .WithHeaderNameReplacer(DuplicateHeaderNameReplacer),
             "DutchCulture_ReplaceColumnNames");
     }

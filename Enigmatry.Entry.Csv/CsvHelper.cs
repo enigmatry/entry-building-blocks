@@ -50,7 +50,7 @@ public class CsvHelper<T>
     public byte[] WriteRecords(IEnumerable<T> records)
     {
         using var memoryStream = new MemoryStream();
-        using var streamWriter = new StreamWriter(memoryStream);
+        using var streamWriter = new StreamWriter(memoryStream, _options.Encoding);
         using var writer = new CsvWriter(streamWriter, _options.Culture);
 
         writer.Context.TypeConverterOptionsCache.AddOptions<DateTime>(
