@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Reflection;
+using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
@@ -50,20 +52,35 @@ public class CsvHelper<T>
     public byte[] WriteRecords(IEnumerable<T> records)
     {
         using var memoryStream = new MemoryStream();
-        using var streamWriter = new StreamWriter(memoryStream);
-        using var writer = new CsvWriter(streamWriter, _options.Culture);
+        WriteRecordsToStream(records, memoryStream);
+        return memoryStream.ToArray();
+    }
 
-        writer.Context.TypeConverterOptionsCache.AddOptions<DateTime>(
+    public MemoryStream WriteRecordsToStream(IEnumerable<T> records)
+    {
+        var memoryStream = new MemoryStream();
+        WriteRecordsToStream(records, memoryStream);
+        return memoryStream;
+    }
+
+    private MemoryStream WriteRecordsToStream(IEnumerable<T> records, MemoryStream memoryStream)
+    {
+        using var streamWriter = new StreamWriter(memoryStream, _options.Encoding, leaveOpen: true);
+        using var csvWriter = new CsvWriter(streamWriter, _options.Culture, leaveOpen: true);
+
+        csvWriter.Context.TypeConverterOptionsCache.AddOptions<DateTime>(
             new TypeConverterOptions { Formats = ["yyyy-MM-dd HH:mm:ss"] });
-        writer.Context.TypeConverterCache.AddConverter<DateTimeOffset>(
+        csvWriter.Context.TypeConverterCache.AddConverter<DateTimeOffset>(
             new DateTimeOffsetToLocalDateTimeConverter());
 
         var classMap = CreateClassMap();
-        writer.Context.RegisterClassMap(classMap);
+        csvWriter.Context.RegisterClassMap(classMap);
 
-        writer.WriteRecords(records);
+        csvWriter.WriteRecords(records);
         streamWriter.Flush();
-        return memoryStream.ToArray();
+        memoryStream.Position = 0;
+
+        return memoryStream;
     }
 
     private DefaultClassMap<T> CreateClassMap()

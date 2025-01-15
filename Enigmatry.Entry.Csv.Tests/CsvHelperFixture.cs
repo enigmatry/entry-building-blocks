@@ -21,31 +21,56 @@ public class CsvHelperFixture
         }
     }
 
+    [Test]
+    public void WriteRecordsToStream_ShouldNotDisposeStream()
+    {
+        List<User> users = [AUser];
+        var helper = ACsvHelper(options => options.WithEncoding(Encoding.UTF8));
+
+        var result = helper.WriteRecordsToStream(users);
+
+        var readAction = () => result.ReadByte();
+        readAction.Should().NotThrow<ObjectDisposedException>();
+    }
+
+    [TestCaseSource(nameof(WriteTestCases))]
+    public void WriteRecordsToStream(CsvWriteTestCase testCase)
+    {
+        var helper = ACsvHelper(testCase.Options);
+
+        var result = WriteRecordsToStream(helper, testCase.Users);
+
+        foreach (var csvRow in testCase.CsvRows)
+        {
+            result.Should().Contain(csvRow);
+        }
+    }
+
     private static IEnumerable<TestCaseData> WriteTestCases()
     {
         yield return AWriteTestCase(
             [
-                "FirstName;LastName;Age;Ingelogd op;SomeDateTime",
-                "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
+                "FirstName;LastName;Age;Username;Ingelogd op;SomeDateTime",
+                "John;Doe;30;john.doe;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(DutchCulture),
+            options => options.WithEncoding(Encoding.UTF8).WithCulture(DutchCulture),
             "DutchCulture");
         yield return AWriteTestCase(
             [
-                "Ime;Prezime;Starost;Datum logovanja;Neki datum",
-                "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
+                "Ime;Prezime;Starost;Korisničko ime;Datum logovanja;Neki datum",
+                "John;Doe;30;john.doe;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
+            options => options.WithEncoding(Encoding.UTF8).WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AWriteTestCase(
             [
-                "FirstName-FirstName;LastName-LastName;Age-Age;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime",
-                "John;Doe;30;2023-12-19 09:30:00;2022-04-27 09:30:00"
+                "FirstName-FirstName;LastName-LastName;Age-Age;Username-Username;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime",
+                "John;Doe;30;john.doe;2023-12-19 09:30:00;2022-04-27 09:30:00"
             ],
             [AUser],
-            options => options.WithCulture(DutchCulture)
+            options => options.WithEncoding(Encoding.UTF8).WithCulture(DutchCulture)
                 .WithHeaderNameReplacer(DuplicateHeaderNameReplacer),
             "DutchCulture_ReplaceColumnNames");
     }
@@ -62,25 +87,26 @@ public class CsvHelperFixture
         row.FirstName.Should().Be(user.FirstName);
         row.LastName.Should().Be(user.LastName);
         row.Age.Should().Be(user.Age);
+        row.Username.Should().Be(user.Username);
     }
 
     private static IEnumerable<TestCaseData> ReadTestCases()
     {
         yield return AReadTestCase(
-            "FirstName;LastName;Age;Ingelogd op;SomeDateTime\n" +
-            "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
+            "FirstName;LastName;Age;Username;Ingelogd op;SomeDateTime\n" +
+            "John;Doe;30;john.doe;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
             options => options.WithCulture(DutchCulture),
             "DutchCulture");
         yield return AReadTestCase(
-            "Ime;Prezime;Starost;Datum logovanja;Neki datum\n" +
-            "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
+            "Ime;Prezime;Starost;Korisničko ime;Datum logovanja;Neki datum\n" +
+            "John;Doe;30;john.doe;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
             options => options.WithCulture(SerbianCulture).WithHeaderNameReplacer(SimulateSerbianStringLocalizer),
             "SerbianCulture");
         yield return AReadTestCase(
-            "FirstName-FirstName;LastName-LastName;Age-Age;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime\n" +
-            "John;Doe;30;2022-04-30 09:30:00;2022-04-27 09:30:00",
+            "FirstName-FirstName;LastName-LastName;Age-Age;Username-Username;Ingelogd op-Ingelogd op;SomeDateTime-SomeDateTime\n" +
+            "John;Doe;30;john.doe;2022-04-30 09:30:00;2022-04-27 09:30:00",
             AUser,
             options => options.WithCulture(DutchCulture).WithHeaderNameReplacer(DuplicateHeaderNameReplacer),
             "DutchCulture_ReplaceColumnNames");
@@ -111,12 +137,20 @@ public class CsvHelperFixture
         return result;
     }
 
+    private static string WriteRecordsToStream<T>(CsvHelper<T> helper, IEnumerable<T> records)
+    {
+        using var stream = helper.WriteRecordsToStream(records);
+        var bytes = stream.ToArray();
+        var result = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+        return result;
+    }
+
     private static CultureInfo DutchCulture => CultureInfo.GetCultureInfo("nl-NL");
     private static CultureInfo SerbianCulture => CultureInfo.GetCultureInfo("sr-Latn-RS");
 
     private static MemoryStream AsCsvStream(string csv)
     {
-        var bytes = Encoding.ASCII.GetBytes(csv);
+        var bytes = Encoding.UTF8.GetBytes(csv);
         var stream = new MemoryStream(bytes);
         return stream;
     }
@@ -127,6 +161,7 @@ public class CsvHelperFixture
             FirstName = "John",
             LastName = "Doe",
             Age = 30,
+            Username = "john.doe",
             LastLogon = new DateTimeOffset(new DateTime(2023, 12, 19, 9, 30, 0, DateTimeKind.Local)),
             SomeDateTime = new DateTime(2022, 4, 27, 9, 30, 0, DateTimeKind.Local)
         };
@@ -139,6 +174,7 @@ public class CsvHelperFixture
             "FirstName" => "Ime",
             "LastName" => "Prezime",
             "Age" => "Starost",
+            "Username" => "Korisničko ime",
             "Ingelogd op" => "Datum logovanja",
             "SomeDateTime" => "Neki datum",
             _ => name
