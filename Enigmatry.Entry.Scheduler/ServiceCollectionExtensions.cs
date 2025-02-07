@@ -54,7 +54,8 @@ public static class ServiceCollectionExtensions
         }
 
         var key = config.JobName;
-        quartz.AddJob(config.JobType, new JobKey(key));
+        quartz.AddJob(config.JobType, new JobKey(key),
+            cfg => cfg.DisallowConcurrentExecution(settings.DisallowConcurrentExecution));
 
         quartz.AddTrigger(trigger =>
         {

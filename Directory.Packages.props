@@ -72,7 +72,7 @@
     <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Formats.Asn1" Version="8.0.1" />
     <!-- added on 2024-10-08 due to reported security vulnerability in EF Core - should be removed at certain moment -->
-    <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.4.8" />
+    <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.6.0.1" />
     <PackageVersion Include="System.Net.Http.Json" Version="8.0.1" />
     <PackageVersion Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
     <PackageVersion Include="System.Text.Json" Version="8.0.5" />
