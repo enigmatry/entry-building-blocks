@@ -1,12 +1,12 @@
 <Project>
 
 	<PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 
     <Authors>Enigmatry</Authors>
-    <Copyright>Copyright © 2024 Enigmatry. All rights reserved.</Copyright>
+    <Copyright>Copyright © 2025 Enigmatry. All rights reserved.</Copyright>
     <Company>Enigmatry</Company>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageIcon>icon-192x192.png</PackageIcon>
@@ -24,7 +24,7 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>8.0</AnalysisLevel>
+    <AnalysisLevel>9.0</AnalysisLevel>
     <LangVersion>latest</LangVersion>
     <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 
