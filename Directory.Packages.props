@@ -19,6 +19,7 @@
     <PackageVersion Include="EmailValidation" Version="1.2.0" />
     <PackageVersion Include="FakeItEasy" Version="8.3.0" />
     <PackageVersion Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
+    <!--Do not update FluentAssertions to 8+ because they're not free: https://github.com/fluentassertions/fluentassertions/pull/2943-->
     <PackageVersion Include="FluentAssertions" Version="[7.2.0]" />
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
