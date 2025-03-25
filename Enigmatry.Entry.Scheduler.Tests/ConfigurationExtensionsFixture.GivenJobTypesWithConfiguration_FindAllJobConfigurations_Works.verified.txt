@@ -5,7 +5,8 @@
     Settings: {
       RunOnStartup: true,
       Enabled: true,
-      Cronex: 2 0 3 ? * * *
+      Cronex: 2 0 3 ? * * *,
+      DisallowConcurrentExecution: false
     }
   },
   {
@@ -14,7 +15,8 @@
     Settings: {
       RunOnStartup: false,
       Enabled: false,
-      Cronex: 1 0 3 ? * * *
+      Cronex: 1 0 3 ? * * *,
+      DisallowConcurrentExecution: false
     }
   }
 ]
