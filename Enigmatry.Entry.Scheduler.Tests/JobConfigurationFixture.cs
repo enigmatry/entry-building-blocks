@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Shouldly;
 
 namespace Enigmatry.Entry.Scheduler.Tests;
 
@@ -12,8 +12,8 @@ public class JobConfigurationFixture
         var arguments =
             GetArguments<SampleJobs.AnEntryJobWithArguments, SampleJobs.AnEntryJobWithArguments.Request>();
 
-        arguments.Arg1.Should().Be("argument1");
-        arguments.Arg2.Should().Be("argument2");
+        arguments.Arg1.ShouldBe("argument1");
+        arguments.Arg2.ShouldBe("argument2");
     }
 
     [Test]
@@ -22,7 +22,7 @@ public class JobConfigurationFixture
         var arguments =
             GetArguments<SampleJobs.AnEntryJobWithoutArguments, SampleJobs.AnEntryJobWithoutArguments.Request>();
 
-        arguments.AnArgument.Should().Be("initialValue");
+        arguments.AnArgument.ShouldBe("initialValue");
     }
 
     private static TArguments GetArguments<T, TArguments>() where TArguments : new()

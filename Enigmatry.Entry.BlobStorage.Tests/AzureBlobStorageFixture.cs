@@ -1,8 +1,8 @@
 ﻿using Azure.Storage.Blobs;
 using Enigmatry.Entry.BlobStorage.Azure;
-using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.BlobStorage.Tests;
 
@@ -35,7 +35,7 @@ public class AzureBlobStorageFixture
     public void TestResourcePath()
     {
         var path = _blobStorage.BuildResourcePath(ResourceName);
-        path.Should().Be($"https://{AccountName}.blob.core.windows.net/{ContainerName}/{ResourceName}");
+        path.ShouldBe($"https://{AccountName}.blob.core.windows.net/{ContainerName}/{ResourceName}");
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class AzureBlobStorageFixture
     {
         var blob = new BlobClient(new Uri($"https://{AccountName}.blob.core.windows.net/{ContainerName}/{ResourceName}"));
         var headers = _blobStorage.ConfigureBlobHttpHeadersAsync(blob);
-        headers.CacheControl.Should().Be("public, max-age=600");
-        headers.ContentType.Should().Be("application/pdf");
+        headers.CacheControl.ShouldBe("public, max-age=600");
+        headers.ContentType.ShouldBe("application/pdf");
     }
 }

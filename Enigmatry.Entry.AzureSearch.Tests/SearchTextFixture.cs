@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using Shouldly;
 
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
@@ -12,8 +12,8 @@ public class SearchTextFixture
     public void TestAsNotEscaped(string? value, string expectedValue)
     {
         var searchText = SearchText.AsNotEscaped(value);
-        searchText.OriginalValue.Should().Be(value);
-        searchText.Value.Should().Be(expectedValue);
+        searchText.OriginalValue.ShouldBe(value);
+        searchText.Value.ShouldBe(expectedValue);
     }
 
     [TestCase(null, "")]
@@ -23,8 +23,8 @@ public class SearchTextFixture
     public void TestAsEscaped(string? value, string expectedValue)
     {
         var searchText = SearchText.AsEscaped(value);
-        searchText.OriginalValue.Should().Be(value);
-        searchText.Value.Should().Be(expectedValue);
+        searchText.OriginalValue.ShouldBe(value);
+        searchText.Value.ShouldBe(expectedValue);
     }
 
     [TestCase(null, "")]
@@ -35,8 +35,8 @@ public class SearchTextFixture
     public void TestAsPhraseSearch(string? value, string expectedValue)
     {
         var searchText = SearchText.AsPhraseSearch(value);
-        searchText.OriginalValue.Should().Be(value);
-        searchText.Value.Should().Be(expectedValue);
+        searchText.OriginalValue.ShouldBe(value);
+        searchText.Value.ShouldBe(expectedValue);
     }
 
     [TestCase(null, "")]
@@ -47,7 +47,7 @@ public class SearchTextFixture
     public void TestAsFullSearch(string? value, string expectedValue)
     {
         var searchText = SearchText.AsFullSearch(value);
-        searchText.OriginalValue.Should().Be(value);
-        searchText.Value.Should().Be(expectedValue);
+        searchText.OriginalValue.ShouldBe(value);
+        searchText.Value.ShouldBe(expectedValue);
     }
 }

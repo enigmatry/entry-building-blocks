@@ -1,7 +1,7 @@
-﻿using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
-using FluentAssertions;
+﻿using System.Net;
+using Enigmatry.Entry.AspNetCore.Tests.SampleApp;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Shouldly;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.SampleAppTests;
 
@@ -16,7 +16,7 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
     public async Task TestGet()
     {
         var response = await GetAsync<WeatherForecast[]>(Client, "WeatherForecast");
-        response!.Length.Should().Be(5);
+        response!.Length.ShouldBe(5);
     }
 
     [Test]
@@ -24,8 +24,8 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
     {
         var response = await Client.GetAsync("WeatherForecast/ThrowsError");
 
-        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-        response.Content.Headers.ContentType!.Should().BeNull();
+        response.StatusCode.ShouldBe(HttpStatusCode.InternalServerError);
+        response.Content.Headers.ContentType!.ShouldBeNull();
     }
 
     [Test]
@@ -33,8 +33,8 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
     {
         var response = await Client.GetAsync("WeatherForecast/throwsEntityNotFoundException");
 
-        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        response.Content.Headers.ContentType!.Should().BeNull();
+        response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+        response.Content.Headers.ContentType!.ShouldBeNull();
     }
 
     [Test]
@@ -42,8 +42,8 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
     {
         var response = await Client.GetAsync("WeatherForecast/NotFound");
 
-        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
-        response.Content.Headers.ContentType!.Should().BeNull();
+        response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
+        response.Content.Headers.ContentType!.ShouldBeNull();
     }
 
     [Test]
@@ -51,8 +51,8 @@ public abstract class WeatherForecastControllerFixtureBase : SampleAppFixtureBas
     {
         var response = await Client.GetAsync("WeatherForecast/ProblemDetails");
 
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        response.Content.Headers.ContentType!.MediaType.Should().Be("application/problem+json");
+        response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+        response.Content.Headers.ContentType!.MediaType.ShouldBe("application/problem+json");
 
         var json = await response.Content.ReadAsStringAsync();
         var problemDetails = DeserializeJson<ProblemDetails>(json)!;

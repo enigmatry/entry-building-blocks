@@ -1,8 +1,8 @@
 ﻿using Enigmatry.Entry.AzureSearch.Abstractions;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Setup;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
@@ -33,9 +33,9 @@ public class SearchIndexManagerFixture
         await _indexManager.RecreateIndex();
 
         var deleted = await _indexManager.DeleteIndex();
-        deleted.Should().BeTrue("index was deleted");
+        deleted.ShouldBeTrue("index was deleted");
 
         deleted = await _indexManager.DeleteIndex();
-        deleted.Should().BeFalse("index does not exist since it was deleted");
+        deleted.ShouldBeFalse("index does not exist since it was deleted");
     }
 }

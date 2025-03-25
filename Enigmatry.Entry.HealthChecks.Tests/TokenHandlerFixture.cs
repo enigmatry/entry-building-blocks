@@ -1,13 +1,11 @@
-﻿using Enigmatry.Entry.HealthChecks.Authorization;
+﻿using System.Security.Claims;
+using Enigmatry.Entry.HealthChecks.Authorization;
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using NUnit.Framework;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using Shouldly;
 
 namespace Enigmatry.Entry.HealthChecks.Tests;
 
@@ -28,7 +26,7 @@ public class HealthChecksTokenHandlerFixture
     {
         Action act = () => _ = new TokenHandler(null!);
 
-        act.Should().Throw<ArgumentNullException>();
+        act.ShouldThrow<ArgumentNullException>();
     }
 
     [Test]
@@ -40,7 +38,7 @@ public class HealthChecksTokenHandlerFixture
 
         await handler.HandleAsync(_handlerContext);
 
-        _handlerContext.HasSucceeded.Should().BeFalse();
+        _handlerContext.HasSucceeded.ShouldBeFalse();
     }
 
     [Test]
@@ -50,7 +48,7 @@ public class HealthChecksTokenHandlerFixture
 
         await handler.HandleAsync(_handlerContext);
 
-        _handlerContext.HasSucceeded.Should().BeFalse();
+        _handlerContext.HasSucceeded.ShouldBeFalse();
     }
 
     [Test]
@@ -60,7 +58,7 @@ public class HealthChecksTokenHandlerFixture
 
         await handler.HandleAsync(_handlerContext);
 
-        _handlerContext.HasSucceeded.Should().BeTrue();
+        _handlerContext.HasSucceeded.ShouldBeTrue();
     }
 
     private static TokenHandler ArrangeHandlerWith(string token)

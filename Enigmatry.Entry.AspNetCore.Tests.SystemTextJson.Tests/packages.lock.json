@@ -421,14 +421,6 @@
         "resolved": "9.0.2",
         "contentHash": "VnlzS7afE8LaXXwKdHOe2D6FcDekqThzU1E67CONV7gp71q3zposqcSeXH+PxARMXC5j31efwXrxP8VGvD70Ug=="
       },
-      "System.Configuration.ConfigurationManager": {
-        "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "gWwQv/Ug1qWJmHCmN17nAbxJYmQBM/E94QxKLksvUiiKB1Ld3Sc/eK1lgmbSjDFxkQhVuayI/cGFZhpBSodLrg==",
-        "dependencies": {
-          "System.Security.Cryptography.ProtectedData": "4.4.0"
-        }
-      },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",
         "resolved": "5.0.0",
@@ -456,11 +448,6 @@
         "type": "Transitive",
         "resolved": "5.0.0",
         "contentHash": "5NecZgXktdGg34rh1OenY1rFNDCI8xSjFr+Z4OU4cU06AQHUdRnIIEeWENu3Wl4YowbzkymAIMvi3WyK9U53pQ=="
-      },
-      "System.Security.Cryptography.ProtectedData": {
-        "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "cJV7ScGW7EhatRsjehfvvYVBvtiSMKgN8bOVI0bQhnF5bU7vnHVIsH49Kva7i7GWaWYvmEzkYVk1TC+gZYBEog=="
       },
       "System.ServiceProcess.ServiceController": {
         "type": "Transitive",
@@ -496,11 +483,11 @@
           "Enigmatry.Entry.AspNetCore": "[1.0.0, )",
           "Enigmatry.Entry.AspNetCore.Tests.SampleApp": "[1.0.0, )",
           "FakeItEasy": "[8.3.0, )",
-          "FluentAssertions": "[6.12.2, 6.12.2]",
           "Microsoft.AspNetCore.Mvc.Testing": "[9.0.2, )",
           "Microsoft.NET.Test.Sdk": "[17.13.0, )",
           "NUnit": "[4.3.2, )",
           "NUnit3TestAdapter": "[5.0.0, )",
+          "Shouldly": "[4.3.0, )",
           "Verify.NUnit": "[28.13.0, )"
         }
       },
@@ -524,8 +511,8 @@
         "type": "Project",
         "dependencies": {
           "Enigmatry.Entry.Core": "[1.0.0, )",
-          "FluentAssertions": "[6.12.2, 6.12.2]",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[9.0.2, )",
+          "Shouldly": "[4.3.0, )",
           "System.Net.Http.Json": "[9.0.2, )"
         }
       },
@@ -591,15 +578,6 @@
         "contentHash": "5QmShA6njFOhQHUYrFUjWEepfRcbQLOhgctaFhWyhPTi17kVGNyZOdvJ/2HhoNthmdghIzNsnZsMScJZhVBaQQ==",
         "dependencies": {
           "Castle.Core": "5.1.1"
-        }
-      },
-      "FluentAssertions": {
-        "type": "CentralTransitive",
-        "requested": "[6.12.2, 6.12.2]",
-        "resolved": "6.12.2",
-        "contentHash": "8YE+xJmT8wgzEpFuzJ4S62oFhEL/AKouMz1RWPEMEUhy9H11aRQlGIWcHurH5BEy7tbF6gb0CJrs0wOw/AtDcQ==",
-        "dependencies": {
-          "System.Configuration.ConfigurationManager": "4.4.0"
         }
       },
       "FluentValidation": {
@@ -839,6 +817,16 @@
         "requested": "[4.2.0, )",
         "resolved": "4.2.0",
         "contentHash": "gmoWVOvKgbME8TYR+gwMf7osROiWAURterc6Rt2dQyX7wtjZYpqFiA/pY6ztjGQKKV62GGCyOcmtP1UKMHgSmA=="
+      },
+      "Shouldly": {
+        "type": "CentralTransitive",
+        "requested": "[4.3.0, )",
+        "resolved": "4.3.0",
+        "contentHash": "sDetrWXrl6YXZ4HeLsdBoNk3uIa7K+V4uvIJ+cqdRa5DrFxeTED7VkjoxCuU1kJWpUuBDZz2QXFzSxBtVXLwRQ==",
+        "dependencies": {
+          "DiffEngine": "11.3.0",
+          "EmptyFiles": "4.4.0"
+        }
       },
       "System.ComponentModel.Annotations": {
         "type": "CentralTransitive",

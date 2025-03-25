@@ -1,9 +1,9 @@
-﻿using Enigmatry.Entry.Email.MailKit;
+﻿using System.Text;
+using Enigmatry.Entry.Email.MailKit;
 using Enigmatry.Entry.Email.Tests.Infrastructure;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System.Text;
+using Shouldly;
 
 namespace Enigmatry.Entry.Email.Tests;
 
@@ -24,7 +24,7 @@ public class MailKitPickupDirectoryEmailClientFixture
     }
 
     [Test]
-    public void ClientShouldGetResolved() => _client.Should().BeOfType(typeof(MailKitPickupDirectoryEmailClient));
+    public void ClientShouldGetResolved() => _client.ShouldBeOfType(typeof(MailKitPickupDirectoryEmailClient));
 
     [Test]
     public async Task TestSendMessage()
@@ -54,12 +54,12 @@ public class MailKitPickupDirectoryEmailClientFixture
         var fullMessage =
             await File.ReadAllTextAsync(pathToFile);
 
-        fullMessage.Should().Contain($"From: {sender}");
-        fullMessage.Should().Contain($"To: {receiver}");
-        fullMessage.Should().Contain(messageBody);
-        fullMessage.Should().Contain(attachment1Contents);
-        fullMessage.Should().Contain($"Content-Type: text/plain; name={attachment1FileName}");
-        fullMessage.Should().Contain(attachment2Contents);
-        fullMessage.Should().Contain($"Content-Disposition: attachment; filename={attachment2FileName}");
+        fullMessage.ShouldContain($"From: {sender}");
+        fullMessage.ShouldContain($"To: {receiver}");
+        fullMessage.ShouldContain(messageBody);
+        fullMessage.ShouldContain(attachment1Contents);
+        fullMessage.ShouldContain($"Content-Type: text/plain; name={attachment1FileName}");
+        fullMessage.ShouldContain(attachment2Contents);
+        fullMessage.ShouldContain($"Content-Disposition: attachment; filename={attachment2FileName}");
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using FluentAssertions;
+using Shouldly;
 
 namespace Enigmatry.Entry.Scheduler.Tests;
 
@@ -11,14 +11,14 @@ public class TypeExtensionsFixture
     {
         var jobs = ThisAssembly().FindAllJobTypes().ToList();
 
-        jobs.Should().Contain(typeof(SampleJobs.AJob), "this type is implementing IJob interface");
-        jobs.Should().Contain(typeof(SampleJobs.AnEntryJobWithArguments), "this type is deriving from EntryJob");
-        jobs.Should().Contain(typeof(SampleJobs.AnEntryJobWithoutArguments), "this type is deriving from EntryJob");
-        jobs.Should().Contain(typeof(SampleJobs.AJobWithoutCronExpression), "this type is deriving from EntryJob");
-        jobs.Should().Contain(typeof(SampleJobs.AJobWithoutConfiguration), "this type is deriving from EntryJob");
-        jobs.Should().Contain(typeof(SampleJobs.AnEntryJobDerivingSomeBaseJob), "this type is deriving from a job that derives from EntryJob");
-        jobs.Should().NotContain(typeof(SampleJobs.ABaseNonAbstractJob<>), "this job is a base class");
-        jobs.Should().NotContain(typeof(SampleJobs.ABaseAbstractJob<>), "this job is a base class");
+        jobs.ShouldContain(typeof(SampleJobs.AJob), "this type is implementing IJob interface");
+        jobs.ShouldContain(typeof(SampleJobs.AnEntryJobWithArguments), "this type is deriving from EntryJob");
+        jobs.ShouldContain(typeof(SampleJobs.AnEntryJobWithoutArguments), "this type is deriving from EntryJob");
+        jobs.ShouldContain(typeof(SampleJobs.AJobWithoutCronExpression), "this type is deriving from EntryJob");
+        jobs.ShouldContain(typeof(SampleJobs.AJobWithoutConfiguration), "this type is deriving from EntryJob");
+        jobs.ShouldContain(typeof(SampleJobs.AnEntryJobDerivingSomeBaseJob), "this type is deriving from a job that derives from EntryJob");
+        jobs.ShouldNotContain(typeof(SampleJobs.ABaseNonAbstractJob<>), "this job is a base class");
+        jobs.ShouldNotContain(typeof(SampleJobs.ABaseAbstractJob<>), "this job is a base class");
 
         await Verify(jobs);
     }

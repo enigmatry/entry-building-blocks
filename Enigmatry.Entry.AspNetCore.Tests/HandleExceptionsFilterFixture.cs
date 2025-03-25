@@ -1,11 +1,11 @@
 ﻿using Enigmatry.Entry.AspNetCore.Filters;
 using Enigmatry.Entry.Core.Entities;
 using FakeItEasy;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Shouldly;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 
@@ -30,8 +30,8 @@ public class HandleExceptionsFilterFixture
 
         var errors = context.Result!.GetErrorMessages().ToList();
 
-        errors.Count.Should().Be(1);
-        errors.First().Should().Be("Name is required.");
+        errors.Count.ShouldBe(1);
+        errors.First().ShouldBe("Name is required.");
     }
 
     [Test]
@@ -44,8 +44,8 @@ public class HandleExceptionsFilterFixture
 
         _filter.OnException(context);
 
-        context.Result.Should().BeOfType<NotFoundResult>();
-        context.Exception.Message.Should().Be(errorMessage);
+        context.Result.ShouldBeOfType<NotFoundResult>();
+        context.Exception.Message.ShouldBe(errorMessage);
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class HandleExceptionsFilterFixture
 
         _filter.OnException(context);
 
-        context.Result.Should().BeNull();
+        context.Result.ShouldBeNull();
     }
 
     [Test]
@@ -73,8 +73,8 @@ public class HandleExceptionsFilterFixture
         _filter.OnException(context);
 
         var result = (JsonResult)context.Result!;
-        result.StatusCode.Should().Be(StatusCodes.Status500InternalServerError);
-        result.ContentType.Should().Be(contentType);
+        result.StatusCode.ShouldBe(StatusCodes.Status500InternalServerError);
+        result.ContentType.ShouldBe(contentType);
     }
 
     private static HandleExceptionsFilter InitializeFilter(bool devModeOn = false)

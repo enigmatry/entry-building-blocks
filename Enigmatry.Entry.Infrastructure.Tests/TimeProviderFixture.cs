@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.Infrastructure.Tests;
 
@@ -15,7 +15,7 @@ public class TimeProviderFixture
         Thread.Sleep(TimeSpan.FromMilliseconds(100));
         var secondDate = provider.FixedUtcNow;
 
-        firstDate.Should().BeExactly(secondDate);
+        firstDate.ShouldBe(secondDate);
     }
 
     [Test]
@@ -27,7 +27,7 @@ public class TimeProviderFixture
         Thread.Sleep(TimeSpan.FromMilliseconds(100));
         var secondDate = provider.UtcNow;
 
-        firstDate.Should().BeBefore(secondDate);
-        firstDate.Should().NotBeExactly(secondDate);
+        firstDate.ShouldBeLessThan(secondDate);
+        firstDate.ShouldNotBe(secondDate);
     }
 }

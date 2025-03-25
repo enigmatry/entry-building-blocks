@@ -1,11 +1,11 @@
-﻿using Enigmatry.Entry.AspNetCore.Exceptions;
+﻿using System.Text.Json;
+using Enigmatry.Entry.AspNetCore.Exceptions;
 using Enigmatry.Entry.Core.Entities;
-using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
+using Shouldly;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
 
@@ -40,9 +40,9 @@ public class ExceptionHandlerFixture
 
         var result = await GetErrorsFrom<ValidationProblemDetails>(context)!;
         var errors = result!.Errors;
-        errors.Count.Should().Be(1);
-        errors.First().Key.Should().Be(propertyName);
-        errors.First().Value.First().Should().Be(propertyError);
+        errors.Count.ShouldBe(1);
+        errors.First().Key.ShouldBe(propertyName);
+        errors.First().Value.First().ShouldBe(propertyError);
     }
 
     [Test]
@@ -54,7 +54,7 @@ public class ExceptionHandlerFixture
 
         await HandleExceptionFrom(context);
 
-        (await GetResponseStringFrom(context)).Should().Be(string.Empty);
+        (await GetResponseStringFrom(context)).ShouldBe(string.Empty);
     }
 
     [Test]
@@ -66,11 +66,11 @@ public class ExceptionHandlerFixture
         await HandleExceptionFrom(context);
 
         StatusCodeShouldBe(StatusCodes.Status500InternalServerError, context);
-        context.Response.ContentType.Should().Be("application/problem+json");
-        (await GetErrorsFrom<ProblemDetails>(context)).Title.Should().Be("An unexpected error occurred!");
+        context.Response.ContentType.ShouldBe("application/problem+json");
+        (await GetErrorsFrom<ProblemDetails>(context)).Title.ShouldBe("An unexpected error occurred!");
     }
 
-    private static void StatusCodeShouldBe(int code, HttpContext context) => context.Response.StatusCode.Should().Be(code);
+    private static void StatusCodeShouldBe(int code, HttpContext context) => context.Response.StatusCode.ShouldBe(code);
 
     private static async Task HandleExceptionFrom(HttpContext context)
     {

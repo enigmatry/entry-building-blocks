@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using Shouldly;
 using static Enigmatry.Entry.AzureSearch.Tests.Searching.AzureSearchTestCases;
 
 namespace Enigmatry.Entry.AzureSearch.Tests.Searching;
@@ -29,12 +29,12 @@ public class FullTextSearchFixture : SearchServiceFixtureBase
         await TestContext.Out.WriteLineAsync("Search text: " + searchText.Value);
 
         var expectation = testCase.Expectation;
-        searchResult.TotalCount.Should().Be(expectation.TotalCount, expectation.Reason);
-        pages.Count.Should().Be(expectation.PagesTotalCount);
+        searchResult.TotalCount.ShouldBe(expectation.TotalCount, expectation.Reason);
+        pages.Count.ShouldBe(expectation.PagesTotalCount);
         if (testCase.Expectation.PagesTotalCount > 0)
         {
             var documentsOnFirstPage = pages.First().Values.Select(r => r.Document).ToList();
-            documentsOnFirstPage.Should().BeEquivalentTo(expectation.ExpectedDocumentsOnFirstPage);
+            documentsOnFirstPage.ShouldBeEquivalentTo(expectation.ExpectedDocumentsOnFirstPage);
         }
     }
 }
