@@ -9,13 +9,19 @@ namespace Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http;
 [PublicAPI]
 public static class HttpResponseMessageAssertionsExtensions
 {
-    public static void BeBadRequest(this HttpResponseMessage response, string because = "", params object[] becauseArgs) =>
+    public static HttpResponseMessage BeBadRequest(this HttpResponseMessage response, string because = "", params object[] becauseArgs)
+    {
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest, string.Format(because, becauseArgs));
+        return response;
+    }
 
-    public static void BeNotFound(this HttpResponseMessage response, string because = "", params object[] becauseArgs) =>
+    public static HttpResponseMessage BeNotFound(this HttpResponseMessage response, string because = "", params object[] becauseArgs)
+    {
         response.StatusCode.ShouldBe(HttpStatusCode.NotFound, string.Format(because, becauseArgs));
+        return response;
+    }
 
-    public static void ContainValidationError(this HttpResponseMessage response, string fieldName, string expectedValidationMessage = "", string because = "", params object[] becauseArgs)
+    public static HttpResponseMessage ContainValidationError(this HttpResponseMessage response, string fieldName, string expectedValidationMessage = "", string because = "", params object[] becauseArgs)
     {
         var responseContent = response.Content.ReadAsStringAsync().Result;
         var errorFound = false;
@@ -44,5 +50,7 @@ public static class HttpResponseMessageAssertionsExtensions
         {
             errorFound.ShouldBeTrue($"Expected response to have validation message with key: {fieldName} and message: {expectedValidationMessage} {string.Format(because, becauseArgs)}, but found {responseContent}.");
         }
+
+        return response;
     }
 }
