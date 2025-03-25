@@ -1,8 +1,8 @@
-using Enigmatry.Entry.Core.Cqrs;
-using FluentAssertions;
+﻿using Enigmatry.Entry.Core.Cqrs;
 using JetBrains.Annotations;
 using MediatR;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.Core.Tests.Cqrs;
 
@@ -15,7 +15,7 @@ public class TypeExtensionsFixture
     public void IsQuery(Type type, bool expectedResult)
     {
         var request = (IBaseRequest)Activator.CreateInstance(type)!;
-        request.IsQuery().Should().Be(expectedResult);
+        request.IsQuery().ShouldBe(expectedResult);
     }
 
     [TestCase(typeof(AQuery), false)]
@@ -24,7 +24,7 @@ public class TypeExtensionsFixture
     public void IsCommand(Type type, bool expectedResult)
     {
         var request = (IBaseRequest)Activator.CreateInstance(type)!;
-        request.IsCommand().Should().Be(expectedResult);
+        request.IsCommand().ShouldBe(expectedResult);
     }
 
     private class AQuery : IQuery<AResponse>;

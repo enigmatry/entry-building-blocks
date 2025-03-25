@@ -1,8 +1,8 @@
-﻿using Enigmatry.Entry.TemplatingEngine.Liquid;
-using FluentAssertions;
+﻿using System.Globalization;
+using Enigmatry.Entry.TemplatingEngine.Liquid;
 using Fluid;
 using Microsoft.Extensions.DependencyInjection;
-using System.Globalization;
+using Shouldly;
 
 namespace Enigmatry.Entry.TemplatingEngine.Fluid.Tests;
 
@@ -47,11 +47,11 @@ public class LiquidTemplatingEngineTests
         var model = new { IdentifierConsistingOfMultipleWords = "hello from template" };
 
         var snakeCaseResult = await engine.RenderAsync("{{identifier_consisting_of_multiple_words}}", model);
-        _ = snakeCaseResult.Should().Be(model.IdentifierConsistingOfMultipleWords);
+        snakeCaseResult.ShouldBe(model.IdentifierConsistingOfMultipleWords);
 
         var pascalCaseResult =
             await engine.RenderAsync($"{{{{{nameof(model.IdentifierConsistingOfMultipleWords)}}}}}", model);
-        _ = pascalCaseResult.Should().Be(string.Empty);
+        pascalCaseResult.ShouldBe(string.Empty);
     }
 
     [Test]
@@ -62,7 +62,7 @@ public class LiquidTemplatingEngineTests
         var model = new { Foo = 42, Bar = "Qux" };
 
         var result = await engine.RenderAsync("{{foo}}{{does_not_exist}}{{bar}}", model);
-        _ = result.Should().Be(model.Foo + model.Bar);
+        result.ShouldBe(model.Foo + model.Bar);
     }
 
     [Test]
@@ -77,7 +77,7 @@ public class LiquidTemplatingEngineTests
         {
             var model = new { Record = new { EnumValue = value } };
             var result = await engine.RenderAsync(template, model);
-            _ = result.Should().Be(model.Record.EnumValue.ToString().ToUpperInvariant());
+            result.ShouldBe(model.Record.EnumValue.ToString().ToUpperInvariant());
         }
     }
 
@@ -94,7 +94,7 @@ public class LiquidTemplatingEngineTests
         var template = "{{ record.amount | " + fluidFilter + " }}";
         var model = new { Record = new { Amount = amount } };
         var result = await engine.RenderAsync(template, model);
-        _ = result.Should().Be(expectedAmount);
+        result.ShouldBe(expectedAmount);
     }
 
     [TestCase(null, "{{ date_time }}", "")]
@@ -110,7 +110,7 @@ public class LiquidTemplatingEngineTests
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
         var result = await engine.RenderAsync(template, model);
 
-        _ = result.Should().Be(expected);
+        result.ShouldBe(expected);
     }
 
     [TestCase(null, "{{ date_time }}", "")]
@@ -125,7 +125,7 @@ public class LiquidTemplatingEngineTests
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
         var result = await engine.RenderAsync(template, model);
 
-        _ = result.Should().Be(expected);
+        result.ShouldBe(expected);
     }
 
     [TestCase(null, "{{ date_only }}", "")]
@@ -139,7 +139,7 @@ public class LiquidTemplatingEngineTests
         var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
         var result = await engine.RenderAsync(template, model);
 
-        _ = result.Should().Be(expected);
+        result.ShouldBe(expected);
     }
 
     [TearDown]

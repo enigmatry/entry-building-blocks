@@ -1,6 +1,6 @@
 ﻿using Enigmatry.Entry.Core.Images;
-using FluentAssertions;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.Core.Tests.Images;
 
@@ -14,7 +14,7 @@ public class ImageDataUriFixture
     {
         Action act = () => _ = ImageDataUri.CreateFrom(null!);
 
-        act.Should().Throw<ArgumentNullException>();
+        act.ShouldThrow<ArgumentNullException>();
     }
 
     [Test]
@@ -27,7 +27,7 @@ public class ImageDataUriFixture
     {
         Action act = () => _ = ImageDataUri.CreateFrom(input);
 
-        act.Should().Throw<ArgumentException>();
+        act.ShouldThrow<ArgumentException>();
     }
 
     [Test]
@@ -37,6 +37,6 @@ public class ImageDataUriFixture
 
         var bytes = dataUri.ToByteArray();
 
-        bytes.Should().BeEquivalentTo(ValidImage.Bytes);
+        bytes.ShouldBeEquivalentTo(ValidImage.Bytes);
     }
 }

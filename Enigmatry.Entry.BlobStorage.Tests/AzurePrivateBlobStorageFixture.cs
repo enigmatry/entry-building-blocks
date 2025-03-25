@@ -1,9 +1,9 @@
 ﻿using System.Web;
 using Azure.Storage.Blobs;
 using Enigmatry.Entry.BlobStorage.Azure;
-using FluentAssertions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.BlobStorage.Tests;
 
@@ -39,13 +39,13 @@ public class AzurePrivateBlobStorageFixture
     public void TestSharedResourcePath(PrivateBlobPermission permission)
     {
         var path = _blobStorage.BuildSharedResourcePath(ResourceName, permission);
-        path.Should().Contain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+        path.ShouldContain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
         var queryParams = HttpUtility.ParseQueryString(path);
         var expiresOn = DateTime.Parse(queryParams["se"]!).ToUniversalTime();
 
-        expiresOn.Should().BeAfter(DateTime.UtcNow);
-        expiresOn.Should().BeLessThan(_sasDuration).After(DateTime.UtcNow);
+        expiresOn.ShouldBeGreaterThan(DateTime.UtcNow);
+        expiresOn.ShouldBeLessThan(DateTime.UtcNow.Add(_sasDuration));
     }
 
     [Test]
@@ -59,7 +59,7 @@ public class AzurePrivateBlobStorageFixture
                    "?sv=2025-01-05&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
                    "&sig=5gu1L%2BkjfDonXKnS8lJ8cJsOK4AU8CVacnxSyou2L0w%3D";
 
-        _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeTrue();
+        _blobStorage.VerifySharedResourcePath(new Uri(path)).ShouldBeTrue();
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class AzurePrivateBlobStorageFixture
                    "/testContainer/testResource.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=w" +
                    "&sig=2trbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
-        _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
+        _blobStorage.VerifySharedResourcePath(new Uri(path)).ShouldBeFalse();
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class AzurePrivateBlobStorageFixture
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
                    "&sig=2TrbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
 
-        _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
+        _blobStorage.VerifySharedResourcePath(new Uri(path)).ShouldBeFalse();
     }
 
     [Test]
@@ -90,6 +90,6 @@ public class AzurePrivateBlobStorageFixture
                    "/testContainer/testResourcee.pdf" +
                    "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
                    "&sig=2trbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
-        _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeFalse();
+        _blobStorage.VerifySharedResourcePath(new Uri(path)).ShouldBeFalse();
     }
 }

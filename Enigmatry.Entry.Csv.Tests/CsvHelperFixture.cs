@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
-using FluentAssertions;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.Csv.Tests;
 
@@ -17,7 +17,7 @@ public class CsvHelperFixture
 
         foreach (var csvRow in testCase.CsvRows)
         {
-            result.Should().Contain(csvRow);
+            result.ShouldContain(csvRow);
         }
     }
 
@@ -30,7 +30,7 @@ public class CsvHelperFixture
         var result = helper.WriteRecordsToStream(users);
 
         var readAction = () => result.ReadByte();
-        readAction.Should().NotThrow<ObjectDisposedException>();
+        readAction.ShouldNotThrow();
     }
 
     [TestCaseSource(nameof(WriteTestCases))]
@@ -42,7 +42,7 @@ public class CsvHelperFixture
 
         foreach (var csvRow in testCase.CsvRows)
         {
-            result.Should().Contain(csvRow);
+            result.ShouldContain(csvRow);
         }
     }
 
@@ -84,10 +84,10 @@ public class CsvHelperFixture
         var row = helper.GetRecords(stream).First();
         var user = testCase.User;
 
-        row.FirstName.Should().Be(user.FirstName);
-        row.LastName.Should().Be(user.LastName);
-        row.Age.Should().Be(user.Age);
-        row.Username.Should().Be(user.Username);
+        row.FirstName.ShouldBe(user.FirstName);
+        row.LastName.ShouldBe(user.LastName);
+        row.Age.ShouldBe(user.Age);
+        row.Username.ShouldBe(user.Username);
     }
 
     private static IEnumerable<TestCaseData> ReadTestCases()

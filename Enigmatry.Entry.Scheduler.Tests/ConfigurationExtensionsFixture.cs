@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.Configuration;
 using Microsoft.Extensions.Configuration;
-using System.Configuration;
+using Shouldly;
 
 namespace Enigmatry.Entry.Scheduler.Tests;
 
@@ -12,7 +12,7 @@ public class ConfigurationExtensionsFixture
     {
         var result = AConfigurationWithoutSchedulingSection().FindAllJobConfigurations(Enumerable.Empty<Type>());
 
-        result.Should().BeEmpty();
+        result.ShouldBeEmpty();
     }
 
     [Test]
@@ -23,8 +23,8 @@ public class ConfigurationExtensionsFixture
             _ = AConfigurationWithoutSchedulingSection().FindAllJobConfigurations(JobTypesWithConfiguration()).ToList();
         };
 
-        act.Should().Throw<ConfigurationErrorsException>()
-            .WithMessage("Section 'Scheduling' is missing from the configuration");
+        var exception = Should.Throw<ConfigurationErrorsException>(act);
+        exception.Message.ShouldBe("Section 'Scheduling' is missing from the configuration");
     }
 
     [Test]
@@ -35,8 +35,8 @@ public class ConfigurationExtensionsFixture
             _ = AConfiguration().FindAllJobConfigurations(WrongJobTypes()).ToList();
         };
 
-        act.Should().Throw<ConfigurationErrorsException>()
-            .WithMessage($"Configuration Section '{WrongJobTypes().First().Name}' is not found");
+        var exception = Should.Throw<ConfigurationErrorsException>(act);
+        exception.Message.ShouldBe($"Configuration Section '{WrongJobTypes().First().Name}' is not found");
     }
 
     [Test]
@@ -47,8 +47,8 @@ public class ConfigurationExtensionsFixture
             _ = AConfiguration().FindAllJobConfigurations(JobTypesWithoutValidConfiguration()).ToList();
         };
 
-        act.Should().Throw<ConfigurationErrorsException>().WithMessage(
-            $"Missing 'Cronex' value in configuration for configuration section: '{JobTypesWithoutValidConfiguration().First().Name}'");
+        var exception = Should.Throw<ConfigurationErrorsException>(act);
+        exception.Message.ShouldBe($"Missing 'Cronex' value in configuration for configuration section: '{JobTypesWithoutValidConfiguration().First().Name}'");
     }
 
     [Test]
@@ -59,21 +59,21 @@ public class ConfigurationExtensionsFixture
             _ = AConfiguration().FindAllJobConfigurations(JobTypesWithoutConfiguration()).ToList();
         };
 
-        act.Should().Throw<ConfigurationErrorsException>()
-            .WithMessage($"Configuration Section '{JobTypesWithoutConfiguration().First().Name}' is not found");
+        var exception = Should.Throw<ConfigurationErrorsException>(act);
+        exception.Message.ShouldBe($"Configuration Section '{JobTypesWithoutConfiguration().First().Name}' is not found");
     }
 
     [Test]
     public async Task GivenJobTypesWithConfiguration_FindAllJobConfigurations_Works()
     {
         var jobs = AConfiguration().FindAllJobConfigurations(JobTypesWithConfiguration()).ToList();
-        jobs.Count.Should().Be(2);
+        jobs.Count.ShouldBe(2);
         await Verify(jobs);
 
         var job2 = jobs.First(j => j.JobType == typeof(SampleJobs.AnEntryJobWithArguments));
         var args = job2.GetSchedulingJobArgumentsValue<SampleJobs.AnEntryJobWithArguments.Request>();
-        args.Arg1.Should().Be("argument1");
-        args.Arg2.Should().Be("argument2");
+        args.Arg1.ShouldBe("argument1");
+        args.Arg2.ShouldBe("argument2");
     }
 
     private static IConfiguration AConfigurationWithoutSchedulingSection() =>

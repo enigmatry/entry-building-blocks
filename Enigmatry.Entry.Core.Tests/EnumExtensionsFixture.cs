@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Enigmatry.Entry.Core.Helpers;
-using FluentAssertions;
 using NUnit.Framework;
+using Shouldly;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace Enigmatry.Entry.Core.Tests;
@@ -13,13 +13,13 @@ public class EnumExtensionsFixture
     [TestCase(TestType.EnumWithDisplayName, "Enum with display name")]
     [TestCase(TestType.EnumWithDisplayNameAndDescription, "Enum with display name and description")]
     public void TestGetDisplayName(TestType value, string expectedDisplayName) =>
-        value.GetDisplayName().Should().Be(expectedDisplayName);
+        value.GetDisplayName().ShouldBe(expectedDisplayName);
 
     [TestCase(TestType.None, "")]
     [TestCase(TestType.EnumWithDescription, "Enum with description")]
     [TestCase(TestType.EnumWithDisplayNameAndDescription, "Enum with display name and description2")]
     public void TestGetDescription(TestType value, string expectedDescription) =>
-        value.GetDescription().Should().Be(expectedDescription);
+        value.GetDescription().ShouldBe(expectedDescription);
 
     public enum TestType
     {

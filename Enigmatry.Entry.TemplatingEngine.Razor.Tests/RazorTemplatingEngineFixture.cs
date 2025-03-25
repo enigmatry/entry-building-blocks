@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.TemplatingEngine.Tests;
 
@@ -26,8 +26,8 @@ public class RazorTemplatingEngineFixture
         var result = await _templatingEngine.RenderFromFileAsync("~/Templates/Sample.cshtml",
             new EmailModel { SampleText = "Hello world!" });
 
-        result.Should().Contain("Hello world!");
-        result.Should().Contain("Congratulations!");
+        result.ShouldContain("Hello world!");
+        result.ShouldContain("Congratulations!");
     }
 
     [Test]
@@ -38,8 +38,8 @@ public class RazorTemplatingEngineFixture
         var result = await _templatingEngine.RenderFromFileAsync("~/Templates/SampleWithViewBag.cshtml",
             new EmailModel { SampleText = "Congratulations!" }, viewBagDictionary);
 
-        result.Should().Contain("Hello world!");
-        result.Should().Contain("Congratulations!");
+        result.ShouldContain("Hello world!");
+        result.ShouldContain("Congratulations!");
     }
 
     private static IHost BuildHost() =>

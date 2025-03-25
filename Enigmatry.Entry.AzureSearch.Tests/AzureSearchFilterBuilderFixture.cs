@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
-using FluentAssertions;
+using Shouldly;
 
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
@@ -19,7 +19,7 @@ public class AzureSearchFilterBuilderFixture
         }
 
         var filter = filterBuilder.Build();
-        filter.Should().Be(testCase.ExpectedFilter);
+        filter.ShouldBe(testCase.ExpectedFilter);
     }
 
     [Test]
@@ -33,7 +33,7 @@ public class AzureSearchFilterBuilderFixture
         filterBuilder.AddStatements(documents, document => $"{nameof(TestDocument.Id)} eq '{document.Id}'");
 
         var filter = filterBuilder.Build();
-        filter.Should().Be("(Name neq '1' or Name neq '2') and (Id eq '1' or Id eq '2')");
+        filter.ShouldBe("(Name neq '1' or Name neq '2') and (Id eq '1' or Id eq '2')");
     }
 
     private static TestDocument ADocument(int id, string name) => new TestDocumentBuilder()

@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" />
-    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
@@ -24,6 +23,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Shouldly" />
     <PackageReference Include="Verify.NUnit" />
   </ItemGroup>
 

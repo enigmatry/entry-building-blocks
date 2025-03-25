@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using Enigmatry.Entry.AspNetCore.Authorization.Attributes;
-using FluentAssertions;
 using NUnit.Framework;
+using Shouldly;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Tests;
 
@@ -26,11 +26,11 @@ public class PermissionTypeConverterFixture
 
         PermissionTypeConverter<PermissionEnum>
             .ConvertToPolicyName("", new[] { PermissionEnum.Read, PermissionEnum.Write, PermissionEnum.Delete })
-            .Should().Be(policyName);
+            .ShouldBe(policyName);
 
         PermissionTypeConverter<string>
             .ConvertToPolicyName("", new[] { "Read", "Write", "Delete" })
-            .Should().Be(policyName);
+            .ShouldBe(policyName);
 
         PermissionTypeConverter<CustomPermissionType>
             .ConvertToPolicyName("",
@@ -40,7 +40,7 @@ public class PermissionTypeConverterFixture
                     new CustomPermissionType("Write"),
                     new CustomPermissionType("Delete")
                 })
-            .Should().Be(policyName);
+            .ShouldBe(policyName);
     }
 
     [Test]
@@ -50,17 +50,17 @@ public class PermissionTypeConverterFixture
 
         PermissionTypeConverter<PermissionEnum>
             .ConvertFromPolicyName("", policyName)
-            .Should().Equal(PermissionEnum.Read, PermissionEnum.Write, PermissionEnum.Delete);
+            .ShouldBe([PermissionEnum.Read, PermissionEnum.Write, PermissionEnum.Delete]);
 
         PermissionTypeConverter<string>
             .ConvertFromPolicyName("", policyName)
-            .Should().Equal("Read", "Write", "Delete");
+            .ShouldBe(["Read", "Write", "Delete"]);
 
         PermissionTypeConverter<CustomPermissionType>
             .ConvertFromPolicyName("", policyName)
-            .Should().Equal(new CustomPermissionType("Read"),
+            .ShouldBe([new CustomPermissionType("Read"),
                 new CustomPermissionType("Write"),
-                new CustomPermissionType("Delete"));
+                new CustomPermissionType("Delete")]);
     }
 }
 

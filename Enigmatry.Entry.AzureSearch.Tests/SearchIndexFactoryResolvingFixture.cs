@@ -1,8 +1,8 @@
 ﻿using Enigmatry.Entry.AzureSearch.Abstractions;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using Enigmatry.Entry.AzureSearch.Tests.Setup;
-using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 
 namespace Enigmatry.Entry.AzureSearch.Tests;
 
@@ -24,8 +24,8 @@ public class SearchIndexFactoryResolvingFixture
 
         var index = resolver.Create();
 
-        index.Name.Should().Be("test-document");
-        index.Analyzers.Count.Should().Be(1);
+        index.Name.ShouldBe("test-document");
+        index.Analyzers.Count.ShouldBe(1);
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class SearchIndexFactoryResolvingFixture
 
         var index = resolver.Create();
 
-        index.Name.Should().Be("another-test-document");
-        index.Analyzers.Count.Should().Be(0);
+        index.Name.ShouldBe("another-test-document");
+        index.Analyzers.Count.ShouldBe(0);
     }
 }

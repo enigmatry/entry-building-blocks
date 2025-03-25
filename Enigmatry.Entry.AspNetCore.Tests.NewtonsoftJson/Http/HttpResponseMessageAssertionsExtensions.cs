@@ -1,29 +1,29 @@
-﻿using FluentAssertions;
-using FluentAssertions.Execution;
-using FluentAssertions.Primitives;
+﻿using System.Net;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Linq;
-using System.Net;
+using Shouldly;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Http;
 
 [PublicAPI]
 public static class HttpResponseMessageAssertionsExtensions
 {
-    public static AndConstraint<HttpResponseMessageAssertions> BeBadRequest(this HttpResponseMessageAssertions constraints, string because = "", params object[] becauseArgs) =>
-        constraints.HaveStatusCode(HttpStatusCode.BadRequest, because, becauseArgs);
-
-    public static AndConstraint<HttpResponseMessageAssertions> BeNotFound(this HttpResponseMessageAssertions constraints, string because = "", params object[] becauseArgs) =>
-        constraints.HaveStatusCode(HttpStatusCode.NotFound, because, becauseArgs);
-
-    public static AndConstraint<HttpResponseMessageAssertions> ContainValidationError(this HttpResponseMessageAssertions constraints
-        , string fieldName,
-        string expectedValidationMessage = "", string because = "", params object[] becauseArgs)
+    public static HttpResponseMessage BeBadRequest(this HttpResponseMessage response, string because = "", params object[] becauseArgs)
     {
-        var responseContent = constraints.Subject.Content.ReadAsStringAsync().Result;
+        response.StatusCode.ShouldBe(HttpStatusCode.BadRequest, string.Format(because, becauseArgs));
+        return response;
+    }
+
+    public static HttpResponseMessage BeNotFound(this HttpResponseMessage response, string because = "", params object[] becauseArgs)
+    {
+        response.StatusCode.ShouldBe(HttpStatusCode.NotFound, string.Format(because, becauseArgs));
+        return response;
+    }
+
+    public static HttpResponseMessage ContainValidationError(this HttpResponseMessage response, string fieldName, string expectedValidationMessage = "", string because = "", params object[] becauseArgs)
+    {
+        var responseContent = response.Content.ReadAsStringAsync().Result;
         var errorFound = false;
         try
         {
@@ -42,23 +42,15 @@ public static class HttpResponseMessageAssertionsExtensions
             Console.WriteLine(exception);
         }
 
-        AssertionScope assertion = Execute.Assertion;
-        AssertionScope assertionScope = assertion.ForCondition(errorFound).BecauseOf(because, becauseArgs);
-        string message;
-        object[] failArgs;
         if (string.IsNullOrEmpty(expectedValidationMessage))
         {
-            message = "Expected response to have validation message with key: {0}{reason}, but found {1}.";
-            failArgs = new object[] { fieldName, responseContent };
+            errorFound.ShouldBeTrue($"Expected response to have validation message with key: {fieldName}{string.Format(because, becauseArgs)}, but found {responseContent}.");
         }
         else
         {
-            message =
-                "Expected response to have validation message with key: {0} and message: {1} {reason}, but found {2}.";
-            failArgs = new object[] { fieldName, expectedValidationMessage, responseContent };
+            errorFound.ShouldBeTrue($"Expected response to have validation message with key: {fieldName} and message: {expectedValidationMessage} {string.Format(because, becauseArgs)}, but found {responseContent}.");
         }
 
-        _ = assertionScope.FailWith(message, failArgs);
-        return new AndConstraint<HttpResponseMessageAssertions>(constraints);
+        return response;
     }
 }
