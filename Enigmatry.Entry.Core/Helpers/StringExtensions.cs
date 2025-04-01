@@ -56,6 +56,57 @@ public static class StringExtensions
         return new string(chars);
     }
 
-    public static string JoinStringWithOnlyValuesWithContent(this IEnumerable<string> values, string separator) =>
+    public static string JoinNonEmptyStrings(this IEnumerable<string> values, string separator) =>
         string.Join(separator, values.Where(value => value.HasContent()));
+
+    public static int ClosestPrimeToLength(this string value)
+    {
+        int length = value?.Length ?? 0;
+        if (length < 2) return 2;
+
+        bool IsPrime(int num)
+        {
+            if (num < 2) return false;
+            for (int i = 2; i <= Math.Sqrt(num); i++)
+                if (num % i == 0) return false;
+            return true;
+        }
+
+        int lower = length, upper = length;
+        while (true)
+        {
+            if (IsPrime(lower)) return lower;
+            if (IsPrime(upper)) return upper;
+            lower--;
+            upper++;
+        }
+    }
+
+    public static string ToKebabCase(this string value)
+    {
+        if (value.HasNoContent())
+        {
+            return value;
+        }
+
+        var result = new List<char>();
+        for (int i = 0; i < value.Length; i++)
+        {
+            char c = value[i];
+            if (char.IsUpper(c))
+            {
+                if (i > 0 && (char.IsLower(value[i - 1]) || (i + 1 < value.Length && char.IsLower(value[i + 1]))))
+                {
+                    result.Add('-');
+                }
+                result.Add(char.ToLower(c, CultureInfo.CurrentCulture));
+            }
+            else
+            {
+                result.Add(c);
+            }
+        }
+
+        return new string(result.ToArray());
+    }
 }
