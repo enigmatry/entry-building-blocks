@@ -1,19 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using Enigmatry.Entry.Core.Entities;
+﻿using Enigmatry.Entry.Core.Entities;
 
-namespace Enigmatry.Entry.Core.Data
+namespace Enigmatry.Entry.Core.Data;
+
+public interface IRepository<T> : IRepository<T, Guid> where T : EntityWithTypedId<Guid>
 {
-    public interface IRepository<T> : IRepository<T, Guid> where T : EntityWithTypedId<Guid>
-    {
-    }
+}
 
-    public interface IRepository<T, in TId> : IEntityRepository<T> where T : EntityWithTypedId<TId>
-    {
-        void Delete(TId id);
+public interface IRepository<T, in TId> : IEntityRepository<T> where T : EntityWithTypedId<TId>
+{
+    public void Delete(TId id);
 
-        T? FindById(TId id);
+    public T? FindById(TId id);
 
-        Task<T?> FindByIdAsync(TId id);
-    }
+    public Task<T?> FindByIdAsync(TId id);
 }

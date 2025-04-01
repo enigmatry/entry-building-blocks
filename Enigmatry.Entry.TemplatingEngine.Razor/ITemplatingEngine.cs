@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿namespace Enigmatry.Entry.TemplatingEngine;
 
-namespace Enigmatry.Entry.TemplatingEngine
+public interface ITemplatingEngine
 {
-    public interface ITemplatingEngine
-    {
-        Task<string> RenderFromFileAsync<T>(string path, T model);
-        Task<string> RenderFromFileAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary);
-    }
+    public Task<string> RenderFromFileAsync<T>(string path, T model);
+    public Task<string> RenderFromFileAsync<T>(string path, T model, IDictionary<string, object> viewBagDictionary);
 }

@@ -2,5 +2,5 @@
 
 public interface ITemplatingEngine
 {
-    Task<string> RenderAsync<T>(string pattern, T model);
+    public Task<string> RenderAsync<T>(string pattern, T model);
 }

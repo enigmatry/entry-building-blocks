@@ -1,11 +1,8 @@
-﻿using System;
+﻿namespace Enigmatry.Entry.Randomness.Contracts;
 
-namespace Enigmatry.Entry.Randomness.Contracts
+public interface IGenerateRandomness
 {
-    public interface IGenerateRandomness
-    {
-        Type GeneratorType { get; }
+    public Type GeneratorType { get; }
 
-        dynamic Generate();
-    }
+    public dynamic Generate();
 }
