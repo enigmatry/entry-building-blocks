@@ -9,5 +9,5 @@ namespace Enigmatry.Entry.Core.EntityFramework.Seeding;
 [PublicAPI]
 public interface ISeeding
 {
-    void Seed(ModelBuilder modelBuilder);
+    public void Seed(ModelBuilder modelBuilder);
 }
