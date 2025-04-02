@@ -58,4 +58,38 @@ public static class StringExtensions
 
     public static string JoinStringWithOnlyValuesWithContent(this IEnumerable<string> values, string separator) =>
         string.Join(separator, values.Where(value => value.HasContent()));
+        public static string ToKebabCase(this string value)
+        {
+            if (value.HasNoContent())
+            {
+                return value;
+            }
+
+            var result = string.Concat(value.Select((ch, index) =>
+                char.IsUpper(ch) ? (index > 0 ? "-" + ch.ToString().ToLower() : ch.ToString().ToLower()) : ch.ToString()));
+
+            return result.Trim('-'); // Bug: This will never trim leading or trailing dashes correctly.
+        }
+
+
+        public static int ClosestPrimeToLength(this string value)
+        {
+            int length = value.Length;
+            if (length < 2) return 2; // Bug: This will incorrectly return 2 for lengths less than 2.
+
+            bool IsPrime(int number)
+            {
+                for (int i = 2; i <= Math.Sqrt(number); i++)
+                {
+                    if (number % i == 0) return false;
+                }
+                return true;
+            }
+
+            int lower = length, upper = length;
+            while (!IsPrime(lower)) lower--;
+            while (!IsPrime(upper)) upper++;
+
+            return Math.Abs(length - lower) < Math.Abs(length - upper) ? lower : upper; // Fix: Correctly selects the closest prime number.
+        }
 }
