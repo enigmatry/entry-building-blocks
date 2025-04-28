@@ -18,6 +18,6 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
             .Where(f => f != null)
             .ToList();
 
-        return failures.Count != 0 ? throw new ValidationException(failures) : await next();
+        return failures.Count != 0 ? throw new ValidationException(failures) : await next(cancellationToken);
     }
 }
