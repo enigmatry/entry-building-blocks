@@ -2,7 +2,7 @@ trigger:
 - '*'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 variables:
   artifactName: enigmatry-entry-building-blocks
@@ -62,8 +62,10 @@ stages:
         path: $(NUGET_PACKAGES)
         cacheHitVar: 'NUGET_CACHE_RESTORED'
     - task: NuGetCommand@2
-      displayName: Nuget Restore
+      displayName: 'NuGet restore'
+      condition: ne(variables.NUGET_CACHE_RESTORED, true)
       inputs:
+        command: 'restore'
         restoreSolution: '$(projectNamePrefix).sln'
     - task: DotNetCoreCLI@2
       displayName: 'Build package'

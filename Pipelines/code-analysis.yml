@@ -24,6 +24,7 @@ jobs:
     projectName: 'Enigmatry - Entry Building Blocks'
     sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
     displayName: 'Code Analysis'
+    dotNetVersion: '9.0.x'
 
 - template: build-report-job.yml@templates
   parameters:
