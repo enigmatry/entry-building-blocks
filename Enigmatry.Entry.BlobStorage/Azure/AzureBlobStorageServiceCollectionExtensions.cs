@@ -1,5 +1,4 @@
-﻿using System;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,10 +21,14 @@ public static class AzureBlobStorageServiceCollectionExtension
     /// <param name="services">Service collection.</param>
     /// <param name="name">Azure Blob Storage container name.</param>
     public static IServiceCollection AddEntryPublicAzBlobStorage(this IServiceCollection services, string name) =>
-        services.AddSingleton<IBlobStorage>(provider =>
+        services.AddSingleton<Func<string, BlobContainerClient>>(provider =>
         {
             var settings = ResolveSettings(provider);
-            var container = CreateContainer(name, PublicAccessType.Blob, settings);
+            return key => CreateContainer(key, PublicAccessType.Blob, settings);
+        }).AddSingleton<IBlobStorage>(provider =>
+        {
+            var settings = ResolveSettings(provider);
+            var container = provider.GetRequiredService<Func<string, BlobContainerClient>>()(name);
             return new AzureBlobStorage(container, settings);
         });
 
@@ -41,10 +44,14 @@ public static class AzureBlobStorageServiceCollectionExtension
     /// <param name="services">Service collection.</param>
     /// <param name="name">Azure Blob Storage container name.</param>
     public static IServiceCollection AddEntryPrivateAzBlobStorage(this IServiceCollection services, string name) =>
-        services.AddSingleton<IPrivateBlobStorage>(provider =>
+        services.AddSingleton<Func<string, BlobContainerClient>>(provider =>
         {
             var settings = ResolveSettings(provider);
-            var container = CreateContainer(name, PublicAccessType.None, settings);
+            return key => CreateContainer(key, PublicAccessType.None, settings);
+        }).AddSingleton<IPrivateBlobStorage>(provider =>
+        {
+            var settings = ResolveSettings(provider);
+            var container = provider.GetRequiredService<Func<string, BlobContainerClient>>()(name);
             return new AzurePrivateBlobStorage(container, settings);
         });
 
