@@ -21,14 +21,10 @@ public static class AzureBlobStorageServiceCollectionExtension
     /// <param name="services">Service collection.</param>
     /// <param name="name">Azure Blob Storage container name.</param>
     public static IServiceCollection AddEntryPublicAzBlobStorage(this IServiceCollection services, string name) =>
-        services.AddSingleton<Func<string, BlobContainerClient>>(provider =>
+        services.AddSingleton<IBlobStorage>(provider =>
         {
             var settings = ResolveSettings(provider);
-            return key => CreateContainer(key, PublicAccessType.Blob, settings);
-        }).AddSingleton<IBlobStorage>(provider =>
-        {
-            var settings = ResolveSettings(provider);
-            var container = provider.GetRequiredService<Func<string, BlobContainerClient>>()(name);
+            var container = CreateContainer(name, PublicAccessType.Blob, settings);
             return new AzureBlobStorage(container, settings);
         });
 
@@ -44,14 +40,10 @@ public static class AzureBlobStorageServiceCollectionExtension
     /// <param name="services">Service collection.</param>
     /// <param name="name">Azure Blob Storage container name.</param>
     public static IServiceCollection AddEntryPrivateAzBlobStorage(this IServiceCollection services, string name) =>
-        services.AddSingleton<Func<string, BlobContainerClient>>(provider =>
+        services.AddSingleton<IPrivateBlobStorage>(provider =>
         {
             var settings = ResolveSettings(provider);
-            return key => CreateContainer(key, PublicAccessType.None, settings);
-        }).AddSingleton<IPrivateBlobStorage>(provider =>
-        {
-            var settings = ResolveSettings(provider);
-            var container = provider.GetRequiredService<Func<string, BlobContainerClient>>()(name);
+            var container = CreateContainer(name, PublicAccessType.None, settings);
             return new AzurePrivateBlobStorage(container, settings);
         });
 
