@@ -1,10 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using System;
 using System.Globalization;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using Enigmatry.Entry.BlobStorage.Models;
 
 namespace Enigmatry.Entry.BlobStorage.Azure;
 
@@ -30,10 +27,6 @@ internal class AzureBlobStorage : IBlobStorage
     public async Task<bool> ExistsAsync(string relativePath, CancellationToken cancellationToken = default) =>
         await Container.GetBlobClient(relativePath).ExistsAsync(cancellationToken);
 
-    public async Task CopyAsync(string relativePath, Uri absoluteUri, CancellationToken cancellationToken) =>
-        await Container.GetBlobClient(relativePath)
-            .StartCopyFromUriAsync(absoluteUri, cancellationToken: cancellationToken);
-
     public async Task AddAsync(string relativePath, Stream content, bool @override = false, CancellationToken cancellationToken = default)
     {
         var blob = Container.GetBlobClient(relativePath);
@@ -50,10 +43,7 @@ internal class AzureBlobStorage : IBlobStorage
             return await Container.DeleteBlobIfExistsAsync(relativePath, cancellationToken: cancellationToken);
         }
 
-        await foreach (var blob in Container.GetBlobsAsync(
-                           prefix: relativePath.Replace('\\', '/')
-                               .Remove(relativePath.IndexOf('*', StringComparison.OrdinalIgnoreCase)),
-                           cancellationToken: cancellationToken))
+        foreach (var blob in await GetListAsync(relativePath, cancellationToken))
         {
             await Container.GetBlobClient(blob.Name).DeleteAsync(cancellationToken: cancellationToken);
         }
@@ -63,6 +53,24 @@ internal class AzureBlobStorage : IBlobStorage
 
     public async Task<Stream> GetAsync(string relativePath, CancellationToken cancellationToken = default) =>
         (await Container.GetBlobClient(relativePath).DownloadAsync(cancellationToken)).Value.Content;
+
+    public async Task<IEnumerable<BlobDetails>> GetListAsync(string relativeUri, CancellationToken cancellationToken = default)
+    {
+        var blobs = new List<BlobDetails>();
+        var directoryPrefix = relativeUri.Replace('\\', '/')
+            .Remove(relativeUri.IndexOf('*', StringComparison.OrdinalIgnoreCase));
+
+        await foreach (var blob in Container.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: directoryPrefix, cancellationToken: cancellationToken))
+        {
+            blobs.Add(new BlobDetails(blob.Name, blob.Metadata));
+        }
+
+        return blobs;
+    }
+
+    public async Task CopyAsync(string relativePath, Uri absoluteUri, CancellationToken cancellationToken) =>
+        await Container.GetBlobClient(relativePath)
+            .StartCopyFromUriAsync(absoluteUri, cancellationToken: cancellationToken);
 
     internal virtual BlobHttpHeaders ConfigureBlobHttpHeadersAsync(BlobClient blob, CancellationToken cancellationToken = default)
     {

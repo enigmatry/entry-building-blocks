@@ -1,10 +1,10 @@
-﻿using System;
+﻿using JetBrains.Annotations;
 
-namespace Enigmatry.Entry.BlobStorage
+namespace Enigmatry.Entry.BlobStorage;
+
+[PublicAPI]
+public interface IPrivateBlobStorage : IBlobStorage
 {
-    public interface IPrivateBlobStorage : IBlobStorage
-    {
-        string BuildSharedResourcePath(string relativePath, PrivateBlobPermission permission = PrivateBlobPermission.Read);
-        bool VerifySharedResourcePath(Uri uri);
-    }
+    string BuildSharedResourcePath(string relativePath, PrivateBlobPermission permission = PrivateBlobPermission.Read);
+    bool VerifySharedResourcePath(Uri uri);
 }
