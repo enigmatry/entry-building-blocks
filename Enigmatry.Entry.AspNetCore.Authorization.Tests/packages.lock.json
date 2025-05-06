@@ -187,6 +187,7 @@
       "enigmatry.entry.core": {
         "type": "Project",
         "dependencies": {
+          "FluentValidation": "[11.11.0, )",
           "JetBrains.Annotations": "[2024.3.0, )",
           "MediatR": "[12.4.1, )",
           "Microsoft.Extensions.Logging.Abstractions": "[9.0.2, )",
