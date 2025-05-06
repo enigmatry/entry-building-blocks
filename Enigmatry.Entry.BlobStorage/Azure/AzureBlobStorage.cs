@@ -54,15 +54,15 @@ internal class AzureBlobStorage : IBlobStorage
     public async Task<Stream> GetAsync(string relativePath, CancellationToken cancellationToken = default) =>
         (await Container.GetBlobClient(relativePath).DownloadAsync(cancellationToken)).Value.Content;
 
-    public async Task<IEnumerable<BlobMetadata>> GetListAsync(string relativeUri, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<BlobDetails>> GetListAsync(string relativeUri, CancellationToken cancellationToken = default)
     {
-        var blobs = new List<BlobMetadata>();
+        var blobs = new List<BlobDetails>();
         var directoryPrefix = relativeUri.Replace('\\', '/')
             .Remove(relativeUri.IndexOf('*', StringComparison.OrdinalIgnoreCase));
 
-        await foreach (var blob in Container.GetBlobsAsync(prefix: directoryPrefix, cancellationToken: cancellationToken))
+        await foreach (var blob in Container.GetBlobsAsync(traits: BlobTraits.Metadata, prefix: directoryPrefix, cancellationToken: cancellationToken))
         {
-            blobs.Add(new BlobMetadata(blob.Name));
+            blobs.Add(new BlobDetails(blob.Name, blob.Metadata));
         }
 
         return blobs;
