@@ -1,5 +1,9 @@
-﻿namespace Enigmatry.Entry.BlobStorage;
+﻿using Enigmatry.Entry.BlobStorage.Models;
+using JetBrains.Annotations;
 
+namespace Enigmatry.Entry.BlobStorage;
+
+[PublicAPI]
 public interface IBlobStorage
 {
     public string Name { get; }
@@ -8,5 +12,6 @@ public interface IBlobStorage
     public Task AddAsync(string relativeUri, Stream content, bool @override = false, CancellationToken cancellationToken = default);
     public Task<bool> RemoveAsync(string relativeUri, CancellationToken cancellationToken = default);
     public Task<Stream> GetAsync(string relativeUri, CancellationToken cancellationToken = default);
+    public Task<IEnumerable<BlobDetails>> GetListAsync(string relativeUri, CancellationToken cancellationToken = default);
     public Task CopyAsync(string relativeUri, Uri absoluteUri, CancellationToken cancellationToken);
 }
