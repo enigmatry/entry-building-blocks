@@ -258,6 +258,7 @@
       "enigmatry.entry.core": {
         "type": "Project",
         "dependencies": {
+          "FluentValidation": "[11.11.0, )",
           "JetBrains.Annotations": "[2024.3.0, )",
           "MediatR": "[12.5.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[9.0.4, )",
@@ -273,6 +274,12 @@
         "dependencies": {
           "Azure.Storage.Common": "12.23.0"
         }
+      },
+      "FluentValidation": {
+        "type": "CentralTransitive",
+        "requested": "[11.11.0, )",
+        "resolved": "11.11.0",
+        "contentHash": "cyIVdQBwSipxWG8MA3Rqox7iNbUNUTK5bfJi9tIdm4CAfH71Oo5ABLP4/QyrUwuakqpUEPGtE43BDddvEehuYw=="
       },
       "JetBrains.Annotations": {
         "type": "CentralTransitive",
