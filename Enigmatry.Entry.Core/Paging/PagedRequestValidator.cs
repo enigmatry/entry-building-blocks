@@ -6,9 +6,9 @@ public class PagedRequestValidator<TRequest, TResponse> : AbstractValidator<TReq
 {
     private readonly IList<int> _pageSizeOptions = [20, 50, 100];
 
-    protected PagedRequestValidator(IList<int>? pageSizeOptions = null)
+    public PagedRequestValidator(params int[] pageSizeOptions)
     {
-        if (pageSizeOptions != null)
+        if (pageSizeOptions.Length != 0)
         {
             _pageSizeOptions = pageSizeOptions;
         }
