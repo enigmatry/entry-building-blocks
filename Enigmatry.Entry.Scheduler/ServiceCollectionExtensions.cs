@@ -34,6 +34,8 @@ public static class ServiceCollectionExtensions
 
     public static void AddEntryApplicationInsights(this IServiceCollectionQuartzConfigurator configurator) => configurator.AddJobListener<ApplicationInsightsJobListener>();
 
+    public static void AddEntryOpenTelemetry(this IServiceCollectionQuartzConfigurator configurator) => configurator.AddJobListener<OpenTelemetryJobListener>();
+
     private static void AddJobs(this IServiceCollectionQuartzConfigurator quartz, IConfiguration configuration,
         Assembly assembly, ILogger logger)
     {
