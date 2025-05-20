@@ -5,6 +5,7 @@ using Serilog.Events;
 namespace Enigmatry.Entry.Core.Settings;
 
 [PublicAPI]
+[Obsolete("Migrate to OpenTelemetry instead.")]
 public class ApplicationInsightsSettings
 {
     public const string ApplicationInsightsSectionName = "ApplicationInsights";

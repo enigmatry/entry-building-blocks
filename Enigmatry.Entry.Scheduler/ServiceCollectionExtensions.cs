@@ -32,6 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddQuartzHostedService(quartz => quartz.WaitForJobsToComplete = true);
     }
 
+    [Obsolete("Use AddEntryOpenTelemetry instead.")]
     public static void AddEntryApplicationInsights(this IServiceCollectionQuartzConfigurator configurator) => configurator.AddJobListener<ApplicationInsightsJobListener>();
 
     public static void AddEntryOpenTelemetry(this IServiceCollectionQuartzConfigurator configurator) => configurator.AddJobListener<OpenTelemetryJobListener>();
