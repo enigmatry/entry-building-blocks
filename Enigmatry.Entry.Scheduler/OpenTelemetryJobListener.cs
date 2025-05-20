@@ -4,7 +4,7 @@ using Quartz;
 
 namespace Enigmatry.Entry.Scheduler;
 
-internal sealed class OpenTelemetryJobListener : IJobListener
+internal sealed class OpenTelemetryJobListener : IJobListener, IDisposable
 {
     private readonly ActivitySource _activitySource = new(Assembly.GetExecutingAssembly().FullName!);
     private bool _disposed;
