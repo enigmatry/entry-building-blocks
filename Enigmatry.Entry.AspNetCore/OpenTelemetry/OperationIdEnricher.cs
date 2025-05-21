@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace Enigmatry.Entry.AspNetCore.ApplicationInsights;
+namespace Enigmatry.Entry.AspNetCore.OpenTelemetry;
 
 // added because of AppInsights sampling of custom events -
 // ensures that a set of events is retained or discarded together

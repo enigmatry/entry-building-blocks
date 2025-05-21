@@ -4,6 +4,7 @@ using Quartz;
 
 namespace Enigmatry.Entry.Scheduler;
 
+[Obsolete("Migrate to OpenTelemetryJobListener instead.")]
 internal sealed class ApplicationInsightsJobListener : IJobListener
 {
     private readonly TelemetryClient _telemetryClient;
