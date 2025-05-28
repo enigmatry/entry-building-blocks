@@ -29,7 +29,7 @@ public abstract class SaveChangesBehavior<TDbContext, TRequest, TResponse>(
             if (skipSaveChanges)
             {
                 logger.LogDebug("Skipping SaveChanges for {CommandName}, Reason: {Reason}", typeName, reason);
-                return await next(cancellationToken);
+                return await next();
             }
 
             var transactionBehavior = GetTransactionBehavior(request);
@@ -47,7 +47,7 @@ public abstract class SaveChangesBehavior<TDbContext, TRequest, TResponse>(
                     {
                         logger.LogDebug("Begin transaction {TransactionId} for {CommandName}", transactionId, typeName);
 
-                        response = await next(cancellationToken);
+                        response = await next();
 
                         logger.LogDebug("Commit transaction {TransactionId} for {CommandName}", transactionId,
                             typeName);
@@ -59,7 +59,7 @@ public abstract class SaveChangesBehavior<TDbContext, TRequest, TResponse>(
             }
             else
             {
-                response = await next(cancellationToken);
+                response = await next();
 
                 logger.LogDebug("Saving changes without transaction for {CommandName}", typeName);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
