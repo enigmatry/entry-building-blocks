@@ -15,7 +15,7 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
                    new List<KeyValuePair<string, object>> { new("MediatRRequestType", requestType) }))
         {
             logger.LogInformation("Handling {RequestType}", requestType);
-            var response = await next(cancellationToken);
+            var response = await next();
             logger.LogInformation("Handled {RequestType}", requestType);
             return response;
         }
