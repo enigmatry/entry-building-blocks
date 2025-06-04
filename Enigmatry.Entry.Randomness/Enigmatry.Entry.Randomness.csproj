@@ -12,4 +12,11 @@
     <PackageReference Include="System.Security.Cryptography.Algorithms" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
 </Project>
