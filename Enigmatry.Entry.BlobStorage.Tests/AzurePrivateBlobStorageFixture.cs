@@ -1,5 +1,4 @@
-﻿using System.Web;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Enigmatry.Entry.BlobStorage.Azure;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
@@ -32,20 +31,32 @@ public class AzurePrivateBlobStorageFixture
         _blobStorage = new AzurePrivateBlobStorage(container, settings.Value);
     }
 
-    [Test]
     [TestCase(PrivateBlobPermission.Read)]
     [TestCase(PrivateBlobPermission.Write)]
     [TestCase(PrivateBlobPermission.Delete)]
-    public void TestSharedResourcePath(PrivateBlobPermission permission)
+    public void BuildSharedResourcePathWithPermission(PrivateBlobPermission permission)
     {
         var path = _blobStorage.BuildSharedResourcePath(ResourceName, permission: permission);
-        path.ShouldContain($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+        path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
-        var queryParams = HttpUtility.ParseQueryString(path);
-        var expiresOn = DateTime.Parse(queryParams["se"]!).ToUniversalTime();
+        var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
+        isSasUriValid.ShouldBeTrue();
 
-        expiresOn.ShouldBeGreaterThan(DateTime.UtcNow);
-        expiresOn.ShouldBeLessThan(DateTime.UtcNow.Add(_sasDuration));
+        var expiresOn = sasUri.ExpiresOn.ToUniversalTime();
+        expiresOn.ShouldBeGreaterThan(DateTimeOffset.UtcNow);
+        expiresOn.ShouldBeLessThan(DateTimeOffset.UtcNow.Add(_sasDuration));
+    }
+
+    [Test]
+    public void BuildSharedResourcePathWithFileName()
+    {
+        const string fileName = "test-file.pdf";
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, fileName);
+        path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+
+        var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
+        isSasUriValid.ShouldBeTrue();
+        sasUri.FileName.ShouldBe(fileName);
     }
 
     [Test]
