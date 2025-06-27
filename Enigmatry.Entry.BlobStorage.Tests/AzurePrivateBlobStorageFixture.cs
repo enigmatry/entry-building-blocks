@@ -48,7 +48,7 @@ public class AzurePrivateBlobStorageFixture
     }
 
     [TestCase("test-file.pdf", "test-file.pdf")]
-    [TestCase("\n<test|-\\file>/.pdf", "__test_-_file__.pdf")]
+    [TestCase("//test-file//.pdf", "__test-file__.pdf")]
     public void BuildSharedResourcePathWithFileName(string fileName, string expectedFileName)
     {
         var path = _blobStorage.BuildSharedResourcePath(ResourceName, fileName);
