@@ -47,16 +47,16 @@ public class AzurePrivateBlobStorageFixture
         expiresOn.ShouldBeLessThan(DateTimeOffset.UtcNow.Add(_sasDuration));
     }
 
-    [Test]
-    public void BuildSharedResourcePathWithFileName()
+    [TestCase("test-file.pdf", "test-file.pdf")]
+    [TestCase("\n<test|-\\file>/.pdf", "__test_-_file__.pdf")]
+    public void BuildSharedResourcePathWithFileName(string fileName, string expectedFileName)
     {
-        const string fileName = "test-file.pdf";
         var path = _blobStorage.BuildSharedResourcePath(ResourceName, fileName);
         path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
         isSasUriValid.ShouldBeTrue();
-        sasUri.FileName.ShouldBe(fileName);
+        sasUri.FileName.ShouldBe(expectedFileName);
     }
 
     [Test]

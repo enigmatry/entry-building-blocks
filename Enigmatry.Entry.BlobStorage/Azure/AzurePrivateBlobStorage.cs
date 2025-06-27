@@ -1,4 +1,5 @@
-﻿using Azure.Storage;
+﻿using System.Text.RegularExpressions;
+using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
 using Enigmatry.Entry.Core.Helpers;
@@ -55,7 +56,10 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
 
         if (fileName.HasContent())
         {
-            builder.ContentDisposition = $"{AzureBlobSharedUri.ContentDispositionPrefix}{fileName}";
+            var invalidChars = Path.GetInvalidFileNameChars();
+            var pattern = $"[{string.Join(string.Empty, invalidChars.Select(c => Regex.Escape(c.ToString())))}]";
+            var sanitizedFileName = Regex.Replace(fileName!, pattern, "_");
+            builder.ContentDisposition = $"{AzureBlobSharedUri.ContentDispositionPrefix}{sanitizedFileName}";
         }
         builder.SetPermissions(permission.ToBlobSasPermissions());
 
