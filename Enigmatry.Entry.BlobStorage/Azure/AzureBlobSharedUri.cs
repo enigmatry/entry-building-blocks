@@ -1,73 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.Specialized;
 using System.Web;
 
-namespace Enigmatry.Entry.BlobStorage.Azure
+namespace Enigmatry.Entry.BlobStorage.Azure;
+
+internal record AzureBlobSharedUri
 {
-    internal record AzureBlobSharedUri
+    private static readonly AzureBlobSharedUri Empty = new();
+    private AzureBlobSharedUri() { }
+
+    public string BlobName { get; private set; } = string.Empty;
+    public PrivateBlobPermission Permission { get; private set; }
+    public DateTimeOffset ExpiresOn { get; private set; }
+    public string? ContentDisposition { get; private set; }
+    public string Signature { get; private set; } = string.Empty;
+
+    public const string ContentDispositionPrefix = "attachment; filename=";
+    public string? FileName => ContentDisposition?.StartsWith(ContentDispositionPrefix, StringComparison.InvariantCulture) is true
+        ? ContentDisposition?[ContentDispositionPrefix.Length..]
+        : null;
+
+    public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
     {
-        private static readonly AzureBlobSharedUri Empty = new();
-        private AzureBlobSharedUri() { }
+        sharedUri = Empty;
 
-        public string BlobName { get; private set; } = string.Empty;
-        public PrivateBlobPermission Permission { get; private set; }
-        public DateTimeOffset ExpiresOn { get; private set; }
-        public string Signature { get; private set; } = string.Empty;
-
-        public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
+        try
         {
-            sharedUri = Empty;
-
-            try
-            {
-                sharedUri = Parse(uri);
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-
-            return true;
+            sharedUri = Parse(uri);
+        }
+        catch (FormatException)
+        {
+            return false;
         }
 
-        private static AzureBlobSharedUri Parse(Uri uri)
-        {
-            var decodedUriParams = HttpUtility.ParseQueryString(uri.Query);
-            var blobName = ParseBlobName(uri.Segments);
-            var permission = ParseBlobPermission(decodedUriParams);
-            var expiresOn = ParseExpiryDate(decodedUriParams);
-            var signature = ParseSignature(decodedUriParams);
-            return new AzureBlobSharedUri
-            {
-                BlobName = blobName,
-                ExpiresOn = expiresOn,
-                Permission = permission,
-                Signature = signature
-            };
-        }
-
-        private static string ParseSignature(NameValueCollection decodedUriParams) =>
-            decodedUriParams["sig"] ?? throw new FormatException("Cannot parse signature");
-
-        private static DateTimeOffset ParseExpiryDate(NameValueCollection decodedExistingAbsoluteUriQuery) =>
-            DateTimeOffset.TryParse(decodedExistingAbsoluteUriQuery["se"], out var expiryDate)
-                ? expiryDate
-                : throw new FormatException("Cannot parse expiry date");
-
-        private static PrivateBlobPermission ParseBlobPermission(NameValueCollection query) =>
-            query["sp"] switch
-            {
-                "r" => PrivateBlobPermission.Read,
-                "w" => PrivateBlobPermission.Write,
-                "d" => PrivateBlobPermission.Delete,
-                _ => throw new FormatException("Cannot parse permission")
-            };
-
-        private static string ParseBlobName(IReadOnlyCollection<string> segments) =>
-            segments.Count < 3
-                ? throw new FormatException("Cannot parse blob name")
-                : segments.Skip(2).Aggregate((acc, seg) => acc + seg);
+        return true;
     }
+
+    private static AzureBlobSharedUri Parse(Uri uri)
+    {
+        var decodedUriParams = HttpUtility.ParseQueryString(uri.Query);
+        var blobName = ParseBlobName(uri.Segments);
+        var permission = ParseBlobPermission(decodedUriParams);
+        var expiresOn = ParseExpiryDate(decodedUriParams);
+        var contentDisposition = ParseContentDisposition(decodedUriParams);
+        var signature = ParseSignature(decodedUriParams);
+        return new AzureBlobSharedUri
+        {
+            BlobName = blobName,
+            ExpiresOn = expiresOn,
+            Permission = permission,
+            ContentDisposition = contentDisposition,
+            Signature = signature
+        };
+    }
+
+    private static string ParseSignature(NameValueCollection decodedUriParams) =>
+        decodedUriParams["sig"] ?? throw new FormatException("Cannot parse signature");
+
+    private static string? ParseContentDisposition(NameValueCollection decodedUriParams) =>
+        decodedUriParams["rscd"];
+
+    private static DateTimeOffset ParseExpiryDate(NameValueCollection decodedUriParams) =>
+        DateTimeOffset.TryParse(decodedUriParams["se"], out var expiryDate)
+            ? expiryDate
+            : throw new FormatException("Cannot parse expiry date");
+
+    private static PrivateBlobPermission ParseBlobPermission(NameValueCollection decodedUriParams) =>
+        decodedUriParams["sp"] switch
+        {
+            "r" => PrivateBlobPermission.Read,
+            "w" => PrivateBlobPermission.Write,
+            "d" => PrivateBlobPermission.Delete,
+            _ => throw new FormatException("Cannot parse permission")
+        };
+
+    private static string ParseBlobName(IReadOnlyCollection<string> segments) =>
+        segments.Count < 3
+            ? throw new FormatException("Cannot parse blob name")
+            : segments.Skip(2).Aggregate((acc, seg) => acc + seg);
 }
