@@ -59,7 +59,7 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
             var invalidChars = Path.GetInvalidFileNameChars();
             var pattern = $"[{string.Join(string.Empty, invalidChars.Select(c => Regex.Escape(c.ToString())))}]";
             var sanitizedFileName = Regex.Replace(fileName!, pattern, "_");
-            builder.ContentDisposition = $"{AzureBlobSharedUri.ContentDispositionPrefix}{sanitizedFileName}";
+            builder.ContentDisposition = AzureBlobSharedUri.GetContentDisposition(sanitizedFileName);
         }
         builder.SetPermissions(permission.ToBlobSasPermissions());
 

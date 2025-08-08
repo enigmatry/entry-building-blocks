@@ -14,10 +14,14 @@ internal record AzureBlobSharedUri
     public string? ContentDisposition { get; private set; }
     public string Signature { get; private set; } = string.Empty;
 
-    public const string ContentDispositionPrefix = "attachment; filename=";
+    private const string ContentDispositionPrefix = "attachment; filename=\"";
+    private const string ContentDispositionSuffix = "\"";
     public string? FileName => ContentDisposition?.StartsWith(ContentDispositionPrefix, StringComparison.InvariantCulture) is true
-        ? ContentDisposition?[ContentDispositionPrefix.Length..]
+        ? ContentDisposition?[ContentDispositionPrefix.Length..^ContentDispositionSuffix.Length]
         : null;
+
+    public static string GetContentDisposition(string fileName) =>
+        $"{ContentDispositionPrefix}{fileName}{ContentDispositionSuffix}";
 
     public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
     {
