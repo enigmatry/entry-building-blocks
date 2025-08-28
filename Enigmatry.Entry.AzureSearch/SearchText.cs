@@ -1,4 +1,5 @@
-﻿using Enigmatry.Entry.Core.Helpers;
+﻿using Enigmatry.Entry.AzureSearch.Extensions;
+using Enigmatry.Entry.Core.Helpers;
 
 namespace Enigmatry.Entry.AzureSearch;
 

@@ -1,7 +1,7 @@
 ﻿using Enigmatry.Entry.AzureSearch.Abstractions;
 using Humanizer;
 
-namespace Enigmatry.Entry.AzureSearch;
+namespace Enigmatry.Entry.AzureSearch.Indexes;
 
 public class DefaultSearchIndexNameResolver<T> : ISearchIndexNameResolver<T>
 {

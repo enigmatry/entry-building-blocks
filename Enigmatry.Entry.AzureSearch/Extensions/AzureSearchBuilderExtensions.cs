@@ -1,4 +1,5 @@
 ﻿using Enigmatry.Entry.AzureSearch.Abstractions;
+using Enigmatry.Entry.AzureSearch.Indexes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Enigmatry.Entry.AzureSearch.Extensions;
@@ -9,7 +10,7 @@ public static class AzureSearchBuilderExtensions
     {
         builder.Services.AddScoped<ISearchIndexNameResolver<T>, DefaultSearchIndexNameResolver<T>>(
             _ => !string.IsNullOrEmpty(indexName) ? new DefaultSearchIndexNameResolver<T>(indexName) : new DefaultSearchIndexNameResolver<T>());
-        builder.Services.AddScoped<ISearchIndexFactory<T>, DefaultSearchIndexFactory<T>>();
+        builder.Services.AddScoped<ISearchIndexBuilder<T>, DefaultSearchIndexBuilder<T>>();
         builder.Services.AddScoped<ISearchClientFactory<T>, DefaultSearchClientFactory<T>>();
         builder.Services.AddScoped<ISearchIndexManager<T>, DefaultSearchIndexManager<T>>();
         builder.Services.AddScoped<ISearchService<T>, DefaultSearchService<T>>();

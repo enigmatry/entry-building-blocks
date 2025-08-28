@@ -20,9 +20,9 @@ public class SearchIndexFactoryResolvingFixture
     [Test]
     public void TestResolveSearchIndexTestDocument()
     {
-        var resolver = _services.GetRequiredService<ISearchIndexFactory<TestDocument>>();
+        var resolver = _services.GetRequiredService<ISearchIndexBuilder<TestDocument>>();
 
-        var index = resolver.Create();
+        var index = resolver.Build();
 
         index.Name.ShouldBe("test-document");
         index.Analyzers.Count.ShouldBe(1);
@@ -31,9 +31,9 @@ public class SearchIndexFactoryResolvingFixture
     [Test]
     public void TestResolveSearchIndexAnotherTestDocument()
     {
-        var resolver = _services.GetRequiredService<ISearchIndexFactory<AnotherTestDocument>>();
+        var resolver = _services.GetRequiredService<ISearchIndexBuilder<AnotherTestDocument>>();
 
-        var index = resolver.Create();
+        var index = resolver.Build();
 
         index.Name.ShouldBe("another-test-document");
         index.Analyzers.Count.ShouldBe(0);
