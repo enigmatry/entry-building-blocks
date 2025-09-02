@@ -10,9 +10,9 @@ public class AzureSearchDocumentBuilder<T> : IAzureSearchBuilder
         Services = services;
     }
 
-    public IAzureSearchBuilder AddSearchIndexFactory<TFactory>() where TFactory : class, ISearchIndexFactory<T>
+    public IAzureSearchBuilder AddSearchIndexFactory<TFactory>() where TFactory : class, ISearchIndexBuilder<T>
     {
-        Services.AddScoped<ISearchIndexFactory<T>, TFactory>();
+        Services.AddScoped<ISearchIndexBuilder<T>, TFactory>();
         return this;
     }
 

@@ -1,29 +1,27 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Azure.Search.Documents.Indexes;
+﻿using Azure.Search.Documents.Indexes;
 using Enigmatry.Entry.AzureSearch.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace Enigmatry.Entry.AzureSearch;
+namespace Enigmatry.Entry.AzureSearch.Indexes;
 
 public class DefaultSearchIndexManager<T> : ISearchIndexManager<T>
 {
-    private readonly ISearchIndexFactory<T> _indexFactory;
+    private readonly ISearchIndexBuilder<T> _indexBuilder;
     private readonly SearchIndexClient _client;
     private readonly ILogger<DefaultSearchIndexManager<T>> _logger;
     private const int NoContentHttpStatusCode = 204;
 
-    public DefaultSearchIndexManager(ISearchIndexFactory<T> indexFactory, SearchIndexClient client,
+    public DefaultSearchIndexManager(ISearchIndexBuilder<T> indexBuilder, SearchIndexClient client,
         ILogger<DefaultSearchIndexManager<T>> logger)
     {
-        _indexFactory = indexFactory;
+        _indexBuilder = indexBuilder;
         _client = client;
         _logger = logger;
     }
 
     public async Task<bool> DeleteIndex(CancellationToken cancellationToken = default)
     {
-        var index = _indexFactory.Create();
+        var index = _indexBuilder.Build();
 
         _logger.LogInformation("Deleting index: {IndexName}", index.Name);
 
@@ -36,7 +34,7 @@ public class DefaultSearchIndexManager<T> : ISearchIndexManager<T>
 
     public async Task<bool> RecreateIndex(CancellationToken cancellationToken)
     {
-        var index = _indexFactory.Create();
+        var index = _indexBuilder.Build();
 
         _logger.LogInformation("Delete previous index. Index name: {IndexName}", index.Name);
 

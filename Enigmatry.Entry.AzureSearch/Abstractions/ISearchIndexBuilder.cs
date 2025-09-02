@@ -2,7 +2,7 @@
 
 namespace Enigmatry.Entry.AzureSearch.Abstractions;
 
-public interface ISearchIndexFactory<T>
+public interface ISearchIndexBuilder<T>
 {
-    public SearchIndex Create();
+    public SearchIndex Build();
 }

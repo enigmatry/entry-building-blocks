@@ -12,6 +12,16 @@ public static class EnumerableExtensions
         }
     }
 
+    public static async Task ForEach<T>(this IEnumerable<T> source, Func<T, Task> action)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+
+        foreach (var item in source)
+        {
+            await action(item);
+        }
+    }
+
     public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T>? source) => source ?? [];
 }
 

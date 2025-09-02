@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Models;
+using Enigmatry.Entry.AzureSearch.Extensions;
 using Enigmatry.Entry.AzureSearch.Tests.Documents;
 using static Enigmatry.Entry.AzureSearch.Tests.Searching.AzureSearchTestCases.AzureSearchTestCase;
 

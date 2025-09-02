@@ -11,7 +11,7 @@ public class SearchIndexClientFixture
 {
     private ServiceProvider _services = null!;
     private SearchIndexClient _searchIndexClient = null!;
-    private ISearchIndexFactory<TestDocument> _indexFactory = null!;
+    private ISearchIndexBuilder<TestDocument> _indexFactory = null!;
 
     [SetUp]
     public void Setup()
@@ -19,7 +19,7 @@ public class SearchIndexClientFixture
         _services = new ServiceCollectionBuilder().Build();
 
         _searchIndexClient = _services.GetRequiredService<SearchIndexClient>();
-        _indexFactory = _services.GetRequiredService<ISearchIndexFactory<TestDocument>>();
+        _indexFactory = _services.GetRequiredService<ISearchIndexBuilder<TestDocument>>();
     }
 
     [TearDown]
@@ -28,14 +28,14 @@ public class SearchIndexClientFixture
     [Test]
     public async Task TestCreateOrUpdateIndex()
     {
-        var index = _indexFactory.Create();
+        var index = _indexFactory.Build();
         await _searchIndexClient.CreateOrUpdateIndexAsync(index);
     }
 
     [Test]
     public async Task TestDeleteIndex()
     {
-        var index = _indexFactory.Create();
+        var index = _indexFactory.Build();
         await _searchIndexClient.CreateOrUpdateIndexAsync(index);
         await _searchIndexClient.DeleteIndexAsync(index.Name);
     }

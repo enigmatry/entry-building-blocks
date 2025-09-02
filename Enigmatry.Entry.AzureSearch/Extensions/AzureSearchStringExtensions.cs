@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Enigmatry.Entry.AzureSearch;
+﻿namespace Enigmatry.Entry.AzureSearch.Extensions;
 
 internal static class AzureSearchStringExtensions
 {
