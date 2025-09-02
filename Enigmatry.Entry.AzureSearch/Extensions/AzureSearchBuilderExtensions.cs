@@ -18,14 +18,13 @@ public static class AzureSearchBuilderExtensions
 
         if (vectorSearch)
         {
+            builder.Services.AddScoped<IEmbeddingService, EmbeddingService>();
             builder.Services.AddScoped<ISearchService<T>, VectorSearchService<T>>();
         }
         else
         {
             builder.Services.AddScoped<ISearchService<T>, DefaultSearchService<T>>();
         }
-
-        builder.Services.AddScoped<IEmbeddingService, EmbeddingService>();
 
         return new AzureSearchDocumentBuilder<T>(builder.Services);
     }
