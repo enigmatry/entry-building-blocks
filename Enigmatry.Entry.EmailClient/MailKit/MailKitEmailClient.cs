@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Enigmatry.Entry.Core.Settings;
 using JetBrains.Annotations;
 using MailKit;
@@ -12,80 +7,77 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace Enigmatry.Entry.Email.MailKit
+namespace Enigmatry.Entry.Email.MailKit;
+
+[UsedImplicitly]
+internal class MailKitEmailClient : IEmailClient
 {
-    [UsedImplicitly]
-    internal class MailKitEmailClient : IEmailClient
+    private readonly ILogger<MailKitEmailClient> _logger;
+    private readonly SmtpSettings _settings;
+
+    public MailKitEmailClient(IOptionsSnapshot<SmtpSettings> optionsSnapshot, ILogger<MailKitEmailClient> logger)
     {
-        private readonly ILogger<MailKitEmailClient> _logger;
-        private readonly SmtpSettings _settings;
+        _settings = optionsSnapshot.Value;
+        _logger = logger;
+    }
 
-        public MailKitEmailClient(IOptionsSnapshot<SmtpSettings> optionsSnapshot, ILogger<MailKitEmailClient> logger)
+    public async Task<EmailMessageSendResult> SendAsync(EmailMessage emailMessage,
+        CancellationToken cancellationToken = default) =>
+        (await SendBulkAsync(emailMessage.GetBulk(), cancellationToken)).First();
+
+    public async Task<IEnumerable<EmailMessageSendResult>> SendBulkAsync(IEnumerable<EmailMessage> emailMessages,
+        CancellationToken cancellationToken = default)
+    {
+        if (emailMessages == null)
         {
-            _settings = optionsSnapshot.Value;
-            _logger = logger;
+            throw new ArgumentNullException(nameof(emailMessages));
         }
 
-        public async Task<EmailMessageSendResult> SendAsync(EmailMessage emailMessage,
-            CancellationToken cancellationToken = default) =>
-            (await SendBulkAsync(emailMessage.GetBulk(), cancellationToken)).First();
+        var numberOfSentEmails = 0;
+        var stopWatch = new Stopwatch();
+        var result = new List<EmailMessageSendResult>();
 
-        public async Task<IEnumerable<EmailMessageSendResult>> SendBulkAsync(IEnumerable<EmailMessage> emailMessages,
-            CancellationToken cancellationToken = default)
+        using (var smtpClient = new SmtpClient())
         {
-            if (emailMessages == null)
+            await smtpClient.ConnectAsync(_settings, cancellationToken);
+
+            foreach (var emailMessage in emailMessages)
             {
-                throw new ArgumentNullException(nameof(emailMessages));
-            }
-
-            var numberOfSentEmails = 0;
-            var stopWatch = new Stopwatch();
-            var result = new List<EmailMessageSendResult>();
-
-            using (var smtpClient = new SmtpClient())
-            {
-                await smtpClient.ConnectAsync(_settings, cancellationToken);
-
-                foreach (var emailMessage in emailMessages)
+                var sendResult = new EmailMessageSendResult { Message = emailMessage };
+                result.Add(sendResult);
+                try
                 {
-                    var sendResult = new EmailMessageSendResult { Message = emailMessage };
-                    result.Add(sendResult);
-                    try
-                    {
-                        using var message = new MimeMessage();
-                        message.SetEmailData(emailMessage, _settings);
+                    using var message = new MimeMessage();
+                    message.SetEmailData(emailMessage, _settings);
 
-                        var response = await smtpClient.SendAsync(message, cancellationToken);
-                        _logger.LogInformation(
-                            "Message with id {MessageId} and subject {Subject} sent from {From} to {To} with server response {ServerResponse}",
-                            emailMessage.MessageId, emailMessage.Subject, emailMessage.From, emailMessage.To, response);
-                        numberOfSentEmails++;
-                        sendResult.Success = true;
-                    }
-                    catch (SmtpCommandException ex)
-                    {
-                        _logger.LogWarning(ex,
-                            "Unable to send message with id {MessageId} and subject {Subject} from {From} to {To} with error code {ErrorCode} due to a command error: {ErrorMessage}",
-                            emailMessage.MessageId, emailMessage.Subject, emailMessage.From, emailMessage.To,
-                            ex.ErrorCode, ex.Message);
-                    }
-                    catch (ProtocolException ex) when (smtpClient.IsConnected)
-                    {
-                        // only when the client is still connected we should continue trying to send any other message
-                        _logger.LogWarning(ex,
-                            "Unable to send message with id {MessageId} and subject {Subject} from {From} to {To} due to a protocol error: {ErrorMessage}",
-                            emailMessage.MessageId, emailMessage.Subject, emailMessage.From, emailMessage.To,
-                            ex.Message);
-                    }
+                    var response = await smtpClient.SendAsync(message, cancellationToken);
+                    _logger.LogInformation(
+                        "Message with id {MessageId} sent with server response {ServerResponse}",
+                        emailMessage.MessageId, response);
+                    numberOfSentEmails++;
+                    sendResult.Success = true;
                 }
-
-                await smtpClient.DisconnectAsync(true, cancellationToken);
+                catch (SmtpCommandException ex)
+                {
+                    _logger.LogWarning(ex,
+                        "Unable to send message with id {MessageId} with error code {ErrorCode} due to a command error: {ErrorMessage}",
+                        emailMessage.MessageId, ex.ErrorCode, ex.Message);
+                }
+                catch (ProtocolException ex) when (smtpClient.IsConnected)
+                {
+                    // only when the client is still connected we should continue trying to send any other message
+                    _logger.LogWarning(ex,
+                        "Unable to send message with id {MessageId} due to a protocol error: {ErrorMessage}",
+                        emailMessage.MessageId, ex.Message);
+                }
             }
 
-            _logger.LogDebug(
-                $"{numberOfSentEmails} email(s) using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
-
-            return result;
+            await smtpClient.DisconnectAsync(true, cancellationToken);
         }
+
+        _logger.LogDebug(
+            $"{numberOfSentEmails} email(s) using host: {_settings.Server} and port: {_settings.Port}, sent in [{stopWatch.ElapsedMilliseconds}ms]");
+
+        return result;
     }
 }

@@ -2,68 +2,61 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Enigmatry.Entry.Email.MailKit
+namespace Enigmatry.Entry.Email.MailKit;
+
+internal class MailKitPickupDirectoryEmailClient : IEmailClient
 {
-    internal class MailKitPickupDirectoryEmailClient : IEmailClient
+    private readonly ILogger<MailKitPickupDirectoryEmailClient> _logger;
+    private readonly SmtpSettings _settings;
+
+    public MailKitPickupDirectoryEmailClient(IOptionsSnapshot<SmtpSettings> optionsSnapshot,
+        ILogger<MailKitPickupDirectoryEmailClient> logger)
     {
-        private readonly ILogger<MailKitPickupDirectoryEmailClient> _logger;
-        private readonly SmtpSettings _settings;
+        _settings = optionsSnapshot.Value;
+        _logger = logger;
+    }
 
-        public MailKitPickupDirectoryEmailClient(IOptionsSnapshot<SmtpSettings> optionsSnapshot,
-            ILogger<MailKitPickupDirectoryEmailClient> logger)
+    public async Task<EmailMessageSendResult> SendAsync(EmailMessage emailMessage,
+        CancellationToken cancellationToken = default) =>
+        (await SendBulkAsync(emailMessage.GetBulk(), cancellationToken)).First();
+
+    public async Task<IEnumerable<EmailMessageSendResult>> SendBulkAsync(IEnumerable<EmailMessage> emailMessages,
+        CancellationToken cancellationToken = default)
+    {
+        if (!Directory.Exists(_settings.PickupDirectoryLocation))
         {
-            _settings = optionsSnapshot.Value;
-            _logger = logger;
+            Directory.CreateDirectory(_settings.PickupDirectoryLocation);
         }
 
-        public async Task<EmailMessageSendResult> SendAsync(EmailMessage emailMessage,
-            CancellationToken cancellationToken = default) =>
-            (await SendBulkAsync(emailMessage.GetBulk(), cancellationToken)).First();
+        var result = new List<EmailMessageSendResult>();
 
-        public async Task<IEnumerable<EmailMessageSendResult>> SendBulkAsync(IEnumerable<EmailMessage> emailMessages,
-            CancellationToken cancellationToken = default)
+        foreach (var emailMessage in emailMessages)
         {
-            if (!Directory.Exists(_settings.PickupDirectoryLocation))
+            var filePath = Path.Combine(_settings.PickupDirectoryLocation, $"{DateTime.Now.Ticks}.eml");
+
+            using var message = new MimeMessage();
+            message.SetEmailData(emailMessage, _settings);
+
+            var sendResult = new EmailMessageSendResult { Message = emailMessage };
+            result.Add(sendResult);
+
+            try
             {
-                Directory.CreateDirectory(_settings.PickupDirectoryLocation);
+                await message.WriteToAsync(filePath, cancellationToken);
+                _logger.LogInformation(
+                    "Message with id {MessageId} is written to {FilePath}",
+                    message.MessageId, filePath);
+                sendResult.Success = true;
             }
-
-            var result = new List<EmailMessageSendResult>();
-
-            foreach (var emailMessage in emailMessages)
+            catch (Exception ex)
             {
-                var filePath = Path.Combine(_settings.PickupDirectoryLocation, $"{DateTime.Now.Ticks}.eml");
-
-                using var message = new MimeMessage();
-                message.SetEmailData(emailMessage, _settings);
-
-                var sendResult = new EmailMessageSendResult { Message = emailMessage };
-                result.Add(sendResult);
-
-                try
-                {
-                    await message.WriteToAsync(filePath, cancellationToken);
-                    _logger.LogInformation(
-                        "Message with id {MessageId} and subject '{Subject}' and recipient {To} is written to {FilePath}",
-                        message.MessageId, message.Subject, message.To, filePath);
-                    sendResult.Success = true;
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogWarning(ex,
-                        "Unable to write message with id {MessageId} and subject '{Subject}' and recipient {To} to {FilePath}",
-                        message.MessageId, message.Subject, message.To, filePath);
-                }
+                _logger.LogWarning(ex,
+                    "Unable to write message with id {MessageId} to {FilePath}",
+                    message.MessageId, filePath);
             }
-
-            return result;
         }
+
+        return result;
     }
 }
