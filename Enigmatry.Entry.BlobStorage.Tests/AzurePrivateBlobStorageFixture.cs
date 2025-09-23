@@ -56,8 +56,8 @@ public class AzurePrivateBlobStorageFixture
         // the fix is to grab the new signature in the debugger and update the test 
         var path = "https://testaccount.blob.core.windows.net:443" +
                    "/testContainer/testResource.pdf" +
-                   "?sv=2023-11-03&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=2trbBGJP8FKWPmOwgxlNyGDgCPZhv9XRXpif143gwbc=";
+                   "?sv=2025-07-05&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
+                   "&sig=9yr07h509ly4mLFnQvX9GnKuuuAc4JzK56XkYFa9%2Fsk%3D";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).Should().BeTrue();
     }
