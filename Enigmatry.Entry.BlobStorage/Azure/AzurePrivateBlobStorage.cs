@@ -26,11 +26,11 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
     }
 
     public string BuildSharedResourcePath(string relativePath,
-        string? fileName = null,
+        string fileName,
         PrivateBlobPermission permission = PrivateBlobPermission.Read)
     {
         var settings = fileName.HasContent()
-            ? new ContentDispositionSettings(fileName!, ContentDispositionType.Attachment)
+            ? new ContentDispositionSettings(fileName, ContentDispositionType.Attachment)
             : null;
         return BuildSharedResourcePath(relativePath, settings, permission);
     }
