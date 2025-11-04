@@ -2,6 +2,7 @@
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
+using Enigmatry.Entry.BlobStorage.Models;
 using Enigmatry.Entry.Core.Helpers;
 
 namespace Enigmatry.Entry.BlobStorage.Azure;
@@ -20,29 +21,38 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
             return false;
         }
 
-        var validSignature = BuildSasQueryParams(sasUri.BlobName, sasUri.FileName, sasUri.Permission, sasUri.ExpiresOn).Signature;
+        var validSignature = BuildSasQueryParams(sasUri.BlobName, sasUri.GetContentDisposition(), sasUri.Permission, sasUri.ExpiresOn).Signature;
         return sasUri.Signature == validSignature;
     }
-
 
     public string BuildSharedResourcePath(string relativePath,
         string? fileName = null,
         PrivateBlobPermission permission = PrivateBlobPermission.Read)
     {
-        DateTimeOffset expiresOn = DateTime.UtcNow.Add(Settings.SasDuration);
+        var settings = fileName.HasContent()
+            ? new ContentDispositionSettings(fileName!, ContentDispositionType.Attachment)
+            : null;
+        return BuildSharedResourcePath(relativePath, settings, permission);
+    }
+
+    public string BuildSharedResourcePath(string relativePath,
+        ContentDispositionSettings? settings = null,
+        PrivateBlobPermission permission = PrivateBlobPermission.Read)
+    {
         if (relativePath.IsNullOrWhiteSpace())
         {
             return string.Empty;
         }
 
+        DateTimeOffset expiresOn = DateTime.UtcNow.Add(Settings.SasDuration);
         var uri = new Uri(BuildResourcePath(relativePath));
-        var query = BuildSasQueryParams(relativePath, fileName, permission, expiresOn);
+        var query = BuildSasQueryParams(relativePath, settings, permission, expiresOn);
         var builder = new UriBuilder(uri) { Query = query.ToString() };
         return builder.ToString();
     }
 
     private BlobSasQueryParameters BuildSasQueryParams(string blob,
-        string? fileName,
+        ContentDispositionSettings? settings,
         PrivateBlobPermission permission,
         DateTimeOffset expiresOn)
     {
@@ -54,12 +64,10 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
             Protocol = SasProtocol.Https
         };
 
-        if (fileName.HasContent())
+        var contentDisposition = settings?.GetValue();
+        if (contentDisposition.HasContent())
         {
-            var invalidChars = Path.GetInvalidFileNameChars();
-            var pattern = $"[{string.Join(string.Empty, invalidChars.Select(c => Regex.Escape(c.ToString())))}]";
-            var sanitizedFileName = Regex.Replace(fileName!, pattern, "_");
-            builder.ContentDisposition = AzureBlobSharedUri.GetContentDisposition(sanitizedFileName);
+            builder.ContentDisposition = contentDisposition;
         }
         builder.SetPermissions(permission.ToBlobSasPermissions());
 

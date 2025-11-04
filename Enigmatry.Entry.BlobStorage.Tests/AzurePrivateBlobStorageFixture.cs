@@ -36,7 +36,7 @@ public class AzurePrivateBlobStorageFixture
     [TestCase(PrivateBlobPermission.Delete)]
     public void BuildSharedResourcePathWithPermission(PrivateBlobPermission permission)
     {
-        var path = _blobStorage.BuildSharedResourcePath(ResourceName, permission: permission);
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, "", permission: permission);
         path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
@@ -57,7 +57,7 @@ public class AzurePrivateBlobStorageFixture
 
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
         isSasUriValid.ShouldBeTrue();
-        sasUri.FileName.ShouldBe(expectedFileName);
+        sasUri.GetContentDisposition()?.FileName.ShouldBe(expectedFileName);
     }
 
     [Test]
