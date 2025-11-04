@@ -1,8 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using Enigmatry.Entry.Core.Helpers;
+using JetBrains.Annotations;
 
 namespace Enigmatry.Entry.BlobStorage.Models;
 
+[PublicAPI]
 public record ContentDispositionSettings(string FileName, ContentDispositionType Type)
 {
     private const string AttachmentTypePrefix = "attachment; ";
