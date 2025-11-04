@@ -10,7 +10,7 @@ public record ContentDispositionSettings(string FileName, ContentDispositionType
     private const string FileNamePrefix = "filename=\"";
     private const string FileNameSuffix = "\"";
 
-    public string GetValue()
+    internal string GetValue()
     {
         if (FileName.HasNoContent())
         {
@@ -24,7 +24,7 @@ public record ContentDispositionSettings(string FileName, ContentDispositionType
         return $"{valuePrefix}{sanitizedFileName}{FileNameSuffix}";
     }
 
-    public static ContentDispositionSettings? Parse(string? value)
+    internal static ContentDispositionSettings? Parse(string? value)
     {
         if (value.HasNoContent())
         {
