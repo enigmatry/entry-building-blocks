@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Enigmatry.Entry.BlobStorage.Azure;
+using Enigmatry.Entry.BlobStorage.Models;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using Shouldly;
@@ -58,6 +59,24 @@ public class AzurePrivateBlobStorageFixture
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
         isSasUriValid.ShouldBeTrue();
         sasUri.GetContentDisposition()?.FileName.ShouldBe(expectedFileName);
+    }
+
+    [TestCase("test-file.pdf", ContentDispositionType.Attachment, "attachment; filename=\"test-file.pdf\"")]
+    [TestCase("test-file.pdf", ContentDispositionType.Inline, "inline; filename=\"test-file.pdf\"")]
+    public void BuildSharedResourcePathWithContentDisposition(string fileName, ContentDispositionType type, string expectedContentDisposition)
+    {
+        var settings = new ContentDispositionSettings(fileName, type);
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, settings);
+        path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+
+        var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
+        isSasUriValid.ShouldBeTrue();
+
+        sasUri.ContentDisposition.ShouldBe(expectedContentDisposition);
+        var contentDisposition = sasUri.GetContentDisposition();
+        contentDisposition.ShouldNotBeNull();
+        contentDisposition.FileName.ShouldBe(fileName);
+        contentDisposition.Type.ShouldBe(type);
     }
 
     [Test]
