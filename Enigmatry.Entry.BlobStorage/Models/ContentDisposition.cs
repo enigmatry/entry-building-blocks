@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using Enigmatry.Entry.Core.Helpers;
 using JetBrains.Annotations;
 
@@ -7,11 +8,6 @@ namespace Enigmatry.Entry.BlobStorage.Models;
 [PublicAPI]
 public record ContentDisposition(string FileName, ContentDispositionType Type)
 {
-    private const string AttachmentTypePrefix = "attachment; ";
-    private const string InlineTypePrefix = "inline; ";
-    private const string FileNamePrefix = "filename=\"";
-    private const string FileNameSuffix = "\"";
-
     public override string ToString()
     {
         if (FileName.HasNoContent())
@@ -19,48 +15,28 @@ public record ContentDisposition(string FileName, ContentDispositionType Type)
             return string.Empty;
         }
 
-        var invalidChars = Path.GetInvalidFileNameChars();
-        var pattern = $"[{string.Join(string.Empty, invalidChars.Select(c => Regex.Escape(c.ToString())))}]";
-        var sanitizedFileName = Regex.Replace(FileName, pattern, "_");
-        var valuePrefix = GetValuePrefix(Type);
-        return $"{valuePrefix}{sanitizedFileName}{FileNameSuffix}";
+        var contentDisposition = new ContentDispositionHeaderValue(Type.GetDisplayName()) { FileName = GetSanitizedFileName() };
+        return contentDisposition.ToString();
     }
 
     internal static ContentDisposition? Parse(string? value)
     {
-        if (value.HasNoContent())
+        if (value.HasNoContent() || !ContentDispositionHeaderValue.TryParse(value!, out var contentDisposition))
         {
             return null;
         }
 
-        ContentDispositionType? type = null;
-        if (value!.StartsWith(AttachmentTypePrefix, StringComparison.InvariantCulture))
-        {
-            type = ContentDispositionType.Attachment;
-        }
-        else if (value.StartsWith(InlineTypePrefix, StringComparison.InvariantCulture))
-        {
-            type = ContentDispositionType.Inline;
-        }
-
-        if (!type.HasValue)
-        {
-            return null;
-        }
-
-        var valuePrefix = GetValuePrefix(type.Value);
-        var fileName = value[valuePrefix.Length..^FileNameSuffix.Length];
-        return new ContentDisposition(fileName, type.Value);
+        var fileName = contentDisposition.FileName!.Trim('\"');
+        var type = contentDisposition.DispositionType == ContentDispositionType.Attachment.GetDisplayName()
+            ? ContentDispositionType.Attachment
+            : ContentDispositionType.Inline;
+        return new ContentDisposition(fileName, type);
     }
 
-    private static string GetTypePrefix(ContentDispositionType type) =>
-        type switch
-        {
-            ContentDispositionType.Attachment => AttachmentTypePrefix,
-            ContentDispositionType.Inline => InlineTypePrefix,
-            _ => throw new InvalidOperationException("Unknown content disposition type")
-        };
-
-    private static string GetValuePrefix(ContentDispositionType type) =>
-        $"{GetTypePrefix(type)}{FileNamePrefix}";
+    private string GetSanitizedFileName()
+    {
+        var invalidChars = Path.GetInvalidFileNameChars();
+        var pattern = $"[{string.Join(string.Empty, invalidChars.Select(c => Regex.Escape(c.ToString())))}]";
+        return Regex.Replace(FileName, pattern, "_");
+    }
 }

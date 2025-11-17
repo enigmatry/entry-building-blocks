@@ -2,7 +2,7 @@
   BlobName: testResource.pdf,
   ExpiresOn: DateTimeOffset_1,
   CacheControl: max-age=3600,
-  ContentDisposition: attachment; filename="test-file.pdf",
+  ContentDisposition: attachment; filename=test-file.pdf,
   ContentEncoding: gzip,
   ContentLanguage: en,
   ContentType: application/json,

@@ -63,8 +63,8 @@ public class AzurePrivateBlobStorageFixture
         sasUri.GetResponseHeaders()?.ContentDisposition?.FileName.ShouldBe(expectedFileName);
     }
 
-    [TestCase("test-file.pdf", ContentDispositionType.Attachment, "attachment; filename=\"test-file.pdf\"")]
-    [TestCase("test-file.pdf", ContentDispositionType.Inline, "inline; filename=\"test-file.pdf\"")]
+    [TestCase("test-file.pdf", ContentDispositionType.Attachment, "attachment; filename=test-file.pdf")]
+    [TestCase("test-file.pdf", ContentDispositionType.Inline, "inline; filename=test-file.pdf")]
     public void BuildSharedResourcePathWithContentDisposition(string fileName, ContentDispositionType type, string expectedContentDisposition)
     {
         var contentDisposition = new ContentDisposition(fileName, type);
