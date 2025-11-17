@@ -12,10 +12,15 @@ internal record AzureBlobSharedUri
     public string BlobName { get; private set; } = string.Empty;
     public PrivateBlobPermission Permission { get; private set; }
     public DateTimeOffset ExpiresOn { get; private set; }
+    public string? CacheControl { get; private set; }
     public string? ContentDisposition { get; private set; }
+    public string? ContentEncoding { get; private set; }
+    public string? ContentLanguage { get; private set; }
+    public string? ContentType { get; private set; }
     public string Signature { get; private set; } = string.Empty;
 
-    public ContentDisposition? GetContentDisposition() => Models.ContentDisposition.Parse(ContentDisposition);
+    public BlobResponseHeadersOverride? GetResponseHeaders() =>
+        new(CacheControl, Models.ContentDisposition.Parse(ContentDisposition), ContentEncoding, ContentLanguage, ContentType);
 
     public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
     {
@@ -39,14 +44,22 @@ internal record AzureBlobSharedUri
         var blobName = ParseBlobName(uri.Segments);
         var permission = ParseBlobPermission(decodedUriParams);
         var expiresOn = ParseExpiryDate(decodedUriParams);
+        var cacheControl = ParseCacheControl(decodedUriParams);
         var contentDisposition = ParseContentDisposition(decodedUriParams);
+        var contentEncoding = ParseContentEncoding(decodedUriParams);
+        var contentLanguage = ParseContentLanguage(decodedUriParams);
+        var contentType = ParseContentType(decodedUriParams);
         var signature = ParseSignature(decodedUriParams);
         return new AzureBlobSharedUri
         {
             BlobName = blobName,
             ExpiresOn = expiresOn,
             Permission = permission,
+            CacheControl = cacheControl,
             ContentDisposition = contentDisposition,
+            ContentEncoding = contentEncoding,
+            ContentLanguage = contentLanguage,
+            ContentType = contentType,
             Signature = signature
         };
     }
@@ -54,8 +67,20 @@ internal record AzureBlobSharedUri
     private static string ParseSignature(NameValueCollection decodedUriParams) =>
         decodedUriParams["sig"] ?? throw new FormatException("Cannot parse signature");
 
+    private static string? ParseCacheControl(NameValueCollection decodedUriParams) =>
+        decodedUriParams["rscc"];
+
     private static string? ParseContentDisposition(NameValueCollection decodedUriParams) =>
         decodedUriParams["rscd"];
+
+    private static string? ParseContentEncoding(NameValueCollection decodedUriParams) =>
+        decodedUriParams["rsce"];
+
+    private static string? ParseContentLanguage(NameValueCollection decodedUriParams) =>
+        decodedUriParams["rscl"];
+
+    private static string? ParseContentType(NameValueCollection decodedUriParams) =>
+        decodedUriParams["rsct"];
 
     private static DateTimeOffset ParseExpiryDate(NameValueCollection decodedUriParams) =>
         DateTimeOffset.TryParse(decodedUriParams["se"], out var expiryDate)

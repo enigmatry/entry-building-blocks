@@ -53,30 +53,33 @@ public class AzurePrivateBlobStorageFixture
     [TestCase("test,file.pdf", "test,file.pdf")]
     public void BuildSharedResourcePathWithFileName(string fileName, string expectedFileName)
     {
-        var path = _blobStorage.BuildSharedResourcePath(ResourceName, fileName);
+        var contentDisposition = new ContentDisposition(fileName, ContentDispositionType.Attachment);
+        var responseHeaders = new BlobResponseHeadersOverrideBuilder().WithContentDisposition(contentDisposition).Build();
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, responseHeaders: responseHeaders);
         path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
         isSasUriValid.ShouldBeTrue();
-        sasUri.GetContentDisposition()?.FileName.ShouldBe(expectedFileName);
+        sasUri.GetResponseHeaders()?.ContentDisposition?.FileName.ShouldBe(expectedFileName);
     }
 
     [TestCase("test-file.pdf", ContentDispositionType.Attachment, "attachment; filename=\"test-file.pdf\"")]
     [TestCase("test-file.pdf", ContentDispositionType.Inline, "inline; filename=\"test-file.pdf\"")]
     public void BuildSharedResourcePathWithContentDisposition(string fileName, ContentDispositionType type, string expectedContentDisposition)
     {
-        var settings = new ContentDisposition(fileName, type);
-        var path = _blobStorage.BuildSharedResourcePath(ResourceName, settings);
+        var contentDisposition = new ContentDisposition(fileName, type);
+        var responseHeaders = new BlobResponseHeadersOverrideBuilder().WithContentDisposition(contentDisposition).Build();
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, responseHeaders: responseHeaders);
         path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
         isSasUriValid.ShouldBeTrue();
 
         sasUri.ContentDisposition.ShouldBe(expectedContentDisposition);
-        var contentDisposition = sasUri.GetContentDisposition();
-        contentDisposition.ShouldNotBeNull();
-        contentDisposition.FileName.ShouldBe(fileName);
-        contentDisposition.Type.ShouldBe(type);
+        var contentDispositionResponse = sasUri.GetResponseHeaders()?.ContentDisposition;
+        contentDispositionResponse.ShouldNotBeNull();
+        contentDispositionResponse.FileName.ShouldBe(fileName);
+        contentDispositionResponse.Type.ShouldBe(type);
     }
 
     [Test]

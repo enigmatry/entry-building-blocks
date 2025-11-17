@@ -6,8 +6,6 @@ namespace Enigmatry.Entry.BlobStorage;
 [PublicAPI]
 public interface IPrivateBlobStorage : IBlobStorage
 {
-    [Obsolete("Use BuildSharedResourcePath with ContentDispositionSettings instead.")]
-    string BuildSharedResourcePath(string relativePath, string fileName, PrivateBlobPermission permission = PrivateBlobPermission.Read);
-    string BuildSharedResourcePath(string relativePath, ContentDisposition? settings = null, PrivateBlobPermission permission = PrivateBlobPermission.Read);
+    string BuildSharedResourcePath(string relativePath, PrivateBlobPermission permission = PrivateBlobPermission.Read, BlobResponseHeadersOverride? responseHeaders = null);
     bool VerifySharedResourcePath(Uri uri);
 }
