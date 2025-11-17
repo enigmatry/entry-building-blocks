@@ -82,6 +82,27 @@ public class AzurePrivateBlobStorageFixture
         contentDispositionResponse.Type.ShouldBe(type);
     }
 
+    [TestCase("max-age=3600", "test-file.pdf", "gzip", "en", "application/json")]
+    public async Task BuildSharedResourcePathWithAllResponseHeaders(
+        string cacheControl,
+        string fileName,
+        string contentEncoding,
+        string contentLanguage,
+        string contentType)
+    {
+        var contentDisposition = new ContentDisposition(fileName, ContentDispositionType.Attachment);
+        var responseHeaders = new BlobResponseHeadersOverride(cacheControl, contentDisposition, contentEncoding, contentLanguage, contentType);
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, responseHeaders: responseHeaders);
+        path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+
+        var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
+        isSasUriValid.ShouldBeTrue();
+
+        await Verify(sasUri)
+            .UseFileName($"{nameof(AzurePrivateBlobStorageFixture)}.{nameof(BuildSharedResourcePathWithAllResponseHeaders)}")
+            .ScrubMembers<AzureBlobSharedUri>(x => x.Signature);
+    }
+
     [Test]
     public void VerifySharedResourcePathReturnsTrueWhenPathSignatureIsValid()
     {
