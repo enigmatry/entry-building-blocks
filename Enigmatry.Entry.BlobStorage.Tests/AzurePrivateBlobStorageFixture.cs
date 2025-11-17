@@ -65,7 +65,7 @@ public class AzurePrivateBlobStorageFixture
     [TestCase("test-file.pdf", ContentDispositionType.Inline, "inline; filename=\"test-file.pdf\"")]
     public void BuildSharedResourcePathWithContentDisposition(string fileName, ContentDispositionType type, string expectedContentDisposition)
     {
-        var settings = new ContentDispositionSettings(fileName, type);
+        var settings = new ContentDisposition(fileName, type);
         var path = _blobStorage.BuildSharedResourcePath(ResourceName, settings);
         path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 

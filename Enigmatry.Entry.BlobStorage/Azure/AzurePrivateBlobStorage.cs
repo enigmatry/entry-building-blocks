@@ -30,13 +30,13 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
         PrivateBlobPermission permission = PrivateBlobPermission.Read)
     {
         var settings = fileName.HasContent()
-            ? new ContentDispositionSettings(fileName, ContentDispositionType.Attachment)
+            ? new ContentDisposition(fileName, ContentDispositionType.Attachment)
             : null;
         return BuildSharedResourcePath(relativePath, settings, permission);
     }
 
     public string BuildSharedResourcePath(string relativePath,
-        ContentDispositionSettings? settings = null,
+        ContentDisposition? settings = null,
         PrivateBlobPermission permission = PrivateBlobPermission.Read)
     {
         if (relativePath.IsNullOrWhiteSpace())
@@ -52,7 +52,7 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
     }
 
     private BlobSasQueryParameters BuildSasQueryParams(string blob,
-        ContentDispositionSettings? settings,
+        ContentDisposition? settings,
         PrivateBlobPermission permission,
         DateTimeOffset expiresOn)
     {
@@ -64,7 +64,7 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
             Protocol = SasProtocol.Https
         };
 
-        var contentDisposition = settings?.GetValue();
+        var contentDisposition = settings?.ToString();
         if (contentDisposition.HasContent())
         {
             builder.ContentDisposition = contentDisposition;

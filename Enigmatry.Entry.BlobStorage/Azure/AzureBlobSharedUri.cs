@@ -15,7 +15,7 @@ internal record AzureBlobSharedUri
     public string? ContentDisposition { get; private set; }
     public string Signature { get; private set; } = string.Empty;
 
-    public ContentDispositionSettings? GetContentDisposition() => ContentDispositionSettings.Parse(ContentDisposition);
+    public ContentDisposition? GetContentDisposition() => Models.ContentDisposition.Parse(ContentDisposition);
 
     public static bool TryParse(Uri uri, out AzureBlobSharedUri sharedUri)
     {

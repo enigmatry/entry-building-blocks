@@ -5,14 +5,14 @@ using JetBrains.Annotations;
 namespace Enigmatry.Entry.BlobStorage.Models;
 
 [PublicAPI]
-public record ContentDispositionSettings(string FileName, ContentDispositionType Type)
+public record ContentDisposition(string FileName, ContentDispositionType Type)
 {
     private const string AttachmentTypePrefix = "attachment; ";
     private const string InlineTypePrefix = "inline; ";
     private const string FileNamePrefix = "filename=\"";
     private const string FileNameSuffix = "\"";
 
-    internal string GetValue()
+    public override string ToString()
     {
         if (FileName.HasNoContent())
         {
@@ -26,7 +26,7 @@ public record ContentDispositionSettings(string FileName, ContentDispositionType
         return $"{valuePrefix}{sanitizedFileName}{FileNameSuffix}";
     }
 
-    internal static ContentDispositionSettings? Parse(string? value)
+    internal static ContentDisposition? Parse(string? value)
     {
         if (value.HasNoContent())
         {
@@ -50,7 +50,7 @@ public record ContentDispositionSettings(string FileName, ContentDispositionType
 
         var valuePrefix = GetValuePrefix(type.Value);
         var fileName = value[valuePrefix.Length..^FileNameSuffix.Length];
-        return new ContentDispositionSettings(fileName, type.Value);
+        return new ContentDisposition(fileName, type.Value);
     }
 
     private static string GetTypePrefix(ContentDispositionType type) =>
