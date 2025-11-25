@@ -1,7 +1,7 @@
-﻿using System.Text.RegularExpressions;
-using Azure.Storage;
+﻿using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
+using Enigmatry.Entry.BlobStorage.Models;
 using Enigmatry.Entry.Core.Helpers;
 
 namespace Enigmatry.Entry.BlobStorage.Azure;
@@ -20,29 +20,28 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
             return false;
         }
 
-        var validSignature = BuildSasQueryParams(sasUri.BlobName, sasUri.FileName, sasUri.Permission, sasUri.ExpiresOn).Signature;
+        var validSignature = BuildSasQueryParams(sasUri.BlobName, sasUri.GetResponseHeaders(), sasUri.Permission, sasUri.ExpiresOn).Signature;
         return sasUri.Signature == validSignature;
     }
 
-
     public string BuildSharedResourcePath(string relativePath,
-        string? fileName = null,
-        PrivateBlobPermission permission = PrivateBlobPermission.Read)
+        PrivateBlobPermission permission = PrivateBlobPermission.Read,
+        BlobResponseHeadersOverride? responseHeaders = null)
     {
-        DateTimeOffset expiresOn = DateTime.UtcNow.Add(Settings.SasDuration);
         if (relativePath.IsNullOrWhiteSpace())
         {
             return string.Empty;
         }
 
+        DateTimeOffset expiresOn = DateTime.UtcNow.Add(Settings.SasDuration);
         var uri = new Uri(BuildResourcePath(relativePath));
-        var query = BuildSasQueryParams(relativePath, fileName, permission, expiresOn);
+        var query = BuildSasQueryParams(relativePath, responseHeaders, permission, expiresOn);
         var builder = new UriBuilder(uri) { Query = query.ToString() };
         return builder.ToString();
     }
 
     private BlobSasQueryParameters BuildSasQueryParams(string blob,
-        string? fileName,
+        BlobResponseHeadersOverride? responseHeaders,
         PrivateBlobPermission permission,
         DateTimeOffset expiresOn)
     {
@@ -51,15 +50,17 @@ internal class AzurePrivateBlobStorage : AzureBlobStorage, IPrivateBlobStorage
             ExpiresOn = expiresOn,
             BlobContainerName = Container.Name,
             BlobName = blob,
-            Protocol = SasProtocol.Https
+            Protocol = SasProtocol.Https,
+            CacheControl = responseHeaders?.CacheControl.ToEmptyIfNull(),
+            ContentEncoding = responseHeaders?.ContentEncoding.ToEmptyIfNull(),
+            ContentLanguage = responseHeaders?.ContentLanguage.ToEmptyIfNull(),
+            ContentType = responseHeaders?.ContentType.ToEmptyIfNull()
         };
 
-        if (fileName.HasContent())
+        var contentDisposition = responseHeaders?.ContentDisposition?.ToString();
+        if (contentDisposition.HasContent())
         {
-            var invalidChars = Path.GetInvalidFileNameChars();
-            var pattern = $"[{string.Join(string.Empty, invalidChars.Select(c => Regex.Escape(c.ToString())))}]";
-            var sanitizedFileName = Regex.Replace(fileName!, pattern, "_");
-            builder.ContentDisposition = AzureBlobSharedUri.GetContentDisposition(sanitizedFileName);
+            builder.ContentDisposition = contentDisposition;
         }
         builder.SetPermissions(permission.ToBlobSasPermissions());
 

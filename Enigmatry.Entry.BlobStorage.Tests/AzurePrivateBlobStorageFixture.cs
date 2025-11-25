@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using Enigmatry.Entry.BlobStorage.Azure;
+using Enigmatry.Entry.BlobStorage.Models;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using Shouldly;
@@ -52,12 +53,54 @@ public class AzurePrivateBlobStorageFixture
     [TestCase("test,file.pdf", "test,file.pdf")]
     public void BuildSharedResourcePathWithFileName(string fileName, string expectedFileName)
     {
-        var path = _blobStorage.BuildSharedResourcePath(ResourceName, fileName);
+        var contentDisposition = new ContentDisposition(fileName, ContentDispositionType.Attachment);
+        var responseHeaders = new BlobResponseHeadersOverrideBuilder().WithContentDisposition(contentDisposition).Build();
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, responseHeaders: responseHeaders);
         path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
 
         var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
         isSasUriValid.ShouldBeTrue();
-        sasUri.FileName.ShouldBe(expectedFileName);
+        sasUri.GetResponseHeaders()?.ContentDisposition?.FileName.ShouldBe(expectedFileName);
+    }
+
+    [TestCase("test-file.pdf", ContentDispositionType.Attachment, "attachment; filename=test-file.pdf")]
+    [TestCase("test-file.pdf", ContentDispositionType.Inline, "inline; filename=test-file.pdf")]
+    public void BuildSharedResourcePathWithContentDisposition(string fileName, ContentDispositionType type, string expectedContentDisposition)
+    {
+        var contentDisposition = new ContentDisposition(fileName, type);
+        var responseHeaders = new BlobResponseHeadersOverrideBuilder().WithContentDisposition(contentDisposition).Build();
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, responseHeaders: responseHeaders);
+        path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+
+        var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
+        isSasUriValid.ShouldBeTrue();
+
+        sasUri.ContentDisposition.ShouldBe(expectedContentDisposition);
+        var contentDispositionResponse = sasUri.GetResponseHeaders()?.ContentDisposition;
+        contentDispositionResponse.ShouldNotBeNull();
+        contentDispositionResponse.FileName.ShouldBe(fileName);
+        contentDispositionResponse.Type.ShouldBe(type);
+    }
+
+    [TestCase("max-age=3600", "test-file.pdf", "gzip", "en", "application/json")]
+    public async Task BuildSharedResourcePathWithAllResponseHeaders(
+        string cacheControl,
+        string fileName,
+        string contentEncoding,
+        string contentLanguage,
+        string contentType)
+    {
+        var contentDisposition = new ContentDisposition(fileName, ContentDispositionType.Attachment);
+        var responseHeaders = new BlobResponseHeadersOverride(cacheControl, contentDisposition, contentEncoding, contentLanguage, contentType);
+        var path = _blobStorage.BuildSharedResourcePath(ResourceName, responseHeaders: responseHeaders);
+        path.ShouldStartWith($"https://{AccountName}.blob.core.windows.net:443/{ContainerName}/{ResourceName}");
+
+        var isSasUriValid = AzureBlobSharedUri.TryParse(new Uri(path), out var sasUri);
+        isSasUriValid.ShouldBeTrue();
+
+        await Verify(sasUri)
+            .UseFileName($"{nameof(AzurePrivateBlobStorageFixture)}.{nameof(BuildSharedResourcePathWithAllResponseHeaders)}")
+            .ScrubMembers<AzureBlobSharedUri>(x => x.Signature);
     }
 
     [Test]

@@ -50,6 +50,25 @@
           "EmptyFiles": "4.4.0"
         }
       },
+      "Verify.NUnit": {
+        "type": "Direct",
+        "requested": "[31.5.1, )",
+        "resolved": "31.5.1",
+        "contentHash": "+F8pUReoj6evGNMzSY8JHQ4cB7m23sMCuYEZKi4pV8UbT3wp/ycQF6ffgVOreotNVoFhu7XgdCCVEaRY9mloQg==",
+        "dependencies": {
+          "Argon": "0.32.0",
+          "DiffEngine": "16.8.0",
+          "NUnit": "4.4.0",
+          "SimpleInfoName": "3.1.2",
+          "System.ValueTuple": "4.6.1",
+          "Verify": "31.5.1"
+        }
+      },
+      "Argon": {
+        "type": "Transitive",
+        "resolved": "0.32.0",
+        "contentHash": "sW2tLL6cllHx5Q305AkXmGN4gWSGk8Ij2xH6kje1dy5k0Ef3V9g/qE6Y0GH5du515k3coiR9PY8EvZ5SIl9jOw=="
+      },
       "Azure.Core": {
         "type": "Transitive",
         "resolved": "1.47.3",
@@ -71,17 +90,17 @@
       },
       "DiffEngine": {
         "type": "Transitive",
-        "resolved": "11.3.0",
-        "contentHash": "k0ZgZqd09jLZQjR8FyQbSQE86Q7QZnjEzq1LPHtj1R2AoWO8sjV5x+jlSisL7NZAbUOI4y+7Bog8gkr9WIRBGw==",
+        "resolved": "16.8.0",
+        "contentHash": "sn5euijRNDr7+p7lwTISu4uK+U8Awsm9DBSVEhQ49rbm487cHZ8CDE+SYL9PYDgFJXk4nRXcMkXoBaVnPiD3wg==",
         "dependencies": {
-          "EmptyFiles": "4.4.0",
-          "System.Management": "6.0.1"
+          "EmptyFiles": "8.15.0",
+          "System.Management": "8.0.0"
         }
       },
       "EmptyFiles": {
         "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "gwJEfIGS7FhykvtZoscwXj/XwW+mJY6UbAZk+qtLKFUGWC95kfKXnj8VkxsZQnWBxJemM/q664rGLN5nf+OHZw=="
+        "resolved": "8.15.0",
+        "contentHash": "4VP7Bj09eO4nsfA68s9cGoHF9ZXBZjIPIJ7d/piU9iuFEEhzuWAUYkAxXOa0zFT5MiIoDfa0akbD5EjPlkKT2A=="
       },
       "MediatR.Contracts": {
         "type": "Transitive",
@@ -170,6 +189,11 @@
           "Newtonsoft.Json": "13.0.3"
         }
       },
+      "SimpleInfoName": {
+        "type": "Transitive",
+        "resolved": "3.1.2",
+        "contentHash": "/OoEZQxSW6DeTJ9nfrg8BLCOCWpxBiWHV4NkG3t+Xpe8tvzm7yCwKwxkhpauMl3fg9OjlIjJMKX61H6VavLkrw=="
+      },
       "System.ClientModel": {
         "type": "Transitive",
         "resolved": "1.6.1",
@@ -181,8 +205,8 @@
       },
       "System.CodeDom": {
         "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA=="
+        "resolved": "8.0.0",
+        "contentHash": "WTlRjL6KWIMr/pAaq3rYqh0TJlzpouaQ/W1eelssHgtlwHAH25jXTkUphTYx9HaIIf7XA6qs/0+YhtLEQRkJ+Q=="
       },
       "System.Collections.Immutable": {
         "type": "Transitive",
@@ -201,10 +225,10 @@
       },
       "System.Management": {
         "type": "Transitive",
-        "resolved": "6.0.1",
-        "contentHash": "10J1D0h/lioojphfJ4Fuh5ZUThT/xOVHdV9roGBittKKNP2PMjrvibEdbVTGZcPra1399Ja3tqIJLyQrc5Wmhg==",
+        "resolved": "8.0.0",
+        "contentHash": "jrK22i5LRzxZCfGb+tGmke2VH7oE0DvcDlJ1HAKYU8cPmD8XnpUT0bYn2Gy98GEhGjtfbR/sxKTVb+dE770pfA==",
         "dependencies": {
-          "System.CodeDom": "6.0.0"
+          "System.CodeDom": "8.0.0"
         }
       },
       "System.Memory.Data": {
@@ -219,6 +243,11 @@
         "dependencies": {
           "System.Collections.Immutable": "8.0.0"
         }
+      },
+      "System.ValueTuple": {
+        "type": "Transitive",
+        "resolved": "4.6.1",
+        "contentHash": "+RJT4qaekpZ7DDLhf+LTjq+E48jieKiY9ulJ+BoxKmZblIJfIJT8Ufcaa/clQqnYvWs8jugfGSMu8ylS0caG0w=="
       },
       "enigmatry.entry.blobstorage": {
         "type": "Project",
@@ -362,6 +391,18 @@
         "requested": "[9.0.10, )",
         "resolved": "9.0.10",
         "contentHash": "XM02ZBnzxk7Ti6l9YRy8Bp639wANqJzJzw4W4VYiCh+HXY9hBOWkGB4k89OLP/s/RxgM02P4a/mWcJTgFiLf1Q=="
+      },
+      "Verify": {
+        "type": "CentralTransitive",
+        "requested": "[31.5.1, )",
+        "resolved": "31.5.1",
+        "contentHash": "lYobUgJru3iCqXFoU3fMhDAzMu1rzrSK8z9ms+YQZOuvdZE3NVsIUKWyaHiQ+LhKnSTfOW5+38TduuKh/uIQkg==",
+        "dependencies": {
+          "Argon": "0.32.0",
+          "DiffEngine": "16.8.0",
+          "SimpleInfoName": "3.1.2",
+          "System.ValueTuple": "4.6.1"
+        }
       }
     }
   }
