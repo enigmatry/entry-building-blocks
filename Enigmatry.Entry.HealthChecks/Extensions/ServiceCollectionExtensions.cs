@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System;
 
 namespace Enigmatry.Entry.HealthChecks.Extensions;
 
@@ -43,7 +42,7 @@ public static class ServiceCollectionExtensions
 
     private static void Initialize(IHealthChecksBuilder healthChecksBuilder, Settings settings)
     {
-        const int megabyte = 1024 * 1024;
+        const long megabyte = 1024 * 1024;
         healthChecksBuilder.AddPrivateMemoryHealthCheck(megabyte * settings.MaximumAllowedMemoryInMegaBytes,
             "Available memory test", HealthStatus.Degraded);
     }
