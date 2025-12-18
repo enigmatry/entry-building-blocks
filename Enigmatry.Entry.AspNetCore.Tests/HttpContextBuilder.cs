@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using System.Text.Json;
 
 namespace Enigmatry.Entry.AspNetCore.Tests;
+
 internal class HttpContextBuilder
 {
     private Exception _exception = null!;

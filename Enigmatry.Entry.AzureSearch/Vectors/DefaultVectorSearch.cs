@@ -1,6 +1,7 @@
 ﻿using Azure.Search.Documents.Indexes.Models;
 
 namespace Enigmatry.Entry.AzureSearch.Vectors;
+
 public static class DefaultVectorSearch
 {
     public const int Dimension = 3072;

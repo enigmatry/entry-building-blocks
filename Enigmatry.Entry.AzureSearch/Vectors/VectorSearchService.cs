@@ -5,6 +5,7 @@ using Enigmatry.Entry.Core.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AzureSearch.Vectors;
+
 public class VectorSearchService<T> : DefaultSearchService<T>
 {
     private readonly IEmbeddingService _embeddingService;
