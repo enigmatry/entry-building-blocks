@@ -1,4 +1,4 @@
-﻿using Enigmatry.Entry.AspNetCore.OpenTelemetry;
+﻿using Enigmatry.Entry.Core.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
