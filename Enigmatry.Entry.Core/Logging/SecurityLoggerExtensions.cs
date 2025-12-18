@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.Core.Logging;
+
 public static class SecurityLoggerExtensions
 {
     // When changing name parameter don't forget to change the log filter expression in the appsettings.json
