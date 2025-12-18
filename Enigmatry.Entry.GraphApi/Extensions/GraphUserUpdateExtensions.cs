@@ -1,11 +1,10 @@
 ﻿using Enigmatry.Entry.GraphApi.Models;
 using JetBrains.Annotations;
 using Microsoft.Graph;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphUser = Microsoft.Graph.Models.User;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
+
 [PublicAPI]
 public static class GraphUserUpdateExtensions
 {

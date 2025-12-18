@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
+
 internal static class ConfigurationExtension
 {
     internal static GraphApiSettings ResolveGraphApiSettings(this IConfiguration configuration)

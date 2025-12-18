@@ -1,25 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Enigmatry.Entry.Core.Logging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Enigmatry.Entry.AspNetCore.Authorization.Requirements;
 
-internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
-    : AuthorizationHandler<TRequirement> where TRequirement : IAuthorizationRequirement
+internal abstract class AuthenticatedUserRequirementHandler<TRequirement>(
+    ILogger<AuthenticatedUserRequirementHandler<TRequirement>> logger)
+    : AuthorizationHandler<TRequirement>
+    where TRequirement : IAuthorizationRequirement
 {
-    protected readonly ILogger<AuthenticatedUserRequirementHandler<TRequirement>> _logger;
-
-    protected AuthenticatedUserRequirementHandler(
-        ILogger<AuthenticatedUserRequirementHandler<TRequirement>> logger)
-    {
-        _logger = logger;
-    }
+    protected readonly ILogger<AuthenticatedUserRequirementHandler<TRequirement>> _logger = logger;
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, TRequirement requirement)
     {
         if (context.User.Identity is not { IsAuthenticated: true })
         {
-            _logger.LogWarning("User is not authenticated.");
+            _logger.LogSecurityWarning("User is not authenticated.");
             context.Fail();
             return Task.CompletedTask;
         }
@@ -30,7 +27,7 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
         }
         else
         {
-            _logger.LogWarning("{Requirement} has not been met for the resource path: {ResourcePath}.", requirement.ToString(), GetResourcePath(context));
+            _logger.LogSecurityWarning("{Requirement} has not been met for the resource path: {ResourcePath}.", requirement.ToString(), GetResourcePath(context));
             context.Fail();
         }
         return Task.CompletedTask;
