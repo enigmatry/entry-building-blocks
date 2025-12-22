@@ -26,7 +26,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>9.0</AnalysisLevel>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>13.0</LangVersion>
     <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 
   </PropertyGroup>
