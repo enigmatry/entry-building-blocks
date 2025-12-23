@@ -1,23 +1,17 @@
-﻿using Azure.Storage.Blobs;
+﻿using System.Globalization;
+using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using System.Globalization;
 using Enigmatry.Entry.BlobStorage.Models;
 
 namespace Enigmatry.Entry.BlobStorage.Azure;
 
-internal class AzureBlobStorage : IBlobStorage
+internal class AzureBlobStorage(BlobContainerClient container, AzureBlobStorageSettings options)
+    : IBlobStorage
 {
-    protected AzureBlobStorageSettings Settings { get; }
-    protected BlobContainerClient Container { get; }
+    protected AzureBlobStorageSettings Settings { get; } = options;
+    protected BlobContainerClient Container { get; } = container;
 
-    public AzureBlobStorage(BlobContainerClient container, AzureBlobStorageSettings options)
-    {
-        Settings = options;
-        Container = container;
-        Name = container.Name;
-    }
-
-    public string Name { get; }
+    public string Name { get; } = container.Name;
 
     public string BuildResourcePath(string relativePath) =>
         !string.IsNullOrWhiteSpace(relativePath)
@@ -71,6 +65,15 @@ internal class AzureBlobStorage : IBlobStorage
     public async Task CopyAsync(string relativePath, Uri absoluteUri, CancellationToken cancellationToken) =>
         await Container.GetBlobClient(relativePath)
             .StartCopyFromUriAsync(absoluteUri, cancellationToken: cancellationToken);
+
+    public Task SetMetadataAsync(string relativePath, IDictionary<string, string> metadata,
+        CancellationToken cancellationToken = default) => Container.GetBlobClient(relativePath).SetMetadataAsync(metadata, cancellationToken: cancellationToken);
+
+    public async Task<IDictionary<string, string>> GetMetadataAsync(string relativePath, CancellationToken cancellationToken = default)
+    {
+        var properties = await Container.GetBlobClient(relativePath).GetPropertiesAsync(cancellationToken: cancellationToken);
+        return properties?.Value.Metadata ?? new Dictionary<string, string>();
+    }
 
     internal virtual BlobHttpHeaders ConfigureBlobHttpHeadersAsync(BlobClient blob, CancellationToken cancellationToken = default)
     {

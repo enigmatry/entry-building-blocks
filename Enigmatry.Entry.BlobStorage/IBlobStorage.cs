@@ -14,4 +14,6 @@ public interface IBlobStorage
     public Task<Stream> GetAsync(string relativeUri, CancellationToken cancellationToken = default);
     public Task<IEnumerable<BlobDetails>> GetListAsync(string relativeUri, CancellationToken cancellationToken = default);
     public Task CopyAsync(string relativeUri, Uri absoluteUri, CancellationToken cancellationToken);
+    public Task SetMetadataAsync(string relativeUri, IDictionary<string, string> metadata, CancellationToken cancellationToken = default);
+    public Task<IDictionary<string, string>> GetMetadataAsync(string relativeUri, CancellationToken cancellationToken = default);
 }
