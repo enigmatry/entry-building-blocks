@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GraphUser = Microsoft.Graph.Models.User;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
+
 [PublicAPI]
 public static class GraphUserUpdateExtensions
 {

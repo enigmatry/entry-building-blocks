@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Enigmatry.Entry.Core.Logging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +20,7 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
     {
         if (context.User.Identity is not { IsAuthenticated: true })
         {
-            _logger.LogWarning("User is not authenticated.");
+            _logger.LogSecurityWarning("User is not authenticated.");
             context.Fail();
             return Task.CompletedTask;
         }
@@ -30,7 +31,7 @@ internal abstract class AuthenticatedUserRequirementHandler<TRequirement>
         }
         else
         {
-            _logger.LogWarning("{Requirement} has not been met for the resource path: {ResourcePath}.", requirement.ToString(), GetResourcePath(context));
+            _logger.LogSecurityWarning("{Requirement} has not been met for the resource path: {ResourcePath}.", requirement.ToString(), GetResourcePath(context));
             context.Fail();
         }
         return Task.CompletedTask;
