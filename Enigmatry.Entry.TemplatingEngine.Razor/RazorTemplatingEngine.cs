@@ -54,15 +54,18 @@ public class RazorTemplatingEngine : ITemplatingEngine
         IView view = viewEngineResult.View;
 
         using var output = new StringWriter();
+
+        // Create ViewDataDictionary without type constraints to avoid type identity issues
+        // This is necessary for test runners (like ReSharper) that use different assembly loading contexts
+        var viewData = new ViewDataDictionary(_modelMetadataProvider, new ModelStateDictionary());
+
+        // Set model using reflection to bypass type identity checks
+        viewData.Model = model;
+
         var viewContext = new ViewContext(
             actionContext,
             view,
-            new ViewDataDictionary<TModel>(
-                _modelMetadataProvider,
-                new ModelStateDictionary())
-            {
-                Model = model
-            },
+            viewData,
             new TempDataDictionary(
                 actionContext.HttpContext,
                 _tempDataProvider),
