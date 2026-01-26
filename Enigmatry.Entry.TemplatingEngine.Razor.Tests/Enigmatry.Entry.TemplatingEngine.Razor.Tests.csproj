@@ -3,6 +3,8 @@
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
     <RootNamespace>Enigmatry.Entry.TemplatingEngine.Tests</RootNamespace>
+    <!-- Help ReSharper with assembly loading in .NET 10 -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
