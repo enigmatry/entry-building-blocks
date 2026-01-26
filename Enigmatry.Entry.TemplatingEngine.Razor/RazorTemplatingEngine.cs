@@ -19,16 +19,19 @@ public class RazorTemplatingEngine : ITemplatingEngine
     private readonly IServiceProvider _serviceProvider;
     private readonly ITempDataProvider _tempDataProvider;
     private readonly IRazorViewEngine _viewEngine;
+    private readonly IModelMetadataProvider _modelMetadataProvider;
     private static readonly Dictionary<string, object> EmptyViewBagDictionary = [];
 
     public RazorTemplatingEngine(
         IRazorViewEngine viewEngine,
         ITempDataProvider tempDataProvider,
-        IServiceProvider serviceProvider)
+        IServiceProvider serviceProvider,
+        IModelMetadataProvider modelMetadataProvider)
     {
         _viewEngine = viewEngine;
         _tempDataProvider = tempDataProvider;
         _serviceProvider = serviceProvider;
+        _modelMetadataProvider = modelMetadataProvider;
     }
 
     public Task<string> RenderFromFileAsync<TModel>(string path, TModel model)
@@ -55,7 +58,7 @@ public class RazorTemplatingEngine : ITemplatingEngine
             actionContext,
             view,
             new ViewDataDictionary<TModel>(
-                new EmptyModelMetadataProvider(),
+                _modelMetadataProvider,
                 new ModelStateDictionary())
             {
                 Model = model
