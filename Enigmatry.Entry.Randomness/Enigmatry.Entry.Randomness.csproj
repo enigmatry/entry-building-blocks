@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" />
-    <PackageReference Include="System.Security.Cryptography.Algorithms" />
   </ItemGroup>
 
   <ItemGroup>

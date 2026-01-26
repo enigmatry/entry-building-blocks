@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-    <DotnetVersion>9.0.12</DotnetVersion>
+    <DotnetVersion>10.0.2</DotnetVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Ardalis.SmartEnum" Version="8.2.0" />
@@ -72,10 +72,8 @@
     <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.15.1" />
     <PackageVersion Include="Serilog" Version="4.3.0" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.7.1" />
     <PackageVersion Include="System.Net.Http.Json" Version="$(DotnetVersion)" />
-    <PackageVersion Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
     <PackageVersion Include="System.Text.Json" Version="$(DotnetVersion)" />
     <PackageVersion Include="Verify" Version="31.9.4" />
     <PackageVersion Include="Verify.NUnit" Version="31.9.4" />
