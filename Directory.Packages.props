@@ -44,8 +44,6 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(DotnetVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="$(DotnetVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(DotnetVersion)" />
@@ -53,7 +51,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Graph" Version="5.101.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.70.0" />
+    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.72.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.102" />
     <PackageVersion Include="MimeKit" Version="4.14.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />

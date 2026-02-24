@@ -4,13 +4,8 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Enigmatry.Entry.TemplatingEngine;
 
@@ -40,7 +35,6 @@ public class RazorTemplatingEngine : ITemplatingEngine
     public Task<string> RenderFromFileAsync<TModel>(string path, TModel model, IDictionary<string, object> viewBagDictionary)
         => RenderFromFileInternalAsync(path, model, viewBagDictionary);
 
-
     private async Task<string> RenderFromFileInternalAsync<TModel>(string path, TModel model, IDictionary<string, object> viewBagDictionary)
     {
         var actionContext = GetActionContext();
@@ -51,31 +45,29 @@ public class RazorTemplatingEngine : ITemplatingEngine
             throw new InvalidOperationException($"Couldn't find view '{path}'");
         }
 
-        IView view = viewEngineResult.View;
+        var view = viewEngineResult.View;
 
-        using var output = new StringWriter();
+        await using var output = new StringWriter();
 
-        // Create ViewDataDictionary without type constraints to avoid type identity issues
-        // This is necessary for test runners (like ReSharper) that use different assembly loading contexts
-        var viewData = new ViewDataDictionary(_modelMetadataProvider, new ModelStateDictionary());
+        var viewData = new ViewDataDictionary(
+            _modelMetadataProvider,
+            new ModelStateDictionary())
+        {
+            Model = model
+        };
 
-        // Set model using reflection to bypass type identity checks
-        viewData.Model = model;
+        foreach (var keyValuePair in viewBagDictionary)
+        {
+            viewData[keyValuePair.Key] = keyValuePair.Value;
+        }
 
         var viewContext = new ViewContext(
             actionContext,
             view,
             viewData,
-            new TempDataDictionary(
-                actionContext.HttpContext,
-                _tempDataProvider),
+            new TempDataDictionary(actionContext.HttpContext, _tempDataProvider),
             output,
             new HtmlHelperOptions());
-
-        foreach (var keyValuePair in viewBagDictionary)
-        {
-            viewContext.ViewData[keyValuePair.Key] = keyValuePair.Value;
-        }
 
         await view.RenderAsync(viewContext);
 
