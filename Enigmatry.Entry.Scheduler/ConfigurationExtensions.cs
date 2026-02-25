@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace Enigmatry.Entry.Scheduler;
 
@@ -24,7 +23,7 @@ internal static class ConfigurationExtensions
         var section = configuration.GetSection(sectionName);
         if (!section.Exists())
         {
-            throw new ConfigurationErrorsException($"Section '{sectionName}' is missing from the configuration");
+            throw new InvalidOperationException($"Section '{sectionName}' is missing from the configuration");
         }
 
         return section;
