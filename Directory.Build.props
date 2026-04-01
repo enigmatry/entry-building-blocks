@@ -1,7 +1,7 @@
 <Project>
 
 	<PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 
@@ -25,8 +25,8 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>9.0</AnalysisLevel>
-    <LangVersion>13.0</LangVersion>
+    <AnalysisLevel>10.0</AnalysisLevel>
+    <LangVersion>14.0</LangVersion>
     <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 
   </PropertyGroup>
@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Temporarily suppressing AutoMapper 14.0.0 vulnerability until we have a plan how to address it -->
+    <!-- Suppress until we replace AutoMapper -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
   </ItemGroup>
 

@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Configuration;
-using Enigmatry.Entry.Core.Helpers;
+﻿using Enigmatry.Entry.Core.Helpers;
+using Microsoft.Extensions.Configuration;
 
 namespace Enigmatry.Entry.Scheduler;
 
@@ -22,12 +21,12 @@ internal class JobConfiguration
     {
         if (!_section.Exists())
         {
-            throw new ConfigurationErrorsException($"Configuration Section '{JobName}' is not found");
+            throw new InvalidOperationException($"Configuration Section '{JobName}' is not found");
         }
 
         if (!Settings.Cronex.HasContent())
         {
-            throw new ConfigurationErrorsException(
+            throw new InvalidOperationException(
                 $"Missing 'Cronex' value in configuration for configuration section: '{JobName}'");
         }
     }

@@ -25,7 +25,6 @@ public class RazorSampleConsoleStartup
         {
             options.FileProviders.Clear();
             options.FileProviders.Add(new PhysicalFileProvider(_environment.ContentRootPath));
-            options.AdditionalReferencePaths.Add(typeof(EmailModel).Assembly.Location);
         });
 
         services.AddEntryTemplatingEngine();
