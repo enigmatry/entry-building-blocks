@@ -66,7 +66,6 @@ public class Startup
 ```csharp
 using Enigmatry.Entry.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
 
 [ApiController]
 [Route("api/products")]
@@ -176,7 +175,6 @@ public class Startup
         
         // Add other services
         services.AddControllers();
-        services.AddAutoMapper(typeof(Startup).Assembly);
     }
     
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Enigmatry.Entry.TemplatingEngine.Razor.Tests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64359;http://localhost:64360"
+    }
+  }
+}
