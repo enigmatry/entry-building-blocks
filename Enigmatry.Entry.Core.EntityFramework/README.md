@@ -101,14 +101,12 @@ This library builds on Entity Framework Core and has the following dependencies:
 
 1. Entity Framework Core
 2. System.Linq.Dynamic.Core - For dynamic sorting
-3. AutoMapper - For mapping entities to DTOs
 
 ## Dependency Injection Example
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
 
 public class Startup
 {
@@ -117,9 +115,6 @@ public class Startup
         // Register DbContext
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
-        // Register AutoMapper (required for mapping extensions)
-        services.AddAutoMapper(typeof(Startup).Assembly);
     }
 }
 ```

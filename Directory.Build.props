@@ -38,9 +38,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- Suppress until we replace AutoMapper -->
-    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-rvv3-g6hj-g44x" />
-  </ItemGroup>
-
 </Project>

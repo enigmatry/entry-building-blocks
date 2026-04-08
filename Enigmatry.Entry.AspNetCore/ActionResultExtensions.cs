@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Enigmatry.Entry.AspNetCore;
 
@@ -9,8 +8,4 @@ public static class ActionResultExtensions
         model == null
             ? (ActionResult<TDestination>)new NotFoundResult()
             : new OkObjectResult(model);
-
-    public static ActionResult<TDestination> MapToActionResult<TDestination>(this IMapper mapper, object? value) =>
-        value == null ? (ActionResult<TDestination>)new NotFoundResult() :
-            new OkObjectResult(mapper.Map<TDestination>(value));
 }
