@@ -50,6 +50,10 @@ stages:
     displayName: Build Package
     dependsOn: build_prerequisites
     steps:
+    - task: UseDotNet@2
+      displayName: Set .Net version
+      inputs:
+        version: '10.0.x' 
     - task: NuGetToolInstaller@1
       displayName: Install NuGet Tool
     - task: Cache@2
