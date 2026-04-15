@@ -77,8 +77,8 @@ public static class EntityQueryableExtensions
                 PageNumber = request.PageNumber
             };
         }
-
-        private IQueryable<T> OrderByDynamic(string? orderBy, string orderDirection = "asc") =>
-            string.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
     }
+
+    private static IQueryable<T> OrderByDynamic<T>(this IQueryable<T> query, string? orderBy, string orderDirection = "asc") =>
+        string.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
 }
