@@ -22,7 +22,7 @@ public static class EntityQueryableExtensions
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var pagedQuery = OrderByDynamic(query, request.SortBy, request.SortDirection);
+            var pagedQuery = string.IsNullOrWhiteSpace(request.SortBy) ? query : query.OrderBy($"{request.SortBy} {request.SortDirection}");
 
             var skipPaging = request.PageSize == int.MaxValue;
 
@@ -53,7 +53,7 @@ public static class EntityQueryableExtensions
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var pagedQuery = OrderByDynamic(query, request.SortBy, request.SortDirection);
+            var pagedQuery = string.IsNullOrWhiteSpace(request.SortBy) ? query : query.OrderBy($"{request.SortBy} {request.SortDirection}");
 
             var skipPaging = request.PageSize == int.MaxValue;
 
@@ -76,7 +76,4 @@ public static class EntityQueryableExtensions
             };
         }
     }
-
-    private static IQueryable<T> OrderByDynamic<T>(IQueryable<T> query, string? orderBy, string orderDirection = "asc") =>
-        string.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
 }
