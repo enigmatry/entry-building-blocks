@@ -22,10 +22,9 @@ public static class EntityQueryableExtensions
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var pagedQuery = query
-                .OrderByDynamic(request.SortBy, request.SortDirection);
+            var pagedQuery = OrderByDynamic(query, request.SortBy, request.SortDirection);
 
-            var skipPaging = request.PageSize == Int32.MaxValue;
+            var skipPaging = request.PageSize == int.MaxValue;
 
             if (!skipPaging)
             {
@@ -54,10 +53,9 @@ public static class EntityQueryableExtensions
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var pagedQuery = query
-                .OrderByDynamic(request.SortBy, request.SortDirection);
+            var pagedQuery = OrderByDynamic(query, request.SortBy, request.SortDirection);
 
-            var skipPaging = request.PageSize == Int32.MaxValue;
+            var skipPaging = request.PageSize == int.MaxValue;
 
             if (!skipPaging)
             {
@@ -79,6 +77,6 @@ public static class EntityQueryableExtensions
         }
     }
 
-    private static IQueryable<T> OrderByDynamic<T>(this IQueryable<T> query, string? orderBy, string orderDirection = "asc") =>
+    private static IQueryable<T> OrderByDynamic<T>(IQueryable<T> query, string? orderBy, string orderDirection = "asc") =>
         string.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
 }
