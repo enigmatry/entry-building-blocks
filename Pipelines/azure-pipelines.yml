@@ -4,7 +4,7 @@ trigger:
 pool:
   name: 'enigmatry-managed-devops-test'
   demands: 
-  - 'ImageOverride -equals windows-2025-g2'
+  - 'ImageOverride -equals windows-2025-vs2026'
 
 variables:
   artifactName: enigmatry-entry-building-blocks
