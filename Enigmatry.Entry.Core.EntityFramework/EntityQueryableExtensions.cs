@@ -22,10 +22,9 @@ public static class EntityQueryableExtensions
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var pagedQuery = query
-                .OrderByDynamic(request.SortBy, request.SortDirection);
+            var pagedQuery = string.IsNullOrWhiteSpace(request.SortBy) ? query : query.OrderBy($"{request.SortBy} {request.SortDirection}");
 
-            var skipPaging = request.PageSize == Int32.MaxValue;
+            var skipPaging = request.PageSize == int.MaxValue;
 
             if (!skipPaging)
             {
@@ -54,10 +53,9 @@ public static class EntityQueryableExtensions
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var pagedQuery = query
-                .OrderByDynamic(request.SortBy, request.SortDirection);
+            var pagedQuery = string.IsNullOrWhiteSpace(request.SortBy) ? query : query.OrderBy($"{request.SortBy} {request.SortDirection}");
 
-            var skipPaging = request.PageSize == Int32.MaxValue;
+            var skipPaging = request.PageSize == int.MaxValue;
 
             if (!skipPaging)
             {
@@ -77,8 +75,5 @@ public static class EntityQueryableExtensions
                 PageNumber = request.PageNumber
             };
         }
-
-        private IQueryable<T> OrderByDynamic(string? orderBy, string orderDirection = "asc") =>
-            string.IsNullOrWhiteSpace(orderBy) ? query : query.OrderBy($"{orderBy} {orderDirection}");
     }
 }
