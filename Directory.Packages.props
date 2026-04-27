@@ -74,5 +74,7 @@
     <PackageVersion Include="System.Text.Json" Version="$(DotnetVersion)" />
     <PackageVersion Include="Verify" Version="31.13.5" />
     <PackageVersion Include="Verify.NUnit" Version="31.13.5" />
+    <!--transitive packages-->
+    <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
   </ItemGroup>
 </Project>
