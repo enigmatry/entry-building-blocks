@@ -210,7 +210,7 @@
         "dependencies": {
           "EmailValidation": "[1.3.0, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
-          "MailKit": "[4.15.1, )",
+          "MailKit": "[4.16.0, )",
           "Microsoft.Extensions.Configuration.Binder": "[10.0.5, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[10.0.5, )",
           "Microsoft.Extensions.Options": "[10.0.5, )",
@@ -232,11 +232,11 @@
       },
       "MailKit": {
         "type": "CentralTransitive",
-        "requested": "[4.15.1, )",
-        "resolved": "4.15.1",
-        "contentHash": "4mLbqTbH3ctd0NlukHjVQbU3ZnNDuCtB6ttNZDLPZLWMA2Dr31rh/eCSTqOwDojUX8zfDOVaxstMgJTE9PwZNA==",
+        "requested": "[4.16.0, )",
+        "resolved": "4.16.0",
+        "contentHash": "trJ82DOpAmo8i1jO1vNE+dGn4mPRyeYfy4swRcAGgMJhPoI1Kohf4OFJJf0+YIj4iUxgxPn8W+ht7e7KiYzSjg==",
         "dependencies": {
-          "MimeKit": "4.15.1"
+          "MimeKit": "4.16.0"
         }
       },
       "MediatR": {
