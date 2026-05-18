@@ -72,6 +72,7 @@
     <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.7.1" />
     <PackageVersion Include="System.Net.Http.Json" Version="$(DotnetVersion)" />
     <PackageVersion Include="System.Text.Json" Version="$(DotnetVersion)" />
+    <PackageVersion Include="Testcontainers.MsSql" Version="4.11.0" />
     <PackageVersion Include="Verify" Version="31.13.5" />
     <PackageVersion Include="Verify.NUnit" Version="31.13.5" />
     <!--transitive packages-->
