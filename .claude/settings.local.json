@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Projects\\\\Entry Building Blocks\" -Force)",
+      "Bash(Select-Object Name, FullName)",
+      "Bash(grep -E \"\\\\.sln$|\\\\.props$|\\\\.ps1$\")",
+      "Bash(grep \"\\\\.sln$\")"
+    ]
+  }
+}
