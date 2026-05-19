@@ -11,7 +11,7 @@
     <PackageVersion Include="AspNetCore.HealthChecks.System" Version="9.0.0" />
     <PackageVersion Include="Autofac" Version="9.1.0" />
     <PackageVersion Include="AutoMapper" Version="[14.0.0]" />
-    <PackageVersion Include="Azure.Identity" Version="1.19.0" />
+    <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.27.0" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
@@ -26,9 +26,9 @@
     <PackageVersion Include="Fluid.Core" Version="2.31.0" />
     <PackageVersion Include="Humanizer.Core" Version="3.0.10" />
     <PackageVersion Include="JetBrains.Annotations" Version="2025.2.4" />
-    <PackageVersion Include="MailKit" Version="4.15.1" />
+    <PackageVersion Include="MailKit" Version="4.16.0" />
     <PackageVersion Include="MediatR" Version="[12.4.1]" />
-    <PackageVersion Include="Microsoft.ApplicationInsights.WorkerService" Version="3.0.0" />
+    <PackageVersion Include="Microsoft.ApplicationInsights.WorkerService" Version="3.1.1" />
     <PackageVersion Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="$(DotnetVersion)" />
@@ -49,11 +49,11 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(DotnetVersion)" />
-    <PackageVersion Include="Microsoft.Graph" Version="5.103.0" />
+    <PackageVersion Include="Microsoft.Graph" Version="6.0.3" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageVersion Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.74.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.201" />
-    <PackageVersion Include="MimeKit" Version="4.15.1" />
+    <PackageVersion Include="MimeKit" Version="4.16.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="NJsonSchema" Version="11.5.2" />
     <PackageVersion Include="NSwag.AspNetCore" Version="14.6.3" />
