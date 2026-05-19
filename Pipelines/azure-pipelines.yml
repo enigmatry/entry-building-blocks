@@ -98,7 +98,7 @@ stages:
 - stage: publish_nuget
   displayName: publish packages to NuGet
   dependsOn: ci_build
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/10.0-patch')))
   jobs:
   - deployment: Publish
     environment: Publish to NuGet
