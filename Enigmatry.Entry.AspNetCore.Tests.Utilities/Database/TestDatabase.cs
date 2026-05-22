@@ -7,15 +7,19 @@ public sealed class TestDatabase
 {
     public IReadOnlyDictionary<string, string> ConnectionStrings { get; }
 
-    private static readonly Lock ContainerLock = new();
+    private static readonly SemaphoreSlim ContainerLock = new(1, 1);
     private static MsSqlContainer? _container;
     private static bool _containerInitialized;
     private readonly DatabaseInitializerOptions _initializerOptions;
 
-    public TestDatabase(DatabaseInitializerOptions initializerOptions)
+    private TestDatabase(DatabaseInitializerOptions initializerOptions, IReadOnlyDictionary<string, string> connectionStrings)
     {
         _initializerOptions = initializerOptions;
+        ConnectionStrings = connectionStrings;
+    }
 
+    public static async Task<TestDatabase> CreateAsync(DatabaseInitializerOptions initializerOptions)
+    {
         var resolved = new Dictionary<string, string>();
         var unresolved = new List<string>();
 
@@ -32,31 +36,34 @@ public sealed class TestDatabase
             }
         }
 
-        if (unresolved.Count > 0)
+        if (unresolved.Count == 0)
         {
-            try
-            {
-                InitializeContainer();
-                initializerOptions.OnAfterContainerInitialized(_container!.GetConnectionString(), unresolved, resolved);
-            }
-            catch (Exception e)
-            {
-                WriteLine($"Failed to start docker container: {e.Message}");
-                throw;
-            }
+            return new TestDatabase(initializerOptions, resolved);
         }
 
-        ConnectionStrings = resolved;
+        try
+        {
+            await InitializeContainerAsync();
+            initializerOptions.OnAfterContainerInitialized(_container!.GetConnectionString(), unresolved, resolved);
+        }
+        catch (Exception e)
+        {
+            WriteLine($"Failed to start docker container: {e.Message}");
+            throw;
+        }
+
+        return new TestDatabase(initializerOptions, resolved);
     }
 
-    private static void InitializeContainer()
+    private static async Task InitializeContainerAsync()
     {
         if (_containerInitialized)
         {
             return;
         }
 
-        lock (ContainerLock)
+        await ContainerLock.WaitAsync();
+        try
         {
             if (_containerInitialized)
             {
@@ -72,12 +79,12 @@ public sealed class TestDatabase
                 .WithCleanUp(true)
                 .Build();
 
-            Task.Run(async () =>
-            {
-                await _container.StartAsync();
-            }).GetAwaiter().GetResult();
-
+            await _container.StartAsync();
             _containerInitialized = true;
+        }
+        finally
+        {
+            ContainerLock.Release();
         }
     }
 

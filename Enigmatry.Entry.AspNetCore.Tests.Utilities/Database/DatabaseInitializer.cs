@@ -14,6 +14,10 @@ internal static class DatabaseInitializer
         if (HasSchemaChanges(dbContext))
         {
             RecreateDatabase(dbContext);
+            if (options.ResetDataEnabled)
+            {
+                await ResetDataAsync(dbContext, options);
+            }
         }
         else
         {
