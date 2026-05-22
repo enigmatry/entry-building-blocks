@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using NUnit.Framework;
@@ -9,27 +9,28 @@ namespace Enigmatry.Entry.AspNetCore.Tests.Utilities.Database;
 
 internal static class DatabaseInitializer
 {
-    public static async Task RecreateDatabaseAsync(DbContext dbContext, DatabaseInitializerOptions options)
+    public static async Task EnsureDatabaseReady(DbContext dbContext, DatabaseInitializerOptions options)
     {
-        if (HasSchemaChanges(dbContext))
+        if (await HasSchemaChanges(dbContext))
         {
-            RecreateDatabase(dbContext);
+            await DropAndMigrate(dbContext);
             if (options.ResetDataEnabled)
             {
-                await ResetDataAsync(dbContext, options);
+                await ResetData(dbContext, options);
             }
         }
         else
         {
-            await ResetDataAsync(dbContext, options);
+            await ResetData(dbContext, options);
         }
     }
 
-    private static bool HasSchemaChanges(DbContext dbContext)
+    private static async Task<bool> HasSchemaChanges(DbContext dbContext)
     {
         try
         {
-            var dbDoesNotExist = !dbContext.Database.CanConnect(); // this will throw SqlException if connection to server can not be made, and true / false depending on if db exists
+            // CanConnectAsync throws SqlException if the server is unreachable; returns false if the database does not exist
+            var dbDoesNotExist = !await dbContext.Database.CanConnectAsync();
             return dbDoesNotExist || dbContext.Database.GetPendingMigrations().Any();
         }
         catch (SqlException ex)
@@ -40,20 +41,20 @@ internal static class DatabaseInitializer
         }
     }
 
-    private static void RecreateDatabase(DbContext dbContext)
+    private static async Task DropAndMigrate(DbContext dbContext)
     {
-        DropAllDbObjects(dbContext.Database);
-        dbContext.Database.Migrate();
+        await DropAllDbObjects(dbContext.Database);
+        await dbContext.Database.MigrateAsync();
     }
 
-    private static async Task ResetDataAsync(DbContext dbContext, DatabaseInitializerOptions options)
+    private static async Task ResetData(DbContext dbContext, DatabaseInitializerOptions options)
     {
-        RunCustomQuery(dbContext, options.BeforeDeleteCustomSqlQuery);
-        await DeleteDataAsync(dbContext, options);
-        RunCustomQuery(dbContext, options.AfterDeleteCustomSqlQuery);
+        await RunCustomQuery(dbContext, options.BeforeDeleteCustomSqlQuery);
+        await DeleteData(dbContext, options);
+        await RunCustomQuery(dbContext, options.AfterDeleteCustomSqlQuery);
     }
 
-    private static async Task DeleteDataAsync(DbContext dbContext, DatabaseInitializerOptions options)
+    private static async Task DeleteData(DbContext dbContext, DatabaseInitializerOptions options)
     {
         var connectionString = dbContext.Database.GetConnectionString() ?? string.Empty;
 
@@ -70,22 +71,22 @@ internal static class DatabaseInitializer
         await respawner.ResetAsync(connection);
     }
 
-    private static void RunCustomQuery(DbContext dbContext, string? customSqlQuery)
+    private static async Task RunCustomQuery(DbContext dbContext, string? customSqlQuery)
     {
         if (!string.IsNullOrEmpty(customSqlQuery))
         {
-            dbContext.Database.ExecuteSqlRaw(customSqlQuery);
+            await dbContext.Database.ExecuteSqlRawAsync(customSqlQuery);
         }
     }
 
-    private static void DropAllDbObjects(DatabaseFacade database)
+    private static async Task DropAllDbObjects(DatabaseFacade database)
     {
         try
         {
             var dropAllSql = DatabaseHelpers.DropAllSql;
             foreach (var statement in dropAllSql.SplitStatements())
             {
-                database.ExecuteSqlRaw(statement);
+                await database.ExecuteSqlRawAsync(statement);
             }
         }
         catch (SqlException ex)

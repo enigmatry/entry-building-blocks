@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
 namespace Enigmatry.Entry.AspNetCore.Tests.Utilities.Database;
 
-public sealed class TestDatabase
+public sealed class TestDatabase : IAsyncDisposable
 {
     public IReadOnlyDictionary<string, string> ConnectionStrings { get; }
 
@@ -18,7 +18,7 @@ public sealed class TestDatabase
         ConnectionStrings = connectionStrings;
     }
 
-    public static async Task<TestDatabase> CreateAsync(DatabaseInitializerOptions initializerOptions)
+    public static async Task<TestDatabase> Create(DatabaseInitializerOptions initializerOptions)
     {
         var resolved = new Dictionary<string, string>();
         var unresolved = new List<string>();
@@ -43,8 +43,10 @@ public sealed class TestDatabase
 
         try
         {
-            await InitializeContainerAsync();
-            initializerOptions.OnAfterContainerInitialized(_container!.GetConnectionString(), unresolved, resolved);
+            await InitializeContainer(initializerOptions.SqlContainerImage);
+            var containerConnectionString = _container!.GetConnectionString();
+            await initializerOptions.OnAfterContainerInitialized(containerConnectionString, unresolved, resolved);
+            WriteLine($"Docker SQL connection string: {containerConnectionString}");
         }
         catch (Exception e)
         {
@@ -55,7 +57,7 @@ public sealed class TestDatabase
         return new TestDatabase(initializerOptions, resolved);
     }
 
-    private static async Task InitializeContainerAsync()
+    private static async Task InitializeContainer(string sqlContainerImage)
     {
         if (_containerInitialized)
         {
@@ -70,11 +72,9 @@ public sealed class TestDatabase
                 return;
             }
 
-            // These cannot be changed (it is hardcoded in MsSqlBuilder and changing any of them breaks starting of the container
-            // default database: master
-            // default username: sa
-            // default password: yourStrong(!)Password
-            _container = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-CU4-ubuntu-24.04")
+            // These cannot be changed (hardcoded in MsSqlBuilder — changing any of them breaks container startup)
+            // default database: master  |  default username: sa  |  default password: yourStrong(!)Password
+            _container = new MsSqlBuilder(sqlContainerImage)
                 .WithAutoRemove(true)
                 .WithCleanUp(true)
                 .Build();
@@ -88,7 +88,17 @@ public sealed class TestDatabase
         }
     }
 
-    public Task ResetAsync(DbContext dbContext) => DatabaseInitializer.RecreateDatabaseAsync(dbContext, _initializerOptions);
+    public Task Reset(DbContext dbContext) => DatabaseInitializer.EnsureDatabaseReady(dbContext, _initializerOptions);
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_container is not null)
+        {
+            await _container.DisposeAsync();
+            _container = null;
+            _containerInitialized = false;
+        }
+    }
 
     private static void WriteLine(string value) => DatabaseInitializer.WriteLine(value);
 }
