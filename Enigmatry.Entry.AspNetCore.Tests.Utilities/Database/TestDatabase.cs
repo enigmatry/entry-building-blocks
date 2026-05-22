@@ -59,7 +59,7 @@ public sealed class TestDatabase
             // default database: master
             // default username: sa
             // default password: yourStrong(!)Password
-            _container = new MsSqlBuilder()
+            _container = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-CU4-ubuntu-24.04")
                 .WithAutoRemove(true)
                 .WithCleanUp(true)
                 .Build();
@@ -75,5 +75,5 @@ public sealed class TestDatabase
 
     public Task ResetAsync(DbContext dbContext) => DatabaseInitializer.RecreateDatabaseAsync(dbContext, _initializerOptions);
 
-    private static void WriteLine(string value) => TestContext.Out.WriteLine(value);
+    private static void WriteLine(string value) => DatabaseInitializer.WriteLine(value);
 }

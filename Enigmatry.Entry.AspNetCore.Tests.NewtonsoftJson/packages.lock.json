@@ -296,6 +296,8 @@
         "dependencies": {
           "Enigmatry.Entry.Core": "[1.0.0, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.5, )",
+          "NUnit": "[4.5.1, )",
+          "Respawn": "[7.0.0, )",
           "Shouldly": "[4.3.0, )",
           "Testcontainers.MsSql": "[4.11.0, )"
         }
@@ -366,6 +368,18 @@
           "Microsoft.Data.SqlClient": "6.1.1",
           "Microsoft.EntityFrameworkCore.Relational": "10.0.5"
         }
+      },
+      "NUnit": {
+        "type": "CentralTransitive",
+        "requested": "[4.5.1, )",
+        "resolved": "4.5.1",
+        "contentHash": "x1sIqU9i0IkxqFayqthzmJs/75jTMbrfNMixj4vtfTi7rRzGbtuY27V+iAhfTY02u5k2qvW3QBGM414OG4q8Lw=="
+      },
+      "Respawn": {
+        "type": "CentralTransitive",
+        "requested": "[7.0.0, )",
+        "resolved": "7.0.0",
+        "contentHash": "AyWlducZGOnmlEVz4PaL3Qv8wcY3ClPZS9CrlDnSVahGd/E9tTEgSFiC8yoV/F6o6P6IYm8xnHFa/vmWT8tfcw=="
       },
       "Serilog": {
         "type": "CentralTransitive",
