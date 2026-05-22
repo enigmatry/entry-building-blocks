@@ -53,14 +53,17 @@ internal static class DatabaseInitializer
     {
         var connectionString = dbContext.Database.GetConnectionString() ?? string.Empty;
 
-        var respawner = await Respawner.CreateAsync(connectionString,
+        await using var connection = new SqlConnection(connectionString);
+        await connection.OpenAsync();
+
+        var respawner = await Respawner.CreateAsync(connection,
             new RespawnerOptions
             {
                 TablesToIgnore = options.TablesToIgnore.Select(name => new Table(name)).ToArray(),
                 WithReseed = options.ReseedIdentityColumns
             });
 
-        await respawner.ResetAsync(connectionString);
+        await respawner.ResetAsync(connection);
     }
 
     private static void RunCustomQuery(DbContext dbContext, string? customSqlQuery)

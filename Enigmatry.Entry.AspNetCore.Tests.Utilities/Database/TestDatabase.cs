@@ -5,7 +5,7 @@ namespace Enigmatry.Entry.AspNetCore.Tests.Utilities.Database;
 
 public sealed class TestDatabase
 {
-    public string ConnectionString { get; }
+    public IReadOnlyDictionary<string, string> ConnectionStrings { get; }
 
     private static readonly Lock ContainerLock = new();
     private static MsSqlContainer? _container;
@@ -16,22 +16,28 @@ public sealed class TestDatabase
     {
         _initializerOptions = initializerOptions;
 
-        // To use a local sqlServer instance, Create an Environment variable using R# Test Runner, with name "IntegrationTestsConnectionString"
-        // and value: "Server=.;Database={DatabaseName};Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False"
-        // Environment variable with the IntegrationTestsConnectionString is set in .runsettings file
-        var connectionString = Environment.GetEnvironmentVariable("IntegrationTestsConnectionString");
+        var resolved = new Dictionary<string, string>();
+        var unresolved = new List<string>();
 
-        if (!string.IsNullOrEmpty(connectionString))
+        foreach (var envVarName in initializerOptions.ConnectionStringEnvironmentVariables)
         {
-            ConnectionString = connectionString;
+            var value = Environment.GetEnvironmentVariable(envVarName);
+            if (!string.IsNullOrEmpty(value))
+            {
+                resolved[envVarName] = value;
+            }
+            else
+            {
+                unresolved.Add(envVarName);
+            }
         }
-        else
+
+        if (unresolved.Count > 0)
         {
             try
             {
                 InitializeContainer();
-                ConnectionString = _container!.GetConnectionString();
-                WriteLine($"Docker SQL connection string: {ConnectionString}");
+                initializerOptions.OnAfterContainerInitialized(_container!.GetConnectionString(), unresolved, resolved);
             }
             catch (Exception e)
             {
@@ -39,6 +45,8 @@ public sealed class TestDatabase
                 throw;
             }
         }
+
+        ConnectionStrings = resolved;
     }
 
     private static void InitializeContainer()
