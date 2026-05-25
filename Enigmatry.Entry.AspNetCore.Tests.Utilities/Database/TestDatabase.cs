@@ -10,12 +10,15 @@ public sealed class TestDatabase : IAsyncDisposable
     private static readonly SemaphoreSlim ContainerLock = new(1, 1);
     private static MsSqlContainer? _container;
     private static bool _containerInitialized;
+    private static int _containerRefCount;
     private readonly DatabaseInitializerOptions _initializerOptions;
+    private readonly bool _usesContainer;
 
-    private TestDatabase(DatabaseInitializerOptions initializerOptions, IReadOnlyDictionary<string, string> connectionStrings)
+    private TestDatabase(DatabaseInitializerOptions initializerOptions, IReadOnlyDictionary<string, string> connectionStrings, bool usesContainer)
     {
         _initializerOptions = initializerOptions;
         ConnectionStrings = connectionStrings;
+        _usesContainer = usesContainer;
     }
 
     public static async Task<TestDatabase> Create(DatabaseInitializerOptions initializerOptions)
@@ -38,7 +41,7 @@ public sealed class TestDatabase : IAsyncDisposable
 
         if (unresolved.Count == 0)
         {
-            return new TestDatabase(initializerOptions, resolved);
+            return new TestDatabase(initializerOptions, resolved, usesContainer: false);
         }
 
         try
@@ -54,7 +57,8 @@ public sealed class TestDatabase : IAsyncDisposable
             throw;
         }
 
-        return new TestDatabase(initializerOptions, resolved);
+        Interlocked.Increment(ref _containerRefCount);
+        return new TestDatabase(initializerOptions, resolved, usesContainer: true);
     }
 
     private static async Task InitializeContainer(string sqlContainerImage)
@@ -92,11 +96,25 @@ public sealed class TestDatabase : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        if (_container is not null)
+        if (!_usesContainer)
         {
-            await _container.DisposeAsync();
-            _container = null;
-            _containerInitialized = false;
+            return;
+        }
+
+        await ContainerLock.WaitAsync();
+        try
+        {
+            _containerRefCount--;
+            if (_containerRefCount == 0 && _container is not null)
+            {
+                await _container.DisposeAsync();
+                _container = null;
+                _containerInitialized = false;
+            }
+        }
+        finally
+        {
+            ContainerLock.Release();
         }
     }
 

@@ -1,9 +1,9 @@
 ---
 name: aspnet-rest-apis
-description: Enigmatry Entry Blueprint .NET 10 Web API patterns covering MediatR, Autofac, FluentValidation, and vertical slice architecture. Use this when adding or modifying .NET API features, handlers, validators, or controllers.
+description: Enigmatry Entry Building Blocks .NET 10 Web API patterns covering MediatR, Autofac, FluentValidation, and vertical slice architecture. Use this when adding or modifying .NET API features, handlers, validators, or controllers.
 ---
 
-# Blueprint .NET API Patterns
+# Entry Building Blocks .NET API Patterns
 
 ## Feature folder structure
 
@@ -13,7 +13,6 @@ Queries live in `Api/Features/{Feature}/`, commands and domain logic in `Domain/
 Api/Features/Products/
   GetProducts.cs              // list query — static class
   GetProductDetails.cs        // detail query — static class
-  IsProductCodeUnique.cs      // custom query — static class
   ProductsController.cs       // thin — only mediator.Send()
 
 Domain/Products/Commands/
@@ -42,27 +41,20 @@ public static class GetProductDetails
     }
 
     [UsedImplicitly]
-    public class MappingProfile : Profile
-    {
-        public MappingProfile() => CreateMap<Product, Response>();
-    }
-
-    [UsedImplicitly]
-    public class RequestHandler(IRepository<Product> productRepository, IMapper mapper)
+    public class RequestHandler(IRepository<Product> productRepository)
         : IRequestHandler<Request, Response>
     {
         public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
         {
-            var response = await productRepository.QueryAll()
-                .QueryById(request.Id)
-                .SingleOrDefaultMappedAsync<Product, Response>(mapper, cancellationToken: cancellationToken);
-            return response;
+            var product = await productRepository.FindByIdAsync(request.Id)
+                ?? throw new EntityNotFoundException(nameof(Product), request.Id.ToString());
+            return new Response { Id = product.Id, Name = product.Name, Type = product.Type };
         }
     }
 }
 ```
 
-For **list queries**, use `PagedRequest` and `IPagedRequestHandler`:
+For **list queries**, use `PagedRequest` — the handler is a plain `IRequestHandler<Request, PagedResponse<T>>`:
 
 ```csharp
 public static class GetProducts
@@ -77,21 +69,21 @@ public static class GetProducts
     public static class Response
     {
         [PublicAPI]
-        public class Item { public Guid Id { get; set; } ... }
-
-        [UsedImplicitly]
-        public class MappingProfile : Profile
+        public class Item
         {
-            public MappingProfile() => CreateMap<Product, Item>();
+            public Guid Id { get; set; }
+            public string Name { get; set; } = String.Empty;
         }
     }
 
     [UsedImplicitly]
-    public class RequestHandler : IPagedRequestHandler<Request, Response.Item>
+    public class RequestHandler(IRepository<Product> productRepository)
+        : IRequestHandler<Request, PagedResponse<Response.Item>>
     {
         public async Task<PagedResponse<Response.Item>> Handle(Request request, CancellationToken cancellationToken) =>
-            await _productRepository.QueryAll()
-                .ProjectTo<Response.Item>(_mapper.ConfigurationProvider, cancellationToken)
+            await productRepository.QueryAll()
+                .WhereIf(!string.IsNullOrEmpty(request.Name), p => p.Name.Contains(request.Name!))
+                .Select(p => new Response.Item { Id = p.Id, Name = p.Name })
                 .ToPagedResponseAsync(request, cancellationToken);
     }
 }
@@ -99,11 +91,13 @@ public static class GetProducts
 
 ## Commands — static class in Domain/{Feature}/Commands/
 
+Commands implement `ICommand` (void) or `ICommand<TResponse>` — never raw `IRequest<T>`:
+
 ```csharp
 public static class ProductCreateOrUpdate
 {
     [PublicAPI]
-    public class Command : IRequest<Result>
+    public class Command : ICommand<Result>
     {
         public Guid? Id { get; set; }
         public string Name { get; set; } = String.Empty;
@@ -135,44 +129,43 @@ The **command handler** lives in a separate file in the same folder:
 
 ```csharp
 [UsedImplicitly]
-public class ProductCreateOrUpdateCommandHandler
+public class ProductCreateOrUpdateCommandHandler(IRepository<Product> productRepository)
     : IRequestHandler<ProductCreateOrUpdate.Command, ProductCreateOrUpdate.Result>
 {
-    private readonly IRepository<Product, Guid> _productRepository;
-
-    public ProductCreateOrUpdateCommandHandler(IRepository<Product, Guid> productRepository)
-    {
-        _productRepository = productRepository;
-    }
-
     public async Task<ProductCreateOrUpdate.Result> Handle(
         ProductCreateOrUpdate.Command request, CancellationToken cancellationToken)
     {
-        Product result;
+        Product product;
         if (request.Id.HasValue)
         {
-            result = await _productRepository.FindByIdAsync(request.Id.Value)
-                     ?? throw new InvalidOperationException("Could not find product by Id");
-            result.Update(request);
+            product = await productRepository.FindByIdAsync(request.Id.Value)
+                ?? throw new EntityNotFoundException(nameof(Product), request.Id.Value.ToString());
+            product.Update(request);
         }
         else
         {
-            result = Product.Create(request);
-            _productRepository.Add(result);
+            product = Product.Create(request);
+            productRepository.Add(product);
         }
 
-        return new ProductCreateOrUpdate.Result { Id = result.Id };
+        return new ProductCreateOrUpdate.Result { Id = product.Id };
     }
 }
 ```
 
 ## Domain entities
 
-Entities inherit from `EntityWithCreatedUpdated`, use private setters, expose a `Create(Command)` factory and an `Update(Command)` method, and raise domain events via `AddDomainEvent()`:
+Entities inherit from `EntityWithGuidId` (auto-generates sequential GUIDs in the constructor). Use private setters, expose a `Create(Command)` factory and an `Update(Command)` method, and raise domain events via `AddDomainEvent()`. Domain events are `abstract record`s:
 
 ```csharp
-public class Product : EntityWithCreatedUpdated
+public abstract record ProductDomainEvent(Product Product) : DomainEvent;
+public record ProductCreatedDomainEvent(Product Product) : ProductDomainEvent(Product);
+public record ProductUpdatedDomainEvent(Product Product) : ProductDomainEvent(Product);
+
+public class Product : EntityWithGuidId
 {
+    public const int NameMaxLength = 200;
+
     public string Name { get; private set; } = String.Empty;
     public ProductStatus Status { get; private set; } = ProductStatus.Active;
 
@@ -221,7 +214,7 @@ public class ProductsController(IMediator mediator) : Controller
 ```
 
 - Use primary-constructor injection for `IMediator`.
-- Return `response.ToActionResult()` for queries; return result directly for commands.
+- Return `response.ToActionResult()` for queries (returns 404 when null, 200 otherwise); return result directly for commands.
 - Decorate every endpoint with `[UserHasPermission(PermissionId.X)]`.
 - Never put business logic in a controller.
 
@@ -239,8 +232,6 @@ public class MyFeatureModule : Module
 }
 ```
 
-Any class whose name ends with `Service` is **auto-registered** by `ServiceModule` — no manual registration needed for those.
-
 ## EF Core configurations
 
 ```csharp
@@ -253,7 +244,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasSentinel(ProductStatus.Active)
             .HasDefaultValue(ProductStatus.Active);
         builder.HasIndex(x => x.Code).IsUnique();
-        builder.HasCreatedByAndUpdatedBy();
     }
 }
 ```
@@ -261,6 +251,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 ## What NOT to do
 
 - Do not put logic in controllers — use `IRequestHandler<T>`.
+- Do not use `IRequest<T>` directly for commands — use `ICommand` or `ICommand<TResponse>`.
+- Do not use `IRequest<T>` directly for queries — use `IQuery<TResponse>`.
 - Do not use `services.AddSingleton/Scoped` for services — use Autofac modules.
 - Do not add `!` null-forgiving operators.
 - Do not use static `Log.Information(...)` — inject `ILogger<T>`.

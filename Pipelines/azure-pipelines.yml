@@ -72,12 +72,12 @@ stages:
       condition: ne(variables.NUGET_CACHE_RESTORED, true)
       inputs:
         command: 'restore'
-        restoreSolution: '$(projectNamePrefix).sln'
+        restoreSolution: '$(projectNamePrefix).slnx'
     - task: DotNetCoreCLI@2
       displayName: 'Build package'
       inputs:
         command: 'build'
-        projects: '$(projectNamePrefix).sln'
+        projects: '$(projectNamePrefix).slnx'
         configuration: $(buildConfiguration)
     - task: DotNetCoreCLI@2
       displayName: Run Unit Tests
