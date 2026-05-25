@@ -32,6 +32,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="$(DotnetVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.TestHost" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Bcl.AsyncInterfaces" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(DotnetVersion)" />

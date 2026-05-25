@@ -121,11 +121,6 @@
           "Newtonsoft.Json": "13.0.3"
         }
       },
-      "Microsoft.AspNetCore.TestHost": {
-        "type": "Transitive",
-        "resolved": "10.0.5",
-        "contentHash": "PJEdrZnnhvxIEXzDdvdZ38GvpdaiUfKkZ99kudS8riJwhowFb/Qh26Wjk9smrCWcYdMFQmpN5epGiL4o1s8LYA=="
-      },
       "Microsoft.Bcl.Cryptography": {
         "type": "Transitive",
         "resolved": "9.0.4",
@@ -729,7 +724,12 @@
       "enigmatry.entry.aspnetcore.tests.utilities": {
         "type": "Project",
         "dependencies": {
+          "Autofac": "[9.1.0, )",
           "Enigmatry.Entry.Core": "[1.0.0, )",
+          "Enigmatry.Entry.Infrastructure": "[1.0.0, )",
+          "Microsoft.AspNetCore.Mvc.Testing": "[10.0.5, )",
+          "Microsoft.AspNetCore.TestHost": "[10.0.5, )",
+          "Microsoft.EntityFrameworkCore.InMemory": "[10.0.5, )",
           "Microsoft.EntityFrameworkCore.SqlServer": "[10.0.5, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[10.0.5, )",
           "NUnit": "[4.5.1, )",
@@ -756,6 +756,12 @@
           "JetBrains.Annotations": "[2025.2.4, )"
         }
       },
+      "enigmatry.entry.infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "Enigmatry.Entry.Core": "[1.0.0, )"
+        }
+      },
       "enigmatry.entry.swagger": {
         "type": "Project",
         "dependencies": {
@@ -774,6 +780,12 @@
           "Microsoft.Extensions.Diagnostics.HealthChecks": "8.0.11",
           "System.ServiceProcess.ServiceController": "8.0.0"
         }
+      },
+      "Autofac": {
+        "type": "CentralTransitive",
+        "requested": "[9.1.0, )",
+        "resolved": "9.1.0",
+        "contentHash": "onT/BcnnfWcQNXiuC7R/0h8ALQzRdsAI20gpB7nfrudXpFMXdVZKz1umdtHXDwjc/bmWEsrCBAxck3+Arnk15g=="
       },
       "Azure.Identity": {
         "type": "CentralTransitive",
@@ -846,6 +858,12 @@
           "Microsoft.Extensions.Hosting": "10.0.5"
         }
       },
+      "Microsoft.AspNetCore.TestHost": {
+        "type": "CentralTransitive",
+        "requested": "[10.0.5, )",
+        "resolved": "10.0.5",
+        "contentHash": "PJEdrZnnhvxIEXzDdvdZ38GvpdaiUfKkZ99kudS8riJwhowFb/Qh26Wjk9smrCWcYdMFQmpN5epGiL4o1s8LYA=="
+      },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "CentralTransitive",
         "requested": "[10.0.5, )",
@@ -860,6 +878,17 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "10.0.5",
           "Microsoft.EntityFrameworkCore.Analyzers": "10.0.5",
+          "Microsoft.Extensions.Caching.Memory": "10.0.5",
+          "Microsoft.Extensions.Logging": "10.0.5"
+        }
+      },
+      "Microsoft.EntityFrameworkCore.InMemory": {
+        "type": "CentralTransitive",
+        "requested": "[10.0.5, )",
+        "resolved": "10.0.5",
+        "contentHash": "zz4THzlDOrJ7fKU2YUOzQFs2LJ9DgOSr5xFXcDdoD59el73MTQLtQQOAJxQ94F4XDegyL9+2sePSQGdcU25ZxQ==",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "10.0.5",
           "Microsoft.Extensions.Caching.Memory": "10.0.5",
           "Microsoft.Extensions.Logging": "10.0.5"
         }

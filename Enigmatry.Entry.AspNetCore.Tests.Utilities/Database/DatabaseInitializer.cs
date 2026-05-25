@@ -1,4 +1,4 @@
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using NUnit.Framework;
@@ -31,7 +31,7 @@ internal static class DatabaseInitializer
         {
             // CanConnectAsync throws SqlException if the server is unreachable; returns false if the database does not exist
             var dbDoesNotExist = !await dbContext.Database.CanConnectAsync();
-            return dbDoesNotExist || dbContext.Database.GetPendingMigrations().Any();
+            return dbDoesNotExist || (await dbContext.Database.GetPendingMigrationsAsync()).Any();
         }
         catch (SqlException ex)
         {
