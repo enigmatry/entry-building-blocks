@@ -1,9 +1,9 @@
 ---
 name: azure-devops-pipelines
-description: Best practices for Azure DevOps Pipeline YAML files in the Enigmatry Entry Blueprint project. Use this when creating, editing, or reviewing Azure DevOps CI/CD pipeline YAML.
+description: Best practices for Azure DevOps Pipeline YAML files in the Enigmatry Entry Building Blocks project. Use this when creating, editing, or reviewing Azure DevOps CI/CD pipeline YAML.
 ---
 
-# Blueprint Azure DevOps Pipelines
+# Entry Building Blocks Azure DevOps Pipelines
 
 ## Pipeline files
 
@@ -11,12 +11,8 @@ All pipeline YAML lives in `Pipelines/`:
 
 | File | Purpose |
 |------|---------|
-| `azure-pipelines.yml` | Main CI/CD pipeline — build → deploy |
-| `run-all-tests.yml` | Runs all test suites |
-| `code-analysis.yml` | Static analysis |
-| `build-publish-nuget.yml` | NuGet package publishing |
-| `deploy-to-stage.yml` | Reusable deployment job template |
-| `variables/` | Per-environment variable files |
+| `azure-pipelines.yml` | Main CI pipeline — build → test → pack → publish to NuGet |
+| `code-analysis.yml` | Daily scheduled SonarQube + build-report analysis |
 
 Shared pipeline templates are consumed from the `enigmatry-azure-pipelines-templates` repository via a `resources.repositories` reference — do not inline template logic that already exists there.
 
@@ -24,53 +20,114 @@ Shared pipeline templates are consumed from the `enigmatry-azure-pipelines-templ
 
 ```yaml
 variables:
-  artifactName: 'enigmatry-entry-blueprint-template'
-  dbContextName: 'AppDbContext'
-  nodeVersion: '22.17.1'         # keep in sync with .github/workflows/copilot-setup-steps.yml
-  projectNameAngularApp: enigmatry-entry-blueprint-app
-  projectNamePrefix: Enigmatry.Entry.Blueprint
-  majorMinorVersion: 1.0
+  artifactName: enigmatry-entry-building-blocks
+  buildConfiguration: Release
+  projectNamePrefix: Enigmatry.Entry
+  NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
 ```
 
-## Build stage
+## Main pipeline stages
 
-The build uses the shared `build-angular-app-and-dotnet-api.yml` template:
+### 1. `ci_build` — build, test, pack
 
 ```yaml
-- template: build-angular-app-and-dotnet-api.yml@templates
+- stage: ci_build
+  displayName: Build the packages
+  jobs:
+  - job: build_prerequisites        # installs minver-cli, sets build number from git tag
+  - job: Build_Package              # restore → build → test (unit+smoke) → pack → publish artifact
+```
+
+The test step filters to fast categories only:
+
+```yaml
+- task: DotNetCoreCLI@2
+  displayName: Run Unit Tests
+  inputs:
+    command: test
+    projects: $(projectNamePrefix)**/*.Tests.csproj
+    arguments: '--filter TestCategory=unit|TestCategory=smoke --configuration $(buildConfiguration)'
+    nobuild: true
+```
+
+### 2. `publish_nuget` — publish to NuGet.org
+
+Runs only on `master` or `release/*` branches, after `ci_build` succeeds:
+
+```yaml
+- stage: publish_nuget
+  dependsOn: ci_build
+  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+  jobs:
+  - deployment: Publish
+    environment: Publish to NuGet
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: NuGetCommand@2
+            inputs:
+              command: push
+              packagesToPush: '$(System.ArtifactsDirectory)/**/*.nupkg;!$(System.ArtifactsDirectory)/**/*.symbols.nupkg'
+              nuGetFeedType: external
+              publishFeedCredentials: nuget_org
+```
+
+## Code analysis pipeline
+
+Runs on a daily schedule (`0 0 * * *`) against `master`. Uses shared templates:
+
+```yaml
+jobs:
+- template: code-analysis.yml@templates
+  parameters:
+    projectName: 'Enigmatry - Entry Building Blocks'
+    sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
+    dotNetVersion: '10.0.x'
+
+- template: build-report-job.yml@templates
   parameters:
     artifactName: $(artifactName)
-    nodeVersion: $(nodeVersion)
-    projectNameAngularApp: $(projectNameAngularApp)
     projectNamePrefix: $(projectNamePrefix)
-    runAngularTests: true
-    useSlnx: true
-    dbContextNames:
-    - $(dbContextName)
+    projectNameAngularApp: ''      # empty — this project has no Angular frontend
 ```
 
-## Deployment stage
+## Versioning
 
-Deployments use the `deploy-to-stage.yml` template and are gated on branch conditions:
+Version numbers come from `minver-cli` (reads the nearest git tag). The `build_prerequisites` job installs it as a local tool and sets `BUILD_BUILDNUMBER`:
+
+```powershell
+$version = dotnet minver -p preview
+echo "##vso[build.updatebuildnumber]$version"
+```
+
+Pack tasks then consume `$(BUILD_BUILDNUMBER)` via `versioningScheme: byEnvVar`.
+
+## NuGet caching
+
+Always include the cache task before restore:
 
 ```yaml
-- stage: Deploy_Test
-  dependsOn: ci_build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  variables:
-  - template: variables/variables.test.yml
-  jobs:
-  - template: deploy-to-stage.yml
-    parameters:
-      environment: test
-      serviceConnection: 'Enigmatry - Entry Template (Test)'
+- task: Cache@2
+  inputs:
+    key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
+    restoreKeys: |
+      nuget | "$(Agent.OS)"
+      nuget
+    path: $(NUGET_PACKAGES)
+    cacheHitVar: NUGET_CACHE_RESTORED
+
+- task: NuGetCommand@2
+  condition: ne(variables.NUGET_CACHE_RESTORED, true)
+  inputs:
+    command: restore
+    restoreSolution: '$(projectNamePrefix).sln'
 ```
 
 ## Rules
 
-- Use `variables/variables.<env>.yml` files for environment-specific config — never inline environment values.
-- Never hardcode secrets or connection strings in YAML — use variable groups or Azure Key Vault references.
-- Keep `nodeVersion` in sync with `package.json` engines and `copilot-setup-steps.yml`.
-- When adding a new `dbContext`, add it to the `dbContextNames` list in the build template call.
-- Use `batch: true` on triggers to avoid redundant builds for rapid pushes.
-
+- Never hardcode secrets or NuGet API keys — use the `nuget_org` service connection.
+- Do not add deployment stages — this project ships NuGet packages, not deployed services.
+- Use `trigger: '*'` on `azure-pipelines.yml` (run on every push); `trigger: none` on `code-analysis.yml` (schedule-only).
+- When adding a new test project, no pipeline changes are needed — the glob `$(projectNamePrefix)**/*.Tests.csproj` picks it up automatically.
+- Lock files are enforced (`RestorePackagesWithLockFile=true`). After changing `Directory.Packages.props`, regenerate them with `dotnet restore --force-evaluate` before pushing.

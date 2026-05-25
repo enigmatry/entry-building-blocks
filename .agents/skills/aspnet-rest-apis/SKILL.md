@@ -1,6 +1,6 @@
 ---
 name: aspnet-rest-apis
-description: Enigmatry Entry Blueprint .NET 9 Web API patterns covering MediatR, Autofac, FluentValidation, and vertical slice architecture. Use this when adding or modifying .NET API features, handlers, validators, or controllers.
+description: Enigmatry Entry Blueprint .NET 10 Web API patterns covering MediatR, Autofac, FluentValidation, and vertical slice architecture. Use this when adding or modifying .NET API features, handlers, validators, or controllers.
 ---
 
 # Blueprint .NET API Patterns

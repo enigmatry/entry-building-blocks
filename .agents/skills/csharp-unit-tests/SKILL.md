@@ -1,6 +1,6 @@
 ---
 name: csharp-unit-tests
-description: Best practices for C# unit and integration testing with NUnit, FluentAssertions and NSubstitute. Use this when writing or reviewing C# tests.
+description: Best practices for C# unit and integration testing with NUnit, Shouldly and FakeItEasy. Use this when writing or reviewing C# tests.
 ---
 
 # C# Unit Testing
@@ -8,8 +8,8 @@ description: Best practices for C# unit and integration testing with NUnit, Flue
 ## Stack
 
 - **Test runner**: NUnit 4 (`[Test]` / `[TestCase]` / `[TestCaseSource]`)
-- **Assertions**: FluentAssertions — always prefer over `Assert.*`
-- **Mocks**: NSubstitute — use `Substitute.For<T>()` in `[SetUp]`
+- **Assertions**: Shouldly — always prefer over `Assert.*` (`result.ShouldBe(...)`, `collection.ShouldContain(...)`)
+- **Mocks**: FakeItEasy — use `A.Fake<T>()` in `[SetUp]`
 - **Snapshots**: Verify.NUnit — use for integration tests and complex output verification
 - **Integration**: `Microsoft.AspNetCore.Mvc.Testing` (`WebApplicationFactory<T>`)
 
@@ -18,7 +18,7 @@ description: Best practices for C# unit and integration testing with NUnit, Flue
 - Name test files and classes with the `Fixture` suffix: `Section.cs` → `SectionFixture.cs`
 - **Classes named with the `Fixture` suffix do not need `[TestFixture]`** — NUnit discovers them automatically via their `[Test]` methods
 - Mirror the production folder structure under the test project root
-- Test classes are `internal sealed`
+- Unit test classes are `public class`; integration test classes that contain internal test infrastructure are `internal class`
 
 ## Naming — no underscores
 
@@ -44,9 +44,7 @@ Separate Arrange / Act / Assert with a **blank line only** — never write `// A
 [Test]
 public void WhenStartEqualsEndThrows()
 {
-    var act = () => new Section(1000, 1000);
-
-    act.Should().Throw<ArgumentException>();
+    Should.Throw<ArgumentException>(() => new Section(1000, 1000));
 }
 ```
 
@@ -58,7 +56,7 @@ public void ToStringReturnsEndValue()
 
     var result = section.ToString();
 
-    result.Should().Be("2500");
+    result.ShouldBe("2500");
 }
 ```
 
@@ -68,8 +66,8 @@ public void ToStringReturnsEndValue()
 
 ```csharp
 // ❌ avoid — identical structure, only the expected string differs
-[Test] public void ActiveStatusHasCorrectName()   { ... status.Name.Should().Be("Active"); }
-[Test] public void InactiveStatusHasCorrectName() { ... status.Name.Should().Be("Inactive"); }
+[Test] public void ActiveStatusHasCorrectName()   { ... status.Name.ShouldBe("Active"); }
+[Test] public void InactiveStatusHasCorrectName() { ... status.Name.ShouldBe("Inactive"); }
 
 // ✅ correct — collapsed into one parameterized test
 [TestCase(UserStatusId.Active,   "Active")]
@@ -78,7 +76,7 @@ public void StatusHasCorrectName(UserStatusId id, string expected)
 {
     var status = UserStatus.FromValue(id.Value);
 
-    status.Name.Should().Be(expected);
+    status.Name.ShouldBe(expected);
 }
 ```
 
@@ -89,9 +87,7 @@ Use `[TestCase]` whenever the same assertion logic applies to multiple input val
 [TestCase(null)]
 public void CreateUserWithEmptyNameThrows(string? name)
 {
-    var act = () => new UserBuilder().WithFullName(name!).Build();
-
-    act.Should().Throw<ArgumentException>();
+    Should.Throw<ArgumentException>(() => new UserBuilder().WithFullName(name!).Build());
 }
 ```
 
@@ -107,29 +103,36 @@ private static readonly object[][] InvalidEmails =
 [TestCaseSource(nameof(InvalidEmails))]
 public void CreateUserWithInvalidEmailThrows(string email)
 {
-    var act = () => new UserBuilder().WithEmailAddress(email).Build();
-
-    act.Should().Throw<ArgumentException>();
+    Should.Throw<ArgumentException>(() => new UserBuilder().WithEmailAddress(email).Build());
 }
 ```
 
 ## Mocks
 
-Create mocks in `[SetUp]`; never share mutable mock state across tests:
+Create fakes in `[SetUp]`; never share mutable fake state across tests:
 ```csharp
 private IMyService _myService = null!;
 
 [SetUp]
-public void SetUp() => _myService = Substitute.For<IMyService>();
+public void SetUp() => _myService = A.Fake<IMyService>();
+```
+
+Configure return values and verify calls with `A.CallTo`:
+```csharp
+A.CallTo(() => _myService.GetAsync(id)).Returns(expected);
+
+A.CallTo(() => _myService.SaveAsync(A<MyEntity>._)).MustHaveHappenedOnceExactly();
 ```
 
 ## Exception assertions
 
-Always use a lambda + `.Should().Throw<T>()` — never `Assert.Throws`:
+Use `Should.Throw<T>` for synchronous code and `Should.ThrowAsync<T>` for async — never `Assert.Throws`:
 ```csharp
-var act = () => new Section(500, 100);
+Should.Throw<ArgumentException>(() => new Section(500, 100));
+```
 
-act.Should().Throw<ArgumentException>();
+```csharp
+await Should.ThrowAsync<InvalidOperationException>(async () => await _service.ProcessAsync(null));
 ```
 
 ## Snapshot testing with Verify.NUnit
@@ -151,37 +154,36 @@ public async Task GetConfigurationMatchesSnapshot()
 
 - On first run, Verify creates a `.received.txt` file — review it and rename/copy to `.verified.txt` to approve.
 - Commit `.verified.txt` files alongside the tests.
-- Do **not** use Verify for simple unit tests — use explicit FluentAssertions there.
+- Do **not** use Verify for simple unit tests — use explicit Shouldly assertions there.
 
 ## Integration tests
 
-- Inherit from `IntegrationFixtureBase` (in `Api.Tests/Infrastructure/Api/`) which wraps `WebApplicationFactory`, `TestDatabase` (Testcontainers SQL Server), and per-test scope management.
-- Seed data in a `[SetUp]` method using the builder pattern (e.g. `new UserBuilder().With*().Build()`) and `AddAndSaveChanges(entity)`.
-- Use `Client.GetAsync<T>(url)` / `Client.PostAsync<TRequest, TResponse>(url, body)` helpers from the test HTTP client.
-- Assert response bodies with `await Verify(response)` (Verify.NUnit snapshot files).
-- Mark integration test classes with `[Category("integration")]` so they can be filtered in CI: `dotnet test --filter "Category=integration"`.
+- Create a base fixture class that wraps `WebApplicationFactory<Program>`, sets up `HttpClient` in `[SetUp]`, and disposes everything in `[TearDown]`.
+- Override services in `WithWebHostBuilder(builder => builder.ConfigureServices(...))` to substitute real infrastructure with test doubles.
+- Use `Client.GetAsync(url)` / `Client.PostAsync(url, content)` directly on the `HttpClient`.
+- Assert HTTP status codes with Shouldly: `response.StatusCode.ShouldBe(HttpStatusCode.OK)`.
+- Assert response bodies with `await Verify(body)` (Verify.NUnit snapshot files) for complex outputs.
+- Mark integration test classes with `[Category("integration")]` so they can be filtered in CI: `dotnet test --filter "TestCategory=integration"`.
 
 ```csharp
 [Category("integration")]
-public class ProductsControllerFixture : IntegrationFixtureBase
+internal class WeatherForecastControllerFixture : SampleAppFixtureBase
 {
-    private Product _product = null!;
-
-    [SetUp]
-    public void SetUp()
+    [Test]
+    public async Task GetForecastReturnsOk()
     {
-        _product = new ProductBuilder()
-            .WithName("Test Product")
-            .WithCode("BKXX001");
-        AddAndSaveChanges(_product);
+        var response = await Client.GetAsync("WeatherForecast");
+
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 
     [Test]
-    public async Task TestGetById()
+    public async Task GetForecastMatchesSnapshot()
     {
-        var response = await Client.GetAsync<GetProductDetails.Response>($"api/products/{_product.Id}");
+        var response = await Client.GetAsync("WeatherForecast");
+        var body = await response.Content.ReadAsStringAsync();
 
-        await Verify(response);
+        await Verify(body);
     }
 }
 ```
@@ -191,6 +193,6 @@ public class ProductsControllerFixture : IntegrationFixtureBase
 - Do not use underscores in test method names.
 - Do not add `[TestFixture]` to classes whose names end with `Fixture`.
 - Do not write `// Arrange`, `// Act`, `// Assert` comments.
-- Do not use `Assert.That` — use FluentAssertions only.
+- Do not use `Assert.That` — use Shouldly only.
 - Do not leave empty catch blocks.
 - Do not write separate `[Test]` methods for cases that differ only in input values — use `[TestCase]` or `[TestCaseSource]` instead. **Always check for this before writing any new `[Test]` method.**

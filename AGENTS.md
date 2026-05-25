@@ -9,7 +9,7 @@ A collection of reusable .NET NuGet packages (`net10.0`) published by Enigmatry.
 dotnet build -c Release
 
 # Run only the fast test categories (what CI runs)
-dotnet test -c Release --filter "Category=unit|Category=smoke"
+dotnet test -c Release --filter "TestCategory=unit|TestCategory=smoke"
 
 # Run a single test project
 dotnet test Enigmatry.Entry.MediatR.Tests -c Release
