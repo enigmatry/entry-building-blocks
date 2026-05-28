@@ -1,3 +1,4 @@
+﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 
@@ -76,8 +77,6 @@ public sealed class TestDatabase : IAsyncDisposable
                 return;
             }
 
-            // These cannot be changed (hardcoded in MsSqlBuilder — changing any of them breaks container startup)
-            // default database: master  |  default username: sa  |  default password: yourStrong(!)Password
             _container = new MsSqlBuilder(sqlContainerImage)
                 .WithAutoRemove(true)
                 .WithCleanUp(true)
@@ -92,6 +91,7 @@ public sealed class TestDatabase : IAsyncDisposable
         }
     }
 
+    [PublicAPI]
     public Task Reset(DbContext dbContext) => DatabaseInitializer.EnsureDatabaseReady(dbContext, _initializerOptions);
 
     public async ValueTask DisposeAsync()
