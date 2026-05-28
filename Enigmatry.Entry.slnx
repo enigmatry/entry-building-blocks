@@ -1,0 +1,59 @@
+<Solution>
+  <Folder Name="/icons/">
+    <File Path="icon-192x192.png" />
+  </Folder>
+  <Folder Name="/Pipelines/">
+    <File Path="Pipelines/azure-pipelines.yml" />
+    <File Path="Pipelines/code-analysis.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="build.ps1" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="nuget.config" />
+  </Folder>
+  <Project Path="Enigmatry.Entry.AspNetCore.Authorization.Tests/Enigmatry.Entry.AspNetCore.Authorization.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Authorization/Enigmatry.Entry.AspNetCore.Authorization.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests/Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson/Enigmatry.Entry.AspNetCore.Tests.NewtonsoftJson.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests.SampleApp/Enigmatry.Entry.AspNetCore.Tests.SampleApp.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests/Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests.SystemTextJson/Enigmatry.Entry.AspNetCore.Tests.SystemTextJson.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests.Utilities/Enigmatry.Entry.AspNetCore.Tests.Utilities.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore.Tests/Enigmatry.Entry.AspNetCore.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.AspNetCore/Enigmatry.Entry.AspNetCore.csproj" />
+  <Project Path="Enigmatry.Entry.AzureSearch.Tests/Enigmatry.Entry.AzureSearch.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.AzureSearch/Enigmatry.Entry.AzureSearch.csproj" />
+  <Project Path="Enigmatry.Entry.BlobStorage.Tests/Enigmatry.Entry.BlobStorage.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.BlobStorage/Enigmatry.Entry.BlobStorage.csproj" />
+  <Project Path="Enigmatry.Entry.Core.EntityFramework/Enigmatry.Entry.Core.EntityFramework.csproj" />
+  <Project Path="Enigmatry.Entry.Core.Tests/Enigmatry.Entry.Core.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.Core/Enigmatry.Entry.Core.csproj" />
+  <Project Path="Enigmatry.Entry.Csv.Tests/Enigmatry.Entry.Csv.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.Csv/Enigmatry.Entry.Csv.csproj" />
+  <Project Path="Enigmatry.Entry.Email.Tests/Enigmatry.Entry.Email.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.EmailClient/Enigmatry.Entry.Email.csproj" />
+  <Project Path="Enigmatry.Entry.EntityFramework.Tests/Enigmatry.Entry.EntityFramework.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.EntityFramework/Enigmatry.Entry.EntityFramework.csproj" />
+  <Project Path="Enigmatry.Entry.GraphApi/Enigmatry.Entry.GraphApi.csproj" />
+  <Project Path="Enigmatry.Entry.HealthChecks.Tests/Enigmatry.Entry.HealthChecks.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.HealthChecks/Enigmatry.Entry.HealthChecks.csproj" />
+  <Project Path="Enigmatry.Entry.Infrastructure.Tests/Enigmatry.Entry.Infrastructure.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.Infrastructure/Enigmatry.Entry.Infrastructure.csproj" />
+  <Project Path="Enigmatry.Entry.MediatR.Tests/Enigmatry.Entry.MediatR.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.MediatR/Enigmatry.Entry.MediatR.csproj" />
+  <Project Path="Enigmatry.Entry.Randomness/Enigmatry.Entry.Randomness.csproj" />
+  <Project Path="Enigmatry.Entry.Scheduler.Tests/Enigmatry.Entry.Scheduler.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.Scheduler/Enigmatry.Entry.Scheduler.csproj" />
+  <Project Path="Enigmatry.Entry.SmartEnums.EntityFramework/Enigmatry.Entry.SmartEnums.EntityFramework.csproj" />
+  <Project Path="Enigmatry.Entry.SmartEnums.Swagger/Enigmatry.Entry.SmartEnums.Swagger.csproj" />
+  <Project Path="Enigmatry.Entry.SmartEnums.SystemTextJson/Enigmatry.Entry.SmartEnums.SystemTextJson.csproj" />
+  <Project Path="Enigmatry.Entry.SmartEnums.VerifyTests/Enigmatry.Entry.SmartEnums.VerifyTests.csproj" />
+  <Project Path="Enigmatry.Entry.SmartEnums/Enigmatry.Entry.SmartEnums.csproj" />
+  <Project Path="Enigmatry.Entry.SwaggerSecurity/Enigmatry.Entry.Swagger.csproj" />
+  <Project Path="Enigmatry.Entry.TemplatingEngine.Fluid.Tests/Enigmatry.Entry.TemplatingEngine.Fluid.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.TemplatingEngine.Fluid/Enigmatry.Entry.TemplatingEngine.Fluid.csproj" />
+  <Project Path="Enigmatry.Entry.TemplatingEngine.Razor.Tests/Enigmatry.Entry.TemplatingEngine.Razor.Tests.csproj" />
+  <Project Path="Enigmatry.Entry.TemplatingEngine.Razor/Enigmatry.Entry.TemplatingEngine.Razor.csproj" />
+</Solution>

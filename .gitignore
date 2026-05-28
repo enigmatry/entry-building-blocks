@@ -9,6 +9,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Claude local files
+.claude/settings.local.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

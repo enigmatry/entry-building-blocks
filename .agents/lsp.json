@@ -1,0 +1,11 @@
+{
+  "lspServers": {
+    "csharp": {
+      "command": "csharp-ls",
+      "args": [],
+      "fileExtensions": {
+        ".cs": "csharp"
+      }
+    }
+  }
+}
