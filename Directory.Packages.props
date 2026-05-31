@@ -78,6 +78,7 @@
     <PackageVersion Include="Verify" Version="31.13.5" />
     <PackageVersion Include="Verify.NUnit" Version="31.13.5" />
     <!--transitive packages-->
+    <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="2.0.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
   </ItemGroup>
 </Project>
