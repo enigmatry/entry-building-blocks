@@ -205,14 +205,6 @@
           "System.IdentityModel.Tokens.Jwt": "8.6.1"
         }
       },
-      "Microsoft.Kiota.Abstractions": {
-        "type": "Transitive",
-        "resolved": "1.21.1",
-        "contentHash": "YBpZfvokZQelMoY4ITx7kjSpP0MvTb1+c2bbcepu36Yo2MzAUToxX1g2CdQ1idnafk2V+t3W7tSnIGdkSD65pA==",
-        "dependencies": {
-          "Std.UriTemplate": "2.0.8"
-        }
-      },
       "Microsoft.Kiota.Authentication.Azure": {
         "type": "Transitive",
         "resolved": "1.21.1",
@@ -381,6 +373,15 @@
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
           "Microsoft.Extensions.Primitives": "10.0.5"
+        }
+      },
+      "Microsoft.Kiota.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[2.0.0, )",
+        "resolved": "2.0.0",
+        "contentHash": "cb0KA6QGvqMR1xNIjmErb5CiEbQJ/6odKcuPn2GTWD+aRMuldKDqRqRWMDT7MOBcUk9waJyJsgDG+ItQA01JmA==",
+        "dependencies": {
+          "Std.UriTemplate": "2.0.8"
         }
       },
       "Serilog": {
