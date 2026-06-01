@@ -17,7 +17,7 @@ public abstract class EntryJob<T>(ILogger<EntryJob<T>> logger, IConfiguration co
         try
         {
             var jobType = GetType();
-            await Execute(configuration.GetJobConfiguration(jobType).GetSchedulingJobArgumentsValue<T>());
+            await Execute(configuration.GetJobConfiguration(jobType).GetSchedulingJobArgumentsValue<T>(), context.CancellationToken);
             logger.LogInformation("{JobName} job completed.", jobName);
         }
         catch (Exception ex)
@@ -27,4 +27,6 @@ public abstract class EntryJob<T>(ILogger<EntryJob<T>> logger, IConfiguration co
     }
 
     public abstract Task Execute(T request);
+
+    protected virtual Task Execute(T request, CancellationToken cancellationToken) => Execute(request);
 }
