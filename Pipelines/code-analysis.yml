@@ -25,6 +25,7 @@ jobs:
     sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
     displayName: 'Code Analysis'
     dotNetVersion: '10.0.x'
+    useSlnx: true
 
 - template: build-report-job.yml@templates
   parameters:
@@ -32,3 +33,4 @@ jobs:
     displayName: 'Generate Reports'
     projectNameAngularApp: ''
     projectNamePrefix: $(projectNamePrefix)
+    useSlnx: true
