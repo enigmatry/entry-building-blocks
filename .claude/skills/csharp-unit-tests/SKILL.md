@@ -50,7 +50,7 @@ UpdateUserSignInEmailAddressWithNoMatchReturnsTheUserWithoutPatching
 
 Separate Arrange / Act / Assert with a **blank line only** — never write `// Arrange`, `// Act`, or `// Assert` comments:
 
-Keep each phase a single block — exactly three blocks per test. If the assert phase grows beyond two lines, verify with a snapshot (see the Verify section) instead of stacking assertions.
+Keep each phase a single block — exactly three blocks per test.
 
 ```csharp
 [Test]
@@ -138,7 +138,7 @@ A.CallTo(() => _myService.SaveAsync(A<MyEntity>._)).MustHaveHappenedOnceExactly(
 
 ## Test data — code books
 
-Do not scatter hardcoded literals (`new GraphUser { Id = "42" }`, magic emails, GUIDs) across tests. Define canonical test objects once in a code book and read them where needed — `GraphUser.Some` takes less mental effort than an inline object initializer. Use C# 14 static extension members so the code book reads like a member of the domain type:
+Define canonical test objects once in a code book instead of scattering literals (`new GraphUser { Id = "42" }`, magic emails) across tests. Use C# 14 static extension members so it reads like a member of the domain type:
 
 ```csharp
 internal static class GraphUserCodeBook
@@ -153,7 +153,7 @@ internal static class GraphUserCodeBook
 var user = GraphUser.Some;
 ```
 
-Each code book class may extend only one type — two `extension` blocks in the same class cannot both declare a member with the same name.
+One code book class per extended type — same-named members from two `extension` blocks in one class collide.
 
 ## Test infrastructure helpers
 
@@ -190,7 +190,7 @@ public async Task GetConfigurationMatchesSnapshot()
 
 - On first run, Verify creates a `.received.txt` file — review it and rename/copy to `.verified.txt` to approve.
 - Commit `.verified.txt` files alongside the tests.
-- **Use Verify whenever a test needs more than two lines of verification** — also in unit tests. Snapshot one object that captures everything (e.g. a request's method + URL + query + body) instead of stacking `GetProperty(...)` / `ShouldBe(...)` lines. One or two focused Shouldly assertions do not need Verify.
+- **Use Verify whenever a test needs more than two lines of verification** — also in unit tests: snapshot one object that captures everything (e.g. a request's method + URL + query + body).
 
 ## Integration tests
 
@@ -232,6 +232,3 @@ internal class WeatherForecastControllerFixture : SampleAppFixtureBase
 - Do not use `Assert.That` — use Shouldly only.
 - Do not leave empty catch blocks.
 - Do not write separate `[Test]` methods for cases that differ only in input values — use `[TestCase]` or `[TestCaseSource]` instead. **Always check for this before writing any new `[Test]` method.**
-- Do not stack more than two assertion lines — switch to a Verify snapshot.
-- Do not hardcode the same literals across tests — put canonical objects in a code book.
-- Do not leave `IDisposable` test helpers undisposed — dispose them in `[TearDown]`.

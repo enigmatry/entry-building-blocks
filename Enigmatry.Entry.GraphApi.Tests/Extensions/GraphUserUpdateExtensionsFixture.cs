@@ -30,7 +30,7 @@ public class GraphUserUpdateExtensionsFixture
     public async Task UpdateSignInEmailPatchesMatchingIdentity()
     {
         _graph = new FakeGraphClientBuilder().WithUser(GraphUser.Some).Build();
-        var user = new GraphUser { Id = "42", Identities = [ObjectIdentity.SomeEmail] };
+        var user = GraphUser.SomeWithEmailIdentity;
 
         var updated = await _graph.Client.UpdateUserSignInEmailAddress(user, "john@doe.com", "new@doe.com");
 
@@ -42,7 +42,7 @@ public class GraphUserUpdateExtensionsFixture
     public async Task UpdateSignInEmailWithNoMatchDoesNotPatch()
     {
         _graph = new FakeGraphClientBuilder().Build();
-        var user = new GraphUser { Id = "42", Identities = [ObjectIdentity.SomeFederated] };
+        var user = GraphUser.SomeWithFederatedIdentity;
 
         var updated = await _graph.Client.UpdateUserSignInEmailAddress(user, "john@doe.com", "new@doe.com");
 
