@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Shouldly;
 using GraphUser = Microsoft.Graph.Models.User;
 
-namespace Enigmatry.Entry.GraphApi.Tests;
+namespace Enigmatry.Entry.GraphApi.Tests.Extensions;
 
 [Category("unit")]
 public class GraphUserCreateExtensionsFixture
@@ -16,7 +16,7 @@ public class GraphUserCreateExtensionsFixture
     public void SetUp() => _graph = new FakeGraphClient();
 
     [Test]
-    public async Task AddUser_PostsTheUserToTheUsersEndpoint()
+    public async Task AddUserPostsTheUserToTheUsersEndpoint()
     {
         var created = new GraphUser { Id = "42" };
         _graph.UserResponse = created;

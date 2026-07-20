@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Shouldly;
 using GraphUser = Microsoft.Graph.Models.User;
 
-namespace Enigmatry.Entry.GraphApi.Tests;
+namespace Enigmatry.Entry.GraphApi.Tests.Extensions;
 
 [Category("unit")]
 public class GraphUserDeleteExtensionsFixture
@@ -16,7 +16,7 @@ public class GraphUserDeleteExtensionsFixture
     public void SetUp() => _graph = new FakeGraphClient();
 
     [Test]
-    public async Task RemoveUser_ById_SendsDelete()
+    public async Task RemoveUserByIdSendsDelete()
     {
         await _graph.Client.RemoveUser("42");
 
@@ -26,7 +26,7 @@ public class GraphUserDeleteExtensionsFixture
     }
 
     [Test]
-    public async Task RemoveUser_ByIssuerAssignedId_LooksTheUserUpAndDeletesItOnce()
+    public async Task RemoveUserByIssuerAssignedIdDeletesTheUserOnce()
     {
         var user = new GraphUser { Id = "42" };
         _graph.UsersResponse = new UserCollectionResponse { Value = [user] };
@@ -41,7 +41,7 @@ public class GraphUserDeleteExtensionsFixture
     }
 
     [Test]
-    public async Task RemoveUser_ByIssuerAssignedId_WhenUserIsNotFound_ReturnsNullWithoutDeleting()
+    public async Task RemoveUserByIssuerAssignedIdWithUnknownUserReturnsNull()
     {
         _graph.UsersResponse = new UserCollectionResponse { Value = [] };
 

@@ -2,7 +2,7 @@ using Enigmatry.Entry.GraphApi.Extensions;
 using NUnit.Framework;
 using Shouldly;
 
-namespace Enigmatry.Entry.GraphApi.Tests;
+namespace Enigmatry.Entry.GraphApi.Tests.Extensions;
 
 [Category("unit")]
 public class GraphClientPhotoExtensionsFixture
@@ -13,7 +13,7 @@ public class GraphClientPhotoExtensionsFixture
     public void SetUp() => _graph = new FakeGraphClient();
 
     [Test]
-    public async Task GetUserPhoto_RequestsThePhotoContentOfTheGivenUser()
+    public async Task GetUserPhotoRequestsTheUserPhotoContent()
     {
         using var photo = new MemoryStream([1, 2, 3]);
         _graph.StreamResponse = photo;
@@ -26,7 +26,7 @@ public class GraphClientPhotoExtensionsFixture
     }
 
     [Test]
-    public async Task GetCurrentUserPhoto_RequestsThePhotoContentOfTheCurrentUser()
+    public async Task GetCurrentUserPhotoRequestsTheCurrentUserPhotoContent()
     {
         using var photo = new MemoryStream([1, 2, 3]);
         _graph.StreamResponse = photo;

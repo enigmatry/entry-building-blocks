@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Shouldly;
 using GraphUser = Microsoft.Graph.Models.User;
 
-namespace Enigmatry.Entry.GraphApi.Tests;
+namespace Enigmatry.Entry.GraphApi.Tests.Extensions;
 
 [Category("unit")]
 public class GraphClientSearchExtensionsFixture
@@ -19,7 +19,7 @@ public class GraphClientSearchExtensionsFixture
     public void SetUp() => _graph = new FakeGraphClient();
 
     [Test]
-    public async Task GetUserById_RequestsUserWithDefaultFieldsCamelCased()
+    public async Task GetUserByIdRequestsDefaultFieldsCamelCased()
     {
         _graph.UserResponse = new GraphUser { Id = "42" };
 
@@ -33,7 +33,7 @@ public class GraphClientSearchExtensionsFixture
     }
 
     [Test]
-    public async Task GetUserById_WithCustomSelectExpression_CamelCasesTheSelectedProperties()
+    public async Task GetUserByIdWithCustomSelectCamelCasesTheProperties()
     {
         await _graph.Client.GetUserById("42", user => [nameof(user.Id), nameof(user.OtherMails)]);
 
@@ -41,24 +41,26 @@ public class GraphClientSearchExtensionsFixture
         _graph.SingleRequest.QueryParameters["%24select"].ShouldBe(expected);
     }
 
-    [Test]
-    public async Task GetUserByIssuerAssignedId_FiltersOnIdentitiesAndReturnsTheSingleMatch()
+    [TestCase("john@doe.com",
+        "identities/any(c:c/issuerAssignedId eq 'john@doe.com' and c/issuer eq 'contoso.onmicrosoft.com')")]
+    [TestCase("o'brien@doe.com",
+        "identities/any(c:c/issuerAssignedId eq 'o''brien@doe.com' and c/issuer eq 'contoso.onmicrosoft.com')")]
+    public async Task GetUserByIssuerAssignedIdFiltersOnIdentities(string issuerAssignedId, string expectedFilter)
     {
         var expected = new GraphUser { Id = "42" };
         _graph.UsersResponse = new UserCollectionResponse { Value = [expected] };
 
-        var user = await _graph.Client.GetUserByIssuerAssignedId("john@doe.com", "contoso.onmicrosoft.com");
+        var user = await _graph.Client.GetUserByIssuerAssignedId(issuerAssignedId, "contoso.onmicrosoft.com");
 
         user.ShouldBe(expected);
         var request = _graph.SingleRequest;
         request.URI.GetLeftPart(UriPartial.Path).ShouldBe("https://graph.microsoft.com/v1.0/users");
-        request.QueryParameters["%24filter"].ShouldBe(
-            "identities/any(c:c/issuerAssignedId eq 'john@doe.com' and c/issuer eq 'contoso.onmicrosoft.com')");
+        request.QueryParameters["%24filter"].ShouldBe(expectedFilter);
         request.QueryParameters["%24select"].ShouldBe(DefaultSelectFields);
     }
 
     [Test]
-    public async Task GetUserByIssuerAssignedId_WhenNoUserMatches_ReturnsNull()
+    public async Task GetUserByIssuerAssignedIdWithNoMatchReturnsNull()
     {
         _graph.UsersResponse = new UserCollectionResponse { Value = [] };
 
@@ -68,7 +70,7 @@ public class GraphClientSearchExtensionsFixture
     }
 
     [Test]
-    public async Task GetUsers_RequestsGivenPageSize()
+    public async Task GetUsersRequestsGivenPageSize()
     {
         _graph.UsersResponse = new UserCollectionResponse { Value = [new GraphUser { Id = "42" }] };
 
@@ -81,39 +83,21 @@ public class GraphClientSearchExtensionsFixture
     }
 
     [Test]
-    public async Task GetUsers_WhenResponseIsNull_ReturnsEmptyList()
+    public async Task GetUsersWithNullResponseReturnsEmptyList()
     {
         var users = await _graph.Client.GetUsers();
 
         users.ShouldBeEmpty();
     }
 
-    [Test]
-    public async Task SearchUsers_FiltersOnNameAndEmailProperties()
+    [TestCase("Jo",
+        "startswith(displayName, 'Jo') or startswith(givenName, 'Jo') or startswith(surname, 'Jo') or startswith(mail, 'Jo') or startswith(userPrincipalName, 'Jo')")]
+    [TestCase("O'Brien",
+        "startswith(displayName, 'O''Brien') or startswith(givenName, 'O''Brien') or startswith(surname, 'O''Brien') or startswith(mail, 'O''Brien') or startswith(userPrincipalName, 'O''Brien')")]
+    public async Task SearchUsersFiltersOnNameAndEmailProperties(string query, string expectedFilter)
     {
-        await _graph.Client.SearchUsers("Jo");
+        await _graph.Client.SearchUsers(query);
 
-        _graph.SingleRequest.QueryParameters["%24filter"].ShouldBe(
-            "startswith(displayName, 'Jo') or startswith(givenName, 'Jo') or startswith(surname, 'Jo') or startswith(mail, 'Jo') or startswith(userPrincipalName, 'Jo')");
-    }
-
-    [Test]
-    public async Task SearchUsers_EscapesSingleQuotesInTheQuery()
-    {
-        await _graph.Client.SearchUsers("O'Brien");
-
-        _graph.SingleRequest.QueryParameters["%24filter"].ShouldBe(
-            "startswith(displayName, 'O''Brien') or startswith(givenName, 'O''Brien') or startswith(surname, 'O''Brien') or startswith(mail, 'O''Brien') or startswith(userPrincipalName, 'O''Brien')");
-    }
-
-    [Test]
-    public async Task GetUserByIssuerAssignedId_EscapesSingleQuotesInTheArguments()
-    {
-        _graph.UsersResponse = new UserCollectionResponse { Value = [] };
-
-        await _graph.Client.GetUserByIssuerAssignedId("o'brien@doe.com", "contoso.onmicrosoft.com");
-
-        _graph.SingleRequest.QueryParameters["%24filter"].ShouldBe(
-            "identities/any(c:c/issuerAssignedId eq 'o''brien@doe.com' and c/issuer eq 'contoso.onmicrosoft.com')");
+        _graph.SingleRequest.QueryParameters["%24filter"].ShouldBe(expectedFilter);
     }
 }

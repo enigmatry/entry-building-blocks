@@ -4,10 +4,9 @@ using Microsoft.Graph.Models;
 using Microsoft.Kiota.Abstractions;
 using NUnit.Framework;
 using Shouldly;
-using System.Text.Json;
 using GraphUser = Microsoft.Graph.Models.User;
 
-namespace Enigmatry.Entry.GraphApi.Tests;
+namespace Enigmatry.Entry.GraphApi.Tests.Extensions;
 
 [Category("unit")]
 public class GraphUserUpdateExtensionsFixture
@@ -18,7 +17,7 @@ public class GraphUserUpdateExtensionsFixture
     public void SetUp() => _graph = new FakeGraphClient();
 
     [Test]
-    public async Task UpdateUser_PatchesOnlyTheProvidedDetails()
+    public async Task UpdateUserPatchesOnlyTheProvidedDetails()
     {
         _graph.UserResponse = new GraphUser { Id = "42" };
         var userDetails = new UserDetails("42", new PasswordProfile { Password = "some-password" })
@@ -41,7 +40,7 @@ public class GraphUserUpdateExtensionsFixture
     }
 
     [Test]
-    public async Task UpdateUserSignInEmailAddress_PatchesTheMatchingEmailIdentity()
+    public async Task UpdateUserSignInEmailAddressPatchesTheMatchingIdentity()
     {
         _graph.UserResponse = new GraphUser { Id = "42" };
         var user = new GraphUser
@@ -66,7 +65,7 @@ public class GraphUserUpdateExtensionsFixture
     }
 
     [Test]
-    public async Task UpdateUserSignInEmailAddress_WhenNoIdentityMatches_ReturnsTheUserWithoutPatching()
+    public async Task UpdateUserSignInEmailAddressWithNoMatchReturnsTheUserWithoutPatching()
     {
         var user = new GraphUser
         {
