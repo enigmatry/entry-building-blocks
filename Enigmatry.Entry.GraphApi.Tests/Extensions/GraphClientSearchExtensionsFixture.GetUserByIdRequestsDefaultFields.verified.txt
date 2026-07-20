@@ -1,0 +1,15 @@
+﻿{
+  Url: https://graph.microsoft.com/v1.0/users/42,
+  Query: {
+    %24select: [
+      id,
+      displayName,
+      givenName,
+      surname,
+      identities,
+      accountEnabled,
+      userPrincipalName,
+      mail
+    ]
+  }
+}

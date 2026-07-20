@@ -1,0 +1,4 @@
+﻿{
+  Method: DELETE,
+  Url: https://graph.microsoft.com/v1.0/users/42
+}

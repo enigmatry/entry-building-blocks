@@ -1,8 +1,6 @@
 using Enigmatry.Entry.GraphApi.Extensions;
 using Enigmatry.Entry.GraphApi.Models;
 using Microsoft.Graph.Models;
-using Microsoft.Kiota.Abstractions;
-using NUnit.Framework;
 using Shouldly;
 using GraphUser = Microsoft.Graph.Models.User;
 
@@ -13,67 +11,40 @@ public class GraphUserUpdateExtensionsFixture
 {
     private FakeGraphClient _graph = null!;
 
-    [SetUp]
-    public void SetUp() => _graph = new FakeGraphClient();
+    [TearDown]
+    public void TearDown() => _graph?.Dispose();
 
     [Test]
-    public async Task UpdateUserPatchesOnlyTheProvidedDetails()
+    public async Task UpdateUserPatchesOnlyProvidedDetails()
     {
-        _graph.UserResponse = new GraphUser { Id = "42" };
-        var userDetails = new UserDetails("42", new PasswordProfile { Password = "some-password" })
-        {
-            DisplayName = "New Name"
-        };
+        _graph = new FakeGraphClientBuilder().WithUser(GraphUser.Some).Build();
+        var userDetails = new UserDetails("42", PasswordProfile.Some) { DisplayName = "New Name" };
 
         var user = await _graph.Client.UpdateUser(userDetails);
 
         user.ShouldNotBeNull();
-        var request = _graph.SingleRequest;
-        request.HttpMethod.ShouldBe(Method.PATCH);
-        request.URI.GetLeftPart(UriPartial.Path).ShouldBe("https://graph.microsoft.com/v1.0/users/42");
-
-        var body = _graph.SingleRequestJsonBody();
-        body.GetProperty("displayName").GetString().ShouldBe("New Name");
-        body.GetProperty("passwordProfile").GetProperty("password").GetString().ShouldBe("some-password");
-        body.TryGetProperty("passwordPolicies", out _).ShouldBeFalse();
-        body.TryGetProperty("identities", out _).ShouldBeFalse();
+        await Verify(_graph.SingleRequestSnapshot());
     }
 
     [Test]
-    public async Task UpdateUserSignInEmailAddressPatchesTheMatchingIdentity()
+    public async Task UpdateSignInEmailPatchesMatchingIdentity()
     {
-        _graph.UserResponse = new GraphUser { Id = "42" };
-        var user = new GraphUser
-        {
-            Id = "42",
-            Identities =
-            [
-                new ObjectIdentity { SignInType = "emailAddress", IssuerAssignedId = "old@doe.com" }
-            ]
-        };
+        _graph = new FakeGraphClientBuilder().WithUser(GraphUser.Some).Build();
+        var user = new GraphUser { Id = "42", Identities = [ObjectIdentity.SomeEmail] };
 
-        var updated = await _graph.Client.UpdateUserSignInEmailAddress(user, "old@doe.com", "new@doe.com");
+        var updated = await _graph.Client.UpdateUserSignInEmailAddress(user, "john@doe.com", "new@doe.com");
 
         updated.ShouldNotBeNull();
-        var request = _graph.SingleRequest;
-        request.HttpMethod.ShouldBe(Method.PATCH);
-        request.URI.GetLeftPart(UriPartial.Path).ShouldBe("https://graph.microsoft.com/v1.0/users/42");
-
-        var identities = _graph.SingleRequestJsonBody().GetProperty("identities").EnumerateArray().ToList();
-        identities.Count.ShouldBe(1);
-        identities[0].GetProperty("issuerAssignedId").GetString().ShouldBe("new@doe.com");
+        await Verify(_graph.SingleRequestSnapshot());
     }
 
     [Test]
-    public async Task UpdateUserSignInEmailAddressWithNoMatchReturnsTheUserWithoutPatching()
+    public async Task UpdateSignInEmailWithNoMatchDoesNotPatch()
     {
-        var user = new GraphUser
-        {
-            Id = "42",
-            Identities = [new ObjectIdentity { SignInType = "federated", IssuerAssignedId = "old@doe.com" }]
-        };
+        _graph = new FakeGraphClientBuilder().Build();
+        var user = new GraphUser { Id = "42", Identities = [ObjectIdentity.SomeFederated] };
 
-        var updated = await _graph.Client.UpdateUserSignInEmailAddress(user, "old@doe.com", "new@doe.com");
+        var updated = await _graph.Client.UpdateUserSignInEmailAddress(user, "john@doe.com", "new@doe.com");
 
         updated.ShouldBe(user);
         _graph.Requests.ShouldBeEmpty();

@@ -1,0 +1,16 @@
+﻿{
+  Url: https://graph.microsoft.com/v1.0/users,
+  Query: {
+    %24filter: startswith(displayName, 'Jo') or startswith(givenName, 'Jo') or startswith(surname, 'Jo') or startswith(mail, 'Jo') or startswith(userPrincipalName, 'Jo'),
+    %24select: [
+      id,
+      displayName,
+      givenName,
+      surname,
+      identities,
+      accountEnabled,
+      userPrincipalName,
+      mail
+    ]
+  }
+}

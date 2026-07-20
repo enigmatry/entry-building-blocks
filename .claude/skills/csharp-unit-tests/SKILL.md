@@ -36,9 +36,21 @@ Constructor_WhenEndExceedsMaxLength_ThrowsArgumentOutOfRangeException
 Parse_MissingSectionsLine_ThrowsFormatException
 ```
 
+Keep names short by eliminating words already known from context (the fixture name, the method under test):
+
+```csharp
+// ✅ in GraphUserUpdateExtensionsFixture
+UpdateSignInEmailWithNoMatchDoesNotPatch
+
+// ❌ repeats context the fixture and method already provide
+UpdateUserSignInEmailAddressWithNoMatchReturnsTheUserWithoutPatching
+```
+
 ## Test structure — AAA without comments
 
 Separate Arrange / Act / Assert with a **blank line only** — never write `// Arrange`, `// Act`, or `// Assert` comments:
+
+Keep each phase a single block — exactly three blocks per test. If the assert phase grows beyond two lines, verify with a snapshot (see the Verify section) instead of stacking assertions.
 
 ```csharp
 [Test]
@@ -124,6 +136,30 @@ A.CallTo(() => _myService.GetAsync(id)).Returns(expected);
 A.CallTo(() => _myService.SaveAsync(A<MyEntity>._)).MustHaveHappenedOnceExactly();
 ```
 
+## Test data — code books
+
+Do not scatter hardcoded literals (`new GraphUser { Id = "42" }`, magic emails, GUIDs) across tests. Define canonical test objects once in a code book and read them where needed — `GraphUser.Some` takes less mental effort than an inline object initializer. Use C# 14 static extension members so the code book reads like a member of the domain type:
+
+```csharp
+internal static class GraphUserCodeBook
+{
+    extension(GraphUser)
+    {
+        public static GraphUser Some => new() { Id = "42" };
+    }
+}
+
+// in a test
+var user = GraphUser.Some;
+```
+
+Each code book class may extend only one type — two `extension` blocks in the same class cannot both declare a member with the same name.
+
+## Test infrastructure helpers
+
+- Prefer a **builder** over public mutable setters when a test helper needs configuration: `new FakeGraphClientBuilder().WithUser(GraphUser.Some).Build()`, not `helper.UserResponse = ...`.
+- If a helper owns disposable resources (`HttpClient`, `GraphServiceClient`, streams), make it `IDisposable` and dispose it in `[TearDown]`.
+
 ## Exception assertions
 
 Use `Should.Throw<T>` for synchronous code and `Should.ThrowAsync<T>` for async — never `Assert.Throws`:
@@ -154,7 +190,7 @@ public async Task GetConfigurationMatchesSnapshot()
 
 - On first run, Verify creates a `.received.txt` file — review it and rename/copy to `.verified.txt` to approve.
 - Commit `.verified.txt` files alongside the tests.
-- Do **not** use Verify for simple unit tests — use explicit Shouldly assertions there.
+- **Use Verify whenever a test needs more than two lines of verification** — also in unit tests. Snapshot one object that captures everything (e.g. a request's method + URL + query + body) instead of stacking `GetProperty(...)` / `ShouldBe(...)` lines. One or two focused Shouldly assertions do not need Verify.
 
 ## Integration tests
 
@@ -196,3 +232,6 @@ internal class WeatherForecastControllerFixture : SampleAppFixtureBase
 - Do not use `Assert.That` — use Shouldly only.
 - Do not leave empty catch blocks.
 - Do not write separate `[Test]` methods for cases that differ only in input values — use `[TestCase]` or `[TestCaseSource]` instead. **Always check for this before writing any new `[Test]` method.**
+- Do not stack more than two assertion lines — switch to a Verify snapshot.
+- Do not hardcode the same literals across tests — put canonical objects in a code book.
+- Do not leave `IDisposable` test helpers undisposed — dispose them in `[TearDown]`.
