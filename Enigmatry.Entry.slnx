@@ -36,6 +36,7 @@
   <Project Path="Enigmatry.Entry.EmailClient/Enigmatry.Entry.Email.csproj" />
   <Project Path="Enigmatry.Entry.EntityFramework.Tests/Enigmatry.Entry.EntityFramework.Tests.csproj" />
   <Project Path="Enigmatry.Entry.EntityFramework/Enigmatry.Entry.EntityFramework.csproj" />
+  <Project Path="Enigmatry.Entry.GraphApi.Tests/Enigmatry.Entry.GraphApi.Tests.csproj" />
   <Project Path="Enigmatry.Entry.GraphApi/Enigmatry.Entry.GraphApi.csproj" />
   <Project Path="Enigmatry.Entry.HealthChecks.Tests/Enigmatry.Entry.HealthChecks.Tests.csproj" />
   <Project Path="Enigmatry.Entry.HealthChecks/Enigmatry.Entry.HealthChecks.csproj" />
