@@ -1,0 +1,16 @@
+﻿{
+  Url: https://graph.microsoft.com/v1.0/users,
+  Query: {
+    %24filter: identities/any(c:c/issuerAssignedId eq 'o''brien@doe.com' and c/issuer eq 'contoso.onmicrosoft.com'),
+    %24select: [
+      id,
+      displayName,
+      givenName,
+      surname,
+      identities,
+      accountEnabled,
+      userPrincipalName,
+      mail
+    ]
+  }
+}

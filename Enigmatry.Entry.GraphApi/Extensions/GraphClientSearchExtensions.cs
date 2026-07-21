@@ -2,11 +2,7 @@
 using JetBrains.Annotations;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphUser = Microsoft.Graph.Models.User;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
@@ -50,7 +46,7 @@ public static class GraphClientSearchExtensions
         {
             requestConfiguration.QueryParameters.Select = AdjustedDefaultFields();
             requestConfiguration.QueryParameters.Filter =
-                $"identities/any(c:c/issuerAssignedId eq '{issuerAssignedId}' and c/issuer eq '{issuer}')";
+                $"identities/any(c:c/issuerAssignedId eq '{EscapeODataValue(issuerAssignedId)}' and c/issuer eq '{EscapeODataValue(issuer)}')";
         });
 
         return users?.Value?.SingleOrDefault();
@@ -86,12 +82,17 @@ public static class GraphClientSearchExtensions
     /// <param name="graph">Instance of the <see cref="GraphServiceClient"/>.</param>
     /// <param name="query">User to search for.</param>
     /// <returns>Collection of <see cref="GraphUser"/>.</returns>
-    public static async Task<IList<GraphUser>> SearchUsers(this GraphServiceClient graph, string query) =>
-        Normalize(await graph.Users.GetAsync(requestConfiguration =>
+    public static async Task<IList<GraphUser>> SearchUsers(this GraphServiceClient graph, string query)
+    {
+        var escapedQuery = EscapeODataValue(query);
+        return Normalize(await graph.Users.GetAsync(requestConfiguration =>
         {
             requestConfiguration.QueryParameters.Select = AdjustedDefaultFields();
-            requestConfiguration.QueryParameters.Filter = $"startswith(displayName, '{query}') or startswith(givenName, '{query}') or startswith(surname, '{query}') or startswith(mail, '{query}') or startswith(userPrincipalName, '{query}')";
+            requestConfiguration.QueryParameters.Filter = $"startswith(displayName, '{escapedQuery}') or startswith(givenName, '{escapedQuery}') or startswith(surname, '{escapedQuery}') or startswith(mail, '{escapedQuery}') or startswith(userPrincipalName, '{escapedQuery}')";
         }));
+    }
+
+    private static string EscapeODataValue(string value) => value.Replace("'", "''", StringComparison.Ordinal);
 
     private static GraphUser User() => new();
 

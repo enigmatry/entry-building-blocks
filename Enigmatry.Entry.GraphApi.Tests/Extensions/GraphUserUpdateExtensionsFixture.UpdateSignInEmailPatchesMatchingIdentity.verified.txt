@@ -1,0 +1,16 @@
+﻿{
+  Method: PATCH,
+  Url: https://graph.microsoft.com/v1.0/users/42,
+  Body:
+{
+  "id": "42",
+  "@odata.type": "#microsoft.graph.user",
+  "identities": [
+    {
+      "issuer": "contoso.onmicrosoft.com",
+      "issuerAssignedId": "new@doe.com",
+      "signInType": "emailAddress"
+    }
+  ]
+}
+}

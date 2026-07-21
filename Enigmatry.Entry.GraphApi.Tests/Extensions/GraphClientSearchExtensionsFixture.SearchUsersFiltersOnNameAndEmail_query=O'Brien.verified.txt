@@ -1,0 +1,16 @@
+﻿{
+  Url: https://graph.microsoft.com/v1.0/users,
+  Query: {
+    %24filter: startswith(displayName, 'O''Brien') or startswith(givenName, 'O''Brien') or startswith(surname, 'O''Brien') or startswith(mail, 'O''Brien') or startswith(userPrincipalName, 'O''Brien'),
+    %24select: [
+      id,
+      displayName,
+      givenName,
+      surname,
+      identities,
+      accountEnabled,
+      userPrincipalName,
+      mail
+    ]
+  }
+}

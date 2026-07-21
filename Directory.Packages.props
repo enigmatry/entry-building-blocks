@@ -49,7 +49,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(DotnetVersion)" />
-    <PackageVersion Include="Microsoft.Graph" Version="5.103.0" />
+    <PackageVersion Include="Microsoft.Graph" Version="6.2.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
     <PackageVersion Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.77.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.300" />
@@ -78,7 +78,6 @@
     <PackageVersion Include="Verify" Version="31.20.0" />
     <PackageVersion Include="Verify.NUnit" Version="31.20.0" />
     <!--transitive packages-->
-    <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="2.0.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
   </ItemGroup>
 </Project>

@@ -5,7 +5,6 @@
     <PackageId>Enigmatry.Entry.GraphApi</PackageId>
     <Product>Enigmatry.Entry.GraphApi</Product>
     <Description>Building Block for adding MS Graph Api</Description>
-    <NoWarn>NU1902</NoWarn><!-- TODO BP-457: remove this warning when this story is done -->
   </PropertyGroup>
 
   <ItemGroup>

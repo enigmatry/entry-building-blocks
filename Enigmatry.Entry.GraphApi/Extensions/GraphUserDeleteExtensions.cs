@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Graph;
-using System.Threading.Tasks;
 using GraphUser = Microsoft.Graph.Models.User;
 
 namespace Enigmatry.Entry.GraphApi.Extensions;
@@ -24,7 +23,6 @@ public static class GraphUserDeleteExtensions
         }
 
         await graph.RemoveUser(user.Id);
-        await graph.Users[user.Id].DeleteAsync();
         return user;
     }
 
