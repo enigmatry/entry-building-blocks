@@ -77,7 +77,5 @@
     <PackageVersion Include="Testcontainers.MsSql" Version="4.13.0" />
     <PackageVersion Include="Verify" Version="31.25.0" />
     <PackageVersion Include="Verify.NUnit" Version="31.25.0" />
-    <!--transitive packages-->
-    <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
   </ItemGroup>
 </Project>
