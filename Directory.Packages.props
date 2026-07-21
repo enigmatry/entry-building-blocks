@@ -2,20 +2,20 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-    <DotnetVersion>10.0.9</DotnetVersion>
+    <DotnetVersion>10.0.10</DotnetVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Ardalis.SmartEnum" Version="8.2.0" />
     <PackageVersion Include="Ardalis.SmartEnum.EFCore" Version="8.2.0" />
     <PackageVersion Include="Ardalis.SmartEnum.SystemTextJson" Version="8.1.0" />
     <PackageVersion Include="AspNetCore.HealthChecks.System" Version="9.0.0" />
-    <PackageVersion Include="Autofac" Version="9.3.0" />
+    <PackageVersion Include="Autofac" Version="9.3.1" />
     <PackageVersion Include="Azure.Identity" Version="1.21.0" />
     <PackageVersion Include="Azure.Search.Documents" Version="11.7.0" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.29.1" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageVersion Include="coverlet.collector" Version="8.0.1" />
-    <PackageVersion Include="coverlet.msbuild" Version="8.0.1" />
+    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
+    <PackageVersion Include="coverlet.msbuild" Version="10.0.1" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="EmailValidation" Version="1.3.0" />
     <PackageVersion Include="FakeItEasy" Version="9.0.1" />
@@ -50,9 +50,9 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(DotnetVersion)" />
     <PackageVersion Include="Microsoft.Graph" Version="6.2.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
-    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.77.0" />
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.300" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.AzureOpenAI" Version="1.78.0" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.301" />
     <PackageVersion Include="MimeKit" Version="4.17.0" />
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageVersion Include="NJsonSchema" Version="11.6.1" />
@@ -69,15 +69,13 @@
     <PackageVersion Include="Quartz.Extensions.DependencyInjection" Version="3.18.2" />
     <PackageVersion Include="Quartz.Extensions.Hosting" Version="3.18.2" />
     <PackageVersion Include="Respawn" Version="7.0.0" />
-    <PackageVersion Include="Serilog" Version="4.3.1" />
+    <PackageVersion Include="Serilog" Version="4.4.0" />
     <PackageVersion Include="Shouldly" Version="4.3.0" />
-    <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.7.2" />
+    <PackageVersion Include="System.Linq.Dynamic.Core" Version="1.7.3" />
     <PackageVersion Include="System.Net.Http.Json" Version="$(DotnetVersion)" />
     <PackageVersion Include="System.Text.Json" Version="$(DotnetVersion)" />
     <PackageVersion Include="Testcontainers.MsSql" Version="4.13.0" />
-    <PackageVersion Include="Verify" Version="31.20.0" />
-    <PackageVersion Include="Verify.NUnit" Version="31.20.0" />
-    <!--transitive packages-->
-    <PackageVersion Include="OpenTelemetry.Api" Version="1.15.3" />
+    <PackageVersion Include="Verify" Version="31.25.0" />
+    <PackageVersion Include="Verify.NUnit" Version="31.25.0" />
   </ItemGroup>
 </Project>
