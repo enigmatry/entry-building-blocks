@@ -1,0 +1,21 @@
+﻿{
+  Method: POST,
+  Url: https://graph.microsoft.com/v1.0/users,
+  Body:
+{
+  "@odata.type": "#microsoft.graph.user",
+  "displayName": "John Doe",
+  "identities": [
+    {
+      "issuer": "contoso.onmicrosoft.com",
+      "issuerAssignedId": "john@doe.com",
+      "signInType": "emailAddress"
+    }
+  ],
+  "passwordPolicies": "DisablePasswordExpiration",
+  "passwordProfile": {
+    "forceChangePasswordNextSignIn": false,
+    "password": "some-password"
+  }
+}
+}

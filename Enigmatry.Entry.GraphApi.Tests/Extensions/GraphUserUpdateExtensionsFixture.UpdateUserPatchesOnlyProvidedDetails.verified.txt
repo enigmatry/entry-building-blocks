@@ -1,0 +1,13 @@
+﻿{
+  Method: PATCH,
+  Url: https://graph.microsoft.com/v1.0/users/42,
+  Body:
+{
+  "@odata.type": "#microsoft.graph.user",
+  "displayName": "New Name",
+  "passwordProfile": {
+    "forceChangePasswordNextSignIn": false,
+    "password": "some-password"
+  }
+}
+}

@@ -72,6 +72,24 @@
           "EmptyFiles": "4.4.0"
         }
       },
+      "Verify.NUnit": {
+        "type": "Direct",
+        "requested": "[31.25.0, )",
+        "resolved": "31.25.0",
+        "contentHash": "ZB6VlUB90fhDN7lJVEiyyLYCXRBUTgq7rFslnm4byHCPmXvOPf3AVXx/9N0BhZYIM2v74Gx9yb6kYil/rFvE0Q==",
+        "dependencies": {
+          "Argon": "0.35.2",
+          "DiffEngine": "19.3.2",
+          "NUnit": "4.6.1",
+          "SimpleInfoName": "3.2.0",
+          "Verify": "31.25.0"
+        }
+      },
+      "Argon": {
+        "type": "Transitive",
+        "resolved": "0.35.2",
+        "contentHash": "o0I9+qxk1r4EB8vqRaC49kHog8/UUuFPSqpUwi5husDuqTBbbWIhLOwO2uhzA6pdM4UJoz+owN/c1p05YxAs3A=="
+      },
       "Azure.Core": {
         "type": "Transitive",
         "resolved": "1.53.0",
@@ -96,17 +114,16 @@
       },
       "DiffEngine": {
         "type": "Transitive",
-        "resolved": "11.3.0",
-        "contentHash": "k0ZgZqd09jLZQjR8FyQbSQE86Q7QZnjEzq1LPHtj1R2AoWO8sjV5x+jlSisL7NZAbUOI4y+7Bog8gkr9WIRBGw==",
+        "resolved": "19.3.2",
+        "contentHash": "xm+yinIZoVlGYudlIxNmPY+HOypE6hPGqdQN+W2tlwTMzpxo29wgTh2Y4MRangVx+3d1gac+51Kq3iaTu1dVfQ==",
         "dependencies": {
-          "EmptyFiles": "4.4.0",
-          "System.Management": "6.0.1"
+          "EmptyFiles": "8.18.2"
         }
       },
       "EmptyFiles": {
         "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "gwJEfIGS7FhykvtZoscwXj/XwW+mJY6UbAZk+qtLKFUGWC95kfKXnj8VkxsZQnWBxJemM/q664rGLN5nf+OHZw=="
+        "resolved": "8.18.2",
+        "contentHash": "9TKkDyiREYxgTDeoBrVlmBP83w7Hjhj5sDACQhketSgRhgaXRKpjPW7sazx3PEOg0i5PbrwLjoJG9caavf69hg=="
       },
       "MediatR.Contracts": {
         "type": "Transitive",
@@ -374,6 +391,11 @@
           "Microsoft.TestPlatform.ObjectModel": "18.8.1"
         }
       },
+      "SimpleInfoName": {
+        "type": "Transitive",
+        "resolved": "3.2.0",
+        "contentHash": "K8ivHRbPWfncijk62Dan/r/z55gwq3aFzqB6yFlD9X0bbpIaacHyHH2cpcIdz0FECUpERUZTwxts0z4gRWpQpA=="
+      },
       "Std.UriTemplate": {
         "type": "Transitive",
         "resolved": "2.0.8",
@@ -390,11 +412,6 @@
           "System.Memory.Data": "10.0.3"
         }
       },
-      "System.CodeDom": {
-        "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA=="
-      },
       "System.Diagnostics.EventLog": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -407,14 +424,6 @@
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "8.18.0",
           "Microsoft.IdentityModel.Tokens": "8.18.0"
-        }
-      },
-      "System.Management": {
-        "type": "Transitive",
-        "resolved": "6.0.1",
-        "contentHash": "10J1D0h/lioojphfJ4Fuh5ZUThT/xOVHdV9roGBittKKNP2PMjrvibEdbVTGZcPra1399Ja3tqIJLyQrc5Wmhg==",
-        "dependencies": {
-          "System.CodeDom": "6.0.0"
         }
       },
       "System.Memory.Data": {
@@ -559,6 +568,17 @@
         "requested": "[4.4.0, )",
         "resolved": "4.4.0",
         "contentHash": "ZC6Le3rr4TVJJjS4KsQAesxeF1EhW9qcZmmG7eP5Y2G3+gTGkJEUXkq4+tZNPtyp05I0wWOxnIjwtxFweJsObw=="
+      },
+      "Verify": {
+        "type": "CentralTransitive",
+        "requested": "[31.25.0, )",
+        "resolved": "31.25.0",
+        "contentHash": "ZfBnj9tYEG0fzcEOCJsPxV3ukAetvItkEThXD0u6UvecIliviIXyKr/8wR+0C+4J2LLaDA2b1dHL/p8Du0RjWA==",
+        "dependencies": {
+          "Argon": "0.35.2",
+          "DiffEngine": "19.3.2",
+          "SimpleInfoName": "3.2.0"
+        }
       }
     }
   }

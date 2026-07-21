@@ -77,6 +77,9 @@ All version numbers live in `Directory.Packages.props`. Never add a `Version` at
 - `LangVersion=14.0`, `Nullable=enable`, `ImplicitUsings=enable`.
 - MediatR is pinned to an exact version (`[12.4.1]`) to prevent accidental upgrades.
 
+### Code organization
+- One type/class per file, file named after the type. Applies to every language (C#, TS, ...).
+
 ### Test conventions
 - Test classes are named `*Fixture` or `*Tests`.
 - Every test class carries `[Category("unit")]`, `[Category("integration")]`, or `[Category("smoke")]`.

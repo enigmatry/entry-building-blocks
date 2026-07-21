@@ -36,9 +36,21 @@ Constructor_WhenEndExceedsMaxLength_ThrowsArgumentOutOfRangeException
 Parse_MissingSectionsLine_ThrowsFormatException
 ```
 
+Keep names short by eliminating words already known from context (the fixture name, the method under test):
+
+```csharp
+// ✅ in GraphUserUpdateExtensionsFixture
+UpdateSignInEmailWithNoMatchDoesNotPatch
+
+// ❌ repeats context the fixture and method already provide
+UpdateUserSignInEmailAddressWithNoMatchReturnsTheUserWithoutPatching
+```
+
 ## Test structure — AAA without comments
 
 Separate Arrange / Act / Assert with a **blank line only** — never write `// Arrange`, `// Act`, or `// Assert` comments:
+
+Keep each phase a single block — exactly three blocks per test.
 
 ```csharp
 [Test]
@@ -124,6 +136,30 @@ A.CallTo(() => _myService.GetAsync(id)).Returns(expected);
 A.CallTo(() => _myService.SaveAsync(A<MyEntity>._)).MustHaveHappenedOnceExactly();
 ```
 
+## Test data — code books
+
+Define canonical test objects once in a code book instead of scattering literals (`new GraphUser { Id = "42" }`, magic emails) across tests. Use C# 14 static extension members so it reads like a member of the domain type:
+
+```csharp
+internal static class GraphUserCodeBook
+{
+    extension(GraphUser)
+    {
+        public static GraphUser Some => new() { Id = "42" };
+    }
+}
+
+// in a test
+var user = GraphUser.Some;
+```
+
+One code book class per extended type — same-named members from two `extension` blocks in one class collide.
+
+## Test infrastructure helpers
+
+- Prefer a **builder** over public mutable setters when a test helper needs configuration: `new FakeGraphClientBuilder().WithUser(GraphUser.Some).Build()`, not `helper.UserResponse = ...`.
+- If a helper owns disposable resources (`HttpClient`, `GraphServiceClient`, streams), make it `IDisposable` and dispose it in `[TearDown]`.
+
 ## Exception assertions
 
 Use `Should.Throw<T>` for synchronous code and `Should.ThrowAsync<T>` for async — never `Assert.Throws`:
@@ -154,7 +190,7 @@ public async Task GetConfigurationMatchesSnapshot()
 
 - On first run, Verify creates a `.received.txt` file — review it and rename/copy to `.verified.txt` to approve.
 - Commit `.verified.txt` files alongside the tests.
-- Do **not** use Verify for simple unit tests — use explicit Shouldly assertions there.
+- **Use Verify whenever a test needs more than two lines of verification** — also in unit tests: snapshot one object that captures everything (e.g. a request's method + URL + query + body).
 
 ## Integration tests
 

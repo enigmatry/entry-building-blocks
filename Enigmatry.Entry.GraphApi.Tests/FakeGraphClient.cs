@@ -6,41 +6,38 @@ using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Serialization.Json;
 using System.Text.Json;
+using GraphUser = Microsoft.Graph.Models.User;
 
 namespace Enigmatry.Entry.GraphApi.Tests;
 
 /// <summary>
 /// A <see cref="GraphServiceClient"/> over a faked <see cref="IRequestAdapter"/> that records every
-/// <see cref="RequestInformation"/> the fluent API builds and returns canned responses.
+/// <see cref="RequestInformation"/> the fluent API builds and returns the configured responses.
 /// </summary>
-internal sealed class FakeGraphClient
+internal sealed class FakeGraphClient : IDisposable
 {
-    private readonly IRequestAdapter _adapter = A.Fake<IRequestAdapter>();
-
     public GraphServiceClient Client { get; }
     public List<RequestInformation> Requests { get; } = [];
 
-    public User? UserResponse { get; set; }
-    public UserCollectionResponse? UsersResponse { get; set; }
-    public Stream? StreamResponse { get; set; }
-
-    public FakeGraphClient()
+    internal FakeGraphClient(GraphUser? userResponse, UserCollectionResponse? usersResponse, Stream? photoResponse)
     {
-        A.CallTo(() => _adapter.SerializationWriterFactory).Returns(new JsonSerializationWriterFactory());
+        var adapter = A.Fake<IRequestAdapter>();
 
-        A.CallTo(() => _adapter.SendAsync(A<RequestInformation>._, A<ParsableFactory<User>>._,
+        A.CallTo(() => adapter.SerializationWriterFactory).Returns(new JsonSerializationWriterFactory());
+
+        A.CallTo(() => adapter.SendAsync(A<RequestInformation>._, A<ParsableFactory<GraphUser>>._,
                 A<Dictionary<string, ParsableFactory<IParsable>>>._, A<CancellationToken>._))
-            .ReturnsLazily(call => Capture(call, UserResponse));
+            .ReturnsLazily(call => Capture(call, userResponse));
 
-        A.CallTo(() => _adapter.SendAsync(A<RequestInformation>._, A<ParsableFactory<UserCollectionResponse>>._,
+        A.CallTo(() => adapter.SendAsync(A<RequestInformation>._, A<ParsableFactory<UserCollectionResponse>>._,
                 A<Dictionary<string, ParsableFactory<IParsable>>>._, A<CancellationToken>._))
-            .ReturnsLazily(call => Capture(call, UsersResponse));
+            .ReturnsLazily(call => Capture(call, usersResponse));
 
-        A.CallTo(() => _adapter.SendPrimitiveAsync<Stream>(A<RequestInformation>._,
+        A.CallTo(() => adapter.SendPrimitiveAsync<Stream>(A<RequestInformation>._,
                 A<Dictionary<string, ParsableFactory<IParsable>>>._, A<CancellationToken>._))
-            .ReturnsLazily(call => Capture(call, StreamResponse));
+            .ReturnsLazily(call => Capture(call, photoResponse));
 
-        A.CallTo(() => _adapter.SendNoContentAsync(A<RequestInformation>._,
+        A.CallTo(() => adapter.SendNoContentAsync(A<RequestInformation>._,
                 A<Dictionary<string, ParsableFactory<IParsable>>>._, A<CancellationToken>._))
             .ReturnsLazily(call =>
             {
@@ -48,20 +45,40 @@ internal sealed class FakeGraphClient
                 return Task.CompletedTask;
             });
 
-        Client = new GraphServiceClient(_adapter);
+        Client = new GraphServiceClient(adapter);
     }
 
     public RequestInformation SingleRequest => Requests.Single();
 
-    public JsonElement SingleRequestJsonBody()
-    {
-        using var document = JsonDocument.Parse(SingleRequest.Content);
-        return document.RootElement.Clone();
-    }
+    public object SingleRequestSnapshot() => Snapshot(SingleRequest);
+
+    public IEnumerable<object> RequestsSnapshot() => Requests.Select(Snapshot);
+
+    public void Dispose() => Client.Dispose();
 
     private Task<T?> Capture<T>(IFakeObjectCall call, T? response)
     {
         Requests.Add((RequestInformation)call.Arguments[0]!);
         return Task.FromResult(response);
+    }
+
+    private static object Snapshot(RequestInformation request) => new
+    {
+        Method = request.HttpMethod,
+        Url = request.URI.GetLeftPart(UriPartial.Path),
+        Query = request.QueryParameters,
+        Body = ReadBody(request)
+    };
+
+    private static string? ReadBody(RequestInformation request)
+    {
+        if (request.Content == null || request.Content.Length == 0)
+        {
+            return null;
+        }
+
+        using var document = JsonDocument.Parse(request.Content);
+        return JsonSerializer.Serialize(document.RootElement,
+            new JsonSerializerOptions { WriteIndented = true, NewLine = "\n" });
     }
 }
