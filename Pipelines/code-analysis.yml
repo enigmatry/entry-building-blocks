@@ -26,6 +26,11 @@ jobs:
     displayName: 'Code Analysis'
     dotNetVersion: '10.0.x'
     useSlnx: true
+    envVariablesForTests:
+    - name: AzureSearch__SearchServiceEndPoint
+      value: $(AzureSearch__SearchServiceEndPoint)
+    - name: AzureSearch__ApiKey
+      value: $(AzureSearch__ApiKey)
 
 - template: build-report-job.yml@templates
   parameters:
