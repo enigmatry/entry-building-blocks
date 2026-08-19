@@ -37,6 +37,6 @@ public class SearchIndexClientFixture
     {
         var index = _indexFactory.Build();
         await _searchIndexClient.CreateOrUpdateIndexAsync(index);
-        await _searchIndexClient.DeleteIndexAsync(index.Name);
+        await _searchIndexClient.DeleteIndexAsync(index.Name, CancellationToken.None);
     }
 }
