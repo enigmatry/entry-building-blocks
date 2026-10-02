@@ -60,3 +60,24 @@ public class Startup
     }
 }
 ```
+
+## Breaking change: Implicit Grant flow removed
+
+`AddEntrySwaggerWithImplicitGrant` and the legacy `AppAddSwaggerWithImplicitGrant` have been removed.
+The OAuth2 Implicit Grant flow is deprecated and removed in [OAuth 2.1](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1):
+access tokens are returned in the browser URL fragment (leakable via referrer headers, browser history and server logs)
+and no refresh tokens are issued.
+
+Replace the call with the Authorization Code + PKCE equivalent; the parameters are identical:
+
+```csharp
+// Before
+services.AddEntrySwaggerWithImplicitGrant(appTitle, authorizationUrl, tokenUrl, scopes, appVersion, configureSettings);
+
+// After
+services.AddEntrySwaggerWithAuthorizationCode(appTitle, authorizationUrl, tokenUrl, scopes, appVersion, configureSettings);
+```
+
+and wire the Swagger UI with `app.UseEntrySwaggerWithOAuth2Client(clientId, clientSecret, path)`, which enables PKCE
+for the Authorization Code grant. Your identity provider must allow the Authorization Code flow (with PKCE, no client
+secret) for the Swagger UI client.
