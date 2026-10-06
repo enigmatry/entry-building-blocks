@@ -2,7 +2,6 @@
 using Enigmatry.Entry.BlobStorage.Azure;
 using Enigmatry.Entry.BlobStorage.Models;
 using Microsoft.Extensions.Options;
-using NUnit.Framework;
 using Shouldly;
 
 namespace Enigmatry.Entry.BlobStorage.Tests;
@@ -111,8 +110,8 @@ public class AzurePrivateBlobStorageFixture
         // the fix is to grab the new signature in the debugger and update the test
         var path = $"https://{AccountName}.blob.core.windows.net:443" +
                    $"/{ContainerName}/{ResourceName}" +
-                   "?sv=2026-06-06&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
-                   "&sig=YKmaL%2BfpKdMqS4ecIkM%2Fc6X2Bdq6cpTpKsr4lUAOO54%3D";
+                   "?sv=2026-10-06&spr=https&se=2022-08-10T12%3A26%3A47Z&sr=b&sp=r" +
+                   "&sig=NO80%2FEeCmpEuodKR%2FhB5BHAYbXI1HndCZI25TEYI2Vo%3D";
 
         _blobStorage.VerifySharedResourcePath(new Uri(path)).ShouldBeTrue();
     }
