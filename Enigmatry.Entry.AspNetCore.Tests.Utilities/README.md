@@ -6,6 +6,10 @@ A library that provides testing utilities and helpers for ASP.NET Core applicati
 
 Use this library when you need to write tests for ASP.NET Core applications. It provides utilities for mocking HTTP contexts, working with controllers, testing middleware, and more.
 
+## Requirements
+
+Requires NUnit 5 or later.
+
 ## Installation
 
 Add the package to your project:
