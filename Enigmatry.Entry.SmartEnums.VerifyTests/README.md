@@ -6,6 +6,18 @@ A library that provides testing utilities for Smart Enums using the Verify testi
 
 Use this library when you need to write tests for Smart Enum types using the Verify snapshot testing approach. It helps validate that your Smart Enums behave consistently and serialize correctly.
 
+## Requirements
+
+This package depends on [Verify](https://github.com/VerifyTests/Verify) 33, which checks at build time that the consuming build declares its [maintenance fee status](https://github.com/VerifyTests/Verify/blob/main/docs/maintenance-fee.md). Declare it once in `Directory.Build.props`, for example as a GitHub sponsor:
+
+```xml
+<PropertyGroup>
+  <Verify_GitHubSponsorAccount>your-github-account</Verify_GitHubSponsorAccount>
+</PropertyGroup>
+```
+
+Without a declaration the build fails with `SC021`.
+
 ## Installation
 
 Add the package to your project:

@@ -6,6 +6,10 @@ A library that provides testing utilities for ASP.NET Core applications using Ne
 
 Use this library when testing ASP.NET Core applications that use Newtonsoft.Json for JSON serialization. It includes helper methods for serializing and deserializing test data, as well as utilities for HTTP request and response handling.
 
+## Requirements
+
+Depends on `Enigmatry.Entry.AspNetCore.Tests.Utilities` and therefore requires NUnit 5 or later.
+
 ## Installation
 
 Add the package to your project:
@@ -54,7 +58,7 @@ public class ApiClientTests
         response.RequestMessage = new HttpRequestMessage(HttpMethod.Get, "api/products/999");
         
         // Assert
-        // DeserializeWithStatusCodeCheckAsync will throw if status code is not success        Assert.ThrowsAsync<HttpRequestException>(async () => 
+        // DeserializeWithStatusCodeCheckAsync will throw if status code is not success        await Assert.ThrowsAsync<HttpRequestException>(async () => 
             await response.DeserializeWithStatusCodeCheckAsync<Product>());
     }    [Test]
     public async Task EnsureSuccessStatusCode_ThrowsWithContent_WhenNotSuccess()
@@ -65,7 +69,7 @@ public class ApiClientTests
         response.RequestMessage = new HttpRequestMessage(HttpMethod.Get, "api/products");
         
         // Act & Assert
-        // EnsureSuccessStatusCodeAsync enhances exception with content details        var exception = Assert.ThrowsAsync<HttpRequestException>(async () => 
+        // EnsureSuccessStatusCodeAsync enhances exception with content details        var exception = await Assert.ThrowsAsync<HttpRequestException>(async () => 
             await response.EnsureSuccessStatusCodeAsync());
             
         Assert.That(exception.Message, Does.Contain("StatusCode: BadRequest"));
