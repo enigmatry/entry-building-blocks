@@ -16,13 +16,13 @@
       },
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
         "type": "Direct",
-        "requested": "[10.0.13, )",
-        "resolved": "10.0.13",
-        "contentHash": "GI3+ay/fKCdR1e5ycK0pXJgI+eqY/LMDNz+ZhAKXq/ZUD1w5AIMbGygJ2Xf9jBCnoPerFEkHIosEdDh/Ja6yzA==",
+        "requested": "[10.0.14, )",
+        "resolved": "10.0.14",
+        "contentHash": "etcBvy3OyYRRTrSS2BFkg9WY9PqgRIp3Xe8AOCYhGxjYh6HFTnF9VD7NvubjWuezMkBLv1JB7x6wFpHCMt0Y7A==",
         "dependencies": {
           "Microsoft.AspNetCore.Mvc.Razor.Extensions": "6.0.0",
           "Microsoft.CodeAnalysis.Razor": "6.0.0",
-          "Microsoft.Extensions.DependencyModel": "10.0.13"
+          "Microsoft.Extensions.DependencyModel": "10.0.14"
         }
       },
       "Microsoft.NET.Test.Sdk": {
@@ -145,8 +145,8 @@
       },
       "Microsoft.Extensions.DependencyModel": {
         "type": "Transitive",
-        "resolved": "10.0.13",
-        "contentHash": "6TyllZsToy3S/Ziu67GddljRTttuVJ8bbrbVUrsdHqH5678Oax5MpaEubxLoPoWLvgUBYo4KfcAig0mkBtktXQ=="
+        "resolved": "10.0.14",
+        "contentHash": "N8OcqM0370wSXMJ3ZxO66rSElHrIgxvpfUn0vV7zRj7NvKo0nfwgEoTmC3Yz3860o60IaQ4KIPyeLIGX9EeNWA=="
       },
       "Microsoft.Testing.Extensions.Telemetry": {
         "type": "Transitive",
@@ -233,7 +233,7 @@
         "type": "Project",
         "dependencies": {
           "Enigmatry.Entry.Core": "[1.0.0, )",
-          "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "[10.0.13, )"
+          "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": "[10.0.14, )"
         }
       },
       "FluentValidation": {
