@@ -1,73 +1,94 @@
-# entry-building-blocks
+# Entry building blocks
 
-## Index
+Entry building blocks are the .NET packages Enigmatry builds client systems on: persistence, security, search, storage, mail, scheduling, health checks and API documentation, shipped as ordinary NuGet packages rather than as a framework that takes over your application. Each package is an independent module on `net10.0`; take the ones you need and leave the rest.
 
-* [Project Overview](#project-overview)
-* [Development Environment](#development-environment)
-* [Test Environment](#test-environment)
-* [Team](#team)
+Together with the [Entry blueprint](https://github.com/enigmatry/entry-blueprint), a ready-to-run solution skeleton, and [Entry code generation](https://github.com/enigmatry/entry-code-generation), which generates Angular forms and tables from C# configuration, they form Entry: the open-source foundation described at https://www.enigmatry.com/en/entry/.
 
-## Project Overview
+## Packages
 
-### Project Functionality
+All packages are published on nuget.org under the [Enigmatry](https://www.nuget.org/profiles/Enigmatry) profile.
 
-_Describe some of the important use cases and who the users are. Also describe if the software plays in important role in business processes._
+| Package | What it adds |
+|---|---|
+| `Enigmatry.Entry.Core` | Base entities, typed ids, CQRS interfaces, paging and domain events. Depends on no other Entry module. |
+| `Enigmatry.Entry.Core.EntityFramework` | Core abstractions for projects that depend on Entity Framework. |
+| `Enigmatry.Entry.Infrastructure` | Infrastructure services such as the `TimeProvider` implementation. |
+| `Enigmatry.Entry.EntityFramework` | `BaseDbContext`, repository, unit of work and the domain-event interceptor for EF Core. |
+| `Enigmatry.Entry.MediatR` | Validation and logging pipeline behaviours and a null mediator for MediatR. |
+| `Enigmatry.Entry.AspNetCore` | Exception handling, HTTPS, transaction filter and action-result helpers for ASP.NET Core. |
+| `Enigmatry.Entry.AspNetCore.Authorization` | Permission-based authorization for ASP.NET Core applications. |
+| `Enigmatry.Entry.SwaggerSecurity` | Swagger documentation with security definitions. |
+| `Enigmatry.Entry.SmartEnums` | SmartEnum support for Entry entities. |
+| `Enigmatry.Entry.SmartEnums.EntityFramework` | SmartEnum value conversion for EF Core. |
+| `Enigmatry.Entry.SmartEnums.SystemTextJson` | SmartEnum serialisation for System.Text.Json. |
+| `Enigmatry.Entry.SmartEnums.Swagger` | SmartEnum schemas for Swagger and NSwag. |
+| `Enigmatry.Entry.BlobStorage` | Azure Blob Storage access. |
+| `Enigmatry.Entry.AzureSearch` | Azure AI Search (formerly Cognitive Search) indexing and querying. |
+| `Enigmatry.Entry.GraphApi` | Microsoft Graph API client set-up. |
+| `Enigmatry.Entry.EmailClient` | Sending e-mail. |
+| `Enigmatry.Entry.TemplatingEngine.Razor` | Templating, for e-mail among other things, with Razor. |
+| `Enigmatry.Entry.TemplatingEngine.Fluid` | Templating with Fluid (Liquid syntax). |
+| `Enigmatry.Entry.Csv` | Reading and writing CSV. |
+| `Enigmatry.Entry.HealthChecks` | Health-check registration and endpoints. |
+| `Enigmatry.Entry.Scheduler` | Start-up extensions for a scheduler web job running Quartz jobs. |
+| `Enigmatry.Entry.Randomness` | Random values for tests and seeding. |
 
-### Project Architecture
+The packages form layers; upper layers depend on lower ones, never the other way round:
 
-_Give an architectural overview of the project. Describe the different building blocks of the application, layers, API's and databases._
+```
+Enigmatry.Entry.Core                    base entities, CQRS interfaces, paging, domain events
+Enigmatry.Entry.Infrastructure          TimeProvider implementation
+Enigmatry.Entry.EntityFramework         BaseDbContext, repository, unit of work, domain-event interceptor
+Enigmatry.Entry.MediatR                 ValidationBehavior, LoggingBehavior, NullMediator
+Enigmatry.Entry.AspNetCore              exception handling, HTTPS, transaction filter, action-result helpers
+Enigmatry.Entry.AspNetCore.Authorization
+Enigmatry.Entry.SmartEnums.*            SmartEnum + EF Core, Swagger, System.Text.Json, Verify helpers
+Enigmatry.Entry.Csv / EmailClient / BlobStorage / AzureSearch / GraphApi / HealthChecks / Scheduler / TemplatingEngine.*
+```
 
-### External Dependencies
+## Getting started
 
-_Does the application depend on any external API's or 3rd party libraries? Describe them here._
+Add the packages you need to your project:
 
-### Solution Overview
+```powershell
+dotnet add package Enigmatry.Entry.Core
+dotnet add package Enigmatry.Entry.EntityFramework
+dotnet add package Enigmatry.Entry.AspNetCore
+```
 
-_List the Modules / Projects / Projects that make up the complete solution, and give a short description of the module. For example with a table:_
+Each module registers itself through extension methods on the service collection or the application builder; the XML documentation on those methods describes the options. For a complete application that already wires the blocks together, start from the [Entry blueprint](https://github.com/enigmatry/entry-blueprint) instead: `dotnet new install Enigmatry.Entry.Blueprint.Template` and then `dotnet new blueprint`.
 
-Project/Module | Description
----|---
-_Name_ | _Description_
+## Building from source
 
-### Frameworks Used
+```powershell
+# Build
+dotnet build -c Release
 
-_List the Frameworks and SDK's, including the version numbers, used by the project._
+# The fast test categories, which is what CI runs
+dotnet test -c Release --filter "TestCategory=unit|TestCategory=smoke"
 
-## Development Environment (Getting Started)
+# One test project
+dotnet test Enigmatry.Entry.MediatR.Tests -c Release
 
-This section describes how to set up the application locally.
+# Build, test and pack (needs minver-cli installed globally)
+.\build.ps1
+```
 
-### Prerequisites
+Every module follows the same shape: `Enigmatry.Entry.<Module>/` holds the package, `Enigmatry.Entry.<Module>.Tests/` its tests. Package versions are managed centrally in `Directory.Packages.props`; after changing one, run `dotnet restore --force-evaluate` to regenerate the lock files. Warnings are errors, and code style is enforced in the build.
 
-_List here the required tooling to start developing locally, including version (i.e. Visual Studio 2017+, etc.)._
+## Contributing
 
-### Source Code
+Issues and pull requests are welcome. Keep a change inside one module where you can, add or update the tests of that module, and run the fast test categories before opening the pull request.
 
-Clone the repository from: `https://github.com/enigmatry/entry-building-blocks`
+## Licence
 
-* Console command: `git clone https://github.com/enigmatry/entry-building-blocks`
-* Visual Studio: Go to menu Team -> Manage Connections, and then in section Local Git Repositories select action 'Clone' and specify the remote git url and checkout directory.
+Apache-2.0. See [LICENSE.md](https://github.com/enigmatry/entry-building-blocks/blob/master/LICENSE.md).
 
-### Databases and Storage
+## About Enigmatry
 
-_Describe how to deal with Databases and (file) storage used by the project when developing locally._
+Entry is the open-source foundation Enigmatry builds client systems on. Enigmatry is a software company from Rotterdam, founded in 2006, with teams in Belgrade and Novi Sad.
 
-### Configuring the Solution
+* How we use Entry for clients: https://www.enigmatry.com/en/entry/
+* How we build, with agents under checks: https://www.enigmatry.com/en/how-we-build/
 
-_Specify the Settings that need to be configured to make the application run locally._
-
-### Running the Solution
-
-_Specify the steps to take to start the application (after meeting the prerequisites and configuration)._
-
-## Test Environment
-
-_Use this section to specify the details of the Test environment. (url's, servers, databases, etc.)._
-
-## Additional Deployment information
-
-_Describe any non-standard or manual procedures to deploy changes to other environments._
-
-## Team
-
-_List the team members and their contact information._
+Apache-2.0 © Enigmatry
