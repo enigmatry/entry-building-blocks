@@ -47,9 +47,15 @@ Enigmatry.Entry.AspNetCore              ← exception handling, HTTPS, transacti
 Enigmatry.Entry.AspNetCore.Authorization
 Enigmatry.Entry.SmartEnums.*            ← SmartEnum + EF, Swagger, STJ, Verify helpers
 Enigmatry.Entry.Csv / Email / BlobStorage / AzureSearch / GraphApi / HealthChecks / Scheduler / TemplatingEngine.*
+Enigmatry.Entry.Core.EntityFramework    ← EF queryable extensions, data seeding
+Enigmatry.Entry.Swagger                 ← NSwag OpenAPI setup and security
+Enigmatry.Entry.Randomness              ← random data for tests and seeding
+Enigmatry.Entry.AspNetCore.Tests.*      ← test packages for consumers: Utilities (Testcontainers SQL, Respawn, in-memory DB), NewtonsoftJson/SystemTextJson HttpClient helpers
 ```
 
 `Enigmatry.Entry.Core` must have zero dependencies on any other Entry module.
+
+Folder names match the package ID, except `Enigmatry.Entry.EmailClient` (package `Enigmatry.Entry.Email`) and `Enigmatry.Entry.SwaggerSecurity` (package `Enigmatry.Entry.Swagger`).
 
 ## Key conventions
 
@@ -59,18 +65,19 @@ Enigmatry.Entry.Csv / Email / BlobStorage / AzureSearch / GraphApi / HealthCheck
 - Events are raised via `AddDomainEvent()` inside the entity; `PublishDomainEventsInterceptor` dispatches them via MediatR on `SaveChangesAsync`.
 
 ### CQRS
-- Commands implement `ICommand` (no return) or `ICommand<TResponse>`.
-- Queries implement `IQuery<TResponse>`.
-- Both wrap MediatR `IRequest`. `IBaseCommand` tags the handler for `CommandTransactionBehavior` (wraps in a DB transaction).
+- Commands implement `ICommand` or `ICommand<TResponse>`, queries `IQuery<TResponse>`; all are MediatR `IRequest`s, and commands share `IBaseCommand`.
+- `IBaseCommand.TransactionBehavior` returns a `CommandTransactionBehavior` settings record (default: a `ReadCommitted` transaction; `NoTransaction` opts out). The abstract `SaveChangesBehavior<TDbContext, TRequest, TResponse>` in `Enigmatry.Entry.EntityFramework` reads it to wrap commands in a transaction and save; consumers subclass and register it.
 
 ### MediatR pipeline
-Registered behaviors (in order): `ValidationBehavior` → `LoggingBehavior`. Validation runs FluentValidation; failures throw `ValidationException` before the handler executes.
+`Enigmatry.Entry.MediatR` ships `ValidationBehavior` (runs FluentValidation; failures throw `ValidationException` before the handler) and `LoggingBehavior`. The packages register no behaviors: consumers do, as `ValidationBehavior` → `LoggingBehavior` (see the package README).
 
 ### EF DbContext
 Extend `BaseDbContext`. Pass `EntitiesDbContextOptions` to the constructor — it controls which assembly is scanned for `IEntityTypeConfiguration` implementations.
 
 ### NuGet Central Package Management
 All version numbers live in `Directory.Packages.props`. Never add a `Version` attribute to a `.csproj` file. Transitive pinning is enabled (`CentralPackageTransitivePinningEnabled=true`). Lock files are enforced (`RestorePackagesWithLockFile=true`).
+
+.NET 11 ships `Microsoft.Extensions.{Caching,Configuration,DependencyInjection,Diagnostics,FileProviders,Hosting,Logging}.Abstractions`, `Microsoft.Extensions.Options` and `Microsoft.Extensions.Primitives` in the shared framework. A `PackageReference` to any of them raises NU1510, which is a build error here.
 
 ### Build settings (`Directory.Build.props`)
 - `TreatWarningsAsErrors=true` and `EnforceCodeStyleInBuild=true` — all warnings are build errors.
@@ -82,11 +89,13 @@ All version numbers live in `Directory.Packages.props`. Never add a `Version` at
 
 ### Test conventions
 - Test classes are named `*Fixture` or `*Tests`.
-- Every test class carries `[Category("unit")]`, `[Category("integration")]`, or `[Category("smoke")]`.
-- Only `unit` and `smoke` categories run in CI; `integration` tests (Azure services, Testcontainers) are skipped in CI.
+- Every test class carries `[Category("unit")]` or `[Category("integration")]`. CI runs `unit` (its filter also admits `smoke`).
+- `integration` tests: `AzureSearch.Tests` needs an Azure AI Search service, configured through user secrets or the `AzureSearch__SearchServiceEndPoint` / `AzureSearch__ApiKey` env vars (the shared test service holds at most 15 indexes). The `AspNetCore.Tests*` fixtures host SampleApp in-process and need nothing external.
 - Assertions use **Shouldly** (`result.ShouldBe(...)`) or **Verify** for snapshot testing.
+- Verify snapshots (`*.verified.txt`) sit next to their fixture; `*.received.*` files are gitignored.
 - Mocking uses **FakeItEasy** (`A.Fake<T>()`, `A.CallTo(...).MustHaveHappened(...)`).
-- Shared test infrastructure lives in `Enigmatry.Entry.AspNetCore.Tests.Utilities`.
+- Shared test infrastructure for this repo lives in `Enigmatry.Entry.AspNetCore.Tests`. `Enigmatry.Entry.AspNetCore.Tests.Utilities` is a package for consumers.
+- Detailed guidance: `.claude/skills/csharp-unit-tests` (tests) and `.claude/skills/azure-devops-pipelines` (pipeline YAML).
 
 ### SmartEnums
 Use `Ardalis.SmartEnum` as the base. Companion packages add EF Core value converters (`SmartEnums.EntityFramework`), System.Text.Json converters (`SmartEnums.SystemTextJson`), and Swagger schema support (`SmartEnums.Swagger`).
