@@ -1,6 +1,6 @@
 ## What this repository is
 
-A collection of reusable .NET NuGet packages (`net10.0`) published by Enigmatry. Each package is an independent module; all share configuration via `Directory.Build.props` and `Directory.Packages.props`.
+A collection of reusable .NET NuGet packages (`net11.0`) published by Enigmatry. Each package is an independent module; all share configuration via `Directory.Build.props` and `Directory.Packages.props`.
 
 ## Build, test, and pack
 

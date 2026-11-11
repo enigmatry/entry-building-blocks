@@ -1,6 +1,6 @@
 # Entry building blocks
 
-Entry building blocks are the .NET packages Enigmatry builds client systems on: persistence, security, search, storage, mail, scheduling, health checks and API documentation, shipped as ordinary NuGet packages rather than as a framework that takes over your application. Each package is an independent module on `net10.0`; take the ones you need and leave the rest.
+Entry building blocks are the .NET packages Enigmatry builds client systems on: persistence, security, search, storage, mail, scheduling, health checks and API documentation, shipped as ordinary NuGet packages rather than as a framework that takes over your application. Each package is an independent module on `net11.0`; take the ones you need and leave the rest.
 
 Together with the [Entry blueprint](https://github.com/enigmatry/entry-blueprint), a ready-to-run solution skeleton, and [Entry code generation](https://github.com/enigmatry/entry-code-generation), which generates Angular forms and tables from C# configuration, they form Entry: the open-source foundation described at https://www.enigmatry.com/en/entry/.
 
