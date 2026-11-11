@@ -63,6 +63,12 @@ internal class MailKitEmailClient : IEmailClient
                         "Unable to send message with id {MessageId} with error code {ErrorCode} due to a command error: {ErrorMessage}",
                         emailMessage.MessageId, ex.ErrorCode, ex.Message);
                 }
+                catch (SmtpUtf8AddressException ex)
+                {
+                    _logger.LogWarning(ex,
+                        "Unable to send message with id {MessageId} due to an invalid address: {ErrorMessage}",
+                        emailMessage.MessageId, ex.Message);
+                }
                 catch (ProtocolException ex) when (smtpClient.IsConnected)
                 {
                     // only when the client is still connected we should continue trying to send any other message
