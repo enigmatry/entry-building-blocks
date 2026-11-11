@@ -21,11 +21,13 @@ public class RazorSampleConsoleStartup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+#pragma warning disable ASPDEPR003
         services.AddRazorPages().AddRazorRuntimeCompilation(options =>
         {
             options.FileProviders.Clear();
             options.FileProviders.Add(new PhysicalFileProvider(_environment.ContentRootPath));
         });
+#pragma warning restore ASPDEPR003
 
         services.AddEntryTemplatingEngine();
     }
