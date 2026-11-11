@@ -84,7 +84,7 @@ All version numbers live in `Directory.Packages.props`. Never specify a `Version
 
 ### Build settings (Directory.Build.props)
 - `TreatWarningsAsErrors=true` and `EnforceCodeStyleInBuild=true` are global — all warnings are errors.
-- `LangVersion=14.0`, `Nullable=enable`, `ImplicitUsings=enable`.
+- `LangVersion=15.0`, `AnalysisLevel=11.0`, `Nullable=enable`, `ImplicitUsings=enable`.
 - `MediatR` is pinned to an exact version (`[12.4.1]`) to prevent accidental upgrades.
 
 ### Test conventions

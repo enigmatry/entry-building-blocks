@@ -4,11 +4,11 @@
     "net11.0": {
       "Fluid.Core": {
         "type": "Direct",
-        "requested": "[2.40.0, )",
-        "resolved": "2.40.0",
-        "contentHash": "bBI5NejSVAU4Ug1eSodIZXUfjtOWpSUC5pXxMW1jfdKZn3LgLZuVtBDpidl7odaVQL4oGE9nili+JFfs5q6BYQ==",
+        "requested": "[2.41.1, )",
+        "resolved": "2.41.1",
+        "contentHash": "T6ksxt3TxOod/6yJ7G1QMy3udIRlgpY4mxa0Y2yzx3p7JWaOezPrleyOGkUIB1WtzMz7glcl3JFdXGt1zG6MYw==",
         "dependencies": {
-          "Parlot": "1.5.2",
+          "Parlot": "1.5.9",
           "TimeZoneConverter": "7.2.0"
         }
       },
@@ -52,8 +52,8 @@
       },
       "Parlot": {
         "type": "Transitive",
-        "resolved": "1.5.2",
-        "contentHash": "idEOR6WU8WvnaDhFcj9PkWv8r/Actca8KfV9kw94//QEC0iQJVB9w/Z4ZLY8LxwSVMuNPuuLB649kCcVb+HrLw=="
+        "resolved": "1.5.9",
+        "contentHash": "Vro4ZKVZLBoPdCftyMUlzhlRpegI3N6TlT0zpyn79a42mH214VDqzkAdV70vu578W6NKS84hBA9H6j81cz0dLg=="
       },
       "System.CodeDom": {
         "type": "Transitive",
