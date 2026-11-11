@@ -53,7 +53,7 @@ internal class MailKitEmailClient : IEmailClient
                     var response = await smtpClient.SendAsync(message, cancellationToken);
                     _logger.LogInformation(
                         "Message with id {MessageId} sent with server response {ServerResponse}",
-                        emailMessage.MessageId, response);
+                        emailMessage.MessageId, response.ResponseText);
                     numberOfSentEmails++;
                     sendResult.Success = true;
                 }
