@@ -182,8 +182,7 @@
         "dependencies": {
           "Enigmatry.Entry.Core": "[1.0.0, )",
           "Fluid.Core": "[2.41.1, )",
-          "Microsoft.Extensions.Logging": "[11.0.0, )",
-          "Shouldly": "[4.3.0, )"
+          "Microsoft.Extensions.Logging": "[11.0.0, )"
         }
       },
       "FluentValidation": {

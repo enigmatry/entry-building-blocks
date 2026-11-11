@@ -21,52 +21,44 @@
           "Microsoft.Extensions.DependencyInjection": "11.0.0"
         }
       },
-      "Shouldly": {
+      "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
-        "requested": "[4.3.0, )",
-        "resolved": "4.3.0",
-        "contentHash": "sDetrWXrl6YXZ4HeLsdBoNk3uIa7K+V4uvIJ+cqdRa5DrFxeTED7VkjoxCuU1kJWpUuBDZz2QXFzSxBtVXLwRQ==",
+        "requested": "[11.0.100, )",
+        "resolved": "11.0.100",
+        "contentHash": "aBHHGAxLog2OC1nbXyCFyfy1lG9qwYO/COBPc/5cJEqbXpiznmz+wxLU+TVrI+2LzQYFSKpn7pk+RHtx9eHe9w==",
         "dependencies": {
-          "DiffEngine": "11.3.0",
-          "EmptyFiles": "4.4.0"
+          "Microsoft.Build.Tasks.Git": "11.0.100",
+          "Microsoft.SourceLink.Common": "11.0.100",
+          "System.IO.Hashing": "11.0.0"
         }
-      },
-      "DiffEngine": {
-        "type": "Transitive",
-        "resolved": "11.3.0",
-        "contentHash": "k0ZgZqd09jLZQjR8FyQbSQE86Q7QZnjEzq1LPHtj1R2AoWO8sjV5x+jlSisL7NZAbUOI4y+7Bog8gkr9WIRBGw==",
-        "dependencies": {
-          "EmptyFiles": "4.4.0",
-          "System.Management": "6.0.1"
-        }
-      },
-      "EmptyFiles": {
-        "type": "Transitive",
-        "resolved": "4.4.0",
-        "contentHash": "gwJEfIGS7FhykvtZoscwXj/XwW+mJY6UbAZk+qtLKFUGWC95kfKXnj8VkxsZQnWBxJemM/q664rGLN5nf+OHZw=="
       },
       "MediatR.Contracts": {
         "type": "Transitive",
         "resolved": "2.0.1",
         "contentHash": "FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ=="
       },
+      "Microsoft.Build.Tasks.Git": {
+        "type": "Transitive",
+        "resolved": "11.0.100",
+        "contentHash": "juE7HH7MfWolKodshqdxaJjFK3A4wp/UqMN69sVtBBU2hT2Bs1vwjAy0dwdsIUFlff0jEOqT7qcXQiD8l3+z3A==",
+        "dependencies": {
+          "System.IO.Hashing": "11.0.0"
+        }
+      },
+      "Microsoft.SourceLink.Common": {
+        "type": "Transitive",
+        "resolved": "11.0.100",
+        "contentHash": "7BbbX7EWxjEEU1Evc5hPF7aoncC/qq0avTgyUQN7fXXexWbfy4PgDFd35U90wdomwBGkn1zaYTW7kdwxiVdtnQ=="
+      },
       "Parlot": {
         "type": "Transitive",
         "resolved": "1.5.9",
         "contentHash": "Vro4ZKVZLBoPdCftyMUlzhlRpegI3N6TlT0zpyn79a42mH214VDqzkAdV70vu578W6NKS84hBA9H6j81cz0dLg=="
       },
-      "System.CodeDom": {
+      "System.IO.Hashing": {
         "type": "Transitive",
-        "resolved": "6.0.0",
-        "contentHash": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA=="
-      },
-      "System.Management": {
-        "type": "Transitive",
-        "resolved": "6.0.1",
-        "contentHash": "10J1D0h/lioojphfJ4Fuh5ZUThT/xOVHdV9roGBittKKNP2PMjrvibEdbVTGZcPra1399Ja3tqIJLyQrc5Wmhg==",
-        "dependencies": {
-          "System.CodeDom": "6.0.0"
-        }
+        "resolved": "11.0.0",
+        "contentHash": "U+Bv2qCYt6eONi+arSP0QIp4uTO6os6uceBsqiAwruZ+Wo2HrRhO/0tj38M9URJtS+4DhAtT3ka2TGNFYsnhyQ=="
       },
       "TimeZoneConverter": {
         "type": "Transitive",

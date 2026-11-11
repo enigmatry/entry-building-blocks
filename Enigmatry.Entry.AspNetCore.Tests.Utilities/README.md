@@ -1,136 +1,72 @@
 # ASP.NET Core Tests Utilities
 
-A library that provides testing utilities and helpers for ASP.NET Core applications, making it easier to write clean, effective tests for web applications and APIs.
-
-## Intended Usage
-
-Use this library when you need to write tests for ASP.NET Core applications. It provides utilities for mocking HTTP contexts, working with controllers, testing middleware, and more.
+Helpers for integration tests of Entry-based ASP.NET Core APIs: a test host, a SQL Server test database with data reset between tests, and an in-memory EF Core database.
 
 ## Requirements
 
-Requires NUnit 5 or later.
+- NUnit 5. Diagnostic output goes to `TestContext.Out`.
+- Docker, when `TestDatabase` has to start a SQL Server container (see below).
+- An Autofac container in the application under test, for `ApiEnvironment<T>` and `InMemoryDbModule`.
 
 ## Installation
-
-Add the package to your project:
 
 ```bash
 dotnet add package Enigmatry.Entry.AspNetCore.Tests.Utilities
 ```
 
-## Usage Example
+## Test host
 
-Testing exception handling in a controller:
+`ApiEnvironment<T>` is a `WebApplicationFactory<T>` that runs the API in the `Test` environment, loads `appsettings.Test.json`, and returns an `HttpClient` for `https://localhost` with a 30 second timeout. Override `OnContainerBuilderConfiguration` to replace Autofac registrations.
 
 ```csharp
-using Enigmatry.Entry.AspNetCore.Tests;
-using Enigmatry.Entry.AspNetCore.Filters;
-using Microsoft.AspNetCore.Mvc;
-using NUnit.Framework;
-using FakeItEasy;
-using FluentValidation;
-
-[TestFixture]
-public class ExceptionHandlingTests
-{    [Test]
-    public void HandleExceptionsFilter_ShouldReturnBadRequest_WhenValidationExceptionOccurs()
+public class TestEnvironment : ApiEnvironment<Program>
+{
+    public override void OnContainerBuilderConfiguration(HostBuilderContext context, ContainerBuilder builder)
     {
-        // Arrange
-        var exceptionContext = ExceptionContextBuilder.Create()
-            .WithValidationException()
-            .WithJsonRequest()
-            .Build();
-        var filter = new HandleExceptionsFilter();
-        
-        // Act
-        filter.OnException(exceptionContext);
-        
-        // Assert        var result = exceptionContext.Result as BadRequestObjectResult;
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Value, Is.Not.Null);
+        base.OnContainerBuilderConfiguration(context, builder);
+        builder.RegisterModule<InMemoryDbModule>();
     }
+}
+
+[Test]
+public async Task GetsWeatherForecasts()
+{
+    await using var environment = new TestEnvironment();
+    await TestRunner.Run(environment, async (_, client) =>
+    {
+        var response = await client.GetAsync(new Uri("weatherforecast", UriKind.Relative));
+        response.EnsureSuccessStatusCode();
+    });
 }
 ```
 
-Testing HTTP contexts:
+`InMemoryDbModule` registers `DbContextOptions` for an EF Core in-memory database with a unique name. `UriExtensions.AppendParameters` adds query-string parameters to a `Uri`, and `ServiceScopeExtensions.Resolve<T>` resolves a required service from an `IServiceScope`.
+
+## SQL Server test database
+
+`TestDatabase.Create` reads the connection strings from the environment variables listed in `DatabaseInitializerOptions.ConnectionStringEnvironmentVariables` (default: `IntegrationTestsConnectionString`). When any of them is unset, it starts one shared SQL Server container through Testcontainers (`SqlContainerImage`) and uses that container's connection string for the unset ones. Disposing the last `TestDatabase` stops the container.
+
+`Reset(dbContext)` prepares the database for a test:
+
+- When the database doesn't exist or has pending migrations, it drops all objects and applies the migrations. Data is then reset only when `ResetDataEnabled` is set.
+- Otherwise it deletes all data with Respawn, skipping `TablesToIgnore` and reseeding identity columns unless `ReseedIdentityColumns` is false. `BeforeDeleteCustomSqlQuery` and `AfterDeleteCustomSqlQuery` run around the delete.
 
 ```csharp
-using Enigmatry.Entry.AspNetCore.Tests;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Diagnostics;
-using NUnit.Framework;
+private static TestDatabase _database = null!;
 
-[TestFixture]
-public class HttpContextTests
-{    [Test]
-    public void HttpContextBuilder_ShouldCreateValidContext_WithException()
-    {
-        // Arrange
-        var exception = new InvalidOperationException("Test exception");
-        
-        // Act
-        var context = HttpContextBuilder.Create()
-            .With(exception)
-            .Build();
-          // Assert
-        var feature = context.Features.Get<IExceptionHandlerPathFeature>();
-        Assert.That(feature, Is.Not.Null);
-        Assert.That(feature.Error.Message, Is.EqualTo("Test exception"));
-        Assert.That(context.Request.Headers["Accept"], Is.EqualTo("application/json"));
-    }
+[OneTimeSetUp]
+public static async Task CreateDatabase() =>
+    _database = await TestDatabase.Create(new DatabaseInitializerOptions { TablesToIgnore = ["__EFMigrationsHistory"] });
+
+[SetUp]
+public async Task ResetDatabase()
+{
+    await using var dbContext = CreateDbContext(_database.ConnectionStrings["IntegrationTestsConnectionString"]);
+    await _database.Reset(dbContext);
 }
+
+[OneTimeTearDown]
+public static async Task DisposeDatabase() => await _database.DisposeAsync();
 ```
 
-## Service Scope Example
-
-```csharp
-using Enigmatry.Entry.AspNetCore.Tests.Utilities;
-using Microsoft.Extensions.DependencyInjection;
-using NUnit.Framework;
-
-[TestFixture]
-public class ServiceTests
-{    [Test]
-    public void ServiceScope_ResolvesService_Successfully()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddScoped<IMyService, MyService>();
-        var provider = services.BuildServiceProvider();
-        
-        // Act
-        using var scope = provider.CreateScope();
-        var service = scope.Resolve<IMyService>();
-          // Assert
-        Assert.That(service, Is.Not.Null);
-        Assert.That(service, Is.TypeOf<MyService>());
-    }
-}
-```
-
-## Database Utilities Example
-
-```csharp
-using Enigmatry.Entry.AspNetCore.Tests.Utilities.Database;
-using Microsoft.Data.SqlClient;
-using NUnit.Framework;
-
-[TestFixture]
-public class DatabaseTests
-{    [Test]
-    public void DatabaseHelpers_ProvidesDropAllSql()
-    {
-        // Arrange
-        var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=TestDb;Integrated Security=true";
-        
-        // Act & Assert
-        Assert.NotNull(DatabaseHelpers.DropAllSql);
-        
-        // Example of how you might use it in a real test
-        // using var connection = new SqlConnection(connectionString);
-        // connection.Open();
-        // var command = new SqlCommand(DatabaseHelpers.DropAllSql, connection);
-        // command.ExecuteNonQuery();
-    }
-}
-```
+Migrating needs at least one migration in the `DbContext`: EF Core throws when `MigrateAsync` finds none. `DatabaseHelpers.DropAllSql` holds the script that drops all database objects.

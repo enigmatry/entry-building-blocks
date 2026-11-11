@@ -1,13 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>Enigmatry.Entry.TemplatingEngine.Fluid</PackageId>
+    <Product>Enigmatry.Entry.TemplatingEngine.Fluid</Product>
+    <Description>Building Block for adding Fluid (Liquid) templating to an Entry based project</Description>
     <RootNamespace>Enigmatry.Entry.TemplatingEngine.Liquid</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Fluid.Core" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="Shouldly" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
