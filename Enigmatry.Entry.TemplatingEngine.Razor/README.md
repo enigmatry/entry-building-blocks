@@ -6,6 +6,10 @@ A templating engine library that uses the Razor view engine to generate content 
 
 Use this library when you need to generate dynamic content from templates using the familiar Razor syntax, such as for email templates, document generation, or dynamic content rendering.
 
+## Templates
+
+Templates are Razor views (`.cshtml`) compiled at build time, so the project that holds them uses the Razor SDK (`Microsoft.NET.Sdk.Web` or `Microsoft.NET.Sdk.Razor`). Reference a template by its app-relative path, including the extension: `~/EmailTemplates/WelcomeEmail.cshtml`. For templates that change without a rebuild, use `Enigmatry.Entry.TemplatingEngine.Fluid`.
+
 ## Installation
 
 Add the package to your project:
@@ -36,14 +40,14 @@ var model = new EmailModel
 };
 
 // Render a template from a file
-string emailContent = await templateEngine.RenderFromFileAsync("EmailTemplates/WelcomeEmail", model);
+string emailContent = await templateEngine.RenderFromFileAsync("~/EmailTemplates/WelcomeEmail.cshtml", model);
 
 // You can also pass view bag data if needed
 var viewBag = new Dictionary<string, object>
 {
     { "CurrentDate", DateTime.Now }
 };
-string emailContent = await templateEngine.RenderFromFileAsync("EmailTemplates/WelcomeEmail", model, viewBag);
+string emailContent = await templateEngine.RenderFromFileAsync("~/EmailTemplates/WelcomeEmail.cshtml", model, viewBag);
 ```
 
 ## Dependency Injection Example
@@ -87,7 +91,7 @@ public class EmailService
             Username = username,
             ActivationLink = activationLink
         };
-        return await _templateEngine.RenderFromFileAsync("Emails/Welcome", model);
+        return await _templateEngine.RenderFromFileAsync("~/Emails/Welcome.cshtml", model);
     }
 }
 ```
