@@ -8,11 +8,12 @@ public class FloatingPointValueConverter : IFluidValueConverter
 {
     public object? Convert(object? value) => value switch
     {
-        double number => ToDecimal(number.ToString("G15", CultureInfo.InvariantCulture)),
-        float number => ToDecimal(number.ToString("G7", CultureInfo.InvariantCulture)),
+        double number => ToFluidNumber(number.ToString("G15", CultureInfo.InvariantCulture)),
+        float number => ToFluidNumber(number.ToString("G7", CultureInfo.InvariantCulture)),
         _ => null
     };
 
-    private static decimal? ToDecimal(string number) =>
-        decimal.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out var result) ? result : null;
+    // NaN, infinities and magnitudes beyond decimal's range render as text instead of failing the render
+    private static object ToFluidNumber(string number) =>
+        decimal.TryParse(number, NumberStyles.Float, CultureInfo.InvariantCulture, out var result) ? result : number;
 }

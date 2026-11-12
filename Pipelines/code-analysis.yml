@@ -40,3 +40,4 @@ jobs:
     projectNameAngularApp: ''
     projectNamePrefix: $(projectNamePrefix)
     useSlnx: true
+    dotNetVersion: '11.0.x'

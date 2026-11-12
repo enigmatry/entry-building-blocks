@@ -31,7 +31,7 @@ if (Test-Path $artifacts)
 }
 
 # if minver is missing install it using: dotnet tool install --global minver-cli
-$version = exec { & minver }
+$version = exec { & minver -m 11.0 }
 
 exec { & dotnet clean -c Release }
 

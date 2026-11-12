@@ -34,7 +34,7 @@ internal class MailKitEmailClient : IEmailClient
         }
 
         var numberOfSentEmails = 0;
-        var stopWatch = new Stopwatch();
+        var stopWatch = Stopwatch.StartNew();
         var result = new List<EmailMessageSendResult>();
 
         using (var smtpClient = new SmtpClient())
@@ -63,10 +63,11 @@ internal class MailKitEmailClient : IEmailClient
                         "Unable to send message with id {MessageId} with error code {ErrorCode} due to a command error: {ErrorMessage}",
                         emailMessage.MessageId, ex.ErrorCode, ex.Message);
                 }
-                catch (SmtpUtf8AddressException ex)
+                // MailKit throws these before sending, for this message only; the connection stays usable
+                catch (Exception ex) when (ex is SmtpUtf8AddressException or NotSupportedException or InvalidOperationException)
                 {
                     _logger.LogWarning(ex,
-                        "Unable to send message with id {MessageId} due to an invalid address: {ErrorMessage}",
+                        "Unable to send message with id {MessageId} as composed: {ErrorMessage}",
                         emailMessage.MessageId, ex.Message);
                 }
                 catch (ProtocolException ex) when (smtpClient.IsConnected)

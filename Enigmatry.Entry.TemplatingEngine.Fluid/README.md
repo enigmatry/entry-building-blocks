@@ -1,49 +1,49 @@
-# Fluid template building block
+# Fluid templating engine
 
-Building Block with startup extensions for a fluid templating engine.
+Renders [Liquid](https://shopify.github.io/liquid/) templates with [Fluid](https://github.com/sebastienros/fluid), for example for email bodies.
 
 ## Registration
 
-You can use the `AddFluidTemplateEngine` extension method on `IServiceCollection` to add a fluid template engine to the IoC container. 
-This extension method will also configure the fluid template engine and fluid template provider:
-
 ```csharp
-public void ConfigureServices(IServiceCollection services)
+services.AddLiquidTemplatingEngine(options =>
 {
-    ...
-    services.AddFluidTemplateEngine();
-}
+    options.MemberNameStrategy = MemberNameStrategies.SnakeCase;
+    options.CultureInfo = CultureInfo.GetCultureInfo("nl-NL");
+    options.TimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+});
 ```
 
-## FluidTemplateEngineOptions
-
-Optionally, you can also register custom options for the fluid template engine:
+Then inject `ITemplatingEngine` and render a template against a model:
 
 ```csharp
-var options = new FluidTemplateEngineOptions
-{
-    MemberNameStrategy = MemberNameStrategies.SnakeCase,
-    CultureInfo = CultureInfo.GetCultureInfo("nl-NL"),
-    TimeZoneInfo = TimeZoneInfo.Utc,
-    ValueConverters =
-    [
-        value => value is Enum e ? new StringValue(e.GetDescription()) : null,
-        value => value is DateTimeOffset dateTime
-            ? TimeZoneInfo.ConvertTimeFromUtc(dateTime.UtcDateTime.ToUniversalTime(), TimeZoneInfo.Utc)
-                .ToString("dd-MM-yyyy HH:mm:ss", CultureInfo.GetCultureInfo("nl-NL"))
-            : null
-    ]
-};
-services.AddSingleton(Options.Create(options));
+var body = await templatingEngine.RenderAsync("Hello {{ full_name }}", new { FullName = "Jane Doe" });
 ```
 
-Default values are:
-```csharp
-var options = new FluidTemplateEngineOptions
-{
-    MemberNameStrategy = MemberNameStrategies.CamelCase,
-    CultureInfo = CultureInfo.InvariantCulture,
-    TimeZoneInfo = TimeZoneInfo.Local,
-    ValueConverters = new List<Func<object, object>>()
-};
+## Options
+
+| Option | Default | Effect |
+|---|---|---|
+| `MemberNameStrategy` | `MemberNameStrategies.CamelCase` | How model members are named in templates (`snake_case` above) |
+| `CultureInfo` | `CultureInfo.CurrentCulture` | Culture for numbers and dates |
+| `TimeZoneInfo` | `TimeZoneInfo.Local` | Time zone that `DateTime` and `DateTimeOffset` values are converted to |
+
+## Value conversion
+
+The engine registers these converters:
+
+- **Enums** render their `[Description]`.
+- **`DateTime` and `DateTimeOffset`** are converted to `TimeZoneInfo` and formatted with `CultureInfo`.
+- **`double` and `float`** render at the 15 and 7 significant digits they carry, so `1.23` renders as `1.23`. `NaN`, infinities and values beyond `decimal`'s range render as text.
+
+To add your own, implement `IFluidValueConverter` and register it as a scoped service **after** calling `AddLiquidTemplatingEngine`. Converters registered later run first, and the first one that returns a non-null value wins.
+
+## Filters
+
+`format_number` formats a number with a .NET format string, in `CultureInfo` or in a culture you pass. A null value renders as an empty string:
+
+```liquid
+{{ record.amount | format_number: 'n2' }}
+{{ record.amount | format_number: 'c2', 'en-US' }}
 ```
+
+To add your own filter, implement `IFluidFilter` and register it as a scoped service.
