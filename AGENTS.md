@@ -75,7 +75,7 @@ Folder names match the package ID, except `Enigmatry.Entry.EmailClient` (package
 Extend `BaseDbContext`. Pass `EntitiesDbContextOptions` to the constructor — it controls which assembly is scanned for `IEntityTypeConfiguration` implementations.
 
 ### NuGet Central Package Management
-All version numbers live in `Directory.Packages.props`. Never add a `Version` attribute to a `.csproj` file. Transitive pinning is enabled (`CentralPackageTransitivePinningEnabled=true`). Lock files are enforced (`RestorePackagesWithLockFile=true`).
+All version numbers live in `Directory.Packages.props`. Never add a `Version` attribute to a `.csproj` file. Transitive pinning is enabled (`CentralPackageTransitivePinningEnabled=true`). Lock files are enforced (`RestorePackagesWithLockFile=true`), and CI restores in locked mode: a stale `packages.lock.json` fails the build with NU1004, so regenerate them with `dotnet restore --force-evaluate` after any version change. `nuget.config` sets a 24-hour minimum publish age on nuget.org: `dotnet package add/update` only pick versions at least that old, and an explicitly requested version bypasses it.
 
 .NET 11 ships `Microsoft.Extensions.{Caching,Configuration,DependencyInjection,Diagnostics,FileProviders,Hosting,Logging}.Abstractions`, `Microsoft.Extensions.Options` and `Microsoft.Extensions.Primitives` in the shared framework. A `PackageReference` to any of them raises NU1510, which is a build error here.
 

@@ -51,6 +51,8 @@ stages:
   - job: 'Build_Package'
     displayName: Build Package
     dependsOn: build_prerequisites
+    variables:
+      RestoreLockedMode: 'true'
     steps:
     - task: UseDotNet@2
       displayName: Set .Net version

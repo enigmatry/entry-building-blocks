@@ -26,6 +26,7 @@ jobs:
     displayName: 'Code Analysis'
     dotNetVersion: '11.0.x'
     useSlnx: true
+    restoreLockedMode: true
     envVariablesForTests:
     - name: AzureSearch__SearchServiceEndPoint
       value: $(AzureSearch__SearchServiceEndPoint)
