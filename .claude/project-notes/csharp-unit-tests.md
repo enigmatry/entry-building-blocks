@@ -25,7 +25,8 @@ Each tested package has a sibling `Enigmatry.Entry.<Module>.Tests` project. Test
 
 ## Test data, builders and code books
 
-*Open question:* code books and builder locations are not inventoried yet.
+- **Code-book shape:** C# 14 `extension(Type)` static members, one `internal static class <Type>CodeBook` per extended type, entries returning finished objects (`GraphUser.Some`). Same-named members from two `extension` blocks in one class collide, hence one class per type. Existing books: `GraphUserCodeBook`, `ObjectIdentityCodeBook`, `PasswordProfileCodeBook` in `Enigmatry.Entry.GraphApi.Tests`.
+- **Builders** live next to the fixtures that use them, in the test project: `FakeGraphClientBuilder` (GraphApi), `TestDocumentBuilder` and `ServiceCollectionBuilder` (AzureSearch), `SchedulingConfigurationBuilder` (Scheduler), `HttpContextBuilder` and `ExceptionContextBuilder` (AspNetCore), `TestServiceProviderBuilder` (MediatR). A test helper that needs configuration gets a builder, not public mutable setters; a helper owning disposable resources is `IDisposable` and is disposed in `[TearDown]`.
 
 ## Verify
 

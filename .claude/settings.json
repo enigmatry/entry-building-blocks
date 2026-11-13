@@ -7,5 +7,17 @@
       "mcp__azure-devops__repo_get_pull_request_by_id",
       "mcp__azure-devops__repo_get_pull_request_changes"
     ]
+  },
+  "enabledPlugins": {
+    "entry-blueprint@enigmatry": true
+  },
+  "extraKnownMarketplaces": {
+    "enigmatry": {
+      "source": {
+        "source": "github",
+        "repo": "enigmatry/claude-plugins"
+      },
+      "autoUpdate": true
+    }
   }
 }

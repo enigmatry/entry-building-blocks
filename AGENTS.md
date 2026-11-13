@@ -98,10 +98,23 @@ All version numbers live in `Directory.Packages.props`. Never add a `Version` at
 - Verify snapshots (`*.verified.txt`) sit next to their fixture; `*.received.*` files are gitignored.
 - Mocking uses **FakeItEasy** (`A.Fake<T>()`, `A.CallTo(...).MustHaveHappened(...)`).
 - Shared test infrastructure for this repo lives in `Enigmatry.Entry.AspNetCore.Tests`. `Enigmatry.Entry.AspNetCore.Tests.Utilities` is a package for consumers.
-- Detailed guidance: `.claude/skills/csharp-unit-tests` (tests), with repo facts in `.claude/project-notes/csharp-unit-tests.md`, and `.claude/skills/azure-devops-pipelines` (pipeline YAML).
+- Detailed guidance: the `entry-blueprint:csharp-unit-tests` plugin skill, with this repo's facts in `.claude/project-notes/csharp-unit-tests.md`.
 
 ### SmartEnums
 Use `Ardalis.SmartEnum` as the base. Companion packages add EF Core value converters (`SmartEnums.EntityFramework`), System.Text.Json converters (`SmartEnums.SystemTextJson`), and Swagger schema support (`SmartEnums.Swagger`).
+
+## Claude Code: the `entry-blueprint` plugin
+
+`.claude/settings.json` enables Enigmatry's shared `entry-blueprint` plugin (marketplace `enigmatry/claude-plugins`). Its .NET hooks run here as they are: test-skill loading before test edits, C# formatting on edit, and the `dotnet format`/build and code-review gates on stop.
+
+| Plugin skill | Here |
+|---|---|
+| `csharp-unit-tests` | Applies, with `.claude/project-notes/csharp-unit-tests.md` |
+| `code-review-blueprint` | Applies to the .NET items; its controller, NSwag and Angular items don't occur in this repo |
+| `baseline-security-audit`, `jira-branch` | Apply |
+| `azure-devops-pipelines` | Replaced by this repo's `.claude/skills/azure-devops-pipelines`: these pipelines build and publish NuGet packages and deploy nothing |
+| `pull-request` | Not used: pull requests go to GitHub (`enigmatry/entry-building-blocks`), not Azure DevOps |
+| `aspnet-rest-apis` and the Angular/frontend skills (`angular`, `angular-testing`, `typescript`, `frontend-*`, `a11y`, `generating-e2e-tests`) | Not applicable: no application or frontend here |
 
 ## Versioning
 

@@ -60,6 +60,8 @@ Each module registers itself through extension methods on the service collection
 
 ## Building from source
 
+Building needs the .NET 11 SDK (pinned in `global.json`).
+
 ```powershell
 # Build
 dotnet build -c Release
@@ -79,6 +81,8 @@ Every module follows the same shape: `Enigmatry.Entry.<Module>/` holds the packa
 ## Contributing
 
 Issues and pull requests are welcome. Keep a change inside one module where you can, add or update the tests of that module, and run the fast test categories before opening the pull request.
+
+The repository's [Claude Code](https://claude.com/claude-code) setup uses Enigmatry's shared `entry-blueprint` plugin; `AGENTS.md` describes how. Install it once per clone with `claude plugin install entry-blueprint@enigmatry --scope project`.
 
 ## Licence
 

@@ -1,6 +1,6 @@
 ---
 name: azure-devops-pipelines
-description: Best practices for Azure DevOps Pipeline YAML files in the Enigmatry Entry Building Blocks project. Use this when creating, editing, or reviewing Azure DevOps CI/CD pipeline YAML.
+description: Azure DevOps Pipeline YAML for Enigmatry Entry Building Blocks (NuGet packages, no deployments). Use this, not entry-blueprint:azure-devops-pipelines, when creating, editing, or reviewing pipeline YAML in this repository.
 ---
 
 # Entry Building Blocks Azure DevOps Pipelines

@@ -1,10 +1,5 @@
 {
   "mcpServers": {
-    "azure-devops": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@azure-devops/mcp", "enigmatry", "-d", "core", "repositories", "pipelines"]
-    },
     "atlassian": {
       "type": "stdio",
       "command": "npx",
