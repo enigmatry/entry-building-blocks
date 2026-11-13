@@ -18,6 +18,7 @@ public static class TemplatingEngineStartupExtensions
         services.AddScoped<IFluidValueConverter, EnumValueConverter>();
         services.AddScoped<IFluidValueConverter, DateTimeValueConverter>();
         services.AddScoped<IFluidValueConverter, DateTimeOffsetValueConverter>();
+        services.AddScoped<IFluidValueConverter, FloatingPointValueConverter>();
 
         services.AddScoped<IFluidFilter, FormatNumberFilter>();
     }

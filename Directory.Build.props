@@ -1,7 +1,7 @@
 <Project>
 
 	<PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 
@@ -25,8 +25,8 @@
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>10.0</AnalysisLevel>
-    <LangVersion>14.0</LangVersion>
+    <AnalysisLevel>11.0</AnalysisLevel>
+    <LangVersion>15.0</LangVersion>
     <NoWarn>EnableGenerateDocumentationFile</NoWarn>
 
   </PropertyGroup>

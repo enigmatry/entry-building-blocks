@@ -6,88 +6,42 @@ A templating engine library that uses the Razor view engine to generate content 
 
 Use this library when you need to generate dynamic content from templates using the familiar Razor syntax, such as for email templates, document generation, or dynamic content rendering.
 
-## Installation
+## Templates
 
-Add the package to your project:
+Templates are Razor views (`.cshtml`) compiled at build time:
+
+- In a web project (`Microsoft.NET.Sdk.Web`), the views compile into the application.
+- In a Razor class library (`Microsoft.NET.Sdk.Razor`), set `<AddRazorSupportForMvc>true</AddRazorSupportForMvc>` so the views compile for MVC, and reference the library from the application.
+
+Reference a template by its app-relative path, including the extension: `~/EmailTemplates/WelcomeEmail.cshtml`. For templates that change without a rebuild, use `Enigmatry.Entry.TemplatingEngine.Fluid`.
+
+The engine finds compiled views through MVC's application parts, so it runs inside an ASP.NET Core host: a web application, or a generic host with `ConfigureWebHostDefaults` for a background service or console application.
+
+## Installation
 
 ```bash
 dotnet add package Enigmatry.Entry.TemplatingEngine.Razor
 ```
 
-## Usage Example
+## Registration
 
 ```csharp
-using Enigmatry.Entry.TemplatingEngine;
-using Microsoft.Extensions.DependencyInjection;
-
-// In a non-DI environment, you would need to manually set up the service provider:
-var services = new ServiceCollection();
 services.AddRazorPages();
-services.AddMvc();
 services.AddEntryTemplatingEngine();
-var serviceProvider = services.BuildServiceProvider();
-var templateEngine = serviceProvider.GetRequiredService<ITemplatingEngine>();
-
-// Define a model
-var model = new EmailModel
-{
-    Username = "John",
-    ActivationLink = "https://example.com/activate?token=abc123"
-};
-
-// Render a template from a file
-string emailContent = await templateEngine.RenderFromFileAsync("EmailTemplates/WelcomeEmail", model);
-
-// You can also pass view bag data if needed
-var viewBag = new Dictionary<string, object>
-{
-    { "CurrentDate", DateTime.Now }
-};
-string emailContent = await templateEngine.RenderFromFileAsync("EmailTemplates/WelcomeEmail", model, viewBag);
 ```
 
-## Dependency Injection Example
+## Usage
 
-Register the template engine in your application's service collection:
-
-```csharp
-using Enigmatry.Entry.TemplatingEngine;
-
-public void ConfigureServices(IServiceCollection services)
-{
-    // Register Razor pages and MVC components needed by the template engine
-    services.AddRazorPages();
-    services.AddMvc();
-    
-    // Register the templating engine
-    services.AddEntryTemplatingEngine();
-}
-```
-
-Then inject and use the template engine in your services:
+Inject `ITemplatingEngine` and render a template with a model, optionally passing view bag data:
 
 ```csharp
-using Enigmatry.Entry.TemplatingEngine;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-public class EmailService
+public class EmailService(ITemplatingEngine templatingEngine)
 {
-    private readonly ITemplatingEngine _templateEngine;
-    
-    public EmailService(ITemplatingEngine templateEngine)
-    {
-        _templateEngine = templateEngine;
-    }
-    
-    public async Task<string> GenerateWelcomeEmail(string username, string activationLink)
-    {
-        var model = new EmailModel
-        {
-            Username = username,
-            ActivationLink = activationLink
-        };
-        return await _templateEngine.RenderFromFileAsync("Emails/Welcome", model);
-    }
+    public Task<string> GenerateWelcomeEmail(EmailModel model) =>
+        templatingEngine.RenderFromFileAsync("~/EmailTemplates/WelcomeEmail.cshtml", model);
+
+    public Task<string> GenerateWelcomeEmailWithTitle(EmailModel model, string title) =>
+        templatingEngine.RenderFromFileAsync("~/EmailTemplates/WelcomeEmail.cshtml", model,
+            new Dictionary<string, object> { ["Title"] = title });
 }
 ```

@@ -97,6 +97,23 @@ public class LiquidTemplatingEngineTests
         result.ShouldBe(expectedAmount);
     }
 
+    [TestCase(1.23, "{{ record.amount }}", "1,23")]
+    [TestCase(0.1, "{{ record.amount }}", "0,1")]
+    [TestCase(0.1 + 0.2, "{{ record.amount }}", "0,3")]
+    [TestCase(double.NaN, "{{ record.amount }}", "NaN")]
+    [TestCase(1e30, "{{ record.amount }}", "1E+30")]
+    [TestCase(1.23, "{{ record.amount | format_number: 'n2' }}", "1,23")]
+    [TestCase(1234.5678, "{{ record.amount | format_number: 'n3' }}", "1.234,568")]
+    public async Task DoublesShouldBeRenderedWithoutConversionNoise(double amount, string template, string expected)
+    {
+        var engine = _scope.ServiceProvider.GetRequiredService<ITemplatingEngine>();
+        var model = new { Record = new { Amount = amount } };
+
+        var result = await engine.RenderAsync(template, model);
+
+        result.ShouldBe(expected);
+    }
+
     [TestCase(null, "{{ date_time }}", "")]
     [TestCase("2022-09-14 23:59:59+02:00", "{{ date_time }}", "14-09-2022 23:59:59")]
     [TestCase("2022-09-14 23:59:59+00:00", "{{ date_time }}", "15-09-2022 01:59:59")]

@@ -34,7 +34,7 @@ internal class MailKitEmailClient : IEmailClient
         }
 
         var numberOfSentEmails = 0;
-        var stopWatch = new Stopwatch();
+        var stopWatch = Stopwatch.StartNew();
         var result = new List<EmailMessageSendResult>();
 
         using (var smtpClient = new SmtpClient())
@@ -53,7 +53,7 @@ internal class MailKitEmailClient : IEmailClient
                     var response = await smtpClient.SendAsync(message, cancellationToken);
                     _logger.LogInformation(
                         "Message with id {MessageId} sent with server response {ServerResponse}",
-                        emailMessage.MessageId, response);
+                        emailMessage.MessageId, response.ResponseText);
                     numberOfSentEmails++;
                     sendResult.Success = true;
                 }
@@ -62,6 +62,12 @@ internal class MailKitEmailClient : IEmailClient
                     _logger.LogWarning(ex,
                         "Unable to send message with id {MessageId} with error code {ErrorCode} due to a command error: {ErrorMessage}",
                         emailMessage.MessageId, ex.ErrorCode, ex.Message);
+                }
+                catch (Exception ex) when (MessageSendExceptions.AffectsOnlyThisMessage(ex))
+                {
+                    _logger.LogWarning(ex,
+                        "Unable to send message with id {MessageId} as composed: {ErrorMessage}",
+                        emailMessage.MessageId, ex.Message);
                 }
                 catch (ProtocolException ex) when (smtpClient.IsConnected)
                 {

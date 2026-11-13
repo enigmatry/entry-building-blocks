@@ -27,6 +27,11 @@ stages:
     steps:
     - checkout: self
       fetchDepth: 0
+    - task: UseDotNet@2
+      displayName: Set .Net version
+      inputs:
+        packageType: sdk
+        useGlobalJson: true
     - task: DotNetCoreCLI@2
       displayName: Add Manifest for tool installation
       inputs:
@@ -44,20 +49,21 @@ stages:
       inputs:
         targetType: inline
         script: |
-          $version = dotnet minver -p preview
+          $version = dotnet minver -p preview -m 11.0
           echo "##vso[build.updatebuildnumber]$version"
           Write-Host "Setting MinVer to '$version'"
 
   - job: 'Build_Package'
     displayName: Build Package
     dependsOn: build_prerequisites
+    variables:
+      RestoreLockedMode: 'true'
     steps:
     - task: UseDotNet@2
       displayName: Set .Net version
       inputs:
-        version: '10.0.x' 
-    - task: NuGetToolInstaller@1
-      displayName: Install NuGet Tool
+        packageType: sdk
+        useGlobalJson: true
     - task: Cache@2
       displayName: 'NuGet Cache'
       inputs:
@@ -67,12 +73,12 @@ stages:
             nuget
         path: $(NUGET_PACKAGES)
         cacheHitVar: 'NUGET_CACHE_RESTORED'
-    - task: NuGetCommand@2
+    - task: DotNetCoreCLI@2
       displayName: 'NuGet restore'
       condition: ne(variables.NUGET_CACHE_RESTORED, true)
       inputs:
         command: 'restore'
-        restoreSolution: '$(projectNamePrefix).slnx'
+        projects: '$(projectNamePrefix).slnx'
     - task: DotNetCoreCLI@2
       displayName: 'Build package'
       inputs:

@@ -24,8 +24,9 @@ jobs:
     projectName: 'Enigmatry - Entry Building Blocks'
     sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
     displayName: 'Code Analysis'
-    dotNetVersion: '10.0.x'
+    useGlobalJson: true
     useSlnx: true
+    restoreLockedMode: true
     envVariablesForTests:
     - name: AzureSearch__SearchServiceEndPoint
       value: $(AzureSearch__SearchServiceEndPoint)
@@ -39,3 +40,5 @@ jobs:
     projectNameAngularApp: ''
     projectNamePrefix: $(projectNamePrefix)
     useSlnx: true
+    useGlobalJson: true
+    restoreLockedMode: true

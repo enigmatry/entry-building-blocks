@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using FluentValidation;
@@ -23,8 +23,8 @@ public class TestServiceProviderBuilder
 
     private void AppAddMediatR(IServiceCollection serviceCollection)
     {
-        serviceCollection.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         serviceCollection.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        serviceCollection.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
         serviceCollection.AddMediatR(config =>
         {
