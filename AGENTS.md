@@ -4,6 +4,8 @@ A collection of reusable .NET NuGet packages (`net11.0`) published by Enigmatry.
 
 ## Build, test, and pack
 
+Requires the .NET 11 SDK (`global.json`).
+
 ```powershell
 # Build
 dotnet build -c Release
@@ -90,20 +92,20 @@ All version numbers live in `Directory.Packages.props`. Never add a `Version` at
 
 ### Test conventions
 - Test classes are named `*Fixture` or `*Tests`.
-- Every test class carries `[Category("unit")]` or `[Category("integration")]`. CI runs `unit` (its filter also admits `smoke`).
+- Every test class carries `[Category("unit")]` or `[Category("integration")]`. The build pipeline runs `TestCategory=unit|smoke`; the nightly code-analysis pipeline runs every test project, integration included. The `AzureSearch.Tests.Searching.*` fixtures are `[Explicit]` (BP-815), so they only run on demand.
 - `integration` tests: `AzureSearch.Tests` needs an Azure AI Search service, configured through user secrets or the `AzureSearch__SearchServiceEndPoint` / `AzureSearch__ApiKey` env vars (the shared test service holds at most 15 indexes). The `AspNetCore.Tests*` fixtures host SampleApp in-process and need nothing external.
 - Assertions use **Shouldly** (`result.ShouldBe(...)`) or **Verify** for snapshot testing.
 - Verify snapshots (`*.verified.txt`) sit next to their fixture; `*.received.*` files are gitignored.
 - Mocking uses **FakeItEasy** (`A.Fake<T>()`, `A.CallTo(...).MustHaveHappened(...)`).
 - Shared test infrastructure for this repo lives in `Enigmatry.Entry.AspNetCore.Tests`. `Enigmatry.Entry.AspNetCore.Tests.Utilities` is a package for consumers.
-- Detailed guidance: `.claude/skills/csharp-unit-tests` (tests) and `.claude/skills/azure-devops-pipelines` (pipeline YAML).
+- Detailed guidance: `.claude/skills/csharp-unit-tests` (tests), with repo facts in `.claude/project-notes/csharp-unit-tests.md`, and `.claude/skills/azure-devops-pipelines` (pipeline YAML).
 
 ### SmartEnums
 Use `Ardalis.SmartEnum` as the base. Companion packages add EF Core value converters (`SmartEnums.EntityFramework`), System.Text.Json converters (`SmartEnums.SystemTextJson`), and Swagger schema support (`SmartEnums.Swagger`).
 
 ## Versioning
 
-Releases are versioned with [MinVer](https://github.com/adamralph/minver) — the version is derived from the nearest git tag. Install the CLI tool once:
+Releases are versioned with [MinVer](https://github.com/adamralph/minver) — the version is derived from the nearest git tag, with a minimum of `11.0` (`-m 11.0` in `Pipelines/azure-pipelines.yml` and `build.ps1`), so untagged builds publish as `11.0.0-preview.N`. A release is a tag (`11.0.0`); a new .NET major moves the `-m` value in both places. Install the CLI tool once:
 
 ```powershell
 dotnet tool install --global minver-cli

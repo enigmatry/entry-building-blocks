@@ -4,7 +4,7 @@ Project-specific companion to the shared `entry-blueprint:csharp-unit-tests` ski
 
 ## Test projects
 
-Each tested package has a sibling `Enigmatry.Entry.<Module>.Tests` project. Tests use the `unit` and `integration` categories; CI runs `--filter "TestCategory=unit|TestCategory=smoke"`.
+Each tested package has a sibling `Enigmatry.Entry.<Module>.Tests` project. Tests use the `unit` and `integration` categories. The build pipeline runs `--filter "TestCategory=unit|TestCategory=smoke"`; the nightly code-analysis pipeline runs every test project, integration included. The `AzureSearch.Tests.Searching.*` fixtures are `[Explicit]` (BP-815) and only run on demand.
 
 | Project | Categories | Integration profile |
 |---|---|---|
