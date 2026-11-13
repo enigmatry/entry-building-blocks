@@ -83,14 +83,21 @@ jobs:
   parameters:
     projectName: 'Enigmatry - Entry Building Blocks'
     sonarProjectKey: 'AspNetCoreAngular_EnigmatryBlueprintBuildingBlocks'
-    dotNetVersion: '11.0.x'
+    useGlobalJson: true
+    restoreLockedMode: true
 
 - template: build-report-job.yml@templates
   parameters:
     artifactName: $(artifactName)
     projectNamePrefix: $(projectNamePrefix)
     projectNameAngularApp: ''      # empty — this project has no Angular frontend
+    useGlobalJson: true
+    restoreLockedMode: true
 ```
+
+## .NET SDK
+
+The repository-root `global.json` pins the SDK major (`11.0.100`, `rollForward: latestFeature`). Every `UseDotNet@2` step installs from it (`packageType: sdk`, `useGlobalJson: true`; the templates take `useGlobalJson: true`), so the SDK version lives in that one file. Move it with each .NET major.
 
 ## Versioning
 

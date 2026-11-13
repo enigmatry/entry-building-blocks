@@ -82,6 +82,7 @@ All version numbers live in `Directory.Packages.props`. Never add a `Version` at
 ### Build settings (`Directory.Build.props`)
 - `TreatWarningsAsErrors=true` and `EnforceCodeStyleInBuild=true` — all warnings are build errors.
 - `LangVersion=15.0`, `AnalysisLevel=11.0`, `Nullable=enable`, `ImplicitUsings=enable`.
+- `global.json` pins the .NET 11 SDK (`11.0.100`, `rollForward: latestFeature`); both pipelines install the SDK from it.
 - MediatR is pinned to an exact version (`[12.4.1]`) to prevent accidental upgrades.
 
 ### Code organization
