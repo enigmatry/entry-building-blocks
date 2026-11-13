@@ -27,6 +27,11 @@ stages:
     steps:
     - checkout: self
       fetchDepth: 0
+    - task: UseDotNet@2
+      displayName: Set .Net version
+      inputs:
+        packageType: sdk
+        useGlobalJson: true
     - task: DotNetCoreCLI@2
       displayName: Add Manifest for tool installation
       inputs:
