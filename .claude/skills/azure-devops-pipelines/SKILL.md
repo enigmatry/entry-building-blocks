@@ -97,7 +97,7 @@ jobs:
 Version numbers come from `minver-cli` (reads the nearest git tag). The `build_prerequisites` job installs it as a local tool and sets `BUILD_BUILDNUMBER`:
 
 ```powershell
-$version = dotnet minver -p preview
+$version = dotnet minver -p preview -m 11.0
 echo "##vso[build.updatebuildnumber]$version"
 ```
 
@@ -105,24 +105,30 @@ Pack tasks then consume `$(BUILD_BUILDNUMBER)` via `versioningScheme: byEnvVar`.
 
 ## NuGet caching
 
-Always include the cache task before restore:
+Restore with the .NET SDK (`DotNetCoreCLI@2`), so restore and build use the SDK `UseDotNet@2` installed, behind the cache task. The build job sets `RestoreLockedMode: 'true'` as a job variable, which also covers the implicit restores in build, test and pack:
 
 ```yaml
-- task: Cache@2
-  inputs:
-    key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
-    restoreKeys: |
-      nuget | "$(Agent.OS)"
-      nuget
-    path: $(NUGET_PACKAGES)
-    cacheHitVar: NUGET_CACHE_RESTORED
+- job: 'Build_Package'
+  variables:
+    RestoreLockedMode: 'true'
+  steps:
+  - task: Cache@2
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**,!**/obj/**'
+      restoreKeys: |
+        nuget | "$(Agent.OS)"
+        nuget
+      path: $(NUGET_PACKAGES)
+      cacheHitVar: NUGET_CACHE_RESTORED
 
-- task: NuGetCommand@2
-  condition: ne(variables.NUGET_CACHE_RESTORED, true)
-  inputs:
-    command: restore
-    restoreSolution: '$(projectNamePrefix).sln'
+  - task: DotNetCoreCLI@2
+    condition: ne(variables.NUGET_CACHE_RESTORED, true)
+    inputs:
+      command: restore
+      projects: '$(projectNamePrefix).slnx'
 ```
+
+A stale `packages.lock.json` fails the restore with NU1004.
 
 ## Rules
 
